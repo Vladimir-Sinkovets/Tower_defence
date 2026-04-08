@@ -8,7 +8,7 @@ namespace Assets.Game.Scripts.Enemy
     {
         [SerializeField] private NavMeshAgent _navMeshAgent;
         [SerializeField] private EnemyView _enemyView;
-        [SerializeField] private Transform _dest;
+        [SerializeField] private Health _target;
 
         private StateMachine _stateMachine;
         private EnemyStateMachineData _data;
@@ -19,7 +19,7 @@ namespace Assets.Game.Scripts.Enemy
             _data = new EnemyStateMachineData()
             {
                 NavMeshAgent = _navMeshAgent,
-                Target = _dest,
+                Target = _target,
                 Transform = transform,
                 View = _enemyView,
             };
