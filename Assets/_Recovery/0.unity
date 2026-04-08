@@ -7046,7 +7046,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1394721494}
   - component: {fileID: 1394721493}
-  - component: {fileID: 1394721495}
   - component: {fileID: 1394721492}
   m_Layer: 0
   m_Name: Enemy
@@ -7065,8 +7064,8 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.18
-  m_Speed: 1
-  m_Acceleration: 8
+  m_Speed: 3.5
+  m_Acceleration: 100
   avoidancePriority: 50
   m_AngularSpeed: 120
   m_StoppingDistance: 0
@@ -7090,7 +7089,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
   _navMeshAgent: {fileID: 1394721492}
-  _enemyView: {fileID: 1394721495}
   _dest: {fileID: 1030096483}
 --- !u!4 &1394721494
 Transform:
@@ -7108,19 +7106,6 @@ Transform:
   - {fileID: 650941556}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1394721495
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1394721491}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ba5778f162e16248a8bc271f236da95, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Enemy.EnemyView
-  _animator: {fileID: 1884647942}
 --- !u!1001 &1396470606
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9719,43 +9704,13 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 47e7468693a15f14b81cac13b492b28e, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1884647942}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 47e7468693a15f14b81cac13b492b28e, type: 3}
 --- !u!4 &1884647940 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 47e7468693a15f14b81cac13b492b28e, type: 3}
   m_PrefabInstance: {fileID: 1884647939}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1884647941 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 47e7468693a15f14b81cac13b492b28e, type: 3}
-  m_PrefabInstance: {fileID: 1884647939}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &1884647942
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1884647941}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 5098c360a98d0d64f8080334e22a1880, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &1889669489
 PrefabInstance:
   m_ObjectHideFlags: 0
