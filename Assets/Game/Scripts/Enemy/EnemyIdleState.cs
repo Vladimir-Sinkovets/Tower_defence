@@ -27,11 +27,11 @@ namespace Assets.Game.Scripts.Enemy
         {
             _time += Time.deltaTime;
 
-            if (Vector3.Distance(_data.Transform.position, _data.Target.transform.position) > 1)
+            if (Vector3.Distance(_data.Transform.position, _data.Target.transform.position) > _data.Config.AttackRange)
             {
                 StateSwitcher.SwitchState<EnemyRunState>();
             }
-            else if (_time >= 1.0f)
+            else if (_time >= _data.Config.IntervalBetweenAttacks)
             {
                 StateSwitcher.SwitchState<EnemyAttackState>();
             }

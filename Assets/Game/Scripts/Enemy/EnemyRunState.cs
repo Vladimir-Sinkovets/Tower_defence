@@ -26,7 +26,7 @@ namespace Assets.Game.Scripts.Enemy
 
         public override void Update()
         {
-            if (Vector3.Distance(_data.Transform.position, _data.Target.transform.position) <= 1)
+            if (Vector3.Distance(_data.Transform.position, _data.Target.transform.position) <= _data.Config.AttackRange)
             {
                 StateSwitcher.SwitchState<EnemyAttackState>();
             }

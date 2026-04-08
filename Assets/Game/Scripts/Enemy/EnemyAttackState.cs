@@ -1,6 +1,4 @@
 ﻿using Assets.Game.Scripts.Common.UniversalStateMachine;
-using System;
-using UnityEngine;
 
 namespace Assets.Game.Scripts.Enemy
 {
@@ -20,7 +18,7 @@ namespace Assets.Game.Scripts.Enemy
 
         private void AttackAnimationEventHandler()
         {
-            _data.Target.GetDamage(5);
+            _data.Target.GetDamage(_data.Config.Damage);
 
             StateSwitcher.SwitchState<EnemyIdleState>();
         }

@@ -4,16 +4,15 @@ using UnityEngine.AI;
 
 namespace Assets.Game.Scripts.Enemy
 {
-    public class EnemyController : MonoBehaviour
+    public class SimpleEnemy : Enemy
     {
         [SerializeField] private NavMeshAgent _navMeshAgent;
         [SerializeField] private EnemyView _enemyView;
-        [SerializeField] private Health _target;
 
         private StateMachine _stateMachine;
         private EnemyStateMachineData _data;
 
-        private void Start()
+        public void Init(Health _target, SimpleEnemyFactory config)
         {
             _stateMachine = new StateMachine();
             _data = new EnemyStateMachineData()
@@ -22,7 +21,10 @@ namespace Assets.Game.Scripts.Enemy
                 Target = _target,
                 Transform = transform,
                 View = _enemyView,
+                Config = config,
             };
+
+            _navMeshAgent.speed = config.Speed;
 
             _stateMachine.AddState(new EnemyRunState(_stateMachine, _data));
             _stateMachine.AddState(new EnemyIdleState(_stateMachine, _data));
