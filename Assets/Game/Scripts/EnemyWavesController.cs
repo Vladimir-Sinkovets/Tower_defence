@@ -13,7 +13,7 @@ namespace Assets.Game.Scripts
 
         private readonly WaitForSeconds _interval = new WaitForSeconds(1.0f);
 
-        public void Init()
+        public void StartWaves()
         {
             StartCoroutine(SpawnWaves());
         }
