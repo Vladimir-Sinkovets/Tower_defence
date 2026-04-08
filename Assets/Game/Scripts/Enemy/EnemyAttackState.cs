@@ -1,4 +1,5 @@
 ﻿using Assets.Game.Scripts.Common;
+using System;
 using UnityEngine;
 
 namespace Assets.Game.Scripts.Enemy
@@ -14,12 +15,15 @@ namespace Assets.Game.Scripts.Enemy
 
         public override void Enter()
         {
-            _data.View.PlayAttackAnimation();
+            _data.View.PlayAttackAnimation(AttackAnimationEventHandler);
         }
 
-        public override void Exit()
+        private void AttackAnimationEventHandler()
         {
+            StateSwitcher.SwitchState<EnemyIdleState>();
         }
+
+        public override void Exit() { }
 
         public override void Update() { }
     }
