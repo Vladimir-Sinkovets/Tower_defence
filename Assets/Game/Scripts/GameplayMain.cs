@@ -8,7 +8,7 @@ namespace Assets.Game.Scripts
 
         private void Start()
         {
-            _enemyWavesController.Init();
+            _enemyWavesController.StartWaves();
         }
     }
 }
