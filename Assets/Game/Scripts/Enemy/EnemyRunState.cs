@@ -14,7 +14,7 @@ namespace Assets.Game.Scripts.Enemy
 
         public override void Enter()
         {
-            _data.NavMeshAgent.SetDestination(_data.Target.position);
+            _data.NavMeshAgent.SetDestination(_data.Target.transform.position);
 
             _data.View.PlayWalkAnimation();
         }
@@ -26,7 +26,7 @@ namespace Assets.Game.Scripts.Enemy
 
         public override void Update()
         {
-            if (Vector3.Distance(_data.Transform.position, _data.Target.position) <= 1)
+            if (Vector3.Distance(_data.Transform.position, _data.Target.transform.position) <= 1)
             {
                 StateSwitcher.SwitchState<EnemyAttackState>();
             }

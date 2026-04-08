@@ -27,7 +27,7 @@ namespace Assets.Game.Scripts.Enemy
         {
             _time += Time.deltaTime;
 
-            if (Vector3.Distance(_data.Transform.position, _data.Target.position) > 1)
+            if (Vector3.Distance(_data.Transform.position, _data.Target.transform.position) > 1)
             {
                 StateSwitcher.SwitchState<EnemyRunState>();
             }

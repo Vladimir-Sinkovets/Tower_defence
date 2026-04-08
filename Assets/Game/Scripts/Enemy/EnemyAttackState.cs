@@ -20,6 +20,8 @@ namespace Assets.Game.Scripts.Enemy
 
         private void AttackAnimationEventHandler()
         {
+            _data.Target.GetDamage(5);
+
             StateSwitcher.SwitchState<EnemyIdleState>();
         }
 
