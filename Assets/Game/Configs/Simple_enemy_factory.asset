@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cece4032baacc1f48b82430de6f14576, type: 3}
+  m_Name: Simple_enemy_factory
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Enemy.SimpleEnemyFactory
+  Hp: 10
+  Speed: 1
+  AttackRange: 1
+  IntervalBetweenAttacks: 1
+  Damage: 2
+  _prefab: {fileID: 3887083065228993146, guid: 3a30612356179e54a99e73c8e3e2ece0, type: 3}
