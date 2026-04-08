@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets.Game.Scripts.Common
+namespace Assets.Game.Scripts.Common.UniversalStateMachine
 {
     public class StateMachine : IStateSwitcher, IDisposable
     {
