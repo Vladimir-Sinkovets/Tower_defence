@@ -1,4 +1,4 @@
-﻿using Assets.Game.Scripts.Common;
+﻿using Assets.Game.Scripts.Common.UniversalStateMachine;
 using System;
 using UnityEngine;
 

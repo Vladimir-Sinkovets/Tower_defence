@@ -1,4 +1,4 @@
-﻿namespace Assets.Game.Scripts.Common
+﻿namespace Assets.Game.Scripts.Common.UniversalStateMachine
 {
     public abstract class State
     {
