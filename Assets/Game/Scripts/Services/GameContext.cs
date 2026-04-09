@@ -5,10 +5,10 @@ namespace Assets.Game.Scripts.Services
 {
     public class GameContext
     {
-        private HashSet<Enemy> _enemies = new();
+        private HashSet<Damageable> _enemies = new();
 
-        public IEnumerable<Enemy> All => _enemies;
-        public bool RegisterEnemy(Enemy enemy) => _enemies.Add(enemy);
-        public bool UnregisterEnemy(Enemy enemy) => _enemies.Remove(enemy);
+        public IEnumerable<Damageable> All => _enemies;
+        public bool RegisterEnemy(Damageable enemy) => _enemies.Add(enemy);
+        public bool UnregisterEnemy(Damageable enemy) => _enemies.Remove(enemy);
     }
 }

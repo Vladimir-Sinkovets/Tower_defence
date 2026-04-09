@@ -1,14 +1,15 @@
-﻿using UnityEngine;
+﻿using Assets.Game.Scripts.Enemies;
+using UnityEngine;
 
 namespace Assets.Game.Scripts
 {
     public class Projectile : MonoBehaviour
     {
-        private Health _target;
+        private Damageable _target;
         private int _damage;
         private float _speed;
 
-        public void Init(Health target, int damage, float speed)
+        public void Init(Damageable target, int damage, float speed)
         {
             _target = target;
             _damage = damage;

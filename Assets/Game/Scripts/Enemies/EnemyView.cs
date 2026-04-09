@@ -6,6 +6,7 @@ namespace Assets.Game.Scripts.Enemies
     public class EnemyView : MonoBehaviour
     {
         [SerializeField] private Animator _animator;
+        [SerializeField] private GameObject _canvas;
 
         private Action _currentAttackCallback;
 
@@ -36,6 +37,11 @@ namespace Assets.Game.Scripts.Enemies
             _currentAttackCallback?.Invoke();
 
             _currentAttackCallback = null;
+        }
+
+        public void DisableCanvas()
+        {
+            _canvas.SetActive(false);
         }
     }
 }

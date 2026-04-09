@@ -1,5 +1,6 @@
 ﻿using Assets.Game.Scripts.Enemies;
 using Assets.Game.Scripts.Services;
+using System;
 using UnityEngine;
 using Zenject;
 
@@ -16,7 +17,7 @@ namespace Assets.Game.Scripts
 
 
         private GameContext _context;
-        private Enemy _currenttarget;
+        private Damageable _currenttarget;
 
         private float _nextShootTime = 0;
 
@@ -45,20 +46,32 @@ namespace Assets.Game.Scripts
 
             projectile.transform.position = _projectileStartPosition.transform.position;
 
-            projectile.Init(_currenttarget.Health, _damage, _projectileSpeed);
+            projectile.Init(_currenttarget, _damage, _projectileSpeed);
         }
 
         private void FindTarget()
         {
             foreach (var enemy in _context.All)
             {
+                if (enemy.IsDied)
+                    continue;
+
                 if (Vector3.Distance(enemy.transform.position, transform.position) <= _attackRadius)
                 {
                     _currenttarget = enemy;
 
+                    _currenttarget.OnDied += OnCurrentTargetDiedHandler;
+
                     break;
                 }
             }
+        }
+
+        private void OnCurrentTargetDiedHandler()
+        {
+            _currenttarget.OnDied -= OnCurrentTargetDiedHandler;
+
+            _currenttarget = null;
         }
     }
 }

@@ -10,6 +10,6 @@ namespace Assets.Game.Scripts.Enemies
         public NavMeshAgent NavMeshAgent;
         public EnemyView View;
         public SimpleEnemyFactory Config;
-        public Health Health;
+        public SimpleEnemy Damageable;
     }
 }
