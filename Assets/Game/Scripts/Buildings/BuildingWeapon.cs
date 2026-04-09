@@ -1,5 +1,6 @@
-﻿using Assets.Game.Scripts.Enemies;
+﻿using Assets.Game.Scripts.Animations;
 using Assets.Game.Scripts.Services;
+using Assets.Game.Scripts.Shared;
 using System;
 using System.Collections;
 using UnityEngine;

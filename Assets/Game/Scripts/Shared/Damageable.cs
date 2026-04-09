@@ -1,9 +1,7 @@
-﻿using Assets.Game.Scripts.Services;
-using System;
+﻿using System;
 using UnityEngine;
-using Zenject;
 
-namespace Assets.Game.Scripts.Enemies
+namespace Assets.Game.Scripts.Shared
 {
     public abstract class Damageable : MonoBehaviour
     {

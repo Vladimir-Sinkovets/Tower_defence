@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Assets.Game.Scripts
+namespace Assets.Game.Scripts.Shared
 {
     public delegate void HpChangedDelegate(int currentHp, int maxHp);
 

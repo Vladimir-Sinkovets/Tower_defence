@@ -1,7 +1,7 @@
 ﻿using DG.Tweening;
 using UnityEngine;
 
-namespace Assets.Game.Scripts
+namespace Assets.Game.Scripts.Animations
 {
     public class IdleScaleAnimation : MonoBehaviour
     {

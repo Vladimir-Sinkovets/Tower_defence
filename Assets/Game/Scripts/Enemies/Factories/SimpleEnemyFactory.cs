@@ -1,7 +1,8 @@
-﻿using UnityEngine;
+﻿using Assets.Game.Scripts.Shared;
+using UnityEngine;
 using Zenject;
 
-namespace Assets.Game.Scripts.Enemies
+namespace Assets.Game.Scripts.Enemies.Factories
 {
     [CreateAssetMenu(fileName = "Simple_enemy_factory", menuName = "Enemies/Simple enemy factory")]
     public class SimpleEnemyFactory : EnemyFactory
