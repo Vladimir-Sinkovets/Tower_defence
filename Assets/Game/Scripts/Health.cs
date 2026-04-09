@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Assets.Game.Scripts
 {
@@ -7,6 +8,7 @@ namespace Assets.Game.Scripts
     public class Health : MonoBehaviour
     {
         public event HpChangedDelegate OnHpChanged;
+        public event Action OnDied;
 
         [SerializeField] private int _startHp;
 
@@ -22,6 +24,9 @@ namespace Assets.Game.Scripts
             _currentHp -= damage;
 
             OnHpChanged?.Invoke(_currentHp, _startHp);
+
+            if (_currentHp <= 0)
+                OnDied?.Invoke();
         }
     }
 }

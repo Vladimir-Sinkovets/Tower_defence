@@ -22,6 +22,7 @@ namespace Assets.Game.Scripts.Enemies
                 Transform = transform,
                 View = _enemyView,
                 Config = config,
+                Health = Health,
             };
 
             _navMeshAgent.speed = config.Speed;
@@ -29,6 +30,7 @@ namespace Assets.Game.Scripts.Enemies
             _stateMachine.AddState(new EnemyRunState(_stateMachine, _data));
             _stateMachine.AddState(new EnemyIdleState(_stateMachine, _data));
             _stateMachine.AddState(new EnemyAttackState(_stateMachine, _data));
+            _stateMachine.AddState(new EnemyDeathState(_stateMachine, _data));
 
             _stateMachine.SetStartState<EnemyRunState>();
         }

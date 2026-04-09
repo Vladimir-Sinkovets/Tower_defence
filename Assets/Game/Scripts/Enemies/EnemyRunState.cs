@@ -1,4 +1,5 @@
 ﻿using Assets.Game.Scripts.Common.UniversalStateMachine;
+using System;
 using UnityEngine;
 
 namespace Assets.Game.Scripts.Enemies
@@ -17,11 +18,15 @@ namespace Assets.Game.Scripts.Enemies
             _data.NavMeshAgent.SetDestination(_data.Target.transform.position);
 
             _data.View.PlayWalkAnimation();
+
+            _data.Health.OnDied += OnEnemyDied;
         }
 
         public override void Exit()
         {
             _data.NavMeshAgent.isStopped = true;
+
+            _data.Health.OnDied -= OnEnemyDied;
         }
 
         public override void Update()
@@ -30,6 +35,11 @@ namespace Assets.Game.Scripts.Enemies
             {
                 StateSwitcher.SwitchState<EnemyAttackState>();
             }
+        }
+
+        private void OnEnemyDied()
+        {
+            StateSwitcher.SwitchState<EnemyDeathState>();
         }
     }
 }
