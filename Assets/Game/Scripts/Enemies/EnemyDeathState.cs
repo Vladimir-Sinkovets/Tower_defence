@@ -14,6 +14,7 @@ namespace Assets.Game.Scripts.Enemies
         public override void Enter()
         {
             _data.View.PlayDeathAnimation();
+            _data.View.DisableCanvas();
         }
 
         public override void Exit() { }

@@ -9,6 +9,6 @@ namespace Assets.Game.Scripts.Enemies
         public float AttackRange = 1.0f;
         public float IntervalBetweenAttacks = 1.0f;
 
-        public abstract Enemy Create(Health target);
+        public abstract Damageable Create(Health target);
     }
 }

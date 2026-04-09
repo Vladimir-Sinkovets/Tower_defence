@@ -4,7 +4,7 @@ using UnityEngine.AI;
 
 namespace Assets.Game.Scripts.Enemies
 {
-    public class SimpleEnemy : Enemy
+    public class SimpleEnemy : Damageable
     {
         [SerializeField] private NavMeshAgent _navMeshAgent;
         [SerializeField] private EnemyView _enemyView;
@@ -22,7 +22,7 @@ namespace Assets.Game.Scripts.Enemies
                 Transform = transform,
                 View = _enemyView,
                 Config = config,
-                Health = Health,
+                Damageable = this,
             };
 
             _navMeshAgent.speed = config.Speed;
@@ -37,6 +37,10 @@ namespace Assets.Game.Scripts.Enemies
 
         private void Update() => _stateMachine.Update();
 
-        private void OnDestroy() => _stateMachine.Dispose();
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+            _stateMachine.Dispose();
+        }
     }
 }

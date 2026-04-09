@@ -15,7 +15,7 @@ namespace Assets.Game.Scripts.Enemies
         {
             _data.View.PlayAttackAnimation(AttackAnimationEventHandler);
 
-            _data.Health.OnDied += OnEnemyDied;
+            _data.Damageable.OnDied += OnEnemyDied;
         }
 
         private void AttackAnimationEventHandler()
@@ -27,7 +27,7 @@ namespace Assets.Game.Scripts.Enemies
 
         public override void Exit()
         {
-            _data.Health.OnDied -= OnEnemyDied;
+            _data.Damageable.OnDied -= OnEnemyDied;
         }
 
         public override void Update() { }

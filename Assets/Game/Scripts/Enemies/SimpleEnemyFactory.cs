@@ -9,7 +9,7 @@ namespace Assets.Game.Scripts.Enemies
         
         [SerializeField] private SimpleEnemy _prefab;
 
-        public override Enemy Create(Health target)
+        public override Damageable Create(Health target)
         {
             var simpleEnemy = Instantiate(_prefab);
 
