@@ -491,6 +491,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Enemy.EnemyView
   _animator: {fileID: 4913932138852090868}
   _canvas: {fileID: 8272443485462244588}
+  _modelHideAnimationRoot: {fileID: 2313532400928715547}
 --- !u!4 &2133199707065573520 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 47e7468693a15f14b81cac13b492b28e, type: 3}

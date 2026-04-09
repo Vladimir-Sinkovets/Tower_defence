@@ -13,11 +13,17 @@ namespace Assets.Game.Scripts.Enemies.States
 
         public override void Enter()
         {
+            _data.NavMeshAgent.enabled = false;
             _data.View.PlayDeathAnimation();
             _data.View.DisableCanvas();
+            _data.View.RemoveModel();
         }
 
-        public override void Exit() { }
+        public override void Exit()
+        {
+            _data.NavMeshAgent.enabled = true;
+            _data.View.EnableCanvas();
+        }
 
         public override void Update() { }
     }
