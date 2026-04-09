@@ -37,11 +37,13 @@ namespace Assets.Game.Scripts
             {
                 var spawnPoint = GetRandomPerimeterPoint();
 
-                var enemy = _enemyFactory.Create(_target, _diContainer);
+                var enemy = _enemyFactory.Create(_diContainer);
 
                 _gameContext.RegisterEnemy(enemy);
 
                 enemy.transform.position = spawnPoint;
+
+                enemy.Activate(_target);
 
                 yield return _interval;
             }

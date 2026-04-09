@@ -1,6 +1,6 @@
 ﻿using Assets.Game.Scripts.Animations;
+using Assets.Game.Scripts.Enemies;
 using Assets.Game.Scripts.Services;
-using Assets.Game.Scripts.Shared;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -22,7 +22,7 @@ namespace Assets.Game.Scripts
 
 
         private GameContext _context;
-        private Damageable _currentTarget;
+        private Enemy _currentTarget;
 
         private float _nextShootTime = 0;
 
@@ -71,16 +71,16 @@ namespace Assets.Game.Scripts
 
         private void FindTarget()
         {
-            foreach (var enemy in _context.All)
+            foreach (var enemy in _context.AllEnemies)
             {
-                if (enemy.IsDied)
+                if (enemy.Health.IsDied)
                     continue;
 
                 if (Vector3.Distance(enemy.transform.position, transform.position) <= _attackRadius)
                 {
                     _currentTarget = enemy;
 
-                    _currentTarget.OnDied += OnCurrentTargetDiedHandler;
+                    _currentTarget.Health.OnDied += OnCurrentTargetDiedHandler;
 
                     _nextShootTime = Time.time + _attackInterval;
 
@@ -111,7 +111,7 @@ namespace Assets.Game.Scripts
 
         private void OnCurrentTargetDiedHandler()
         {
-            _currentTarget.OnDied -= OnCurrentTargetDiedHandler;
+            _currentTarget.Health.OnDied -= OnCurrentTargetDiedHandler;
 
             _currentTarget = null;
         }

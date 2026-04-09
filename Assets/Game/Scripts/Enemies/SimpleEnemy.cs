@@ -9,7 +9,7 @@ using Zenject;
 
 namespace Assets.Game.Scripts.Enemies
 {
-    public class SimpleEnemy : Damageable
+    public class SimpleEnemy : Enemy
     {
         [SerializeField] private NavMeshAgent _navMeshAgent;
         [SerializeField] private EnemyView _enemyView;
@@ -18,6 +18,9 @@ namespace Assets.Game.Scripts.Enemies
         private EnemyStateMachineData _data;
 
         private EnemyEvents _enemyEvents;
+        private bool _isActive;
+
+        public bool IsActive { get => _isActive; }
 
         [Inject]
         private void Construct(EnemyEvents enemyEvents)
@@ -25,43 +28,53 @@ namespace Assets.Game.Scripts.Enemies
             _enemyEvents = enemyEvents;
         }
 
-        public void Init(Health _target, SimpleEnemyFactory config)
+        public void Init(SimpleEnemyFactory config)
         {
             _stateMachine = new StateMachine();
-            _data = new EnemyStateMachineData()
-            {
-                NavMeshAgent = _navMeshAgent,
-                Target = _target,
-                Transform = transform,
-                View = _enemyView,
-                Config = config,
-                Damageable = this,
-            };
-
-            _navMeshAgent.speed = config.Speed;
+            _data = new EnemyStateMachineData();
 
             _stateMachine.AddState(new EnemyRunState(_stateMachine, _data));
             _stateMachine.AddState(new EnemyIdleState(_stateMachine, _data));
             _stateMachine.AddState(new EnemyAttackState(_stateMachine, _data));
             _stateMachine.AddState(new EnemyDeathState(_stateMachine, _data));
 
+            _navMeshAgent.speed = config.Speed;
+
+            _data.NavMeshAgent = _navMeshAgent;
+            _data.Transform = transform;
+            _data.View = _enemyView;
+            _data.Config = config;
+            _data.Enemy = this;
+
+            _navMeshAgent.enabled = true;
+            _navMeshAgent.Warp(transform.position);
+            _navMeshAgent.ResetPath();
+            _navMeshAgent.velocity = Vector3.zero;
+
+            Health.OnDied += OnDiedHandler;
+
+            Health.ResetHealth();
+        }
+
+        public override void Activate(Health target)
+        {
+            if (_isActive)
+                return;
+
+            _data.Target = target;
+
             _stateMachine.SetStartState<EnemyRunState>();
 
-            OnDied += OnDiedHandler;
+            _isActive = true;
         }
 
-        private void OnDiedHandler()
-        {
-            _enemyEvents.EnemyDie();
-        }
+        private void OnDiedHandler() => _enemyEvents.EnemyDie();
 
         private void Update() => _stateMachine.Update();
 
-        protected override void OnDestroy()
+        protected void OnDestroy()
         {
-            base.OnDestroy();
-
-            OnDied -= OnDiedHandler;
+            Health.OnDied -= OnDiedHandler;
 
             _stateMachine.Dispose();
         }

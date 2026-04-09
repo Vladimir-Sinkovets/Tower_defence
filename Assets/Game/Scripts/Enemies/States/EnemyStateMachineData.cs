@@ -12,6 +12,6 @@ namespace Assets.Game.Scripts.Enemies.States
         public NavMeshAgent NavMeshAgent;
         public EnemyView View;
         public SimpleEnemyFactory Config;
-        public SimpleEnemy Damageable;
+        public SimpleEnemy Enemy;
     }
 }

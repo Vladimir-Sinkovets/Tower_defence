@@ -11,11 +11,11 @@ namespace Assets.Game.Scripts.Enemies.Factories
         
         [SerializeField] private SimpleEnemy _prefab;
 
-        public override Damageable Create(Health target, DiContainer container)
+        public override Enemy Create(DiContainer container)
         {
             var simpleEnemy = container.InstantiatePrefabForComponent<SimpleEnemy>(_prefab);
 
-            simpleEnemy.Init(target, config: this);
+            simpleEnemy.Init(this);
 
             return simpleEnemy;
         }

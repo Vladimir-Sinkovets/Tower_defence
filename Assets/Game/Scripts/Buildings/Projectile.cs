@@ -1,15 +1,15 @@
-﻿using Assets.Game.Scripts.Shared;
+﻿using Assets.Game.Scripts.Enemies;
 using UnityEngine;
 
 namespace Assets.Game.Scripts
 {
     public class Projectile : MonoBehaviour
     {
-        private Damageable _target;
+        private Enemy _target;
         private int _damage;
         private float _speed;
 
-        public void Init(Damageable target, int damage, float speed)
+        public void Init(Enemy target, int damage, float speed)
         {
             _target = target;
             _damage = damage;
@@ -24,7 +24,7 @@ namespace Assets.Game.Scripts
 
             if (Vector3.Distance(_target.transform.position, transform.position) <= 0.2f)
             {
-                _target.GetDamage(_damage);
+                _target.Health.GetDamage(_damage);
 
                 Destroy(gameObject);
             }

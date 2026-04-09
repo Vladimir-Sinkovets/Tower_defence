@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07090c36883a58b49bf59af8c30d344a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
-  Health: {fileID: -3116879590046017766}
+  health: {fileID: -3116879590046017766}
   _navMeshAgent: {fileID: 838242292948046785}
   _enemyView: {fileID: 8780912966657089858}
 --- !u!195 &838242292948046785

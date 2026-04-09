@@ -1,5 +1,4 @@
-﻿using Assets.Game.Scripts.Shared;
-using UnityEngine;
+﻿using UnityEngine;
 using Zenject;
 
 namespace Assets.Game.Scripts.Enemies.Factories
@@ -11,6 +10,6 @@ namespace Assets.Game.Scripts.Enemies.Factories
         public float AttackRange = 1.0f;
         public float IntervalBetweenAttacks = 1.0f;
 
-        public abstract Damageable Create(Health target, DiContainer container);
+        public abstract Enemy Create(DiContainer container);
     }
 }
