@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DG.Tweening;
+using System;
+using System.Collections;
 using UnityEngine;
 
 namespace Assets.Game.Scripts.Enemies
@@ -7,13 +9,11 @@ namespace Assets.Game.Scripts.Enemies
     {
         [SerializeField] private Animator _animator;
         [SerializeField] private GameObject _canvas;
+        [SerializeField] private GameObject _modelHideAnimationRoot;
 
         private Action _currentAttackCallback;
 
-        public void PlayWalkAnimation()
-        {
-            _animator.SetTrigger("Walk");
-        }
+        public void PlayWalkAnimation() => _animator.SetTrigger("Walk");
 
         public void PlayAttackAnimation(Action callback = null)
         {
@@ -22,15 +22,9 @@ namespace Assets.Game.Scripts.Enemies
             _currentAttackCallback = callback;
         }
 
-        public void PlayIdleAnimation()
-        {
-            _animator.SetTrigger("Idle");
-        }
+        public void PlayIdleAnimation() => _animator.SetTrigger("Idle");
 
-        public void PlayDeathAnimation()
-        {
-            _animator.SetTrigger("Death");
-        }
+        public void PlayDeathAnimation() => _animator.SetTrigger("Death");
 
         public void AttckAnimationEventHandler()
         {
@@ -39,9 +33,17 @@ namespace Assets.Game.Scripts.Enemies
             _currentAttackCallback = null;
         }
 
-        public void DisableCanvas()
+        public void DisableCanvas() => _canvas.SetActive(false);
+
+        public void EnableCanvas() => _canvas.SetActive(true);
+
+        public void RemoveModel(float delay = 1.0f) => StartCoroutine(RemoveModelCoroutine(delay));
+
+        private IEnumerator RemoveModelCoroutine(float delay)
         {
-            _canvas.SetActive(false);
+            yield return new WaitForSeconds(delay);
+
+            yield return _modelHideAnimationRoot.transform.DOMoveY(_modelHideAnimationRoot.transform.position.y - 1.5f, 1.0f);
         }
     }
 }
