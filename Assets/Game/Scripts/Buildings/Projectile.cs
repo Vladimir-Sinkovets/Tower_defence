@@ -24,7 +24,7 @@ namespace Assets.Game.Scripts
 
             if (Vector3.Distance(_target.transform.position, transform.position) <= 0.2f)
             {
-                _target.Health.GetDamage(_damage);
+                _target.Health.ApplyDamage(_damage);
 
                 Destroy(gameObject);
             }
