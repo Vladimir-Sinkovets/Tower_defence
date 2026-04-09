@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cece4032baacc1f48b82430de6f14576, type: 3}
+  m_Script: {fileID: 11500000, guid: 06f2ed870884130418b9a589b217c0dc, type: 3}
   m_Name: Simple_enemy_factory
-  m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Enemy.SimpleEnemyFactory
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Enemies.Factories.SimpleEnemyFactory
   Hp: 10
   Speed: 1
   AttackRange: 1
