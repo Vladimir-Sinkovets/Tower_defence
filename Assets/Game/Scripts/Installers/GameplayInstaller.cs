@@ -15,6 +15,8 @@ namespace Assets.Game.Scripts.Installers
             Container.Bind<EnemyEvents>().AsSingle();
 
             Container.BindInstance(_wavesSpawner).AsSingle();
+
+            Container.BindInterfacesAndSelfTo<CurrencyBank>().AsSingle();
         }
     }
 }
