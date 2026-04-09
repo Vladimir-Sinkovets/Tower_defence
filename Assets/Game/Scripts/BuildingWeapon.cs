@@ -1,5 +1,7 @@
 ﻿using Assets.Game.Scripts.Enemies;
 using Assets.Game.Scripts.Services;
+using System;
+using System.Collections;
 using UnityEngine;
 using Zenject;
 
@@ -15,6 +17,7 @@ namespace Assets.Game.Scripts
         [SerializeField] private Projectile _projectilePrefab;
         [SerializeField] private Transform _projectileStartPosition;
         [SerializeField] private Transform _weaponRoot;
+        [SerializeField] private WeaponAnimation _beforeShootAnimation;
 
 
         private GameContext _context;
@@ -46,13 +49,23 @@ namespace Assets.Game.Scripts
             if (_nextShootTime > Time.time)
                 return;
 
+            StartCoroutine(Shoot());
+        }
+
+        private IEnumerator Shoot()
+        {
             _nextShootTime = Time.time + _attackInterval;
+
+            if (_beforeShootAnimation != null)
+                yield return _beforeShootAnimation.PlayBeforeAttackAnimation();
 
             var projectile = Instantiate(_projectilePrefab);
 
             projectile.transform.position = _projectileStartPosition.transform.position;
 
             projectile.Init(_currentTarget, _damage, _projectileSpeed);
+
+            yield break;
         }
 
         private void FindTarget()
