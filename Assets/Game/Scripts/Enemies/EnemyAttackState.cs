@@ -22,6 +22,9 @@ namespace Assets.Game.Scripts.Enemies
         {
             _data.Target.GetDamage(_data.Config.Damage);
 
+            if (_data.Damageable.IsDied)
+                return;
+
             StateSwitcher.SwitchState<EnemyIdleState>();
         }
 
