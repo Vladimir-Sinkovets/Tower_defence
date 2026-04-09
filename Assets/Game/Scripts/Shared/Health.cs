@@ -22,7 +22,7 @@ namespace Assets.Game.Scripts.Shared
             _isDead = false;
         }
 
-        public void GetDamage(int damage)
+        public void ApplyDamage(int damage)
         {
             if (_isDead)
                 return;

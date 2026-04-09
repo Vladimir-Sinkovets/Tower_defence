@@ -20,7 +20,7 @@ namespace Assets.Game.Scripts.Enemies.States
 
         private void AttackAnimationEventHandler()
         {
-            _data.Target.GetDamage(_data.Config.Damage);
+            _data.Target.ApplyDamage(_data.Config.Damage);
 
             if (_data.Enemy.Health.IsDied)
                 return;
