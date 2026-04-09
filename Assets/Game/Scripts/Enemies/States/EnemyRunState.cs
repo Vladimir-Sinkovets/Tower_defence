@@ -19,14 +19,14 @@ namespace Assets.Game.Scripts.Enemies.States
 
             _data.View.PlayWalkAnimation();
 
-            _data.Damageable.OnDied += OnEnemyDied;
+            _data.Enemy.Health.OnDied += OnEnemyDied;
         }
 
         public override void Exit()
         {
             _data.NavMeshAgent.isStopped = true;
 
-            _data.Damageable.OnDied -= OnEnemyDied;
+            _data.Enemy.Health.OnDied -= OnEnemyDied;
         }
 
         public override void Update()

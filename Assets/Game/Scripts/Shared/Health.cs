@@ -10,21 +10,41 @@ namespace Assets.Game.Scripts.Shared
 
         [SerializeField] private int _startHp;
 
+        private bool _isDead;
+
+        public bool IsDied { get => _isDead; }
+
         private int _currentHp;
 
-        private void Start()
+        private void Awake()
         {
             _currentHp = _startHp;
+            _isDead = false;
         }
 
         public void GetDamage(int damage)
         {
+            if (_isDead)
+                return;
+
             _currentHp -= damage;
 
             OnHpChanged?.Invoke(_currentHp, _startHp);
 
             if (_currentHp <= 0)
+            {
+                _isDead = true;
                 OnDied?.Invoke();
+            }
+        }
+
+        public void ResetHealth()
+        {
+            _isDead = false;
+
+            _currentHp = _startHp;
+
+            OnHpChanged?.Invoke(_currentHp, _startHp);
         }
     }
 }

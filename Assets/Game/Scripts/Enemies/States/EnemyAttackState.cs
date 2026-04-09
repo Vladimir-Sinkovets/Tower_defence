@@ -15,14 +15,14 @@ namespace Assets.Game.Scripts.Enemies.States
         {
             _data.View.PlayAttackAnimation(AttackAnimationEventHandler);
 
-            _data.Damageable.OnDied += OnEnemyDied;
+            _data.Enemy.Health.OnDied += OnEnemyDied;
         }
 
         private void AttackAnimationEventHandler()
         {
             _data.Target.GetDamage(_data.Config.Damage);
 
-            if (_data.Damageable.IsDied)
+            if (_data.Enemy.Health.IsDied)
                 return;
 
             StateSwitcher.SwitchState<EnemyIdleState>();
@@ -30,7 +30,7 @@ namespace Assets.Game.Scripts.Enemies.States
 
         public override void Exit()
         {
-            _data.Damageable.OnDied -= OnEnemyDied;
+            _data.Enemy.Health.OnDied -= OnEnemyDied;
         }
 
         public override void Update() { }

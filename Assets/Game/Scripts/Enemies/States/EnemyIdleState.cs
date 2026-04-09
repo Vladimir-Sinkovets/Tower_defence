@@ -20,12 +20,12 @@ namespace Assets.Game.Scripts.Enemies.States
 
             _data.View.PlayIdleAnimation();
 
-            _data.Damageable.OnDied += OnEnemyDied;
+            _data.Enemy.Health.OnDied += OnEnemyDied;
         }
 
         public override void Exit()
         {
-            _data.Damageable.OnDied -= OnEnemyDied;
+            _data.Enemy.Health.OnDied -= OnEnemyDied;
         }
 
         public override void Update()
