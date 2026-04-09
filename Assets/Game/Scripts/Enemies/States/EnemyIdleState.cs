@@ -1,37 +1,42 @@
 ﻿using Assets.Game.Scripts.Common.UniversalStateMachine;
-using System;
 using UnityEngine;
 
-namespace Assets.Game.Scripts.Enemies
+namespace Assets.Game.Scripts.Enemies.States
 {
-    public class EnemyRunState : State
+    public class EnemyIdleState : State
     {
         private readonly EnemyStateMachineData _data;
 
-        public EnemyRunState(IStateSwitcher stateSwitcher, EnemyStateMachineData data) : base(stateSwitcher)
+        private float _time;
+
+        public EnemyIdleState(IStateSwitcher stateSwitcher, EnemyStateMachineData data) : base(stateSwitcher)
         {
             _data = data;
         }
 
         public override void Enter()
         {
-            _data.NavMeshAgent.SetDestination(_data.Target.transform.position);
+            _time = 0.0f;
 
-            _data.View.PlayWalkAnimation();
+            _data.View.PlayIdleAnimation();
 
             _data.Damageable.OnDied += OnEnemyDied;
         }
 
         public override void Exit()
         {
-            _data.NavMeshAgent.isStopped = true;
-
             _data.Damageable.OnDied -= OnEnemyDied;
         }
 
         public override void Update()
         {
-            if (Vector3.Distance(_data.Transform.position, _data.Target.transform.position) <= _data.Config.AttackRange)
+            _time += Time.deltaTime;
+
+            if (Vector3.Distance(_data.Transform.position, _data.Target.transform.position) > _data.Config.AttackRange)
+            {
+                StateSwitcher.SwitchState<EnemyRunState>();
+            }
+            else if (_time >= _data.Config.IntervalBetweenAttacks)
             {
                 StateSwitcher.SwitchState<EnemyAttackState>();
             }

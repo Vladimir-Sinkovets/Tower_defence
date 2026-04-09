@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-namespace Assets.Game.Scripts
+namespace Assets.Game.Scripts.Animations
 {
     public abstract class WeaponAnimation : MonoBehaviour
     {

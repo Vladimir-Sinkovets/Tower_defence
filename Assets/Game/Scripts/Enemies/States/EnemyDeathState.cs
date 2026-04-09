@@ -1,6 +1,6 @@
 ﻿using Assets.Game.Scripts.Common.UniversalStateMachine;
 
-namespace Assets.Game.Scripts.Enemies
+namespace Assets.Game.Scripts.Enemies.States
 {
     public class EnemyDeathState : State
     {

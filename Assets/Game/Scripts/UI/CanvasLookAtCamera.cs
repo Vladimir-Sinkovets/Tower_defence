@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.Game.Scripts
+namespace Assets.Game.Scripts.UI
 {
     public class CanvasLookAtCamera : MonoBehaviour
     {

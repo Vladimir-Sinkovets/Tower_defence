@@ -1,7 +1,9 @@
-﻿using UnityEngine;
+﻿using Assets.Game.Scripts.Enemies.Factories;
+using Assets.Game.Scripts.Shared;
+using UnityEngine;
 using UnityEngine.AI;
 
-namespace Assets.Game.Scripts.Enemies
+namespace Assets.Game.Scripts.Enemies.States
 {
     public class EnemyStateMachineData
     {

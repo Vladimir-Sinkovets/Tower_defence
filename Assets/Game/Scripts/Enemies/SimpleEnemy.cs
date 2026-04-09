@@ -1,6 +1,8 @@
 using Assets.Game.Scripts.Common.UniversalStateMachine;
+using Assets.Game.Scripts.Enemies.Factories;
+using Assets.Game.Scripts.Enemies.States;
 using Assets.Game.Scripts.Services;
-using System;
+using Assets.Game.Scripts.Shared;
 using UnityEngine;
 using UnityEngine.AI;
 using Zenject;

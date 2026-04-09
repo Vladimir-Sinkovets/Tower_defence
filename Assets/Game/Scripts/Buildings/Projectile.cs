@@ -1,4 +1,4 @@
-﻿using Assets.Game.Scripts.Enemies;
+﻿using Assets.Game.Scripts.Shared;
 using UnityEngine;
 
 namespace Assets.Game.Scripts
