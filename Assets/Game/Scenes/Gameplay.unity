@@ -11636,6 +11636,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1844808435}
   - component: {fileID: 1844808436}
+  - component: {fileID: 1844808437}
   m_Layer: 0
   m_Name: Weapon
   m_TagString: Untagged
@@ -11679,6 +11680,21 @@ MonoBehaviour:
   _projectilePrefab: {fileID: 1616887737679894971, guid: c77931573eaa6f147b287c00d3d3fbfc, type: 3}
   _projectileStartPosition: {fileID: 2096980610}
   _weaponRoot: {fileID: 2070612213}
+  _beforeShootAnimation: {fileID: 1844808437}
+--- !u!114 &1844808437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1844808434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e064e5ffd52e3b43b1a0843a5d16deb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.BarrelAnimation
+  _barrel: {fileID: 6608839162403753028}
+  _duration: 0.1
 --- !u!1001 &1852349711
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13002,7 +13018,7 @@ Transform:
   m_GameObject: {fileID: 2096980609}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.036, z: 0.332}
+  m_LocalPosition: {x: 0, y: 0.002, z: 0.332}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
