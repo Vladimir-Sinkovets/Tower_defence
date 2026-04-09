@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Assets.Game.Scripts.Services;
+using System;
 using UnityEngine;
+using Zenject;
 
 namespace Assets.Game.Scripts.Enemies
 {
@@ -9,20 +11,23 @@ namespace Assets.Game.Scripts.Enemies
 
         [SerializeField] protected Health Health;
 
-        private bool _isDied;
+        private bool _isDead;
 
-        public bool IsDied { get => _isDied; }
+        public bool IsDied { get => _isDead; }
 
         public void GetDamage(int damage) => Health.GetDamage(damage);
 
-        protected virtual void Awake() => Health.OnDied += OnDiedHandler;
-        protected virtual void OnDestroy() => Health.OnDied -= OnDiedHandler;
+        protected virtual void Awake() => Health.OnDied += OnHealthDiedHandler;
+        protected virtual void OnDestroy() => Health.OnDied -= OnHealthDiedHandler;
 
-        private void OnDiedHandler()
+        private void OnHealthDiedHandler()
         {
-            _isDied = true;
+            if (_isDead)
+                return;
 
             OnDied?.Invoke();
+
+            _isDead = true;
         }
     }
 }

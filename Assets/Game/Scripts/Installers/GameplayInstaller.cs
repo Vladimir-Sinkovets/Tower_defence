@@ -11,6 +11,9 @@ namespace Assets.Game.Scripts.Installers
         public override void InstallBindings()
         {
             Container.Bind<GameContext>().AsSingle();
+
+            Container.Bind<EnemyEvents>().AsSingle();
+
             Container.BindInstance(_wavesSpawner).AsSingle();
         }
     }
