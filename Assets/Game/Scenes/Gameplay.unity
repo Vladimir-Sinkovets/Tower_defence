@@ -11714,9 +11714,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1844808435}
-  - component: {fileID: 1844808436}
-  - component: {fileID: 1844808437}
   - component: {fileID: 1844808438}
+  - component: {fileID: 1844808437}
+  - component: {fileID: 1844808436}
   m_Layer: 0
   m_Name: Weapon
   m_TagString: Untagged
@@ -11749,18 +11749,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1844808434}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: efa15cee398bd1b4f91b564668d9cd90, type: 3}
+  m_Script: {fileID: 11500000, guid: a9da0d0124a23d94287e406aeeb13f85, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.BuildingWeapon
-  _attackRadius: 4
-  _attackInterval: 1
-  _projectileSpeed: 4
-  _damage: 20
-  _rotationSpeed: 540
-  _projectilePrefab: {fileID: 1616887737679894971, guid: c77931573eaa6f147b287c00d3d3fbfc, type: 3}
-  _projectileStartPosition: {fileID: 2096980610}
-  _weaponRoot: {fileID: 2070612213}
-  _beforeShootAnimation: {fileID: 1844808437}
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Animations.IdleScaleAnimation
+  _target: {fileID: 985666606}
+  _scale: 1.1
+  _duration: 1.5
+  _ease: 2
 --- !u!114 &1844808437
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11770,9 +11765,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1844808434}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e064e5ffd52e3b43b1a0843a5d16deb, type: 3}
+  m_Script: {fileID: 11500000, guid: ddb4ceeb506f2444481fab9071486923, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.BarrelAnimation
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Animations.BarrelAnimation
   _barrel: {fileID: 6608839162403753028}
   _duration: 0.1
 --- !u!114 &1844808438
@@ -11784,13 +11779,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 1844808434}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b639f7b064d9534384742eab75e2e68, type: 3}
+  m_Script: {fileID: 11500000, guid: 9255a3f7b052e8a4c8fab78f8d10ad64, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.IdleScaleAnimation
-  _target: {fileID: 985666606}
-  _scale: 1.09
-  _duration: 1.5
-  _ease: 2
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.BuildingWeapon
+  _attackRadius: 4
+  _attackInterval: 1
+  _projectileSpeed: 4
+  _damage: 40
+  _rotationSpeed: 360
+  _projectilePrefab: {fileID: 5064200408351446433, guid: c77931573eaa6f147b287c00d3d3fbfc, type: 3}
+  _projectileStartPosition: {fileID: 2096980610}
+  _weaponRoot: {fileID: 2070612213}
+  _beforeShootAnimation: {fileID: 1844808437}
 --- !u!1001 &1852349711
 PrefabInstance:
   m_ObjectHideFlags: 0
