@@ -3,11 +3,9 @@ using UnityEngine;
 
 namespace Assets.Game.Scripts.Shared
 {
-    public delegate void HpChangedDelegate(int currentHp, int maxHp);
-
     public class Health : MonoBehaviour
     {
-        public event HpChangedDelegate OnHpChanged;
+        public event Action<int, int> OnHpChanged;
         public event Action OnDied;
 
         [SerializeField] private int _startHp;
