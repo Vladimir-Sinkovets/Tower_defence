@@ -1,21 +1,22 @@
-﻿using UnityEngine;
+﻿using Assets.Game.Scripts.Services;
+using UnityEngine;
 using Zenject;
 
 namespace Assets.Game.Scripts
 {
     public class GameplayMain : MonoBehaviour
     {
-        private EnemyWavesSpawner _enemyWavesController;
+        private WavesController _wavesController;
 
         [Inject]
-        private void Construct(EnemyWavesSpawner enemyWavesSpawner)
+        private void Construct(WavesController waveController)
         {
-            _enemyWavesController = enemyWavesSpawner;
+            _wavesController = waveController;
         }
 
         private void Start()
         {
-            StartCoroutine(_enemyWavesController.SpawnWave(3));
+            _wavesController.StartWaves();
         }
     }
 }
