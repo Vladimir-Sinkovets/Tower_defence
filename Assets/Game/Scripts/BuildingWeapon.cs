@@ -1,6 +1,5 @@
 ﻿using Assets.Game.Scripts.Enemies;
 using Assets.Game.Scripts.Services;
-using System;
 using UnityEngine;
 using Zenject;
 
@@ -12,12 +11,14 @@ namespace Assets.Game.Scripts
         [SerializeField] private float _attackInterval = 1.0f;
         [SerializeField] private float _projectileSpeed = 4.0f;
         [SerializeField] private int _damage = 1;
+        [SerializeField] private float _rotationSpeed = 360.0f;
         [SerializeField] private Projectile _projectilePrefab;
         [SerializeField] private Transform _projectileStartPosition;
+        [SerializeField] private Transform _weaponRoot;
 
 
         private GameContext _context;
-        private Damageable _currenttarget;
+        private Damageable _currentTarget;
 
         private float _nextShootTime = 0;
 
@@ -29,10 +30,15 @@ namespace Assets.Game.Scripts
 
         private void Update()
         {
-            if (_currenttarget != null)
+            if (_currentTarget != null)
+            {
+                RotateWeapon();
                 Attack();
+            }
             else
+            {
                 FindTarget();
+            }
         }
 
         private void Attack()
@@ -46,7 +52,7 @@ namespace Assets.Game.Scripts
 
             projectile.transform.position = _projectileStartPosition.transform.position;
 
-            projectile.Init(_currenttarget, _damage, _projectileSpeed);
+            projectile.Init(_currentTarget, _damage, _projectileSpeed);
         }
 
         private void FindTarget()
@@ -58,20 +64,42 @@ namespace Assets.Game.Scripts
 
                 if (Vector3.Distance(enemy.transform.position, transform.position) <= _attackRadius)
                 {
-                    _currenttarget = enemy;
+                    _currentTarget = enemy;
 
-                    _currenttarget.OnDied += OnCurrentTargetDiedHandler;
+                    _currentTarget.OnDied += OnCurrentTargetDiedHandler;
+
+                    _nextShootTime = Time.time + _attackInterval;
 
                     break;
                 }
             }
         }
 
+        private void RotateWeapon()
+        {
+            if (_currentTarget == null) return;
+
+            Vector3 direction = _currentTarget.transform.position - _weaponRoot.position;
+            direction.y = 0f; // Игнорируем наклон по вертикали
+
+            if (direction.sqrMagnitude > 0.001f)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(direction);
+                // Плавный поворот с максимальной скоростью _rotationSpeed
+                _weaponRoot.rotation = Quaternion.RotateTowards(
+                    _weaponRoot.rotation,
+                    targetRotation,
+                    _rotationSpeed * Time.deltaTime
+                );
+            }
+        }
+
+
         private void OnCurrentTargetDiedHandler()
         {
-            _currenttarget.OnDied -= OnCurrentTargetDiedHandler;
+            _currentTarget.OnDied -= OnCurrentTargetDiedHandler;
 
-            _currenttarget = null;
+            _currentTarget = null;
         }
     }
 }
