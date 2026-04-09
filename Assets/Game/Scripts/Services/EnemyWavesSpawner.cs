@@ -17,6 +17,10 @@ namespace Assets.Game.Scripts
         private DiContainer _diContainer;
         private readonly WaitForSeconds _interval = new WaitForSeconds(1.0f);
 
+        private bool _isSpawning;
+
+        public bool IsSpawning { get => _isSpawning; }
+
         [Inject]
         private void Construct(GameContext context, DiContainer diContainer)
         {
@@ -26,6 +30,8 @@ namespace Assets.Game.Scripts
 
         public IEnumerator SpawnWave(int count)
         {
+            _isSpawning = true;
+
             for (int i = 0; i < count; i++)
             {
                 var spawnPoint = GetRandomPerimeterPoint();
@@ -38,6 +44,8 @@ namespace Assets.Game.Scripts
 
                 yield return _interval;
             }
+
+            _isSpawning = false;
         }
 
         private Vector3 GetRandomPerimeterPoint()
