@@ -14,12 +14,14 @@ namespace Assets.Game.Scripts
         [SerializeField] private Transform[] _perimeterPoints;
 
         private GameContext _gameContext;
+        private DiContainer _diContainer;
         private readonly WaitForSeconds _interval = new WaitForSeconds(1.0f);
 
         [Inject]
-        private void Construct(GameContext context)
+        private void Construct(GameContext context, DiContainer diContainer)
         {
             _gameContext = context;
+            _diContainer = diContainer;
         }
 
         public IEnumerator SpawnWave(int count)
@@ -28,7 +30,7 @@ namespace Assets.Game.Scripts
             {
                 var spawnPoint = GetRandomPerimeterPoint();
 
-                var enemy = _enemyFactory.Create(_target);
+                var enemy = _enemyFactory.Create(_target, _diContainer);
 
                 _gameContext.RegisterEnemy(enemy);
 

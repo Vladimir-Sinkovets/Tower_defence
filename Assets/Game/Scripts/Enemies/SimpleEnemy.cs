@@ -1,6 +1,9 @@
 using Assets.Game.Scripts.Common.UniversalStateMachine;
+using Assets.Game.Scripts.Services;
+using System;
 using UnityEngine;
 using UnityEngine.AI;
+using Zenject;
 
 namespace Assets.Game.Scripts.Enemies
 {
@@ -11,6 +14,14 @@ namespace Assets.Game.Scripts.Enemies
 
         private StateMachine _stateMachine;
         private EnemyStateMachineData _data;
+
+        private EnemyEvents _enemyEvents;
+
+        [Inject]
+        private void Construct(EnemyEvents enemyEvents)
+        {
+            _enemyEvents = enemyEvents;
+        }
 
         public void Init(Health _target, SimpleEnemyFactory config)
         {
@@ -33,6 +44,13 @@ namespace Assets.Game.Scripts.Enemies
             _stateMachine.AddState(new EnemyDeathState(_stateMachine, _data));
 
             _stateMachine.SetStartState<EnemyRunState>();
+
+            OnDied += OnDiedHandler;
+        }
+
+        private void OnDiedHandler()
+        {
+            _enemyEvents.EnemyDie();
         }
 
         private void Update() => _stateMachine.Update();
@@ -40,6 +58,9 @@ namespace Assets.Game.Scripts.Enemies
         protected override void OnDestroy()
         {
             base.OnDestroy();
+
+
+            
             _stateMachine.Dispose();
         }
     }

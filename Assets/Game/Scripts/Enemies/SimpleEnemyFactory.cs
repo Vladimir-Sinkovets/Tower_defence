@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Zenject;
 
 namespace Assets.Game.Scripts.Enemies
 {
@@ -9,9 +10,9 @@ namespace Assets.Game.Scripts.Enemies
         
         [SerializeField] private SimpleEnemy _prefab;
 
-        public override Damageable Create(Health target)
+        public override Damageable Create(Health target, DiContainer container)
         {
-            var simpleEnemy = Instantiate(_prefab);
+            var simpleEnemy = container.InstantiatePrefabForComponent<SimpleEnemy>(_prefab);
 
             simpleEnemy.Init(target, config: this);
 
