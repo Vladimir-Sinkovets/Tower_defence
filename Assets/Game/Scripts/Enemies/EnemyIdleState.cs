@@ -19,9 +19,14 @@ namespace Assets.Game.Scripts.Enemies
             _time = 0.0f;
 
             _data.View.PlayIdleAnimation();
+
+            _data.Health.OnDied += OnEnemyDied;
         }
 
-        public override void Exit() { }
+        public override void Exit()
+        {
+            _data.Health.OnDied -= OnEnemyDied;
+        }
 
         public override void Update()
         {
@@ -35,6 +40,11 @@ namespace Assets.Game.Scripts.Enemies
             {
                 StateSwitcher.SwitchState<EnemyAttackState>();
             }
+        }
+
+        private void OnEnemyDied()
+        {
+            StateSwitcher.SwitchState<EnemyDeathState>();
         }
     }
 }

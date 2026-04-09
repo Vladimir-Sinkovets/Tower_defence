@@ -14,6 +14,8 @@ namespace Assets.Game.Scripts.Enemies
         public override void Enter()
         {
             _data.View.PlayAttackAnimation(AttackAnimationEventHandler);
+
+            _data.Health.OnDied += OnEnemyDied;
         }
 
         private void AttackAnimationEventHandler()
@@ -23,8 +25,16 @@ namespace Assets.Game.Scripts.Enemies
             StateSwitcher.SwitchState<EnemyIdleState>();
         }
 
-        public override void Exit() { }
+        public override void Exit()
+        {
+            _data.Health.OnDied -= OnEnemyDied;
+        }
 
         public override void Update() { }
+
+        private void OnEnemyDied()
+        {
+            StateSwitcher.SwitchState<EnemyDeathState>();
+        }
     }
 }

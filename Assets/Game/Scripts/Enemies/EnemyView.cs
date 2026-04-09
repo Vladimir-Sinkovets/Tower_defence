@@ -26,6 +26,11 @@ namespace Assets.Game.Scripts.Enemies
             _animator.SetTrigger("Idle");
         }
 
+        public void PlayDeathAnimation()
+        {
+            _animator.SetTrigger("Death");
+        }
+
         public void AttckAnimationEventHandler()
         {
             _currentAttackCallback?.Invoke();
