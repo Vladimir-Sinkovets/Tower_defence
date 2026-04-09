@@ -1,4 +1,5 @@
 ﻿using Assets.Game.Scripts.Configs;
+using Assets.Game.Scripts.Input;
 using Assets.Game.Scripts.Services;
 using UnityEngine;
 using Zenject;
@@ -24,6 +25,8 @@ namespace Assets.Game.Scripts.Installers
             Container.BindInstance(_wavesConfig).AsSingle();
 
             Container.BindInterfacesAndSelfTo<CurrencyBank>().AsSingle();
+
+            Container.BindInterfacesAndSelfTo<GameInput>().AsSingle();
         }
     }
 }
