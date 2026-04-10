@@ -2757,7 +2757,7 @@ MonoBehaviour:
   _wavesController: {fileID: 824132534}
   _wavesConfig: {fileID: 11400000, guid: e2d770929064cb9429f04b4f05b91882, type: 2}
   _buildingController: {fileID: 1784379952}
-  _buildingsConfig: {fileID: 11400000, guid: d07fff8915ae33641969ad1d86315b11, type: 2}
+  _buildingsConfig: {fileID: 11400000, guid: bb7a5b96a7f4bf9428849ea2877e38c7, type: 2}
   _chooseBuildingPanel: {fileID: 355309993}
 --- !u!1001 &428744459
 PrefabInstance:

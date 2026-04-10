@@ -21,15 +21,15 @@ namespace Assets.Game.Scripts
         [SerializeField] private WeaponAnimation _beforeShootAnimation;
 
 
-        private GameContext _context;
+        private Registry<Enemy> _enemiesRegistry;
         private Enemy _currentTarget;
 
         private float _nextShootTime = 0;
 
         [Inject]
-        private void Construct(GameContext context)
+        private void Construct(Registry<Enemy> enemyRegistry)
         {
-            _context = context;
+            _enemiesRegistry = enemyRegistry;
         }
 
         private void Update()
@@ -71,7 +71,7 @@ namespace Assets.Game.Scripts
 
         private void FindTarget()
         {
-            foreach (var enemy in _context.AllEnemies)
+            foreach (var enemy in _enemiesRegistry.All)
             {
                 if (enemy.Health.IsDied)
                     continue;

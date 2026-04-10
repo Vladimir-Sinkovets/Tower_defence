@@ -1,4 +1,5 @@
-﻿using Assets.Game.Scripts.Enemies.Factories;
+﻿using Assets.Game.Scripts.Enemies;
+using Assets.Game.Scripts.Enemies.Factories;
 using Assets.Game.Scripts.Services;
 using Assets.Game.Scripts.Shared;
 using System.Collections;
@@ -14,7 +15,7 @@ namespace Assets.Game.Scripts
         [SerializeField] private Health _target;
         [SerializeField] private Transform[] _perimeterPoints;
 
-        private GameContext _gameContext;
+        private Registry<Enemy> _enemyRegistry;
         private DiContainer _diContainer;
         private readonly WaitForSeconds _interval = new WaitForSeconds(1.0f);
 
@@ -23,9 +24,9 @@ namespace Assets.Game.Scripts
         public bool IsSpawning { get => _isSpawning; }
 
         [Inject]
-        private void Construct(GameContext context, DiContainer diContainer)
+        private void Construct(Registry<Enemy> enemyRegistry, DiContainer diContainer)
         {
-            _gameContext = context;
+            _enemyRegistry = enemyRegistry;
             _diContainer = diContainer;
         }
 
@@ -39,7 +40,7 @@ namespace Assets.Game.Scripts
 
                 var enemy = _enemyFactory.Create(_diContainer);
 
-                _gameContext.RegisterEnemy(enemy);
+                _enemyRegistry.Register(enemy);
 
                 enemy.transform.position = spawnPoint;
 
