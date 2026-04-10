@@ -34,8 +34,6 @@ namespace Assets.Game.Scripts.Services
             weapon.transform.parent = building.WeaponPosition;
             weapon.transform.position = building.WeaponPosition.position;
 
-            _buildingRegistry.Register(building);
-
             building.transform.position = _position;
         }
 

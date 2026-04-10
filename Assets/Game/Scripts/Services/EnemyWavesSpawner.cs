@@ -40,8 +40,6 @@ namespace Assets.Game.Scripts
 
                 var enemy = _enemyFactory.Create(_diContainer);
 
-                _enemyRegistry.Register(enemy);
-
                 enemy.transform.position = spawnPoint;
 
                 enemy.Activate(_target);
