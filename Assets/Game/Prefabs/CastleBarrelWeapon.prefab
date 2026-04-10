@@ -88,7 +88,7 @@ Transform:
   m_GameObject: {fileID: 6407833312944818361}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.715, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 8849716848535618690}
   - component: {fileID: 5391943246603077655}
   m_Layer: 0
-  m_Name: Weapon
+  m_Name: CastleBarrelWeapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -142,12 +142,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9255a3f7b052e8a4c8fab78f8d10ad64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.BuildingWeapon
-  _attackRadius: 4
-  _attackInterval: 1
-  _projectileSpeed: 4
-  _damage: 40
-  _rotationSpeed: 360
-  _projectilePrefab: {fileID: 5064200408351446433, guid: c77931573eaa6f147b287c00d3d3fbfc, type: 3}
   _projectileStartPosition: {fileID: 2363022085429066481}
   _weaponRoot: {fileID: 5187566578085011401}
   _beforeShootAnimation: {fileID: 8849716848535618690}

@@ -29,6 +29,11 @@ namespace Assets.Game.Scripts.Services
 
             building.Init(_buildingConfig);
 
+            var weapon = _buildingConfig.WeaponFactory.Create(_container);
+
+            weapon.transform.parent = building.WeaponPosition;
+            weapon.transform.position = building.WeaponPosition.position;
+
             _buildingRegistry.Register(building);
 
             building.transform.position = _position;

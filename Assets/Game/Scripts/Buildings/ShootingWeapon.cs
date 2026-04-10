@@ -5,17 +5,10 @@ using System.Collections;
 using UnityEngine;
 using Zenject;
 
-namespace Assets.Game.Scripts
+namespace Assets.Game.Scripts.Buildings
 {
-    public class BuildingWeapon : MonoBehaviour
+    public class ShootingWeapon : Weapon
     {
-        [SerializeField] private float _attackRadius = 4.0f;
-        [SerializeField] private float _attackInterval = 1.0f;
-        [SerializeField] private float _projectileSpeed = 4.0f;
-        [SerializeField] private int _damage = 1;
-        [SerializeField] private float _rotationSpeed = 360.0f;
-        [SerializeField] private float _arcHeight = 0.4f;
-        [SerializeField] private Projectile _projectilePrefab;
         [SerializeField] private Transform _projectileStartPosition;
         [SerializeField] private Transform _weaponRoot;
         [SerializeField] private WeaponAnimation _beforeShootAnimation;
@@ -25,12 +18,12 @@ namespace Assets.Game.Scripts
         private Enemy _currentTarget;
 
         private float _nextShootTime = 0;
+        private ShootingWeaponFactory _config;
 
         [Inject]
-        private void Construct(Registry<Enemy> enemyRegistry)
-        {
-            _enemiesRegistry = enemyRegistry;
-        }
+        private void Construct(Registry<Enemy> enemyRegistry) => _enemiesRegistry = enemyRegistry;
+
+        public void Init(ShootingWeaponFactory config) => _config = config;
 
         private void Update()
         {
@@ -55,16 +48,16 @@ namespace Assets.Game.Scripts
 
         private IEnumerator Shoot()
         {
-            _nextShootTime = Time.time + _attackInterval;
+            _nextShootTime = Time.time + _config.AttackInterval;
 
             if (_beforeShootAnimation != null)
                 yield return _beforeShootAnimation.PlayBeforeAttackAnimation();
 
-            var projectile = Instantiate(_projectilePrefab);
+            var projectile = Instantiate(_config.ProjectilePrefab);
 
             projectile.transform.position = _projectileStartPosition.transform.position;
 
-            projectile.Init(_currentTarget, _damage, _projectileSpeed, _arcHeight);
+            projectile.Init(_currentTarget, _config.Damage, _config.ProjectileSpeed, _config.ArcHeight);
 
             yield break;
         }
@@ -76,13 +69,13 @@ namespace Assets.Game.Scripts
                 if (enemy.Health.IsDied)
                     continue;
 
-                if (Vector3.Distance(enemy.transform.position, transform.position) <= _attackRadius)
+                if (Vector3.Distance(enemy.transform.position, transform.position) <= _config.AttackRadius)
                 {
                     _currentTarget = enemy;
 
                     _currentTarget.Health.OnDied += OnCurrentTargetDiedHandler;
 
-                    _nextShootTime = Time.time + _attackInterval;
+                    _nextShootTime = Time.time + _config.AttackInterval;
 
                     break;
                 }
@@ -102,7 +95,7 @@ namespace Assets.Game.Scripts
                 _weaponRoot.rotation = Quaternion.RotateTowards(
                     _weaponRoot.rotation,
                     targetRotation,
-                    _rotationSpeed * Time.deltaTime
+                    _config.RotationSpeed * Time.deltaTime
                 );
             }
         }

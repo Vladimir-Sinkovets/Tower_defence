@@ -4,9 +4,13 @@ namespace Assets.Game.Scripts.Buildings
 {
     public class Building : MonoBehaviour
     {
+        [SerializeField] private Transform _weaponPosition;
+
         private BuildingConfig _config;
 
         public float RadiusOfOccupiedSpace => _config.RadiusOfOccupiedSpace;
+
+        public Transform WeaponPosition { get => _weaponPosition; }
 
         public void Init(BuildingConfig config)
         {
