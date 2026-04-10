@@ -1,6 +1,8 @@
-﻿using Assets.Game.Scripts.Configs;
+﻿using Assets.Game.Scripts.Buildings;
+using Assets.Game.Scripts.Configs;
 using Assets.Game.Scripts.Input;
 using Assets.Game.Scripts.Services;
+using Assets.Game.Scripts.UI;
 using UnityEngine;
 using Zenject;
 
@@ -12,6 +14,8 @@ namespace Assets.Game.Scripts.Installers
         [SerializeField] private WavesController _wavesController;
         [SerializeField] private WavesConfig _wavesConfig;
         [SerializeField] private BuildingController _buildingController;
+        [SerializeField] private BuildingsConfig _buildingsConfig;
+        [SerializeField] private ChooseBuildingPanel _chooseBuildingPanel;
 
         public override void InstallBindings()
         {
@@ -19,9 +23,13 @@ namespace Assets.Game.Scripts.Installers
 
             Container.Bind<EnemyEvents>().AsSingle();
 
-            Container.Bind<BuildingService>().AsSingle();
+            Container.Bind<BuildingBuilder>().AsTransient();
 
             Container.BindInstance(_wavesSpawner).AsSingle();
+
+            Container.BindInstance(_buildingsConfig).AsSingle();
+
+            Container.BindInstance(_chooseBuildingPanel).AsSingle();
 
             Container.BindInstance(_buildingController).AsSingle();
 
