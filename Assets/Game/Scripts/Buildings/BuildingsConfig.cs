@@ -14,6 +14,7 @@ namespace Assets.Game.Scripts.Buildings
     public class BuildingConfig
     {
         public Sprite Icon;
-        public GameObject Prefab;
+        public float RadiusOfOccupiedSpace = 1.0f;
+        public Building Prefab;
     }
 }

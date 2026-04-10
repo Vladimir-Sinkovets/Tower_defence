@@ -8,11 +8,17 @@ namespace Assets.Game.Scripts.Services
 {
     public class BuildingBuilder
     {
-        private Vector3 _position;
-        private BuildingConfig _buildingConfig;
-        private DiContainer _container;
+        private readonly DiContainer _container;
+        private readonly Registry<Building> _buildingRegistry;
 
-        public BuildingBuilder(DiContainer container) => _container = container;
+        private BuildingConfig _buildingConfig;
+        private Vector3 _position;
+
+        public BuildingBuilder(DiContainer container, Registry<Building> buildingRegistry)
+        {
+            _container = container;
+            _buildingRegistry = buildingRegistry;
+        }
 
         public void SetPosition(Vector3 position) => _position = position;
 
@@ -20,7 +26,11 @@ namespace Assets.Game.Scripts.Services
 
         public void Build()
         {
-            var building = _container.InstantiatePrefab(_buildingConfig.Prefab);
+            var building = _container.InstantiatePrefabForComponent<Building>(_buildingConfig.Prefab);
+
+            building.Init(_buildingConfig);
+
+            _buildingRegistry.Register(building);
 
             building.transform.position = _position;
         }

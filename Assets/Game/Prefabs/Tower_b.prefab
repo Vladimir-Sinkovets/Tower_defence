@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3579294769708352277}
+  - component: {fileID: 6428938463721697562}
   m_Layer: 0
   m_Name: Tower_b
   m_TagString: Untagged
@@ -32,6 +33,18 @@ Transform:
   - {fileID: 8894339681714800490}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6428938463721697562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3597014661834320659}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c090b2623539c744ad234ad4ee9a440, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Buildings.Building
 --- !u!1001 &8999796988244975745
 PrefabInstance:
   m_ObjectHideFlags: 0

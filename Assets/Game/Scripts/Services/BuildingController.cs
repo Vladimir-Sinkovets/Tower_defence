@@ -14,12 +14,18 @@ namespace Assets.Game.Scripts.Services
         private ChooseBuildingPanel _chooseBuildingPanel;
         private BuildingsConfig _buildingsConfig;
         private BuildingBuilder _builder;
+        private Registry<Building> _buildingRegistry;
         private Camera _mainCamera;
 
         private bool _isBuilding;
 
         [Inject]
-        private void Construct(GameInput input, ChooseBuildingPanel chooseBuildingPanel, BuildingsConfig buildingsConfig, BuildingBuilder builder)
+        private void Construct(
+            GameInput input,
+            ChooseBuildingPanel chooseBuildingPanel,
+            BuildingsConfig buildingsConfig,
+            BuildingBuilder builder,
+            Registry<Building> buildingRegistry)
         {
             _mainCamera = Camera.main;
             _input = input;
@@ -27,6 +33,7 @@ namespace Assets.Game.Scripts.Services
             _chooseBuildingPanel = chooseBuildingPanel;
             _buildingsConfig = buildingsConfig;
             _builder = builder;
+            _buildingRegistry = buildingRegistry;
         }
 
         public void Init()
@@ -43,7 +50,7 @@ namespace Assets.Game.Scripts.Services
 
             var position = GetPoint(tapPosition);
 
-            if (!IsPointFreeToBuild(position))
+            if (IsPositionAvailable(position) == false)
                 return;
 
             _isBuilding = true;
@@ -68,8 +75,14 @@ namespace Assets.Game.Scripts.Services
             _isBuilding = false;
         }
 
-        private bool IsPointFreeToBuild(Vector3 point)
+        private bool IsPositionAvailable(Vector3 position)
         {
+            foreach (var building in _buildingRegistry.All)
+            {
+                if (Vector3.Distance(building.transform.position, position) < building.RadiusOfOccupiedSpace)
+                    return false;
+            }
+
             return true;
         }
 

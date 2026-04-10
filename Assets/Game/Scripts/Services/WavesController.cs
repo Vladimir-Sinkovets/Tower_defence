@@ -1,4 +1,5 @@
 ﻿using Assets.Game.Scripts.Configs;
+using Assets.Game.Scripts.Enemies;
 using System.Collections;
 using System.Linq;
 using UnityEngine;
@@ -9,16 +10,16 @@ namespace Assets.Game.Scripts.Services
     public class WavesController : MonoBehaviour
     {
         private EnemyWavesSpawner _enemyWavesController;
-        private GameContext _gameContext;
+        private Registry<Enemy> _enemyRegistry;
         private WavesConfig _wavesConfig;
 
         private int _wavesCount;
 
         [Inject]
-        private void Construct(EnemyWavesSpawner enemyWavesSpawner, WavesConfig wavesConfig, GameContext gameContext)
+        private void Construct(EnemyWavesSpawner enemyWavesSpawner, WavesConfig wavesConfig, Registry<Enemy> enemyRegistry)
         {
             _enemyWavesController = enemyWavesSpawner;
-            _gameContext = gameContext;
+            _enemyRegistry = enemyRegistry;
             _wavesConfig = wavesConfig;
         }
 
@@ -37,7 +38,7 @@ namespace Assets.Game.Scripts.Services
 
                 yield return new WaitUntil(() => 
                     _enemyWavesController.IsSpawning == false &&
-                    _gameContext.AllEnemies.Any(x => !x.Health.IsDied) == false);
+                    _enemyRegistry.All.Any(x => !x.Health.IsDied) == false);
 
                 yield return new WaitForSeconds(_wavesConfig.IntervalBetweenWaves);
 

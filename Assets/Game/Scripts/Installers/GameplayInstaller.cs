@@ -1,5 +1,6 @@
 ﻿using Assets.Game.Scripts.Buildings;
 using Assets.Game.Scripts.Configs;
+using Assets.Game.Scripts.Enemies;
 using Assets.Game.Scripts.Input;
 using Assets.Game.Scripts.Services;
 using Assets.Game.Scripts.UI;
@@ -19,7 +20,9 @@ namespace Assets.Game.Scripts.Installers
 
         public override void InstallBindings()
         {
-            Container.Bind<GameContext>().AsSingle();
+            Container.Bind<Registry<Enemy>>().AsSingle();
+
+            Container.Bind<Registry<Building>>().AsSingle();
 
             Container.Bind<EnemyEvents>().AsSingle();
 
