@@ -33,7 +33,7 @@ namespace Assets.Game.Scripts.Services
 
         public bool TrySpend(int value)
         {
-            if (value < Total)
+            if (value > Total)
                 return false;
 
             Total -= value;
