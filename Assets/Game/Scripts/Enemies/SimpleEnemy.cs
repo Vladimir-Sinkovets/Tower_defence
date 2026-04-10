@@ -6,6 +6,7 @@ using Assets.Game.Scripts.Shared;
 using UnityEngine;
 using UnityEngine.AI;
 using Zenject;
+using Zenject.SpaceFighter;
 
 namespace Assets.Game.Scripts.Enemies
 {
@@ -18,14 +19,16 @@ namespace Assets.Game.Scripts.Enemies
         private EnemyStateMachineData _data;
 
         private EnemyEvents _enemyEvents;
+        private Registry<Enemy> _enemyRegistry;
         private bool _isActive;
 
         public bool IsActive { get => _isActive; }
 
         [Inject]
-        private void Construct(EnemyEvents enemyEvents)
+        private void Construct(EnemyEvents enemyEvents, Registry<Enemy> enemyRegistry)
         {
             _enemyEvents = enemyEvents;
+            _enemyRegistry = enemyRegistry;
         }
 
         public void Init(SimpleEnemyFactory config)
@@ -54,6 +57,8 @@ namespace Assets.Game.Scripts.Enemies
             Health.OnDied += OnDiedHandler;
 
             Health.ResetHealth();
+
+            _enemyRegistry.Register(this);
         }
 
         public override void Activate(Health target)
@@ -77,6 +82,8 @@ namespace Assets.Game.Scripts.Enemies
             Health.OnDied -= OnDiedHandler;
 
             _stateMachine.Dispose();
+
+            _enemyRegistry?.Unregister(this);
         }
     }
 }
