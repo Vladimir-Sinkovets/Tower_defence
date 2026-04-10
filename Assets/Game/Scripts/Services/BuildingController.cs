@@ -1,6 +1,7 @@
 ﻿using Assets.Game.Scripts.Buildings;
 using Assets.Game.Scripts.Input;
 using Assets.Game.Scripts.UI;
+using System;
 using UnityEngine;
 using Zenject;
 
@@ -15,6 +16,7 @@ namespace Assets.Game.Scripts.Services
         private BuildingsConfig _buildingsConfig;
         private BuildingBuilder _builder;
         private Registry<Building> _buildingRegistry;
+        private CurrencyBank _currencyBank;
         private Camera _mainCamera;
 
         private bool _isBuilding;
@@ -25,7 +27,8 @@ namespace Assets.Game.Scripts.Services
             ChooseBuildingPanel chooseBuildingPanel,
             BuildingsConfig buildingsConfig,
             BuildingBuilder builder,
-            Registry<Building> buildingRegistry)
+            Registry<Building> buildingRegistry,
+            CurrencyBank currencyBank)
         {
             _mainCamera = Camera.main;
             _input = input;
@@ -34,6 +37,7 @@ namespace Assets.Game.Scripts.Services
             _buildingsConfig = buildingsConfig;
             _builder = builder;
             _buildingRegistry = buildingRegistry;
+            _currencyBank = currencyBank;
         }
 
         public void Init()
@@ -41,6 +45,13 @@ namespace Assets.Game.Scripts.Services
             _input.Tap += OnTapHandler;
 
             _chooseBuildingPanel.OnOptionChosen += OnOptionChosenHandler;
+
+            _currencyBank.OnCurrencyChanged += OnCurrencyChangedHandler;
+        }
+
+        private void OnCurrencyChangedHandler(int total)
+        {
+            _chooseBuildingPanel.UpdatePanel(total);
         }
 
         private void OnTapHandler(Vector2 tapPosition)
@@ -64,15 +75,20 @@ namespace Assets.Game.Scripts.Services
 
             _builder.SetPosition(position);
 
-            _chooseBuildingPanel.Open(_buildingsConfig.Buildings);
+            _chooseBuildingPanel.Open(_buildingsConfig.Buildings, _currencyBank.Total);
         }
 
         private void OnOptionChosenHandler(BuildingConfig buildingConfig)
         {
-            _builder.SetBuilding(buildingConfig);
-            _builder.Build();
+            var isSucceeded = _currencyBank.TrySpend(buildingConfig.Price);
 
             _isBuilding = false;
+
+            if (isSucceeded == false)
+                return;
+
+            _builder.SetBuilding(buildingConfig);
+            _builder.Build();
         }
 
         private bool IsPositionAvailable(Vector3 position)

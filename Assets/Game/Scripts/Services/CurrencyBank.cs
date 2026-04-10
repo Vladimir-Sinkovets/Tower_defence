@@ -31,6 +31,16 @@ namespace Assets.Game.Scripts.Services
             Total = 0;
         }
 
+        public bool TrySpend(int value)
+        {
+            if (value < Total)
+                return false;
+
+            Total -= value;
+
+            return true;
+        }
+
         private void OnEnemyDiedHandler()
         {
             Total += 1;

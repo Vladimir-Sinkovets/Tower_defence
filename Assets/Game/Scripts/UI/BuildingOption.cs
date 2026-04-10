@@ -10,22 +10,38 @@ namespace Assets.Game.Scripts.UI
         public event Action<BuildingOption> OnClick;
 
         [SerializeField] private Image _icon;
+        [SerializeField] private Image _unavailableImage;
 
         private BuildingConfig _config;
+        private bool _availability;
 
         public BuildingConfig Config { get => _config; }
 
-        public void Init(BuildingConfig config)
+        public void Init(BuildingConfig config, bool availability)
         {
             _config = config;
-            _icon.sprite = config.Icon;
+
+            UpdateOption(availability);
         }
 
-        public void OnClickHandler() => OnClick?.Invoke(this);
+        public void OnClickHandler()
+        {
+            if (_availability)
+                OnClick?.Invoke(this);
+        }
 
         private void OnDestroy()
         {
             OnClick = null;
+        }
+
+        public void UpdateOption(bool availability)
+        {
+            _icon.sprite = _config.Icon;
+
+            _availability = availability;
+
+            _unavailableImage.gameObject.SetActive(!availability);
         }
     }
 }

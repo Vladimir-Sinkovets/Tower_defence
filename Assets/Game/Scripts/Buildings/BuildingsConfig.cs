@@ -16,5 +16,6 @@ namespace Assets.Game.Scripts.Buildings
         public Sprite Icon;
         public float RadiusOfOccupiedSpace = 1.0f;
         public Building Prefab;
+        public int Price;
     }
 }

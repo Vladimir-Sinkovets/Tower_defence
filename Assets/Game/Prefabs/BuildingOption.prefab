@@ -375,6 +375,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.UI.BuildingOption
   _icon: {fileID: 5408259733872673928}
+  _unavailableImage: {fileID: 127403770399153246}
 --- !u!1 &7800779145990778650
 GameObject:
   m_ObjectHideFlags: 0
