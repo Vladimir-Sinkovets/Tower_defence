@@ -22,6 +22,8 @@ namespace Assets.Game.Scripts.Services
         private CurrencyBank _currencyBank;
         private Camera _mainCamera;
 
+        private bool _isStopped;
+
         [Inject]
         private void Construct(
             GameInput input,
@@ -57,6 +59,9 @@ namespace Assets.Game.Scripts.Services
 
         private void OnTapHandler(Vector2 tapPosition)
         {
+            if (_isStopped)
+                return;
+
             if (IsPointOverUI(tapPosition))
                 return;
 
@@ -88,6 +93,13 @@ namespace Assets.Game.Scripts.Services
             _builder.SetPosition(position);
 
             _chooseBuildingPanel.Open(_buildingsConfig.Buildings, _currencyBank.Total);
+        }
+
+        public void Stop()
+        {
+            _chooseBuildingPanel.Hide();
+
+            _isStopped = true;
         }
 
         private void OnOptionChosenHandler(BuildingConfig buildingConfig)

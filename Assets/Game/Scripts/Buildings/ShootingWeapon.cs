@@ -13,17 +13,31 @@ namespace Assets.Game.Scripts.Buildings
         [SerializeField] private Transform _weaponRoot;
         [SerializeField] private WeaponAnimation _beforeShootAnimation;
 
-
         private Registry<Enemy> _enemiesRegistry;
+
+        private ShootingWeaponFactory _config;
+
         private Enemy _currentTarget;
 
         private float _nextShootTime = 0;
-        private ShootingWeaponFactory _config;
+        private bool _isStopped;
 
         [Inject]
-        private void Construct(Registry<Enemy> enemyRegistry) => _enemiesRegistry = enemyRegistry;
+        private void Construct(Registry<Enemy> enemyRegistry, Registry<Weapon> weaponRegistry)
+        {
+            base.Construct(weaponRegistry);
 
-        public void Init(ShootingWeaponFactory config) => _config = config;
+            _enemiesRegistry = enemyRegistry;
+        }
+
+        public void Init(ShootingWeaponFactory config)
+        {
+            base.Init();
+
+            _isStopped = false;
+
+            _config = config;
+        }
 
         private void Update()
         {
@@ -40,6 +54,9 @@ namespace Assets.Game.Scripts.Buildings
 
         private void Attack()
         {
+            if (_isStopped)
+                return;
+
             if (_nextShootTime > Time.time)
                 return;
 
@@ -100,12 +117,13 @@ namespace Assets.Game.Scripts.Buildings
             }
         }
 
-
         private void OnCurrentTargetDiedHandler()
         {
             _currentTarget.Health.OnDied -= OnCurrentTargetDiedHandler;
 
             _currentTarget = null;
         }
+
+        public override void Stop() => _isStopped = true;
     }
 }

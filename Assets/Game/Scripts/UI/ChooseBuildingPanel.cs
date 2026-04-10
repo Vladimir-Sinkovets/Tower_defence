@@ -30,7 +30,7 @@ namespace Assets.Game.Scripts.UI
             }
         }
 
-        private void Hide()
+        public void Hide()
         {
             _panel.SetActive(false);
         }
