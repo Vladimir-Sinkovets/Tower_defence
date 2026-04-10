@@ -1,6 +1,7 @@
 ﻿using Assets.Game.Scripts.Buildings;
 using Assets.Game.Scripts.Enemies;
 using Assets.Game.Scripts.Services;
+using System;
 using UnityEngine;
 using Zenject;
 
@@ -12,21 +13,21 @@ namespace Assets.Game.Scripts
         private BuildingController _buildingController;
         private Castle _castle;
         private Registry<Enemy> _enemyRegistry;
-        private Registry<Building> _buildingRegistry;
+        private Registry<Weapon> _weaponRegistry;
 
         [Inject]
         private void Construct(
             WavesController waveController,
             BuildingController buildingController,
             Castle castle,
-            Registry<Building> buildingRegistry,
+            Registry<Weapon> weaponRegistry,
             Registry<Enemy> enemyRegistry)
         {
             _wavesController = waveController;
             _buildingController = buildingController;
             _castle = castle;
             _enemyRegistry = enemyRegistry;
-            _buildingRegistry = buildingRegistry;
+            _weaponRegistry = weaponRegistry;
         }
 
         private void Start()
@@ -42,13 +43,27 @@ namespace Assets.Game.Scripts
         {
             StopEnemies();
 
-            //StopWeapons();
+            StopWeapons();
+
+            StopBuilingController();
 
             //OpenPanel();
 
             //SetMetaData();
         }
 
+        private void StopBuilingController()
+        {
+            _buildingController.Stop();
+        }
+
+        private void StopWeapons()
+        {
+            foreach (var weapon in _weaponRegistry.All)
+            {
+                weapon.Stop();
+            }
+        }
 
         private void StopEnemies()
         {
