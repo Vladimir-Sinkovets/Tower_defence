@@ -17,6 +17,7 @@ namespace Assets.Game.Scripts.Installers
         [SerializeField] private BuildingController _buildingController;
         [SerializeField] private BuildingsConfig _buildingsConfig;
         [SerializeField] private ChooseBuildingPanel _chooseBuildingPanel;
+        [SerializeField] private EndGamePanel _endGamePanel;
         [SerializeField] private Castle _castle;
 
         public override void InstallBindings()
@@ -29,7 +30,7 @@ namespace Assets.Game.Scripts.Installers
 
             Container.Bind<EnemyEvents>().AsSingle(); 
 
-            Container.Bind<GameStatictics>().AsSingle();
+            Container.Bind<GameStatistics>().AsSingle();
 
             Container.Bind<BuildingBuilder>().AsTransient();
 
@@ -40,6 +41,8 @@ namespace Assets.Game.Scripts.Installers
             Container.BindInstance(_buildingsConfig).AsSingle();
 
             Container.BindInstance(_chooseBuildingPanel).AsSingle();
+
+            Container.BindInstance(_endGamePanel).AsSingle();
 
             Container.BindInstance(_buildingController).AsSingle();
 
