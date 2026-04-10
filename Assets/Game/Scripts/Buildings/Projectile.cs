@@ -9,22 +9,45 @@ namespace Assets.Game.Scripts
         private int _damage;
         private float _speed;
 
+        private Vector3 _targetLastPosition;
+
         public void Init(Enemy target, int damage, float speed)
         {
+            if (target == null)
+            {
+                Destroy(gameObject);
+                return;
+            }
+
             _target = target;
             _damage = damage;
             _speed = speed;
+
+            _targetLastPosition = target.transform.position;
         }
 
         private void Update()
         {
-            var direction = (_target.transform.position - transform.position).normalized;
+            Vector3 target;
 
-            transform.Translate(direction * _speed * Time.deltaTime);
-
-            if (Vector3.Distance(_target.transform.position, transform.position) <= 0.2f)
+            if (_target != null)
             {
-                _target.Health.ApplyDamage(_damage);
+                target = _target.transform.position;
+                _targetLastPosition = target;
+            }
+            else
+            {
+                target = _target.transform.position;
+            }
+
+            var direction = (target - transform.position).normalized;
+
+            transform.Translate(_speed * Time.deltaTime * direction);
+
+            if (Vector3.Distance(target, transform.position) <= 0.2f)
+            {
+                if (_target != null)
+                    _target.Health.ApplyDamage(_damage);
 
                 Destroy(gameObject);
             }
