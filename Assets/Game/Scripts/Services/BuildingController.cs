@@ -9,28 +9,27 @@ namespace Assets.Game.Scripts.Services
         [SerializeField] private Transform _planeCenter;
 
         private GameInput _input;
+        private BuildingService _buildingService;
         private Camera _mainCamera;
 
         [Inject]
-        private void Construct(GameInput input)
-        {
-            _input = input;
-        }
-
-        private void Awake()
+        private void Construct(GameInput input, BuildingService buildingService)
         {
             _mainCamera = Camera.main;
+            _input = input;
+            _buildingService = buildingService;
+        }
 
+        public void Init()
+        {
             _input.Tap += OnTapHandler;
         }
 
         private void OnTapHandler(Vector2 tapPosition)
         {
-            var point = GetPoint(tapPosition);
+            var position = GetPoint(tapPosition);
 
-            // check distance to other buldings 
-
-
+            _buildingService.StartBuilding(position);
         }
 
         private Vector3 GetPoint(Vector2 tapPosition)
@@ -45,6 +44,11 @@ namespace Assets.Game.Scripts.Services
             }
 
             return Vector3.zero;
+        }
+
+        private void OnDestroy()
+        {
+            _input.Tap -= OnTapHandler;
         }
     }
 }
