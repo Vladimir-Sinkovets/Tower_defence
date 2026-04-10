@@ -1,10 +1,10 @@
 ﻿namespace Assets.Game.Scripts.Services
 {
-    public class GameStatictics
+    public class GameStatistics
     {
         private int _killedEnemiesCount;
 
-        public GameStatictics(EnemyEvents enemyEvents)
+        public GameStatistics(EnemyEvents enemyEvents)
         {
             enemyEvents.OnEnemyDied += OnEnemyDiedHandler;
         }

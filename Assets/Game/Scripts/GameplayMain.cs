@@ -1,6 +1,7 @@
 ﻿using Assets.Game.Scripts.Buildings;
 using Assets.Game.Scripts.Enemies;
 using Assets.Game.Scripts.Services;
+using Assets.Game.Scripts.UI;
 using System;
 using UnityEngine;
 using Zenject;
@@ -14,6 +15,9 @@ namespace Assets.Game.Scripts
         private Castle _castle;
         private Registry<Enemy> _enemyRegistry;
         private Registry<Weapon> _weaponRegistry;
+        private EndGamePanel _endGamePanel;
+        private GameStatistics _gameStatistics;
+        private CurrencyBank _currencyBank;
 
         [Inject]
         private void Construct(
@@ -21,13 +25,19 @@ namespace Assets.Game.Scripts
             BuildingController buildingController,
             Castle castle,
             Registry<Weapon> weaponRegistry,
-            Registry<Enemy> enemyRegistry)
+            Registry<Enemy> enemyRegistry,
+            EndGamePanel endGamePanel,
+            GameStatistics gameStatistics,
+            CurrencyBank currencyBank)
         {
             _wavesController = waveController;
             _buildingController = buildingController;
             _castle = castle;
             _enemyRegistry = enemyRegistry;
             _weaponRegistry = weaponRegistry;
+            _endGamePanel = endGamePanel;
+            _gameStatistics = gameStatistics;
+            _currencyBank = currencyBank;
         }
 
         private void Start()
@@ -47,9 +57,14 @@ namespace Assets.Game.Scripts
 
             StopBuilingController();
 
-            //OpenPanel();
+            OpenPanel();
 
             //SetMetaData();
+        }
+
+        private void OpenPanel()
+        {
+            _endGamePanel.Open(_gameStatistics.KilledEnemiesCount, _currencyBank.Total, 100);
         }
 
         private void StopBuilingController()

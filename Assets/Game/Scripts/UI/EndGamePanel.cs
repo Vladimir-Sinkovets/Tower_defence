@@ -1,0 +1,28 @@
+﻿using TMPro;
+using UnityEngine;
+
+namespace Assets.Game.Scripts.UI
+{
+    public class EndGamePanel : MonoBehaviour
+    {
+        [SerializeField] private RectTransform _panel;
+
+        [SerializeField] private TMP_Text _killedCountText;
+        [SerializeField] private RectTransform _killedCountPanel;
+
+        [SerializeField] private TMP_Text _currencyText;
+        [SerializeField] private RectTransform _currencyPanel;
+
+        [SerializeField] private TMP_Text _metaCurrencyText;
+        [SerializeField] private RectTransform _metaCurrencyPanel;
+
+        public void Open(int killedEnemyCount, int currencyCount, int metaCurrencyCount)
+        {
+            _killedCountText.text = killedEnemyCount.ToString();
+            _currencyText.text = currencyCount.ToString();
+            _metaCurrencyText.text = metaCurrencyCount.ToString();
+
+            _panel.gameObject.SetActive(true);
+        }
+    }
+}
