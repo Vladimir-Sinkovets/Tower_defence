@@ -78,8 +78,6 @@ namespace Assets.Game.Scripts.Services
             var results = new List<RaycastResult>();
             EventSystem.current.RaycastAll(eventData, results);
 
-            Debug.Log(results.Count > 0);
-
             return results.Count > 0;
         }
 

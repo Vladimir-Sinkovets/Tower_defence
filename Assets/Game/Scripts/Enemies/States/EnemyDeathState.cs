@@ -1,4 +1,5 @@
 ﻿using Assets.Game.Scripts.Common.UniversalStateMachine;
+using UnityEngine;
 
 namespace Assets.Game.Scripts.Enemies.States
 {
@@ -18,6 +19,8 @@ namespace Assets.Game.Scripts.Enemies.States
             _data.View.RemoveModel();
 
             _data.NavMeshAgent.enabled = false;
+
+            Object.Destroy(_data.Enemy.gameObject, 3.0f);
         }
 
         public override void Exit()
