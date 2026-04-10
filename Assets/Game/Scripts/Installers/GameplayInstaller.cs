@@ -11,6 +11,7 @@ namespace Assets.Game.Scripts.Installers
         [SerializeField] private EnemyWavesSpawner _wavesSpawner;
         [SerializeField] private WavesController _wavesController;
         [SerializeField] private WavesConfig _wavesConfig;
+        [SerializeField] private BuildingController _buildingController;
 
         public override void InstallBindings()
         {
@@ -18,7 +19,11 @@ namespace Assets.Game.Scripts.Installers
 
             Container.Bind<EnemyEvents>().AsSingle();
 
+            Container.Bind<BuildingService>().AsSingle();
+
             Container.BindInstance(_wavesSpawner).AsSingle();
+
+            Container.BindInstance(_buildingController).AsSingle();
 
             Container.BindInstance(_wavesController).AsSingle();
 
