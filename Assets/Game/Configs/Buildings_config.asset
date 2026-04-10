@@ -12,12 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86e582c52f8fb184da5cb67891e60aeb, type: 3}
   m_Name: Buildings_config
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Buildings.BuildingsConfig
+  CastleWeapon: {fileID: 11400000, guid: 5b3cdfa5337102841805787409734b52, type: 2}
   Buildings:
   - Icon: {fileID: 21300000, guid: 188ebcf3299cbe04ba6b0d4fa5c162cf, type: 3}
     RadiusOfOccupiedSpace: 1
     Prefab: {fileID: 202107224205421965, guid: 77add5befab89364cade8b33dddd2891, type: 3}
+    WeaponFactory: {fileID: 11400000, guid: 3814b801d78002a48b329e67e5de1285, type: 2}
     Price: 2
   - Icon: {fileID: 21300000, guid: 58d3f9f8758a0a34898acaa50d12bdb4, type: 3}
     RadiusOfOccupiedSpace: 1
     Prefab: {fileID: 6428938463721697562, guid: 06f7adc453219ec4ca7235518be08a56, type: 3}
+    WeaponFactory: {fileID: 11400000, guid: a569c99a3718aed42bf396be467f643a, type: 2}
     Price: 3

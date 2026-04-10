@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 371ea471c49352e4ba4a64e930f34da5, type: 3}
+  m_Name: Catapult_weapon_factory
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Buildings.ShootingWeaponFactory
+  AttackRadius: 4
+  AttackInterval: 1
+  ProjectileSpeed: 4
+  Damage: 40
+  RotationSpeed: 360
+  ArcHeight: 0.4
+  ProjectilePrefab: {fileID: 5064200408351446433, guid: fab406a5f664d5b4788c91a09f564d4f, type: 3}
+  _prefab: {fileID: 8884717547047690953, guid: d4ed3d9ac2acf47408d1a95223214702, type: 3}
