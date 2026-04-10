@@ -71,6 +71,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2139718236988082955}
     m_Modifications:
+    - target: {fileID: 2864936249383356852, guid: b4c60f9ad1883514eb42a602ebb59268, type: 3}
+      propertyPath: _arcHeight
+      value: 0.15
+      objectReference: {fileID: 0}
     - target: {fileID: 3573163000938159376, guid: b4c60f9ad1883514eb42a602ebb59268, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.5

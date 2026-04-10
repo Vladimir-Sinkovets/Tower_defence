@@ -10,8 +10,13 @@ namespace Assets.Game.Scripts
         private float _speed;
 
         private Vector3 _targetLastPosition;
+        private Vector3 _startPosition;
 
-        public void Init(Enemy target, int damage, float speed)
+        private float _time;
+        private float _flightTime;
+        private float _arcHeight;
+
+        public void Init(Enemy target, int damage, float speed, float arcHeight)
         {
             if (target == null)
             {
@@ -24,27 +29,35 @@ namespace Assets.Game.Scripts
             _speed = speed;
 
             _targetLastPosition = target.transform.position;
+            _startPosition = transform.position;
+
+            var distance = Vector3.Distance(_startPosition, _targetLastPosition);
+            _flightTime = distance / _speed;
+            _arcHeight = arcHeight;
         }
 
         private void Update()
         {
-            Vector3 target;
+            _time += Time.deltaTime;
 
             if (_target != null)
             {
-                target = _target.transform.position;
-                _targetLastPosition = target;
-            }
-            else
-            {
-                target = _target.transform.position;
+                _targetLastPosition = _target.transform.position;
             }
 
-            var direction = (target - transform.position).normalized;
+            var direction = (_targetLastPosition - transform.position).normalized;
 
             transform.Translate(_speed * Time.deltaTime * direction);
 
-            if (Vector3.Distance(target, transform.position) <= 0.2f)
+            var t = _time / _flightTime;
+
+            var height = _arcHeight * 4 * (t - t * t);
+
+            var pos = transform.position;
+            pos.y = _startPosition.y + height;
+            transform.position = pos;
+
+            if (Vector3.Distance(_targetLastPosition, transform.position) <= 0.2f)
             {
                 if (_target != null)
                     _target.Health.ApplyDamage(_damage);

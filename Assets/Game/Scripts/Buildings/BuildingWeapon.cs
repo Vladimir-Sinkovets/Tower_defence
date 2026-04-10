@@ -15,6 +15,7 @@ namespace Assets.Game.Scripts
         [SerializeField] private float _projectileSpeed = 4.0f;
         [SerializeField] private int _damage = 1;
         [SerializeField] private float _rotationSpeed = 360.0f;
+        [SerializeField] private float _arcHeight = 0.4f;
         [SerializeField] private Projectile _projectilePrefab;
         [SerializeField] private Transform _projectileStartPosition;
         [SerializeField] private Transform _weaponRoot;
@@ -64,7 +65,7 @@ namespace Assets.Game.Scripts
 
             projectile.transform.position = _projectileStartPosition.transform.position;
 
-            projectile.Init(_currentTarget, _damage, _projectileSpeed);
+            projectile.Init(_currentTarget, _damage, _projectileSpeed, _arcHeight);
 
             yield break;
         }
