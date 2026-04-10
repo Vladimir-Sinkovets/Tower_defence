@@ -25,7 +25,9 @@ namespace Assets.Game.Scripts.Installers
 
             Container.Bind<Registry<Building>>().AsSingle();
 
-            Container.Bind<EnemyEvents>().AsSingle();
+            Container.Bind<EnemyEvents>().AsSingle(); 
+
+            Container.Bind<GameStatictics>().AsSingle();
 
             Container.Bind<BuildingBuilder>().AsTransient();
 
