@@ -13,7 +13,7 @@ namespace Assets.Game.Scripts.UI
         [SerializeField] private RectTransform _optionsContainer;
         [SerializeField] private BuildingOption _buildingOptionPrefab;
 
-        private List<BuildingOption> _options;
+        private List<BuildingOption> _options = new();
 
         public void Open(IEnumerable<BuildingConfig> configs, int total)
         {
@@ -38,8 +38,6 @@ namespace Assets.Game.Scripts.UI
         private void InitializeOptions(IEnumerable<BuildingConfig> configs, int total)
         {
             ClearContainer();
-
-            _options = new();
 
             foreach (var config in configs)
             {
