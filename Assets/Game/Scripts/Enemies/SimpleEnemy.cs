@@ -85,5 +85,7 @@ namespace Assets.Game.Scripts.Enemies
 
             _enemyRegistry?.Unregister(this);
         }
+
+        public override void Deactivate() => _isActive = false;
     }
 }

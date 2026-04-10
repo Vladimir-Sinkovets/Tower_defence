@@ -8,10 +8,7 @@ namespace Assets.Game.Scripts.Enemies.States
     {
         private readonly EnemyStateMachineData _data;
 
-        public EnemyRunState(IStateSwitcher stateSwitcher, EnemyStateMachineData data) : base(stateSwitcher)
-        {
-            _data = data;
-        }
+        public EnemyRunState(IStateSwitcher stateSwitcher, EnemyStateMachineData data) : base(stateSwitcher) => _data = data;
 
         public override void Enter()
         {
@@ -31,7 +28,11 @@ namespace Assets.Game.Scripts.Enemies.States
 
         public override void Update()
         {
-            if (Vector3.Distance(_data.Transform.position, _data.Target.transform.position) <= _data.Config.AttackRange)
+            if (_data.Enemy.IsActive == false)
+            {
+                StateSwitcher.SwitchState<EnemyIdleState>();
+            }
+            else if (Vector3.Distance(_data.Transform.position, _data.Target.transform.position) <= _data.Config.AttackRange)
             {
                 StateSwitcher.SwitchState<EnemyAttackState>();
             }

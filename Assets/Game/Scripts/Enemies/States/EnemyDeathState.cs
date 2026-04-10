@@ -7,10 +7,7 @@ namespace Assets.Game.Scripts.Enemies.States
     {
         private readonly EnemyStateMachineData _data;
 
-        public EnemyDeathState(IStateSwitcher stateSwitcher, EnemyStateMachineData data) : base(stateSwitcher)
-        {
-            _data = data;
-        }
+        public EnemyDeathState(IStateSwitcher stateSwitcher, EnemyStateMachineData data) : base(stateSwitcher) => _data = data;
 
         public override void Enter()
         {
