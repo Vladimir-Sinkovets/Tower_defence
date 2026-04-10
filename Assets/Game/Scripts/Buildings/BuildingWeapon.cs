@@ -1,7 +1,6 @@
 ﻿using Assets.Game.Scripts.Animations;
 using Assets.Game.Scripts.Enemies;
 using Assets.Game.Scripts.Services;
-using System;
 using System.Collections;
 using UnityEngine;
 using Zenject;
@@ -94,13 +93,12 @@ namespace Assets.Game.Scripts
         {
             if (_currentTarget == null) return;
 
-            Vector3 direction = _currentTarget.transform.position - _weaponRoot.position;
-            direction.y = 0f; // Игнорируем наклон по вертикали
+            var direction = _currentTarget.transform.position - _weaponRoot.position;
+            direction.y = 0f;
 
             if (direction.sqrMagnitude > 0.001f)
             {
-                Quaternion targetRotation = Quaternion.LookRotation(direction);
-                // Плавный поворот с максимальной скоростью _rotationSpeed
+                var targetRotation = Quaternion.LookRotation(direction);
                 _weaponRoot.rotation = Quaternion.RotateTowards(
                     _weaponRoot.rotation,
                     targetRotation,

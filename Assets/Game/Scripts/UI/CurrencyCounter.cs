@@ -1,5 +1,4 @@
 ﻿using Assets.Game.Scripts.Services;
-using System;
 using TMPro;
 using UnityEngine;
 using Zenject;

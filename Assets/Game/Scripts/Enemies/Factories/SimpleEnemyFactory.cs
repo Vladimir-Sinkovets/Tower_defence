@@ -1,5 +1,4 @@
-﻿using Assets.Game.Scripts.Shared;
-using UnityEngine;
+﻿using UnityEngine;
 using Zenject;
 
 namespace Assets.Game.Scripts.Enemies.Factories
