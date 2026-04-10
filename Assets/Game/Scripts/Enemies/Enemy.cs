@@ -10,5 +10,7 @@ namespace Assets.Game.Scripts.Enemies
         public Health Health => health;
 
         public abstract void Activate(Health target);
+
+        public abstract void Deactivate();
     }
 }

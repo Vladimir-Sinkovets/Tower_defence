@@ -12908,6 +12908,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Buildings.Castle
   _weaponPosition: {fileID: 1390631840}
+  _health: {fileID: 1984246206}
 --- !u!1 &1992888406
 GameObject:
   m_ObjectHideFlags: 0

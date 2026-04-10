@@ -1,11 +1,16 @@
-﻿using UnityEngine;
+﻿using Assets.Game.Scripts.Shared;
+using System;
+using UnityEngine;
 using Zenject;
 
 namespace Assets.Game.Scripts.Buildings
 {
     public class Castle : MonoBehaviour
     {
+        public event Action OnCastleHpEnded;
+
         [SerializeField] private Transform _weaponPosition;
+        [SerializeField] private Health _health;
 
         private BuildingsConfig _buildingsConfig;
         private DiContainer _container;
@@ -23,6 +28,10 @@ namespace Assets.Game.Scripts.Buildings
 
             weapon.transform.parent = _weaponPosition;
             weapon.transform.position = _weaponPosition.transform.position;
+
+            _health.OnDied += OnDiedHandler;
         }
+
+        private void OnDiedHandler() => OnCastleHpEnded?.Invoke();
     }
 }

@@ -1,6 +1,5 @@
 ﻿using Assets.Game.Scripts.Services;
 using UnityEngine;
-using UnityEngine.UIElements;
 using Zenject;
 
 namespace Assets.Game.Scripts.Buildings
