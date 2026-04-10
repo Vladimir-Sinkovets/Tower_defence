@@ -1,7 +1,11 @@
 ﻿using Assets.Game.Scripts.Buildings;
 using Assets.Game.Scripts.Input;
 using Assets.Game.Scripts.UI;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UIElements;
 using Zenject;
 
 namespace Assets.Game.Scripts.Services
@@ -17,8 +21,6 @@ namespace Assets.Game.Scripts.Services
         private Registry<Building> _buildingRegistry;
         private CurrencyBank _currencyBank;
         private Camera _mainCamera;
-
-        private bool _isBuilding;
 
         [Inject]
         private void Construct(
@@ -55,7 +57,7 @@ namespace Assets.Game.Scripts.Services
 
         private void OnTapHandler(Vector2 tapPosition)
         {
-            if (_isBuilding)
+            if (IsPointOverUI(tapPosition))
                 return;
 
             var position = GetPoint(tapPosition);
@@ -63,9 +65,22 @@ namespace Assets.Game.Scripts.Services
             if (IsPositionAvailable(position) == false)
                 return;
 
-            _isBuilding = true;
-
             StartBuilding(position);
+        }
+
+        private bool IsPointOverUI(Vector2 position)
+        {
+            var eventData = new PointerEventData(EventSystem.current)
+            {
+                position = position
+            };
+
+            var results = new List<RaycastResult>();
+            EventSystem.current.RaycastAll(eventData, results);
+
+            Debug.Log(results.Count > 0);
+
+            return results.Count > 0;
         }
 
         public void StartBuilding(Vector3 position)
@@ -80,8 +95,6 @@ namespace Assets.Game.Scripts.Services
         private void OnOptionChosenHandler(BuildingConfig buildingConfig)
         {
             var isSucceeded = _currencyBank.TrySpend(buildingConfig.Price);
-
-            _isBuilding = false;
 
             if (isSucceeded == false)
                 return;
