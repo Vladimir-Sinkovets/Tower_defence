@@ -1,4 +1,5 @@
 ﻿using Assets.Game.Scripts.Buildings;
+using Assets.Game.Scripts.Configs;
 using Assets.Game.Scripts.Enemies;
 using Assets.Game.Scripts.Services;
 using Assets.Game.Scripts.UI;
@@ -18,6 +19,8 @@ namespace Assets.Game.Scripts
         private EndGamePanel _endGamePanel;
         private GameStatistics _gameStatistics;
         private CurrencyBank _currencyBank;
+        private MetaCurrencyConfig _metaCurrencyConfig;
+        private MetaCurrencyService _metaCurrencyService;
 
         [Inject]
         private void Construct(
@@ -28,7 +31,9 @@ namespace Assets.Game.Scripts
             Registry<Enemy> enemyRegistry,
             EndGamePanel endGamePanel,
             GameStatistics gameStatistics,
-            CurrencyBank currencyBank)
+            CurrencyBank currencyBank,
+            MetaCurrencyConfig metaCurrencyConfig,
+            MetaCurrencyService metaCurrencyService)
         {
             _wavesController = waveController;
             _buildingController = buildingController;
@@ -38,6 +43,8 @@ namespace Assets.Game.Scripts
             _endGamePanel = endGamePanel;
             _gameStatistics = gameStatistics;
             _currencyBank = currencyBank;
+            _metaCurrencyConfig = metaCurrencyConfig;
+            _metaCurrencyService = metaCurrencyService;
         }
 
         private void Start()
@@ -57,20 +64,21 @@ namespace Assets.Game.Scripts
 
             StopBuilingController();
 
-            OpenPanel();
+            var earnedMetaCurrency = CalculateMetaData();
+                
+            ApplyMetaData(earnedMetaCurrency);
 
-            //SetMetaData();
+            OpenPanel(earnedMetaCurrency);
         }
 
-        private void OpenPanel()
-        {
-            _endGamePanel.Open(_gameStatistics.KilledEnemiesCount, _currencyBank.Total, 100);
-        }
+        private void ApplyMetaData(int value) => _metaCurrencyService.Add(value);
 
-        private void StopBuilingController()
-        {
-            _buildingController.Stop();
-        }
+        private int CalculateMetaData() => _wavesController.WavesCount * _metaCurrencyConfig.MetaCurrencyPerWave +
+                _gameStatistics.KilledEnemiesCount * _metaCurrencyConfig.MetaCurrencyPerKill;
+
+        private void OpenPanel(int earnedMetaCurrency) => _endGamePanel.Open(_gameStatistics.KilledEnemiesCount, _currencyBank.Total, earnedMetaCurrency);
+
+        private void StopBuilingController() => _buildingController.Stop();
 
         private void StopWeapons()
         {

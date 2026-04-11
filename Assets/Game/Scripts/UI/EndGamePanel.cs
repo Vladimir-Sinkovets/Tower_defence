@@ -24,7 +24,7 @@ namespace Assets.Game.Scripts.UI
         {
             _killedCountText.text = killedEnemyCount.ToString();
             _currencyText.text = currencyCount.ToString();
-            _metaCurrencyText.text = metaCurrencyCount.ToString();
+            _metaCurrencyText.text = $"+{metaCurrencyCount}";
 
             _panel.gameObject.SetActive(true);
         }
