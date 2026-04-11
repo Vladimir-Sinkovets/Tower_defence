@@ -76,7 +76,11 @@ namespace Assets.Game.Scripts
         private int CalculateMetaData() => _wavesController.WavesCount * _metaCurrencyConfig.MetaCurrencyPerWave +
                 _gameStatistics.KilledEnemiesCount * _metaCurrencyConfig.MetaCurrencyPerKill;
 
-        private void OpenPanel(int earnedMetaCurrency) => _endGamePanel.Open(_gameStatistics.KilledEnemiesCount, _currencyBank.Total, earnedMetaCurrency);
+        private void OpenPanel(int earnedMetaCurrency) => _endGamePanel.Open(
+            _wavesController.WavesCount,
+            _gameStatistics.KilledEnemiesCount,
+            _currencyBank.Total,
+            earnedMetaCurrency);
 
         private void StopBuilingController() => _buildingController.Stop();
 
