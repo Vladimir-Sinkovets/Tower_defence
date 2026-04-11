@@ -1,11 +1,9 @@
 ﻿using Assets.Game.Scripts.Buildings;
 using Assets.Game.Scripts.Input;
 using Assets.Game.Scripts.UI;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UIElements;
 using Zenject;
 
 namespace Assets.Game.Scripts.Services
@@ -48,8 +46,16 @@ namespace Assets.Game.Scripts.Services
             _input.Tap += OnTapHandler;
 
             _chooseBuildingPanel.OnOptionChosen += OnOptionChosenHandler;
+            _chooseBuildingPanel.OnCloseButtonClicked += OnCloseButtonClickedHandler;
 
             _currencyBank.OnCurrencyChanged += OnCurrencyChangedHandler;
+        }
+
+        private void OnCloseButtonClickedHandler()
+        {
+            _chooseBuildingPanel.Hide();
+
+            _builder.Clean();
         }
 
         private void OnCurrencyChangedHandler(int total)
@@ -141,6 +147,11 @@ namespace Assets.Game.Scripts.Services
         private void OnDestroy()
         {
             _input.Tap -= OnTapHandler;
+
+            _chooseBuildingPanel.OnOptionChosen -= OnOptionChosenHandler;
+            _chooseBuildingPanel.OnCloseButtonClicked -= OnCloseButtonClickedHandler;
+
+            _currencyBank.OnCurrencyChanged -= OnCurrencyChangedHandler;
         }
     }
 }

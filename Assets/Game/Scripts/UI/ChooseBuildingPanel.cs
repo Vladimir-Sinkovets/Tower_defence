@@ -8,6 +8,7 @@ namespace Assets.Game.Scripts.UI
     public class ChooseBuildingPanel : MonoBehaviour
     {
         public event Action<BuildingConfig> OnOptionChosen;
+        public event Action OnCloseButtonClicked;
 
         [SerializeField] private GameObject _panel;
         [SerializeField] private RectTransform _optionsContainer;
@@ -34,6 +35,8 @@ namespace Assets.Game.Scripts.UI
         {
             _panel.SetActive(false);
         }
+
+        public void OnCloseButtonClickedHandler() => OnCloseButtonClicked?.Invoke();
 
         private void InitializeOptions(IEnumerable<BuildingConfig> configs, int total)
         {
