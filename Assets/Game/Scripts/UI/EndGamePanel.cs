@@ -11,6 +11,9 @@ namespace Assets.Game.Scripts.UI
 
         [SerializeField] private RectTransform _panel;
 
+        [SerializeField] private TMP_Text _wavesCountText;
+        [SerializeField] private RectTransform _wavesCountPanel;
+
         [SerializeField] private TMP_Text _killedCountText;
         [SerializeField] private RectTransform _killedCountPanel;
 
@@ -20,8 +23,9 @@ namespace Assets.Game.Scripts.UI
         [SerializeField] private TMP_Text _metaCurrencyText;
         [SerializeField] private RectTransform _metaCurrencyPanel;
 
-        public void Open(int killedEnemyCount, int currencyCount, int metaCurrencyCount)
+        public void Open(int wavesCount, int killedEnemyCount, int currencyCount, int metaCurrencyCount)
         {
+            _wavesCountText.text = wavesCount.ToString();
             _killedCountText.text = killedEnemyCount.ToString();
             _currencyText.text = currencyCount.ToString();
             _metaCurrencyText.text = $"+{metaCurrencyCount}";
