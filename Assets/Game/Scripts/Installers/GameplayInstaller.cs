@@ -33,6 +33,8 @@ namespace Assets.Game.Scripts.Installers
 
             Container.Bind<GameStatistics>().AsSingle();
 
+            Container.Bind<GameOverManager>().AsSingle();
+
             Container.Bind<BuildingBuilder>().AsTransient();
 
             Container.BindInstance(_wavesSpawner).AsSingle();
