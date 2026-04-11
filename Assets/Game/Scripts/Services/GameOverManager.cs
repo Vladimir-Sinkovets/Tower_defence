@@ -1,0 +1,88 @@
+﻿using Assets.Game.Scripts.Buildings;
+using Assets.Game.Scripts.Configs;
+using Assets.Game.Scripts.Enemies;
+using Assets.Game.Scripts.UI;
+using Zenject;
+
+namespace Assets.Game.Scripts.Services
+{
+    public class GameOverManager
+    {
+        private Registry<Enemy> _enemyRegistry;
+        private Registry<Weapon> _weaponRegistry;
+        private EndGamePanel _endGamePanel;
+        private GameStatistics _gameStatistics;
+        private CurrencyBank _currencyBank;
+        private MetaCurrencyConfig _metaCurrencyConfig;
+        private MetaCurrencyService _metaCurrencyService;
+        private WavesController _wavesController;
+        private BuildingController _buildingController;
+
+        [Inject]
+        private void Construct(
+            WavesController waveController,
+            BuildingController buildingController,
+            Registry<Weapon> weaponRegistry,
+            Registry<Enemy> enemyRegistry,
+            EndGamePanel endGamePanel,
+            GameStatistics gameStatistics,
+            CurrencyBank currencyBank,
+            MetaCurrencyConfig metaCurrencyConfig,
+            MetaCurrencyService metaCurrencyService)
+        {
+            _wavesController = waveController;
+            _buildingController = buildingController;
+            _enemyRegistry = enemyRegistry;
+            _weaponRegistry = weaponRegistry;
+            _endGamePanel = endGamePanel;
+            _gameStatistics = gameStatistics;
+            _currencyBank = currencyBank;
+            _metaCurrencyConfig = metaCurrencyConfig;
+            _metaCurrencyService = metaCurrencyService;
+        }
+
+        public void GameOver()
+        {
+            StopEnemies();
+
+            StopWeapons();
+
+            StopBuilingController();
+
+            var earnedMetaCurrency = CalculateMetaData();
+
+            ApplyMetaData(earnedMetaCurrency);
+
+            OpenPanel(earnedMetaCurrency);
+        }
+
+        private void ApplyMetaData(int value) => _metaCurrencyService.Add(value);
+
+        private int CalculateMetaData() => _wavesController.WavesCount * _metaCurrencyConfig.MetaCurrencyPerWave +
+                _gameStatistics.KilledEnemiesCount * _metaCurrencyConfig.MetaCurrencyPerKill;
+
+        private void OpenPanel(int earnedMetaCurrency) => _endGamePanel.Open(
+            _wavesController.WavesCount,
+            _gameStatistics.KilledEnemiesCount,
+            _currencyBank.Total,
+            earnedMetaCurrency);
+
+        private void StopBuilingController() => _buildingController.Stop();
+
+        private void StopWeapons()
+        {
+            foreach (var weapon in _weaponRegistry.All)
+            {
+                weapon.Stop();
+            }
+        }
+
+        private void StopEnemies()
+        {
+            foreach (var enemy in _enemyRegistry.All)
+            {
+                enemy.Deactivate();
+            }
+        }
+    }
+}
