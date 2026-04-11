@@ -3569,9 +3569,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 910496517}
-        m_TargetAssemblyTypeName: Assets.Game.Scripts.UI.EndGamePanel, Assembly-CSharp
-        m_MethodName: MenuButtonHandler
+      - m_Target: {fileID: 1439249188}
+        m_TargetAssemblyTypeName: Assets.Game.Scripts.Services.GameplaySceneManager,
+          Assembly-CSharp
+        m_MethodName: OnMenuClickHandler
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -10606,6 +10607,50 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: c2252770c12196e4f8709a67a56d9545, type: 3}
   m_PrefabInstance: {fileID: 1396470606}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1439249187
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1439249189}
+  - component: {fileID: 1439249188}
+  m_Layer: 0
+  m_Name: SceneManger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1439249188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1439249187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6bc46c2e749f7a468899d83d34e98f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Services.GameplaySceneManager
+--- !u!4 &1439249189
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1439249187}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.43432, y: -0, z: -3.91467}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1463643192
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13800,9 +13845,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 910496517}
-        m_TargetAssemblyTypeName: Assets.Game.Scripts.UI.EndGamePanel, Assembly-CSharp
-        m_MethodName: RestartButtonHandler
+      - m_Target: {fileID: 1439249188}
+        m_TargetAssemblyTypeName: Assets.Game.Scripts.Services.GameplaySceneManager,
+          Assembly-CSharp
+        m_MethodName: OnRestartClickHandler
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -15822,6 +15868,7 @@ SceneRoots:
   - {fileID: 1992888407}
   - {fileID: 405241746}
   - {fileID: 996813203}
+  - {fileID: 1439249189}
   - {fileID: 1316312513}
   - {fileID: 1042056704}
   - {fileID: 970686232}

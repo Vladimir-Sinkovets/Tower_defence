@@ -1,4 +1,5 @@
 ﻿using DG.Tweening;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Assets.Game.Scripts.Animations
@@ -25,7 +26,6 @@ namespace Assets.Game.Scripts.Animations
         private void OnDestroy()
         {
             _tween?.Kill();
-            _tween = null;
 
             if (_target != null)
                 _target.localScale = _initialScale;

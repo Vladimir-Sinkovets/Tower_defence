@@ -8,6 +8,8 @@ namespace Assets.Game.Scripts.Installers
         public override void InstallBindings()
         {
             Container.Bind<MetaCurrencyService>().AsSingle();
+
+            Container.Bind<SceneLoader>().AsSingle();
         }
     }
 }
