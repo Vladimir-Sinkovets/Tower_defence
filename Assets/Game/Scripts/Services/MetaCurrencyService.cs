@@ -2,7 +2,7 @@
 
 namespace Assets.Game.Scripts.Services
 {
-    public class MetaCurrencyService : ScriptableObject
+    public class MetaCurrencyService
     {
         private const string PrefsKey = "MetaCurrency";
 

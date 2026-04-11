@@ -45,5 +45,7 @@ namespace Assets.Game.Scripts.Enemies
 
             yield return _modelHideAnimationRoot.transform.DOMoveY(_modelHideAnimationRoot.transform.position.y - 1.5f, 1.0f);
         }
+
+        private void OnDestroy() => _modelHideAnimationRoot.transform?.DOKill();
     }
 }

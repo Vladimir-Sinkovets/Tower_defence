@@ -21,5 +21,7 @@ namespace Assets.Game.Scripts.Animations
             _catapult.DOLocalRotate(new Vector3(0, 0, 0), _duration)
                 .SetEase(Ease.InSine);
         }
+
+        private void OnDestroy() => _catapult?.DOKill();
     }
 }

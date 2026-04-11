@@ -25,5 +25,7 @@ namespace Assets.Game.Scripts.Animations
                 .SetEase(Ease.InQuint)
                 .WaitForCompletion();
         }
+
+        private void OnDestroy() => _barrel?.DOKill();
     }
 }
