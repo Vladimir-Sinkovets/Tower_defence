@@ -1,5 +1,6 @@
 ﻿using Assets.Game.Scripts.Buildings;
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,6 +12,7 @@ namespace Assets.Game.Scripts.UI
 
         [SerializeField] private Image _icon;
         [SerializeField] private Image _unavailableImage;
+        [SerializeField] private TMP_Text _price;
 
         private BuildingConfig _config;
         private bool _availability;
@@ -42,6 +44,8 @@ namespace Assets.Game.Scripts.UI
             _availability = availability;
 
             _unavailableImage.gameObject.SetActive(!availability);
+
+            _price.text = $"${_config.Price}";
         }
     }
 }
