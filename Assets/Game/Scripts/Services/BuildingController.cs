@@ -116,7 +116,8 @@ namespace Assets.Game.Scripts.Services
                 return;
 
             _builder.SetBuilding(buildingConfig);
-            _builder.Build();
+
+            StartCoroutine(_builder.Build());
         }
 
         private bool IsPositionAvailable(Vector3 position)
@@ -152,6 +153,8 @@ namespace Assets.Game.Scripts.Services
             _chooseBuildingPanel.OnCloseButtonClicked -= OnCloseButtonClickedHandler;
 
             _currencyBank.OnCurrencyChanged -= OnCurrencyChangedHandler;
+
+            StopAllCoroutines();
         }
     }
 }
