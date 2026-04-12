@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 371ea471c49352e4ba4a64e930f34da5, type: 3}
-  m_Name: Barrel_weapon_factory
+  m_Name: Catapult_building_factory
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Buildings.ShootingWeaponFactory
   AttackRadius: 4
   AttackInterval: 1
@@ -18,5 +18,5 @@ MonoBehaviour:
   Damage: 40
   RotationSpeed: 360
   ArcHeight: 0.4
-  ProjectilePrefab: {fileID: 5064200408351446433, guid: c77931573eaa6f147b287c00d3d3fbfc, type: 3}
-  _prefab: {fileID: 2864936249383356852, guid: b4c60f9ad1883514eb42a602ebb59268, type: 3}
+  ProjectilePrefab: {fileID: 5064200408351446433, guid: fab406a5f664d5b4788c91a09f564d4f, type: 3}
+  _prefab: {fileID: 8884717547047690953, guid: d4ed3d9ac2acf47408d1a95223214702, type: 3}
