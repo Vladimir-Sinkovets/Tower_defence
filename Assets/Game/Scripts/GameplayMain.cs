@@ -1,8 +1,6 @@
 ﻿using Assets.Game.Scripts.Animations;
 using Assets.Game.Scripts.Buildings;
 using Assets.Game.Scripts.Services;
-using DG.Tweening;
-using System;
 using System.Collections;
 using UnityEngine;
 using Zenject;
@@ -43,13 +41,13 @@ namespace Assets.Game.Scripts
 
         private IEnumerator Start()
         {
-            _buildingController.Init();
-
             yield return _fieldStartupAnimation.Play();
 
             yield return CreateCastleBuilding();
 
             _castle.Init();
+
+            _buildingController.Init();
 
             _wavesController.StartWaves();
 

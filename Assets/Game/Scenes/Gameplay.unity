@@ -151,7 +151,7 @@ RectTransform:
   m_Children:
   - {fileID: 1816162675}
   - {fileID: 982947862}
-  m_Father: {fileID: 910496516}
+  m_Father: {fileID: 464419216}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
@@ -1302,7 +1302,9 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1865312754}
+  - {fileID: 1133697050}
   m_Father: {fileID: 355309992}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1746,7 +1748,7 @@ RectTransform:
   m_Children:
   - {fileID: 642015533}
   - {fileID: 107904584}
-  m_Father: {fileID: 910496516}
+  m_Father: {fileID: 464419216}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
@@ -3059,6 +3061,7 @@ GameObject:
   m_Component:
   - component: {fileID: 355309992}
   - component: {fileID: 355309993}
+  - component: {fileID: 355309994}
   m_Layer: 5
   m_Name: ChooseBuildingPanel
   m_TagString: Untagged
@@ -3079,8 +3082,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 118647886}
-  - {fileID: 1865312754}
-  - {fileID: 1133697050}
   m_Father: {fileID: 1042056704}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -3103,6 +3104,23 @@ MonoBehaviour:
   _panel: {fileID: 355309991}
   _optionsContainer: {fileID: 1865312754}
   _buildingOptionPrefab: {fileID: 6354163965170378316, guid: c725b8c29f7ccc645b8a3a514395d357, type: 3}
+  _animation: {fileID: 355309994}
+--- !u!114 &355309994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 355309991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d1256c007c53424f8dc908aa9be365e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Animations.PanelAppearanceAnimation
+  panel: {fileID: 118647886}
+  direction: 1
+  duration: 0.5
+  ease: 2
 --- !u!1001 &384664518
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3298,7 +3316,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1600887418}
-  m_Father: {fileID: 910496516}
+  m_Father: {fileID: 464419216}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
@@ -3591,13 +3609,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 450753821}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1713295338}
-  m_Father: {fileID: 910496516}
+  m_Father: {fileID: 464419216}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 1, y: 0}
@@ -3733,7 +3751,14 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 414350678}
+  - {fileID: 1902170128}
+  - {fileID: 16456276}
+  - {fileID: 556276236}
+  - {fileID: 185326548}
+  - {fileID: 1843320851}
+  - {fileID: 450753822}
   m_Father: {fileID: 910496516}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -4181,7 +4206,7 @@ RectTransform:
   m_Children:
   - {fileID: 851211038}
   - {fileID: 1151126790}
-  m_Father: {fileID: 910496516}
+  m_Father: {fileID: 464419216}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
@@ -6907,6 +6932,7 @@ GameObject:
   m_Component:
   - component: {fileID: 910496516}
   - component: {fileID: 910496517}
+  - component: {fileID: 910496518}
   m_Layer: 5
   m_Name: EndGamePanel
   m_TagString: Untagged
@@ -6927,13 +6953,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 464419216}
-  - {fileID: 414350678}
-  - {fileID: 1902170128}
-  - {fileID: 16456276}
-  - {fileID: 556276236}
-  - {fileID: 185326548}
-  - {fileID: 1843320851}
-  - {fileID: 450753822}
   m_Father: {fileID: 1042056704}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -6962,6 +6981,23 @@ MonoBehaviour:
   _currencyPanel: {fileID: 556276236}
   _metaCurrencyText: {fileID: 107904585}
   _metaCurrencyPanel: {fileID: 185326548}
+  _animation: {fileID: 910496518}
+--- !u!114 &910496518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 910496515}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d1256c007c53424f8dc908aa9be365e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Animations.PanelAppearanceAnimation
+  panel: {fileID: 464419216}
+  direction: 0
+  duration: 0.5
+  ease: 2
 --- !u!1001 &920683926
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8711,12 +8747,12 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1133697049}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 355309992}
+  m_Father: {fileID: 118647886}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.87988883, y: 1}
   m_AnchorMax: {x: 0.87988883, y: 1}
@@ -12640,6 +12676,7 @@ MonoBehaviour:
   - {fileID: 847448777}
   - {fileID: 1468242812}
   - {fileID: 1832927024}
+  _scaleDuration: 0.25
 --- !u!1001 &1656604225
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14256,13 +14293,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1843320850}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 40859973}
-  m_Father: {fileID: 910496516}
+  m_Father: {fileID: 464419216}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -14536,12 +14573,12 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1865312753}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 355309992}
+  m_Father: {fileID: 118647886}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.1, y: 0.05}
   m_AnchorMax: {x: 0.9, y: 0.9}
@@ -14900,7 +14937,7 @@ RectTransform:
   m_Children:
   - {fileID: 618680836}
   - {fileID: 46186476}
-  m_Father: {fileID: 910496516}
+  m_Father: {fileID: 464419216}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
