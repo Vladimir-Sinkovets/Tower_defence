@@ -3266,6 +3266,7 @@ MonoBehaviour:
   _endGamePanel: {fileID: 910496517}
   _castle: {fileID: 1984246207}
   _metaCurrencyConfig: {fileID: 11400000, guid: 7a6467ea0a848454a9a19b505317eb0b, type: 2}
+  _fieldStartupAnimation: {fileID: 1651697476}
 --- !u!1 &414350677
 GameObject:
   m_ObjectHideFlags: 0
@@ -12251,6 +12252,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1651697474}
   - component: {fileID: 1651697475}
+  - component: {fileID: 1651697476}
   m_Layer: 0
   m_Name: Field
   m_TagString: Untagged
@@ -12465,6 +12467,179 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: 16dcafde6bdd1a44cad39e4d6075a7bd, type: 2}
   m_BuildHeightMesh: 0
+--- !u!114 &1651697476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1651697473}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 820280471908db6428dbe9d2119231be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Animations.FieldStartupAnimation
+  _tiles:
+  - {fileID: 865942943}
+  - {fileID: 775207854}
+  - {fileID: 672606966}
+  - {fileID: 343515019}
+  - {fileID: 1208661971}
+  - {fileID: 1978558828}
+  - {fileID: 443333031}
+  - {fileID: 638344692}
+  - {fileID: 926438417}
+  - {fileID: 2137443413}
+  - {fileID: 1463643193}
+  - {fileID: 930400831}
+  - {fileID: 316361130}
+  - {fileID: 1111316931}
+  - {fileID: 1889669490}
+  - {fileID: 546353992}
+  - {fileID: 1162002051}
+  - {fileID: 251104077}
+  - {fileID: 2118501601}
+  - {fileID: 1877035744}
+  - {fileID: 724306507}
+  - {fileID: 2043753063}
+  - {fileID: 88252150}
+  - {fileID: 636239021}
+  - {fileID: 695166991}
+  - {fileID: 1492419449}
+  - {fileID: 1120688221}
+  - {fileID: 1656604226}
+  - {fileID: 1035569779}
+  - {fileID: 1781399965}
+  - {fileID: 1217207194}
+  - {fileID: 643768453}
+  - {fileID: 1244900974}
+  - {fileID: 261464711}
+  - {fileID: 2145532870}
+  - {fileID: 113067945}
+  - {fileID: 1196443240}
+  - {fileID: 59666751}
+  - {fileID: 1467341409}
+  - {fileID: 1149281665}
+  - {fileID: 1891009926}
+  - {fileID: 56295103}
+  - {fileID: 1596561890}
+  - {fileID: 178767024}
+  - {fileID: 624612517}
+  - {fileID: 2096368506}
+  - {fileID: 1319337742}
+  - {fileID: 1015178779}
+  - {fileID: 103540613}
+  - {fileID: 346343465}
+  - {fileID: 1043963211}
+  - {fileID: 272976602}
+  - {fileID: 1503223961}
+  - {fileID: 1629054401}
+  - {fileID: 1567520653}
+  - {fileID: 1362302167}
+  - {fileID: 724721995}
+  - {fileID: 1780144676}
+  - {fileID: 269715541}
+  - {fileID: 2061501298}
+  - {fileID: 1926658038}
+  - {fileID: 384664519}
+  - {fileID: 2146610549}
+  - {fileID: 1478100107}
+  - {fileID: 1280639320}
+  - {fileID: 428744460}
+  - {fileID: 1008958849}
+  - {fileID: 174311185}
+  - {fileID: 2048254847}
+  - {fileID: 443022819}
+  - {fileID: 1147028754}
+  - {fileID: 19801346}
+  - {fileID: 128776160}
+  - {fileID: 723435328}
+  - {fileID: 320525793}
+  - {fileID: 997703294}
+  - {fileID: 235164497}
+  - {fileID: 1620776169}
+  - {fileID: 1469049163}
+  - {fileID: 894440136}
+  - {fileID: 1197810306}
+  - {fileID: 214400152}
+  - {fileID: 905640168}
+  - {fileID: 486393670}
+  - {fileID: 752678585}
+  - {fileID: 259444298}
+  - {fileID: 1384081968}
+  - {fileID: 1778072900}
+  - {fileID: 1707661376}
+  - {fileID: 1254290116}
+  - {fileID: 764593575}
+  - {fileID: 1926225412}
+  - {fileID: 185898531}
+  - {fileID: 194872643}
+  - {fileID: 301584236}
+  - {fileID: 83864489}
+  - {fileID: 777378697}
+  - {fileID: 1674524193}
+  - {fileID: 1684946876}
+  - {fileID: 1852349712}
+  - {fileID: 1764003432}
+  - {fileID: 2147425062}
+  - {fileID: 1024914267}
+  - {fileID: 1000836490}
+  - {fileID: 578193259}
+  - {fileID: 1053789338}
+  - {fileID: 41981690}
+  - {fileID: 1639915244}
+  - {fileID: 1361686916}
+  - {fileID: 1367192010}
+  - {fileID: 509587582}
+  - {fileID: 1396470607}
+  - {fileID: 744851004}
+  - {fileID: 1612050193}
+  - {fileID: 1993830180}
+  - {fileID: 1725116080}
+  - {fileID: 1391708641}
+  - {fileID: 1011171892}
+  - {fileID: 1897668880}
+  - {fileID: 1776007657}
+  - {fileID: 263994528}
+  - {fileID: 870308215}
+  - {fileID: 1133210247}
+  - {fileID: 267201926}
+  - {fileID: 1782242495}
+  - {fileID: 936963999}
+  - {fileID: 466283523}
+  - {fileID: 1606901427}
+  - {fileID: 900530770}
+  - {fileID: 1259140684}
+  - {fileID: 558669993}
+  - {fileID: 1330952845}
+  - {fileID: 831126218}
+  - {fileID: 837511219}
+  - {fileID: 932920748}
+  - {fileID: 634092802}
+  - {fileID: 525592097}
+  - {fileID: 1612500320}
+  - {fileID: 62012934}
+  - {fileID: 330638050}
+  - {fileID: 567009148}
+  - {fileID: 171785731}
+  - {fileID: 1243300236}
+  - {fileID: 920683927}
+  - {fileID: 586233236}
+  - {fileID: 1121997003}
+  - {fileID: 590083477}
+  - {fileID: 1737384299}
+  - {fileID: 1859245082}
+  - {fileID: 2113112881}
+  - {fileID: 850319847}
+  - {fileID: 727991896}
+  - {fileID: 1631470055}
+  - {fileID: 1759837910}
+  - {fileID: 1109092629}
+  - {fileID: 159933214}
+  - {fileID: 1709019599}
+  - {fileID: 847448777}
+  - {fileID: 1468242812}
+  - {fileID: 1832927024}
 --- !u!1001 &1656604225
 PrefabInstance:
   m_ObjectHideFlags: 0

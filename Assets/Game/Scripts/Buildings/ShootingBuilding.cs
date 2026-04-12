@@ -88,8 +88,6 @@ namespace Assets.Game.Scripts.Buildings
             projectile.transform.position = _projectileStartPosition.transform.position;
 
             projectile.Init(_currentTarget, _config.Damage, _config.ProjectileSpeed, _config.ArcHeight);
-
-            Debug.Log(projectile.name);
         }
 
         private void FindTarget()
