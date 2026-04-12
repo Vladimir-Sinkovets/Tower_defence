@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Game.Scripts.Animations;
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -23,6 +24,8 @@ namespace Assets.Game.Scripts.UI
         [SerializeField] private TMP_Text _metaCurrencyText;
         [SerializeField] private RectTransform _metaCurrencyPanel;
 
+        [SerializeField] private PanelAppearanceAnimation _animation;
+
         public void Open(int wavesCount, int killedEnemyCount, int currencyCount, int metaCurrencyCount)
         {
             _wavesCountText.text = wavesCount.ToString();
@@ -31,6 +34,9 @@ namespace Assets.Game.Scripts.UI
             _metaCurrencyText.text = $"+{metaCurrencyCount}";
 
             _panel.gameObject.SetActive(true);
+
+            if (_animation != null)
+                _animation.Show();
         }
 
         public void RestartButtonHandler() => OnRestartButtonClicked?.Invoke();

@@ -1,4 +1,5 @@
-﻿using Assets.Game.Scripts.Buildings;
+﻿using Assets.Game.Scripts.Animations;
+using Assets.Game.Scripts.Buildings;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,12 +14,22 @@ namespace Assets.Game.Scripts.UI
         [SerializeField] private GameObject _panel;
         [SerializeField] private RectTransform _optionsContainer;
         [SerializeField] private BuildingOption _buildingOptionPrefab;
+        [SerializeField] private PanelAppearanceAnimation _animation;
 
         private List<BuildingOption> _options = new();
+        private bool _isOpened;
 
         public void Open(IEnumerable<BuildingConfig> configs, int total)
         {
-            _panel.SetActive(true);
+            if (_isOpened == false)
+            {
+                _panel.SetActive(true);
+
+                if (_animation != null)
+                    _animation.Show();
+            }
+
+            _isOpened = true;
 
             InitializeOptions(configs, total);
         }
@@ -33,9 +44,21 @@ namespace Assets.Game.Scripts.UI
 
         public void Hide()
         {
-            _panel.SetActive(false);
+            _isOpened = false;
 
-            ClearContainer();
+            if (_animation != null)
+                _animation.Hide(() =>
+                {
+                    _panel.SetActive(false);
+
+                    ClearContainer();
+                });
+            else
+            {
+                _panel.SetActive(false);
+
+                ClearContainer();
+            }
         }
 
         public void OnCloseButtonClickedHandler() => OnCloseButtonClicked?.Invoke();
