@@ -17,6 +17,7 @@ namespace Assets.Game.Scripts
         private GameOverManager _gameOverManager;
         private FieldStartupAnimation _fieldStartupAnimation;
         private BuildingsConfig _buildingsConfig;
+        private IBuildingAnimations _buildingAnimations;
         private DiContainer _container;
 
         [Inject]
@@ -27,6 +28,7 @@ namespace Assets.Game.Scripts
             GameOverManager gameOverManager,
             FieldStartupAnimation fieldStartupAnimation,
             BuildingsConfig buildingsConfig,
+            IBuildingAnimations buildingAnimations,
             DiContainer container)
         {
             _wavesController = waveController;
@@ -35,6 +37,7 @@ namespace Assets.Game.Scripts
             _gameOverManager = gameOverManager;
             _fieldStartupAnimation = fieldStartupAnimation;
             _buildingsConfig = buildingsConfig;
+            _buildingAnimations = buildingAnimations;
             _container = container;
         }
 
@@ -60,24 +63,7 @@ namespace Assets.Game.Scripts
             building.transform.parent = _castle.transform;
             building.transform.position = _castle.BuildingPosition.transform.position;
 
-            var buildingGroundPosition = building.transform.position;
-
-            building.transform.position += new Vector3(0, 10, 0);
-
-            yield return building.transform.DOMove(buildingGroundPosition, 0.5f)
-                .SetEase(Ease.InExpo).WaitForCompletion();
-
-            building.transform.DOScaleX(1.2f, 0.15f)
-                .SetEase(Ease.OutBack);
-
-            building.transform.DOScaleZ(1.2f, 0.15f)
-                .SetEase(Ease.OutBack);
-
-            yield return building.transform.DOScaleY(0.1f, 0.15f)
-                .SetEase(Ease.OutBack).WaitForCompletion();
-
-            yield return building.transform.DOScale(1.0f, 0.15f)
-                .SetEase(Ease.OutBack).WaitForCompletion();
+            yield return _buildingAnimations.PlayBuildingAppearanceAnimation(building);
         }
 
         private void OnCastleHpEndedHandler() => _gameOverManager.GameOver();
