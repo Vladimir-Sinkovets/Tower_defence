@@ -6,6 +6,7 @@ namespace Assets.Game.Scripts.Shared
     public class Health : MonoBehaviour
     {
         public event Action<int, int> OnHpChanged;
+        public event Action<int> OnDamagaed;
         public event Action OnDied;
 
         [SerializeField] private int _startHp;
@@ -30,6 +31,8 @@ namespace Assets.Game.Scripts.Shared
             _currentHp -= damage;
 
             OnHpChanged?.Invoke(_currentHp, _startHp);
+
+            OnDamagaed?.Invoke(damage);
 
             if (_currentHp <= 0)
             {

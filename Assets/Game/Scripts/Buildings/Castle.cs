@@ -6,7 +6,8 @@ namespace Assets.Game.Scripts.Buildings
 {
     public class Castle : MonoBehaviour
     {
-        public event Action OnCastleHpEnded;
+        public event Action OnHpEnded;
+        public event Action OnDamaged;
 
         [SerializeField] private Transform _buildingPosition;
         [SerializeField] private Health _health;
@@ -16,8 +17,17 @@ namespace Assets.Game.Scripts.Buildings
         public void Init()
         {
             _health.OnDied += OnDiedHandler;
+            _health.OnDamagaed += OnDamagedHandler;
         }
 
-        private void OnDiedHandler() => OnCastleHpEnded?.Invoke();
+        private void OnDamagedHandler(int _) => OnDamaged?.Invoke();
+
+        private void OnDiedHandler() => OnHpEnded?.Invoke();
+
+        private void OnDestroy()
+        {
+            _health.OnDied -= OnDiedHandler;
+            _health.OnDamagaed -= OnDamagedHandler;
+        }
     }
 }
