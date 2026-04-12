@@ -11,6 +11,7 @@ namespace Assets.Game.Scripts.Services
     public class BuildingController : MonoBehaviour
     {
         [SerializeField] private Transform _planeCenter;
+        [SerializeField] private Transform _pointerPrefab;
 
         private GameInput _input;
         private ChooseBuildingPanel _chooseBuildingPanel;
@@ -19,6 +20,8 @@ namespace Assets.Game.Scripts.Services
         private Registry<Building> _buildingRegistry;
         private CurrencyBank _currencyBank;
         private Camera _mainCamera;
+
+        private Transform _pointer;
 
         private bool _isStopped;
 
@@ -49,6 +52,9 @@ namespace Assets.Game.Scripts.Services
             _chooseBuildingPanel.OnCloseButtonClicked += OnCloseButtonClickedHandler;
 
             _currencyBank.OnCurrencyChanged += OnCurrencyChangedHandler;
+
+            _pointer = Instantiate(_pointerPrefab);
+            _pointer.gameObject.SetActive(false);
         }
 
         private void OnCloseButtonClickedHandler()
@@ -98,11 +104,16 @@ namespace Assets.Game.Scripts.Services
 
             _builder.SetPosition(position);
 
+            _pointer.gameObject.SetActive(true);
+            _pointer.position = position;
+
             _chooseBuildingPanel.Open(_buildingsConfig.Buildings, _currencyBank.Total);
         }
 
         public void Stop()
         {
+            _pointer.gameObject.SetActive(false);
+
             _chooseBuildingPanel.Hide();
 
             _isStopped = true;
@@ -116,6 +127,8 @@ namespace Assets.Game.Scripts.Services
                 return;
 
             _builder.SetBuilding(buildingConfig);
+
+            _pointer.gameObject.SetActive(false);
 
             StartCoroutine(_builder.Build());
         }
