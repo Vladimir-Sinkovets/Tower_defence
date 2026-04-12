@@ -52,7 +52,7 @@ namespace Assets.Game.Scripts.Enemies.States
 
         private void AttackAnimationEventHandler()
         {
-            if (_data.Enemy.Health.IsDied == true || _data.Enemy.IsActive == false)
+            if (_data.Enemy.Health.IsDead == true || _data.Enemy.IsActive == false)
                 return;
 
             _data.Target.ApplyDamage(_data.Config.Damage);

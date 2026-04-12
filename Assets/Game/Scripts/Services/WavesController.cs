@@ -40,7 +40,7 @@ namespace Assets.Game.Scripts.Services
 
                 yield return new WaitUntil(() => 
                     _enemyWavesController.IsSpawning == false &&
-                    _enemyRegistry.All.Any(x => !x.Health.IsDied) == false);
+                    _enemyRegistry.All.Any(x => !x.Health.IsDead) == false);
 
                 yield return new WaitForSeconds(_wavesConfig.IntervalBetweenWaves);
 

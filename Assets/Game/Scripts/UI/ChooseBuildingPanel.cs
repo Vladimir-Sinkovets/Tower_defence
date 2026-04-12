@@ -34,6 +34,8 @@ namespace Assets.Game.Scripts.UI
         public void Hide()
         {
             _panel.SetActive(false);
+
+            ClearContainer();
         }
 
         public void OnCloseButtonClickedHandler() => OnCloseButtonClicked?.Invoke();
@@ -63,9 +65,9 @@ namespace Assets.Game.Scripts.UI
 
         private void OnOptionClickedHandler(BuildingOption option)
         {
-            OnOptionChosen?.Invoke(option.Config);
-
             Hide();
+
+            OnOptionChosen?.Invoke(option.Config);
         }
 
         private void ClearContainer()
@@ -75,10 +77,14 @@ namespace Assets.Game.Scripts.UI
 
             foreach (var option in _options)
             {
+                option.OnClick -= OnOptionClickedHandler;
+
                 Destroy(option.gameObject);
             }
 
             _options.Clear();
         }
+
+        private void OnDestroy() => ClearContainer();
     }
 }
