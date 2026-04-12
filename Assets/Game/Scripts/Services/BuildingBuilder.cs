@@ -1,5 +1,4 @@
-﻿
-using Assets.Game.Scripts.Buildings;
+﻿using Assets.Game.Scripts.Buildings;
 using UnityEngine;
 using Zenject;
 
@@ -8,7 +7,6 @@ namespace Assets.Game.Scripts.Services
     public class BuildingBuilder
     {
         private readonly DiContainer _container;
-        private readonly Registry<Building> _buildingRegistry;
 
         private BuildingConfig _buildingConfig;
         private Vector3 _position;
@@ -16,7 +14,6 @@ namespace Assets.Game.Scripts.Services
         public BuildingBuilder(DiContainer container, Registry<Building> buildingRegistry)
         {
             _container = container;
-            _buildingRegistry = buildingRegistry;
         }
 
         public void SetPosition(Vector3 position) => _position = position;
