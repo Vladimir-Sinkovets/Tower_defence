@@ -7,7 +7,7 @@ using Zenject;
 
 namespace Assets.Game.Scripts.Buildings
 {
-    public class ShootingWeapon : Weapon
+    public class ShootingBuilding : Building
     {
         [SerializeField] private Transform _projectileStartPosition;
         [SerializeField] private Transform _weaponRoot;
@@ -15,7 +15,7 @@ namespace Assets.Game.Scripts.Buildings
 
         private Registry<Enemy> _enemiesRegistry;
 
-        private ShootingWeaponFactory _config;
+        private ShootingBuildingFactory _config;
 
         private Enemy _currentTarget;
 
@@ -23,16 +23,16 @@ namespace Assets.Game.Scripts.Buildings
         private bool _isStopped;
 
         [Inject]
-        private void Construct(Registry<Enemy> enemyRegistry, Registry<Weapon> weaponRegistry)
+        private void Construct(Registry<Enemy> enemyRegistry, Registry<Building> buildingRegistry)
         {
-            base.Construct(weaponRegistry);
+            base.Construct(buildingRegistry);
 
             _enemiesRegistry = enemyRegistry;
         }
 
-        public void Init(ShootingWeaponFactory config)
+        public void Init(ShootingBuildingFactory config)
         {
-            base.Init();
+            base.Init(config);
 
             _isStopped = false;
 

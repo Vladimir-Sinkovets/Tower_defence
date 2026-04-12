@@ -4,25 +4,23 @@ using Zenject;
 
 namespace Assets.Game.Scripts.Buildings
 {
-    public class Building : MonoBehaviour
+    public abstract class Building : MonoBehaviour
     {
-        [SerializeField] private Transform _weaponPosition;
-
-        private BuildingConfig _config;
         private Registry<Building> _buildingRegistry;
+        private BuildingFactory _config;
 
         public float RadiusOfOccupiedSpace => _config.RadiusOfOccupiedSpace;
 
-        public Transform WeaponPosition { get => _weaponPosition; }
-
         [Inject]
-        private void Construct(Registry<Building> buildingRegistry) => _buildingRegistry = buildingRegistry;
+        protected virtual void Construct(Registry<Building> buildingRegistry) => _buildingRegistry = buildingRegistry;
 
-        public void Init(BuildingConfig config)
+        public virtual void Init(BuildingFactory config)
         {
             _config = config;
             _buildingRegistry.Register(this);
         }
+
+        public abstract void Stop();
 
         private void OnDrawGizmos()
         {
@@ -30,6 +28,7 @@ namespace Assets.Game.Scripts.Buildings
                 Gizmos.DrawWireSphere(transform.position, RadiusOfOccupiedSpace);
         }
 
-        private void OnDestroy() => _buildingRegistry?.Unregister(this);
+
+        protected virtual void OnDestroy() => _buildingRegistry.Unregister(this);
     }
 }

@@ -9,7 +9,7 @@ namespace Assets.Game.Scripts.Services
     public class GameOverManager
     {
         private Registry<Enemy> _enemyRegistry;
-        private Registry<Weapon> _weaponRegistry;
+        private Registry<Building> _buildingRegistry;
         private EndGamePanel _endGamePanel;
         private GameStatistics _gameStatistics;
         private CurrencyBank _currencyBank;
@@ -22,7 +22,7 @@ namespace Assets.Game.Scripts.Services
         private void Construct(
             WavesController waveController,
             BuildingController buildingController,
-            Registry<Weapon> weaponRegistry,
+            Registry<Building> buildingRegistry,
             Registry<Enemy> enemyRegistry,
             EndGamePanel endGamePanel,
             GameStatistics gameStatistics,
@@ -33,7 +33,7 @@ namespace Assets.Game.Scripts.Services
             _wavesController = waveController;
             _buildingController = buildingController;
             _enemyRegistry = enemyRegistry;
-            _weaponRegistry = weaponRegistry;
+            _buildingRegistry = buildingRegistry;
             _endGamePanel = endGamePanel;
             _gameStatistics = gameStatistics;
             _currencyBank = currencyBank;
@@ -45,7 +45,7 @@ namespace Assets.Game.Scripts.Services
         {
             StopEnemies();
 
-            StopWeapons();
+            StopBuildings();
 
             StopBuilingController();
 
@@ -69,11 +69,11 @@ namespace Assets.Game.Scripts.Services
 
         private void StopBuilingController() => _buildingController.Stop();
 
-        private void StopWeapons()
+        private void StopBuildings()
         {
-            foreach (var weapon in _weaponRegistry.All)
+            foreach (var building in _buildingRegistry.All)
             {
-                weapon.Stop();
+                building.Stop();
             }
         }
 

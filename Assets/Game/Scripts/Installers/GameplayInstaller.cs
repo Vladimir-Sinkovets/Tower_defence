@@ -27,8 +27,6 @@ namespace Assets.Game.Scripts.Installers
 
             Container.Bind<Registry<Building>>().AsSingle();
 
-            Container.Bind<Registry<Weapon>>().AsSingle();
-
             Container.Bind<EnemyEvents>().AsSingle(); 
 
             Container.Bind<GameStatistics>().AsSingle();

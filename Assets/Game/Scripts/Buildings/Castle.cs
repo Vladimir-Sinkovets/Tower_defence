@@ -9,7 +9,7 @@ namespace Assets.Game.Scripts.Buildings
     {
         public event Action OnCastleHpEnded;
 
-        [SerializeField] private Transform _weaponPosition;
+        [SerializeField] private Transform _buildingPosition;
         [SerializeField] private Health _health;
 
         private BuildingsConfig _buildingsConfig;
@@ -24,10 +24,10 @@ namespace Assets.Game.Scripts.Buildings
 
         public void Init()
         {
-            var weapon = _buildingsConfig.CastleWeapon.Create(_container);
+            var building = _buildingsConfig.CastleBuilding.Create(_container);
 
-            weapon.transform.parent = _weaponPosition;
-            weapon.transform.position = _weaponPosition.transform.position;
+            building.transform.parent = _buildingPosition;
+            building.transform.position = _buildingPosition.transform.position;
 
             _health.OnDied += OnDiedHandler;
         }

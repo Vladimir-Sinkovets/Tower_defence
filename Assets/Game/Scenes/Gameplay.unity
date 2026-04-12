@@ -6961,68 +6961,6 @@ MonoBehaviour:
   _currencyPanel: {fileID: 556276236}
   _metaCurrencyText: {fileID: 107904585}
   _metaCurrencyPanel: {fileID: 185326548}
---- !u!1001 &919515436
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 1984246205}
-    m_Modifications:
-    - target: {fileID: -8679921383154817045, guid: ead0a05f2f0c8b04ea1e8a56f4dad092, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: ead0a05f2f0c8b04ea1e8a56f4dad092, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: ead0a05f2f0c8b04ea1e8a56f4dad092, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: ead0a05f2f0c8b04ea1e8a56f4dad092, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: ead0a05f2f0c8b04ea1e8a56f4dad092, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: ead0a05f2f0c8b04ea1e8a56f4dad092, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: ead0a05f2f0c8b04ea1e8a56f4dad092, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: ead0a05f2f0c8b04ea1e8a56f4dad092, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: ead0a05f2f0c8b04ea1e8a56f4dad092, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: ead0a05f2f0c8b04ea1e8a56f4dad092, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: ead0a05f2f0c8b04ea1e8a56f4dad092, type: 3}
-      propertyPath: m_Name
-      value: tower-square-build-a
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: ead0a05f2f0c8b04ea1e8a56f4dad092, type: 3}
---- !u!4 &919515437 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ead0a05f2f0c8b04ea1e8a56f4dad092, type: 3}
-  m_PrefabInstance: {fileID: 919515436}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &920683926
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10656,7 +10594,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1390631840}
   m_Layer: 0
-  m_Name: WeaponPosition
+  m_Name: BuildingPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10671,7 +10609,7 @@ Transform:
   m_GameObject: {fileID: 1390631839}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.842, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -15236,7 +15174,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 919515437}
   - {fileID: 1390631840}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -15265,7 +15202,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71a41234fded6b34bb1e62ffbda2e6ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Buildings.Castle
-  _weaponPosition: {fileID: 1390631840}
+  _buildingPosition: {fileID: 1390631840}
   _health: {fileID: 1984246206}
 --- !u!1 &1992888406
 GameObject:
