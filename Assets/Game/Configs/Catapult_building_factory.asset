@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 371ea471c49352e4ba4a64e930f34da5, type: 3}
   m_Name: Catapult_building_factory
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Buildings.ShootingWeaponFactory
+  RadiusOfOccupiedSpace: 1
   AttackRadius: 4
   AttackInterval: 1
   ProjectileSpeed: 4
@@ -19,4 +20,6 @@ MonoBehaviour:
   RotationSpeed: 360
   ArcHeight: 0.4
   ProjectilePrefab: {fileID: 5064200408351446433, guid: fab406a5f664d5b4788c91a09f564d4f, type: 3}
+  ShootVFX: {fileID: 0}
+  HitVFX: {fileID: 2433282508523890284, guid: e7668afd988943942aafd650a2f30c4c, type: 3}
   _prefab: {fileID: 8884717547047690953, guid: d4ed3d9ac2acf47408d1a95223214702, type: 3}

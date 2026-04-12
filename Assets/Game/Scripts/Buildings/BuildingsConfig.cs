@@ -16,7 +16,6 @@ namespace Assets.Game.Scripts.Buildings
     public class BuildingConfig
     {
         public Sprite Icon;
-        public float RadiusOfOccupiedSpace = 1.0f;
         public BuildingFactory BuildingFactory;
         public int Price;
     }

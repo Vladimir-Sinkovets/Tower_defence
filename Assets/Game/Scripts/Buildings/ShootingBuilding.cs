@@ -41,6 +41,12 @@ namespace Assets.Game.Scripts.Buildings
             _isStopped = false;
 
             _config = config;
+
+            ClearTarget();
+
+            _nextShootTime = 0f;
+
+            _nextSearchTime = 0f;
         }
 
         private void Update()
@@ -83,11 +89,18 @@ namespace Assets.Game.Scripts.Buildings
             if (_preShootAnimation != null)
                 yield return _preShootAnimation.PlayBeforeAttackAnimation();
 
+            if (_config.ShootVFX != null)
+            {
+                var vfx = Instantiate(_config.ShootVFX, _projectileStartPosition.position, Quaternion.identity);
+
+                Destroy(vfx.gameObject, vfx.main.duration);
+            }
+
             var projectile = Instantiate(_config.ProjectilePrefab);
 
             projectile.transform.position = _projectileStartPosition.transform.position;
 
-            projectile.Init(_currentTarget, _config.Damage, _config.ProjectileSpeed, _config.ArcHeight);
+            projectile.Init(_currentTarget, _config.Damage, _config.ProjectileSpeed, _config.ArcHeight, _config.HitVFX);
         }
 
         private void FindTarget()
