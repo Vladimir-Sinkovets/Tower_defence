@@ -95,36 +95,25 @@ namespace Assets.Game.Scripts.Input
             ""id"": ""0c589f0e-97b6-4be9-be1f-0373d79e77fd"",
             ""actions"": [
                 {
-                    ""name"": ""Tap"",
-                    ""type"": ""Button"",
-                    ""id"": ""9be417c5-c8c4-4ca3-ac29-9507ddf320f0"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""TapPosition"",
+                    ""name"": ""TouchPosition"",
                     ""type"": ""Value"",
                     ""id"": ""169f6786-f9c9-4543-bbb1-cd1865f3fb78"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Touch"",
+                    ""type"": ""Button"",
+                    ""id"": ""c64867be-8430-4df9-93a9-3bc400a73d4b"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""b004abed-376c-4317-a92e-4fde913513e6"",
-                    ""path"": ""<Touchscreen>/primaryTouch/tap"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Tap"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
                 {
                     ""name"": """",
                     ""id"": ""39e50b52-95a8-4d74-b9c6-3387d90f6ce0"",
@@ -132,7 +121,18 @@ namespace Assets.Game.Scripts.Input
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""TapPosition"",
+                    ""action"": ""TouchPosition"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""687f0f17-eff6-4133-b7c1-144a1cf340a1"",
+                    ""path"": ""<Touchscreen>/touch0/press"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Touch"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -143,8 +143,8 @@ namespace Assets.Game.Scripts.Input
 }");
             // Gameplay
             m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
-            m_Gameplay_Tap = m_Gameplay.FindAction("Tap", throwIfNotFound: true);
-            m_Gameplay_TapPosition = m_Gameplay.FindAction("TapPosition", throwIfNotFound: true);
+            m_Gameplay_TouchPosition = m_Gameplay.FindAction("TouchPosition", throwIfNotFound: true);
+            m_Gameplay_Touch = m_Gameplay.FindAction("Touch", throwIfNotFound: true);
         }
 
         ~@InputActions()
@@ -225,8 +225,8 @@ namespace Assets.Game.Scripts.Input
         // Gameplay
         private readonly InputActionMap m_Gameplay;
         private List<IGameplayActions> m_GameplayActionsCallbackInterfaces = new List<IGameplayActions>();
-        private readonly InputAction m_Gameplay_Tap;
-        private readonly InputAction m_Gameplay_TapPosition;
+        private readonly InputAction m_Gameplay_TouchPosition;
+        private readonly InputAction m_Gameplay_Touch;
         /// <summary>
         /// Provides access to input actions defined in input action map "Gameplay".
         /// </summary>
@@ -239,13 +239,13 @@ namespace Assets.Game.Scripts.Input
             /// </summary>
             public GameplayActions(@InputActions wrapper) { m_Wrapper = wrapper; }
             /// <summary>
-            /// Provides access to the underlying input action "Gameplay/Tap".
+            /// Provides access to the underlying input action "Gameplay/TouchPosition".
             /// </summary>
-            public InputAction @Tap => m_Wrapper.m_Gameplay_Tap;
+            public InputAction @TouchPosition => m_Wrapper.m_Gameplay_TouchPosition;
             /// <summary>
-            /// Provides access to the underlying input action "Gameplay/TapPosition".
+            /// Provides access to the underlying input action "Gameplay/Touch".
             /// </summary>
-            public InputAction @TapPosition => m_Wrapper.m_Gameplay_TapPosition;
+            public InputAction @Touch => m_Wrapper.m_Gameplay_Touch;
             /// <summary>
             /// Provides access to the underlying input action map instance.
             /// </summary>
@@ -272,12 +272,12 @@ namespace Assets.Game.Scripts.Input
             {
                 if (instance == null || m_Wrapper.m_GameplayActionsCallbackInterfaces.Contains(instance)) return;
                 m_Wrapper.m_GameplayActionsCallbackInterfaces.Add(instance);
-                @Tap.started += instance.OnTap;
-                @Tap.performed += instance.OnTap;
-                @Tap.canceled += instance.OnTap;
-                @TapPosition.started += instance.OnTapPosition;
-                @TapPosition.performed += instance.OnTapPosition;
-                @TapPosition.canceled += instance.OnTapPosition;
+                @TouchPosition.started += instance.OnTouchPosition;
+                @TouchPosition.performed += instance.OnTouchPosition;
+                @TouchPosition.canceled += instance.OnTouchPosition;
+                @Touch.started += instance.OnTouch;
+                @Touch.performed += instance.OnTouch;
+                @Touch.canceled += instance.OnTouch;
             }
 
             /// <summary>
@@ -289,12 +289,12 @@ namespace Assets.Game.Scripts.Input
             /// <seealso cref="GameplayActions" />
             private void UnregisterCallbacks(IGameplayActions instance)
             {
-                @Tap.started -= instance.OnTap;
-                @Tap.performed -= instance.OnTap;
-                @Tap.canceled -= instance.OnTap;
-                @TapPosition.started -= instance.OnTapPosition;
-                @TapPosition.performed -= instance.OnTapPosition;
-                @TapPosition.canceled -= instance.OnTapPosition;
+                @TouchPosition.started -= instance.OnTouchPosition;
+                @TouchPosition.performed -= instance.OnTouchPosition;
+                @TouchPosition.canceled -= instance.OnTouchPosition;
+                @Touch.started -= instance.OnTouch;
+                @Touch.performed -= instance.OnTouch;
+                @Touch.canceled -= instance.OnTouch;
             }
 
             /// <summary>
@@ -336,19 +336,19 @@ namespace Assets.Game.Scripts.Input
         public interface IGameplayActions
         {
             /// <summary>
-            /// Method invoked when associated input action "Tap" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// Method invoked when associated input action "TouchPosition" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
             /// </summary>
             /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-            void OnTap(InputAction.CallbackContext context);
+            void OnTouchPosition(InputAction.CallbackContext context);
             /// <summary>
-            /// Method invoked when associated input action "TapPosition" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// Method invoked when associated input action "Touch" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
             /// </summary>
             /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-            void OnTapPosition(InputAction.CallbackContext context);
+            void OnTouch(InputAction.CallbackContext context);
         }
     }
 }
