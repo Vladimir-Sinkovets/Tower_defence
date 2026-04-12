@@ -12,7 +12,7 @@ namespace Assets.Game.Scripts.Buildings
         public float RadiusOfOccupiedSpace => _config.RadiusOfOccupiedSpace;
 
         [Inject]
-        protected virtual void Construct(Registry<Building> buildingRegistry) => _buildingRegistry = buildingRegistry;
+        public virtual void Construct(Registry<Building> buildingRegistry) => _buildingRegistry = buildingRegistry;
 
         public virtual void Init(BuildingFactory config)
         {

@@ -17,7 +17,7 @@ namespace Assets.Game.Scripts
         private GameOverManager _gameOverManager;
 
         [Inject]
-        private void Construct(
+        public void Construct(
             WavesController waveController,
             BuildingController buildingController,
             Castle castle,

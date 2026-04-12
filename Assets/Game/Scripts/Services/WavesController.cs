@@ -18,7 +18,7 @@ namespace Assets.Game.Scripts.Services
         public int WavesCount { get => _wavesCount; }
 
         [Inject]
-        private void Construct(EnemyWavesSpawner enemyWavesSpawner, WavesConfig wavesConfig, Registry<Enemy> enemyRegistry)
+        public void Construct(EnemyWavesSpawner enemyWavesSpawner, WavesConfig wavesConfig, Registry<Enemy> enemyRegistry)
         {
             _enemyWavesController = enemyWavesSpawner;
             _enemyRegistry = enemyRegistry;

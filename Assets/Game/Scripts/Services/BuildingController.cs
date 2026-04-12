@@ -23,7 +23,7 @@ namespace Assets.Game.Scripts.Services
         private bool _isStopped;
 
         [Inject]
-        private void Construct(
+        public void Construct(
             GameInput input,
             ChooseBuildingPanel chooseBuildingPanel,
             BuildingsConfig buildingsConfig,

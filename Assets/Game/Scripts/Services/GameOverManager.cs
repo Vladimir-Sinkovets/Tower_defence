@@ -19,7 +19,7 @@ namespace Assets.Game.Scripts.Services
         private BuildingController _buildingController;
 
         [Inject]
-        private void Construct(
+        public void Construct(
             WavesController waveController,
             BuildingController buildingController,
             Registry<Building> buildingRegistry,

@@ -23,7 +23,7 @@ namespace Assets.Game.Scripts.Buildings
         private bool _isStopped;
 
         [Inject]
-        private void Construct(Registry<Enemy> enemyRegistry, Registry<Building> buildingRegistry)
+        public void Construct(Registry<Enemy> enemyRegistry, Registry<Building> buildingRegistry)
         {
             base.Construct(buildingRegistry);
 
