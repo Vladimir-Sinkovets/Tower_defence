@@ -6,7 +6,7 @@ namespace Assets.Game.Scripts.Input
 {
     public class GameInput : IDisposable
     {
-        public event Action<Vector2> Tap;
+        public event Action<Vector2> Touch;
 
         private InputActions _inputActions;
 
@@ -16,12 +16,12 @@ namespace Assets.Game.Scripts.Input
 
             _inputActions.Gameplay.Enable();
 
-            _inputActions.Gameplay.Tap.performed += OnTapPerformedHandler;
+            _inputActions.Gameplay.Touch.performed += OnTouchPerformedHandler;
         }
 
-        private void OnTapPerformedHandler(InputAction.CallbackContext context)
+        private void OnTouchPerformedHandler(InputAction.CallbackContext context)
         {
-            Tap?.Invoke(_inputActions.Gameplay.TapPosition.ReadValue<Vector2>());
+            Touch?.Invoke(_inputActions.Gameplay.TouchPosition.ReadValue<Vector2>());
         }
 
         public void Dispose()

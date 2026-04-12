@@ -46,7 +46,7 @@ namespace Assets.Game.Scripts.Services
 
         public void Init()
         {
-            _input.Tap += OnTapHandler;
+            _input.Touch += OnTouchHandler;
 
             _chooseBuildingPanel.OnOptionChosen += OnOptionChosenHandler;
             _chooseBuildingPanel.OnCloseButtonClicked += OnCloseButtonClickedHandler;
@@ -59,6 +59,8 @@ namespace Assets.Game.Scripts.Services
 
         private void OnCloseButtonClickedHandler()
         {
+            _pointer.gameObject.SetActive(false);
+
             _chooseBuildingPanel.Hide();
 
             _builder.Clean();
@@ -69,15 +71,15 @@ namespace Assets.Game.Scripts.Services
             _chooseBuildingPanel.UpdatePanel(total);
         }
 
-        private void OnTapHandler(Vector2 tapPosition)
+        private void OnTouchHandler(Vector2 touchPosition)
         {
             if (_isStopped)
                 return;
 
-            if (IsPointOverUI(tapPosition))
+            if (IsPointOverUI(touchPosition))
                 return;
 
-            var position = GetPoint(tapPosition);
+            var position = GetPoint(touchPosition);
 
             if (IsPositionAvailable(position) == false)
                 return;
@@ -144,9 +146,9 @@ namespace Assets.Game.Scripts.Services
             return true;
         }
 
-        private Vector3 GetPoint(Vector2 tapPosition)
+        private Vector3 GetPoint(Vector2 touchPosition)
         {
-            var ray = _mainCamera.ScreenPointToRay(tapPosition);
+            var ray = _mainCamera.ScreenPointToRay(touchPosition);
 
             var buildPlane = new Plane(Vector3.up, _planeCenter.position);
 
@@ -160,7 +162,7 @@ namespace Assets.Game.Scripts.Services
 
         private void OnDestroy()
         {
-            _input.Tap -= OnTapHandler;
+            _input.Touch -= OnTouchHandler;
 
             _chooseBuildingPanel.OnOptionChosen -= OnOptionChosenHandler;
             _chooseBuildingPanel.OnCloseButtonClicked -= OnCloseButtonClickedHandler;
