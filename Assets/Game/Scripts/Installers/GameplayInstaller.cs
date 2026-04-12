@@ -1,4 +1,5 @@
-﻿using Assets.Game.Scripts.Buildings;
+﻿using Assets.Game.Scripts.Animations;
+using Assets.Game.Scripts.Buildings;
 using Assets.Game.Scripts.Configs;
 using Assets.Game.Scripts.Enemies;
 using Assets.Game.Scripts.Input;
@@ -20,6 +21,7 @@ namespace Assets.Game.Scripts.Installers
         [SerializeField] private EndGamePanel _endGamePanel;
         [SerializeField] private Castle _castle;
         [SerializeField] private MetaCurrencyConfig _metaCurrencyConfig;
+        [SerializeField] private FieldStartupAnimation _fieldStartupAnimation;
 
         public override void InstallBindings()
         {
@@ -46,6 +48,8 @@ namespace Assets.Game.Scripts.Installers
             Container.BindInstance(_chooseBuildingPanel).AsSingle();
 
             Container.BindInstance(_endGamePanel).AsSingle();
+
+            Container.BindInstance(_fieldStartupAnimation).AsSingle();
 
             Container.BindInstance(_buildingController).AsSingle();
 
