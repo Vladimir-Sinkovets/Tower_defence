@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 371ea471c49352e4ba4a64e930f34da5, type: 3}
   m_Name: Barrel_building_factory
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Buildings.ShootingWeaponFactory
+  RadiusOfOccupiedSpace: 1
   AttackRadius: 4
   AttackInterval: 1
   ProjectileSpeed: 4
@@ -19,4 +20,6 @@ MonoBehaviour:
   RotationSpeed: 360
   ArcHeight: 0.4
   ProjectilePrefab: {fileID: 5064200408351446433, guid: c77931573eaa6f147b287c00d3d3fbfc, type: 3}
+  ShootVFX: {fileID: 2504214343621411456, guid: 7902838574831e4478afc9cd68a8d958, type: 3}
+  HitVFX: {fileID: 2433282508523890284, guid: e7668afd988943942aafd650a2f30c4c, type: 3}
   _prefab: {fileID: 2864936249383356852, guid: b4c60f9ad1883514eb42a602ebb59268, type: 3}

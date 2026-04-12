@@ -13,6 +13,8 @@ namespace Assets.Game.Scripts.Buildings
         public float RotationSpeed = 360.0f;
         public float ArcHeight = 0.4f;
         public Projectile ProjectilePrefab;
+        public ParticleSystem ShootVFX;
+        public ParticleSystem HitVFX;
 
         [SerializeField] private ShootingBuilding _prefab;
 

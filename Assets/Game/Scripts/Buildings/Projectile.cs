@@ -15,8 +15,9 @@ namespace Assets.Game.Scripts
         private float _time;
         private float _flightTime;
         private float _arcHeight;
+        private ParticleSystem _hitVFXPrefab;
 
-        public void Init(Enemy target, int damage, float speed, float arcHeight)
+        public void Init(Enemy target, int damage, float speed, float arcHeight, ParticleSystem hitVFXPrefab = null)
         {
             if (target == null)
             {
@@ -34,6 +35,8 @@ namespace Assets.Game.Scripts
             var distance = Vector3.Distance(_startPosition, _targetLastPosition);
             _flightTime = distance / _speed;
             _arcHeight = arcHeight;
+
+            _hitVFXPrefab = hitVFXPrefab;
         }
 
         private void Update()
@@ -63,6 +66,13 @@ namespace Assets.Game.Scripts
                     _target.Health.ApplyDamage(_damage);
 
                 Destroy(gameObject);
+
+                if (_hitVFXPrefab != null)
+                {
+                    var vfx = Instantiate(_hitVFXPrefab, transform.position, Quaternion.identity);
+
+                    Destroy(vfx.gameObject, vfx.main.duration);
+                }
             }
         }
     }
