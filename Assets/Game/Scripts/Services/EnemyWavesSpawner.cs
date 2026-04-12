@@ -24,7 +24,7 @@ namespace Assets.Game.Scripts
         public bool IsSpawning { get => _isSpawning; }
 
         [Inject]
-        private void Construct(Registry<Enemy> enemyRegistry, DiContainer diContainer)
+        public void Construct(Registry<Enemy> enemyRegistry, DiContainer diContainer)
         {
             _enemyRegistry = enemyRegistry;
             _diContainer = diContainer;

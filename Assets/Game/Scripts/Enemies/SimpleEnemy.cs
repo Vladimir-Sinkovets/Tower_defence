@@ -25,7 +25,7 @@ namespace Assets.Game.Scripts.Enemies
         public bool IsActive { get => _isActive; }
 
         [Inject]
-        private void Construct(EnemyEvents enemyEvents, Registry<Enemy> enemyRegistry)
+        public void Construct(EnemyEvents enemyEvents, Registry<Enemy> enemyRegistry)
         {
             _enemyEvents = enemyEvents;
             _enemyRegistry = enemyRegistry;

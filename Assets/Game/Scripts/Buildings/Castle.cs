@@ -16,7 +16,7 @@ namespace Assets.Game.Scripts.Buildings
         private DiContainer _container;
 
         [Inject]
-        private void Construct(BuildingsConfig buildingsConfig, DiContainer container)
+        public void Construct(BuildingsConfig buildingsConfig, DiContainer container)
         {
             _buildingsConfig = buildingsConfig;
             _container = container;

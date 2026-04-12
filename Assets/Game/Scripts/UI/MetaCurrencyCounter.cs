@@ -12,7 +12,7 @@ namespace Assets.Game.Scripts.UI
         private MetaCurrencyService _metaCurrencyService;
 
         [Inject]
-        private void Construct(MetaCurrencyService metaCurrencyService) => _metaCurrencyService = metaCurrencyService;
+        public void Construct(MetaCurrencyService metaCurrencyService) => _metaCurrencyService = metaCurrencyService;
 
         private void Start() => _textField.text = _metaCurrencyService.Total.ToString();
     }

@@ -11,7 +11,7 @@ namespace Assets.Game.Scripts.UI
         private CurrencyBank _currencyBank;
 
         [Inject]
-        private void Construct(CurrencyBank currencyBank)
+        public void Construct(CurrencyBank currencyBank)
         {
             _currencyBank = currencyBank;
 
