@@ -1,6 +1,7 @@
 ﻿using Assets.Game.Scripts.Animations;
 using Assets.Game.Scripts.Buildings;
 using Assets.Game.Scripts.Services;
+using DG.Tweening;
 using System.Collections;
 using UnityEngine;
 using Zenject;
@@ -15,7 +16,6 @@ namespace Assets.Game.Scripts
         private GameOverManager _gameOverManager;
         private FieldStartupAnimation _fieldStartupAnimation;
         private BuildingsConfig _buildingsConfig;
-        private IBuildingAnimations _buildingAnimations;
         private DiContainer _container;
 
         [Inject]
@@ -26,7 +26,6 @@ namespace Assets.Game.Scripts
             GameOverManager gameOverManager,
             FieldStartupAnimation fieldStartupAnimation,
             BuildingsConfig buildingsConfig,
-            IBuildingAnimations buildingAnimations,
             DiContainer container)
         {
             _wavesController = waveController;
@@ -35,7 +34,6 @@ namespace Assets.Game.Scripts
             _gameOverManager = gameOverManager;
             _fieldStartupAnimation = fieldStartupAnimation;
             _buildingsConfig = buildingsConfig;
-            _buildingAnimations = buildingAnimations;
             _container = container;
         }
 
@@ -51,9 +49,9 @@ namespace Assets.Game.Scripts
 
             _wavesController.StartWaves();
 
-            _castle.OnCastleHpEnded += OnCastleHpEndedHandler;
+            _castle.OnHpEnded += OnCastleHpEndedHandler;
+            _castle.OnDamaged += OnCastleDamaged;
         }
-
         private IEnumerator CreateCastleBuilding()
         {
             var building = _buildingsConfig.CastleBuilding.Create(_container);
@@ -61,11 +59,18 @@ namespace Assets.Game.Scripts
             building.transform.parent = _castle.transform;
             building.transform.position = _castle.BuildingPosition.transform.position;
 
-            yield return _buildingAnimations.PlayBuildingAppearanceAnimation(building);
+            yield return building.transform.PlayFallDownAppearanceAnimation();
         }
 
         private void OnCastleHpEndedHandler() => _gameOverManager.GameOver();
 
-        private void OnDestroy() => _castle.OnCastleHpEnded -= OnCastleHpEndedHandler;
+        private void OnCastleDamaged() => _castle.transform.DOShakePosition(0.1f, 0.1f, 5);
+
+
+        private void OnDestroy()
+        {
+            _castle.OnHpEnded -= OnCastleHpEndedHandler;
+            _castle.OnDamaged -= OnCastleDamaged;
+        }
     }
 }

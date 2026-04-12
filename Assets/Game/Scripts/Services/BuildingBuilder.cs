@@ -9,16 +9,11 @@ namespace Assets.Game.Scripts.Services
     public class BuildingBuilder
     {
         private readonly DiContainer _container;
-        private readonly IBuildingAnimations _buildingAnimations;
 
         private BuildingConfig _buildingConfig;
         private Vector3 _position;
 
-        public BuildingBuilder(DiContainer container, IBuildingAnimations buildingAnimations)
-        {
-            _container = container;
-            _buildingAnimations = buildingAnimations;
-        }
+        public BuildingBuilder(DiContainer container) => _container = container;
 
         public void SetPosition(Vector3 position) => _position = position;
 
@@ -30,7 +25,7 @@ namespace Assets.Game.Scripts.Services
 
             building.transform.position = _position;
 
-            yield return _buildingAnimations.PlayBuildingAppearanceAnimation(building);
+            yield return building.transform.PlayFallDownAppearanceAnimation();
         }
 
         public void Clean()

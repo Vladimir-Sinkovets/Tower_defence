@@ -59,8 +59,6 @@ namespace Assets.Game.Scripts.Installers
 
             Container.BindInterfacesAndSelfTo<CurrencyBank>().AsSingle();
 
-            Container.BindInterfacesTo<BuildingAnimations>().AsTransient();
-
             Container.BindInterfacesAndSelfTo<GameInput>().AsSingle();
 
             Container.Bind<MetaCurrencyService>().AsSingle();
