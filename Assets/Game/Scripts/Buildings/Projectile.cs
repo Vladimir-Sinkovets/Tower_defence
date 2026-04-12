@@ -48,19 +48,19 @@ namespace Assets.Game.Scripts
                 _targetLastPosition = _target.transform.position;
             }
 
-            var direction = (_targetLastPosition - transform.position).normalized;
-
-            transform.Translate(_speed * Time.deltaTime * direction);
-
             var t = _time / _flightTime;
+
+            t = Mathf.Clamp01(t);
+
+            var horizontalPos = Vector3.Lerp(_startPosition, _targetLastPosition, t);
 
             var height = _arcHeight * 4 * (t - t * t);
 
-            var pos = transform.position;
-            pos.y = _startPosition.y + height;
-            transform.position = pos;
+            horizontalPos.y += height;
 
-            if (Vector3.Distance(_targetLastPosition, transform.position) <= 0.2f)
+            transform.position = horizontalPos;
+
+            if (t >= 1f)
             {
                 if (_target != null)
                     _target.Health.ApplyDamage(_damage);
@@ -70,7 +70,6 @@ namespace Assets.Game.Scripts
                 if (_hitVFXPrefab != null)
                 {
                     var vfx = Instantiate(_hitVFXPrefab, transform.position, Quaternion.identity);
-
                     Destroy(vfx.gameObject, vfx.main.duration);
                 }
             }
