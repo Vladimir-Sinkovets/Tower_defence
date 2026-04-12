@@ -28,7 +28,7 @@ namespace Assets.Game.Scripts.Services
 
             _enemyEvents.OnEnemyDied += OnEnemyDiedHandler;
 
-            Total = 0;
+            Total = 2;
         }
 
         public bool TrySpend(int value)

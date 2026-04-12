@@ -12,7 +12,7 @@ namespace Assets.Game.Scripts.Shared
 
         private bool _isDead;
 
-        public bool IsDied { get => _isDead; }
+        public bool IsDead { get => _isDead; }
 
         private int _currentHp;
 

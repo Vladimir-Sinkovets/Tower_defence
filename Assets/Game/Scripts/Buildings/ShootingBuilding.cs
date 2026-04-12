@@ -1,7 +1,9 @@
 ﻿using Assets.Game.Scripts.Animations;
 using Assets.Game.Scripts.Enemies;
 using Assets.Game.Scripts.Services;
+using System;
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 using Zenject;
 
@@ -11,7 +13,7 @@ namespace Assets.Game.Scripts.Buildings
     {
         [SerializeField] private Transform _projectileStartPosition;
         [SerializeField] private Transform _weaponRoot;
-        [SerializeField] private WeaponAnimation _beforeShootAnimation;
+        [SerializeField] private WeaponAnimation _preShootAnimation;
 
         private Registry<Enemy> _enemiesRegistry;
 
@@ -19,7 +21,9 @@ namespace Assets.Game.Scripts.Buildings
 
         private Enemy _currentTarget;
 
-        private float _nextShootTime = 0;
+        private float _nextShootTime;
+        private float _nextSearchTime;
+
         private bool _isStopped;
 
         [Inject]
@@ -41,34 +45,43 @@ namespace Assets.Game.Scripts.Buildings
 
         private void Update()
         {
+            if (_isStopped)
+                return;
+
             if (_currentTarget != null)
             {
+                if (Vector3.Distance(_currentTarget.transform.position, transform.position) > _config.AttackRadius)
+                {
+                    ClearTarget();
+                    return;
+                }
+
                 RotateWeapon();
+
                 Attack();
             }
-            else
+            else if (Time.time >= _nextSearchTime)
             {
+                _nextSearchTime = Time.time + 0.2f;
+
                 FindTarget();
             }
         }
 
         private void Attack()
         {
-            if (_isStopped)
-                return;
-
             if (_nextShootTime > Time.time)
                 return;
+
+            _nextShootTime = Time.time + _config.AttackInterval;
 
             StartCoroutine(Shoot());
         }
 
         private IEnumerator Shoot()
         {
-            _nextShootTime = Time.time + _config.AttackInterval;
-
-            if (_beforeShootAnimation != null)
-                yield return _beforeShootAnimation.PlayBeforeAttackAnimation();
+            if (_preShootAnimation != null)
+                yield return _preShootAnimation.PlayBeforeAttackAnimation();
 
             var projectile = Instantiate(_config.ProjectilePrefab);
 
@@ -76,27 +89,42 @@ namespace Assets.Game.Scripts.Buildings
 
             projectile.Init(_currentTarget, _config.Damage, _config.ProjectileSpeed, _config.ArcHeight);
 
-            yield break;
+            Debug.Log(projectile.name);
         }
 
         private void FindTarget()
         {
+            if (_enemiesRegistry.All == null)
+                return;
+
+            ClearTarget();
+
+            var minDistance = float.MaxValue;
+            Enemy nearestEnemy = null;
+
             foreach (var enemy in _enemiesRegistry.All)
             {
-                if (enemy.Health.IsDied)
+                if (enemy.Health.IsDead)
                     continue;
 
-                if (Vector3.Distance(enemy.transform.position, transform.position) <= _config.AttackRadius)
+                var distance = Vector3.Distance(enemy.transform.position, transform.position);
+
+                if (distance <= _config.AttackRadius && minDistance > distance)
                 {
-                    _currentTarget = enemy;
+                    minDistance = distance;
 
-                    _currentTarget.Health.OnDied += OnCurrentTargetDiedHandler;
-
-                    _nextShootTime = Time.time + _config.AttackInterval;
-
-                    break;
+                    nearestEnemy = enemy;
                 }
             }
+
+            if (nearestEnemy == null)
+                return;
+
+            _currentTarget = nearestEnemy;
+
+            _currentTarget.Health.OnDied += OnCurrentTargetDiedHandler;
+
+            _nextShootTime = Time.time + _config.AttackInterval;
         }
 
         private void RotateWeapon()
@@ -124,6 +152,31 @@ namespace Assets.Game.Scripts.Buildings
             _currentTarget = null;
         }
 
-        public override void Stop() => _isStopped = true;
+        public override void Stop()
+        {
+            _isStopped = true;
+
+            StopAllCoroutines();
+
+            ClearTarget();
+        }
+
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+
+            StopAllCoroutines();
+
+            ClearTarget();
+        }
+
+        private void ClearTarget()
+        {
+            if (_currentTarget != null)
+            {
+                _currentTarget.Health.OnDied -= OnCurrentTargetDiedHandler;
+                _currentTarget = null;
+            }
+        }
     }
 }

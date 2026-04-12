@@ -236,7 +236,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.BuildingWeapon
   _projectileStartPosition: {fileID: 4446439252952627693}
   _weaponRoot: {fileID: 1978038523322021044}
-  _beforeShootAnimation: {fileID: 6344994068173676564}
+  _preShootAnimation: {fileID: 6344994068173676564}
 --- !u!114 &6344994068173676564
 MonoBehaviour:
   m_ObjectHideFlags: 0
