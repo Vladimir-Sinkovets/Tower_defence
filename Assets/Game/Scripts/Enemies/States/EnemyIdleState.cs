@@ -1,5 +1,4 @@
 ﻿using Assets.Game.Scripts.Common.UniversalStateMachine;
-using UnityEngine;
 
 namespace Assets.Game.Scripts.Enemies.States
 {
@@ -25,7 +24,7 @@ namespace Assets.Game.Scripts.Enemies.States
 
         private void OnEnemyDied()
         {
-            StateSwitcher.SwitchState<EnemyDeathState>();
+            StateSwitcher.SwitchState<SimpleEnemyDeathState>();
         }
     }
 }

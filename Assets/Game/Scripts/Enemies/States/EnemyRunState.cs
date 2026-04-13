@@ -1,5 +1,4 @@
 ﻿using Assets.Game.Scripts.Common.UniversalStateMachine;
-using System;
 using UnityEngine;
 
 namespace Assets.Game.Scripts.Enemies.States
@@ -34,13 +33,13 @@ namespace Assets.Game.Scripts.Enemies.States
             }
             else if (Vector3.Distance(_data.Transform.position, _data.Target.transform.position) <= _data.Config.AttackRange)
             {
-                StateSwitcher.SwitchState<EnemyAttackState>();
+                StateSwitcher.SwitchState<SimpleEnemyAttackState>();
             }
         }
 
         private void OnEnemyDied()
         {
-            StateSwitcher.SwitchState<EnemyDeathState>();
+            StateSwitcher.SwitchState<SimpleEnemyDeathState>();
         }
     }
 }

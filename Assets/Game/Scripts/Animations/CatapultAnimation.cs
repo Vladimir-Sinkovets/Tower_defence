@@ -12,8 +12,6 @@ namespace Assets.Game.Scripts.Animations
 
         public override IEnumerator PlayBeforeAttackAnimation()
         {
-            Debug.Log("Catapult");
-
             yield return _catapult.DOLocalRotate(new Vector3(60, 0, 0), _duration)
                 .SetEase(Ease.InElastic)
                 .WaitForCompletion();

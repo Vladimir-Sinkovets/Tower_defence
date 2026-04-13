@@ -3,7 +3,7 @@ using Zenject;
 
 namespace Assets.Game.Scripts.Enemies.Factories
 {
-    [CreateAssetMenu(fileName = "Simple_enemy_factory", menuName = "Enemies/Simple enemy factory")]
+    [CreateAssetMenu(fileName = "Simple_enemy_factory", menuName = "Configs/Simple enemy factory")]
     public class SimpleEnemyFactory : EnemyFactory
     {
         public int Damage = 2;

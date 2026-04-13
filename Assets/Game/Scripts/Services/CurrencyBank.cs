@@ -1,5 +1,4 @@
 ﻿using System;
-using UnityEngine;
 
 namespace Assets.Game.Scripts.Services
 {
@@ -28,7 +27,7 @@ namespace Assets.Game.Scripts.Services
 
             _enemyEvents.OnEnemyDied += OnEnemyDiedHandler;
 
-            Total = 2;
+            Total = 0;
         }
 
         public bool TrySpend(int value)
@@ -41,16 +40,8 @@ namespace Assets.Game.Scripts.Services
             return true;
         }
 
-        private void OnEnemyDiedHandler()
-        {
-            Total += 1;
+        private void OnEnemyDiedHandler() => Total += 1;
 
-            Debug.Log($"Total - {Total}");
-        }
-
-        public void Dispose()
-        {
-            _enemyEvents.OnEnemyDied -= OnEnemyDiedHandler;
-        }
+        public void Dispose() => _enemyEvents.OnEnemyDied -= OnEnemyDiedHandler;
     }
 }

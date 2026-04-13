@@ -15,9 +15,9 @@ namespace Assets.Game.Scripts.Animations
             yield return DOTween.Sequence()
                 .Append(_barrel.DOScaleZ(0.6f, _duration)
                     .SetEase(Ease.InOutSine))
-                .Append(_barrel.DOScaleY(1.15f, _duration)
+                .Join(_barrel.DOScaleY(1.15f, _duration)
                     .SetEase(Ease.InOutSine))
-                .Append(_barrel.DOScaleX(1.15f, _duration)
+                .Join(_barrel.DOScaleX(1.15f, _duration)
                     .SetEase(Ease.InOutSine))
                 .WaitForCompletion();
 

@@ -1,9 +1,7 @@
 ﻿using Assets.Game.Scripts.Animations;
 using Assets.Game.Scripts.Enemies;
 using Assets.Game.Scripts.Services;
-using System;
 using System.Collections;
-using System.Linq;
 using UnityEngine;
 using Zenject;
 
