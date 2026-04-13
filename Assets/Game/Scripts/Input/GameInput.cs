@@ -8,7 +8,7 @@ namespace Assets.Game.Scripts.Input
     {
         public event Action<Vector2> Touch;
 
-        private InputActions _inputActions;
+        private readonly InputActions _inputActions;
 
         public GameInput()
         {

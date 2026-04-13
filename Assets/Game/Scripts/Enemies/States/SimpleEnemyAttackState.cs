@@ -4,14 +4,14 @@ using UnityEngine;
 
 namespace Assets.Game.Scripts.Enemies.States
 {
-    public class EnemyAttackState : State
+    public class SimpleEnemyAttackState : State
     {
         private readonly EnemyStateMachineData _data;
 
         private bool _isAttacking;
         private float _nextAttackTime;
 
-        public EnemyAttackState(IStateSwitcher stateSwitcher, EnemyStateMachineData data) : base(stateSwitcher) => _data = data;
+        public SimpleEnemyAttackState(IStateSwitcher stateSwitcher, EnemyStateMachineData data) : base(stateSwitcher) => _data = data;
 
         public override void Enter() => _data.Enemy.Health.OnDied += OnEnemyDied;
 
@@ -64,7 +64,7 @@ namespace Assets.Game.Scripts.Enemies.States
 
         private void OnEnemyDied()
         {
-            StateSwitcher.SwitchState<EnemyDeathState>();
+            StateSwitcher.SwitchState<SimpleEnemyDeathState>();
         }
     }
 }

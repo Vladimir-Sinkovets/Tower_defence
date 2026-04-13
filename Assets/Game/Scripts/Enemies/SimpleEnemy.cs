@@ -6,7 +6,6 @@ using Assets.Game.Scripts.Shared;
 using UnityEngine;
 using UnityEngine.AI;
 using Zenject;
-using Zenject.SpaceFighter;
 
 namespace Assets.Game.Scripts.Enemies
 {
@@ -38,8 +37,8 @@ namespace Assets.Game.Scripts.Enemies
 
             _stateMachine.AddState(new EnemyRunState(_stateMachine, _data));
             _stateMachine.AddState(new EnemyIdleState(_stateMachine, _data));
-            _stateMachine.AddState(new EnemyAttackState(_stateMachine, _data));
-            _stateMachine.AddState(new EnemyDeathState(_stateMachine, _data));
+            _stateMachine.AddState(new SimpleEnemyAttackState(_stateMachine, _data));
+            _stateMachine.AddState(new SimpleEnemyDeathState(_stateMachine, _data));
 
             _navMeshAgent.speed = config.Speed;
 

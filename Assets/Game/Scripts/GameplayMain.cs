@@ -18,6 +18,8 @@ namespace Assets.Game.Scripts
         private BuildingsConfig _buildingsConfig;
         private DiContainer _container;
 
+        private Tween _shakeTween;
+
         [Inject]
         public void Construct(
             WavesController waveController,
@@ -52,6 +54,7 @@ namespace Assets.Game.Scripts
             _castle.OnHpEnded += OnCastleHpEndedHandler;
             _castle.OnDamaged += OnCastleDamaged;
         }
+
         private IEnumerator CreateCastleBuilding()
         {
             var building = _buildingsConfig.CastleBuilding.Create(_container);
@@ -64,8 +67,12 @@ namespace Assets.Game.Scripts
 
         private void OnCastleHpEndedHandler() => _gameOverManager.GameOver();
 
-        private void OnCastleDamaged() => _castle.transform.DOShakePosition(0.1f, 0.1f, 5);
+        private void OnCastleDamaged()
+        {
+            _shakeTween?.Complete();
 
+            _shakeTween = _castle.transform.DOShakePosition(0.1f, 0.1f, 5);
+        }
 
         private void OnDestroy()
         {
