@@ -20,7 +20,8 @@ namespace Assets.Game.Scripts.Enemies.States
 
         public override void Exit()
         {
-            _data.NavMeshAgent.isStopped = true;
+            if (_data.NavMeshAgent != null && _data.NavMeshAgent.isOnNavMesh)
+                _data.NavMeshAgent.isStopped = true;
 
             _data.Enemy.Health.OnDied -= OnEnemyDied;
         }
