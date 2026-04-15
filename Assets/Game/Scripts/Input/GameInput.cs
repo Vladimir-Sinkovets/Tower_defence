@@ -26,6 +26,8 @@ namespace Assets.Game.Scripts.Input
 
         public void Dispose()
         {
+            _inputActions.Gameplay.Touch.performed -= OnTouchPerformedHandler;
+
             _inputActions.Gameplay.Disable();
             _inputActions.Dispose();
         }
