@@ -9,23 +9,35 @@ namespace Assets.Game.Scripts.Animations
         [SerializeField] private Transform _barrel;
 
         [SerializeField] private float _duration = 0.1f;
+        [SerializeField] private float _squeezeZ = 0.6f;
+        [SerializeField] private Ease _squeezeZEase = Ease.InOutSine;
+        [SerializeField] private float _squeezeX = 1.15f;
+        [SerializeField] private Ease _squeezeXEase = Ease.InOutSine;
+        [SerializeField] private float _squeezeY = 1.15f;
+        [SerializeField] private Ease _squeezeYEase = Ease.InOutSine;
+        [SerializeField] private float _finalScale = 1.0f;
+        [SerializeField] private Ease _returnToNormalScaleEase = Ease.InQuint;
 
         public override IEnumerator PlayBeforeAttackAnimation()
         {
             yield return DOTween.Sequence()
-                .Append(_barrel.DOScaleZ(0.6f, _duration)
-                    .SetEase(Ease.InOutSine))
-                .Join(_barrel.DOScaleY(1.15f, _duration)
-                    .SetEase(Ease.InOutSine))
-                .Join(_barrel.DOScaleX(1.15f, _duration)
-                    .SetEase(Ease.InOutSine))
+                .Append(_barrel.DOScaleZ(_squeezeZ, _duration)
+                    .SetEase(_squeezeZEase))
+                .Join(_barrel.DOScaleY(_squeezeY, _duration)
+                    .SetEase(_squeezeYEase))
+                .Join(_barrel.DOScaleX(_squeezeX, _duration)
+                    .SetEase(_squeezeYEase))
                 .WaitForCompletion();
 
-            yield return _barrel.DOScale(1.0f, _duration)
-                .SetEase(Ease.InQuint)
+            yield return _barrel.DOScale(_finalScale, _duration)
+                .SetEase(_returnToNormalScaleEase)
                 .WaitForCompletion();
         }
 
-        private void OnDestroy() => _barrel?.DOKill();
+        private void OnDestroy()
+        {
+            if (_barrel != null)
+                _barrel.DOKill();
+        }
     }
 }

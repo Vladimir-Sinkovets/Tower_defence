@@ -59,7 +59,7 @@ namespace Assets.Game.Scripts
                 _perimeterPoints[index + 1] :
                 _perimeterPoints[0];
 
-            var spawnPos = Vector3.Lerp(randomPoint_0.position, randomPoint_1.position, Random.Range(0.0f, 1.0f));
+            var spawnPos = Vector3.Lerp(randomPoint_0.position, randomPoint_1.position, Random.value);
 
             if (NavMesh.SamplePosition(spawnPos, out NavMeshHit hit, 2f, NavMesh.AllAreas))
             {

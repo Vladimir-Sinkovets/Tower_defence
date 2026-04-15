@@ -10,6 +10,10 @@ namespace Assets.Game.Scripts
 {
     public class GameplayMain : MonoBehaviour
     {
+        private const float ShakeDuration = 0.1f;
+        private const float ShakeStrength = 0.1f;
+        private const int ShakeVibrato = 5;
+
         private WavesController _wavesController;
         private BuildingController _buildingController;
         private Castle _castle;
@@ -71,7 +75,7 @@ namespace Assets.Game.Scripts
         {
             _shakeTween?.Complete();
 
-            _shakeTween = _castle.transform.DOShakePosition(0.1f, 0.1f, 5);
+            _shakeTween = _castle.transform.DOShakePosition(ShakeDuration, ShakeStrength, ShakeVibrato);
         }
 
         private void OnDestroy()

@@ -17,7 +17,11 @@ namespace Assets.Game.Scripts.Animations
         private void Awake()
         {
             targetPosition = panel.anchoredPosition;
+            startPosition = CalculateHiddenPosition();
+        }
 
+        private Vector2 CalculateHiddenPosition()
+        {
             var height = panel.rect.height;
 
             var pivotOffset = direction == SlideDirection.FromTop
@@ -28,7 +32,7 @@ namespace Assets.Game.Scripts.Animations
 
             var directionMultiplier = direction == SlideDirection.FromTop ? 1 : -1;
 
-            startPosition = targetPosition + new Vector2(0, totalOffset * directionMultiplier);
+            return targetPosition + new Vector2(0, totalOffset * directionMultiplier);
         }
 
         public void Show()
@@ -45,17 +49,7 @@ namespace Assets.Game.Scripts.Animations
 
         public void Hide(Action callback = null)
         {
-            var height = panel.rect.height;
-
-            var pivotOffset = direction == SlideDirection.FromTop
-                ? (1f - panel.pivot.y) * height
-                : panel.pivot.y * height;
-
-            var totalOffset = height + pivotOffset;
-
-            var directionMultiplier = direction == SlideDirection.FromTop ? 1 : -1;
-
-            var hidePosition = targetPosition + new Vector2(0, totalOffset * directionMultiplier);
+            var hidePosition = CalculateHiddenPosition();
 
             panel.DOKill();
 

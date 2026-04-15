@@ -10,6 +10,8 @@ namespace Assets.Game.Scripts.Animations
         [SerializeField] private List<Transform> _tiles;
 
         [SerializeField] private float _scaleDuration = 0.25f;
+        [SerializeField] private float _finalScale = 0.97f;
+        [SerializeField] private Ease _scaleEase = Ease.OutBounce;
 
         public IEnumerator Play()
         {
@@ -24,8 +26,8 @@ namespace Assets.Game.Scripts.Animations
 
                 Sequence tileSeq = DOTween.Sequence();
 
-                tileSeq.Append(tile.DOScale(0.97f, _scaleDuration)
-                    .SetEase(Ease.OutBounce));
+                tileSeq.Append(tile.DOScale(_finalScale, _scaleDuration)
+                    .SetEase(_scaleEase));
 
                 yield return null;
             }

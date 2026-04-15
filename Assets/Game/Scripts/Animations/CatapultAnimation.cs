@@ -9,17 +9,25 @@ namespace Assets.Game.Scripts.Animations
         [SerializeField] private Transform _catapult;
 
         [SerializeField] private float _duration = 0.1f;
-
+        [SerializeField] private Vector3 _attackRotation = new (60f, 0f, 0f);
+        [SerializeField] private Ease _attackEase = Ease.InElastic;
+        [SerializeField] private Vector3 _normalRotation = Vector3.zero;
+        [SerializeField] private Ease _returnToNoramlEase = Ease.InSine;
+        
         public override IEnumerator PlayBeforeAttackAnimation()
         {
-            yield return _catapult.DOLocalRotate(new Vector3(60, 0, 0), _duration)
-                .SetEase(Ease.InElastic)
+            yield return _catapult.DOLocalRotate(_attackRotation, _duration)
+                .SetEase(_attackEase)
                 .WaitForCompletion();
 
-            _catapult.DOLocalRotate(new Vector3(0, 0, 0), _duration)
-                .SetEase(Ease.InSine);
+            _catapult.DOLocalRotate(_normalRotation, _duration)
+                .SetEase(_returnToNoramlEase);
         }
 
-        private void OnDestroy() => _catapult?.DOKill();
+        private void OnDestroy()
+        {
+            if (_catapult != null)
+                _catapult.DOKill();
+        }
     }
 }
