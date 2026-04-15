@@ -29,8 +29,6 @@ namespace Assets.Game.Scripts.Installers
 
             Container.Bind<Registry<Building>>().AsSingle();
 
-            Container.Bind<EnemyEvents>().AsSingle(); 
-
             Container.Bind<GameStatistics>().AsSingle();
 
             Container.BindInterfacesAndSelfTo<GameOverManager>().AsSingle();
@@ -57,7 +55,7 @@ namespace Assets.Game.Scripts.Installers
 
             Container.BindInstance(_wavesConfig).AsSingle();
 
-            Container.BindInterfacesAndSelfTo<CurrencyBank>().AsSingle();
+            Container.Bind<CurrencyBank>().AsSingle();
 
             Container.BindInterfacesAndSelfTo<GameInput>().AsSingle();
 

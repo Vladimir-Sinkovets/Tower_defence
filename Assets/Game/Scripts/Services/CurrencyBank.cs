@@ -2,13 +2,11 @@
 
 namespace Assets.Game.Scripts.Services
 {
-    public class CurrencyBank : IDisposable
+    public class CurrencyBank
     {
         public event Action<int> OnCurrencyChanged;
 
         private int _total;
-
-        private readonly EnemyEvents _enemyEvents;
 
         public int Total
         {
@@ -21,12 +19,8 @@ namespace Assets.Game.Scripts.Services
             }
         }
 
-        public CurrencyBank(EnemyEvents enemyEvents)
+        public CurrencyBank()
         {
-            _enemyEvents = enemyEvents;
-
-            _enemyEvents.OnEnemyDied += OnEnemyDiedHandler;
-
             Total = 0;
         }
 
@@ -40,8 +34,11 @@ namespace Assets.Game.Scripts.Services
             return true;
         }
 
-        private void OnEnemyDiedHandler() => Total += 1;
+        public void Add(int value)
+        {
+            Total += value;
+        }
 
-        public void Dispose() => _enemyEvents.OnEnemyDied -= OnEnemyDiedHandler;
+        private void OnEnemyDiedHandler() => Total += 1;
     }
 }

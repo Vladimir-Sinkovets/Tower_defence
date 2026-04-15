@@ -9,6 +9,7 @@ namespace Assets.Game.Scripts.Enemies.Factories
         public float Speed = 1.0f;
         public float AttackRange = 1.0f;
         public float IntervalBetweenAttacks = 1.0f;
+        public int Award = 1;
 
         public abstract Enemy Create(DiContainer container);
     }

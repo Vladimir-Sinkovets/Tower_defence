@@ -17,17 +17,19 @@ namespace Assets.Game.Scripts.Enemies
         private StateMachine _stateMachine;
         private EnemyStateMachineData _data;
 
-        private EnemyEvents _enemyEvents;
         private Registry<Enemy> _enemyRegistry;
+        private CurrencyBank _currencyBank;
+        private GameStatistics _gameStatistics;
         private bool _isActive;
 
         public bool IsActive { get => _isActive; }
 
         [Inject]
-        public void Construct(EnemyEvents enemyEvents, Registry<Enemy> enemyRegistry)
+        public void Construct(Registry<Enemy> enemyRegistry, CurrencyBank currencyBank, GameStatistics gameStatistics)
         {
-            _enemyEvents = enemyEvents;
             _enemyRegistry = enemyRegistry;
+            _currencyBank = currencyBank;
+            _gameStatistics = gameStatistics;
         }
 
         public void Init(SimpleEnemyFactory config)
@@ -72,7 +74,11 @@ namespace Assets.Game.Scripts.Enemies
             _isActive = true;
         }
 
-        private void OnDiedHandler() => _enemyEvents.EnemyDie();
+        private void OnDiedHandler()
+        {
+            _currencyBank.Add(_data.Config.Award);
+            _gameStatistics.AddKilledEnemy();
+        }
 
         private void Update() => _stateMachine.Update();
 
