@@ -1,12 +1,14 @@
 ﻿using Assets.Game.Scripts.Buildings;
 using Assets.Game.Scripts.Configs;
 using Assets.Game.Scripts.Enemies;
+using Assets.Game.Scripts.Shared;
 using Assets.Game.Scripts.UI;
+using System;
 using Zenject;
 
 namespace Assets.Game.Scripts.Services
 {
-    public class GameOverManager
+    public class GameOverManager : IDisposable
     {
         private Registry<Enemy> _enemyRegistry;
         private Registry<Building> _buildingRegistry;
@@ -15,6 +17,7 @@ namespace Assets.Game.Scripts.Services
         private CurrencyBank _currencyBank;
         private MetaCurrencyConfig _metaCurrencyConfig;
         private MetaCurrencyService _metaCurrencyService;
+        private SceneLoader _sceneLoader;
         private WavesController _wavesController;
         private BuildingController _buildingController;
 
@@ -28,7 +31,8 @@ namespace Assets.Game.Scripts.Services
             GameStatistics gameStatistics,
             CurrencyBank currencyBank,
             MetaCurrencyConfig metaCurrencyConfig,
-            MetaCurrencyService metaCurrencyService)
+            MetaCurrencyService metaCurrencyService,
+            SceneLoader sceneLoader)
         {
             _wavesController = waveController;
             _buildingController = buildingController;
@@ -39,6 +43,10 @@ namespace Assets.Game.Scripts.Services
             _currencyBank = currencyBank;
             _metaCurrencyConfig = metaCurrencyConfig;
             _metaCurrencyService = metaCurrencyService;
+            _sceneLoader = sceneLoader;
+
+            _endGamePanel.OnRestartButtonClicked += OnRestartClickHandler;
+            _endGamePanel.OnMenuButtonClicked += OnMenuClickHandler;
         }
 
         public void GameOver()
@@ -55,6 +63,9 @@ namespace Assets.Game.Scripts.Services
 
             OpenPanel(earnedMetaCurrency);
         }
+
+        public void OnMenuClickHandler() => _sceneLoader.LoadScene(SceneNames.Menu);
+        public void OnRestartClickHandler() => _sceneLoader.ReloadCurrentScene();
 
         private void ApplyMetaData(int value) => _metaCurrencyService.Add(value);
 
@@ -83,6 +94,12 @@ namespace Assets.Game.Scripts.Services
             {
                 enemy.Deactivate();
             }
+        }
+
+        public void Dispose()
+        {
+            _endGamePanel.OnRestartButtonClicked -= OnRestartClickHandler;
+            _endGamePanel.OnMenuButtonClicked -= OnMenuClickHandler;
         }
     }
 }

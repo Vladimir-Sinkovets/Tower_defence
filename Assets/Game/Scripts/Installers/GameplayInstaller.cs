@@ -33,7 +33,7 @@ namespace Assets.Game.Scripts.Installers
 
             Container.Bind<GameStatistics>().AsSingle();
 
-            Container.Bind<GameOverManager>().AsSingle();
+            Container.BindInterfacesAndSelfTo<GameOverManager>().AsSingle();
 
             Container.Bind<BuildingBuilder>().AsTransient();
 
