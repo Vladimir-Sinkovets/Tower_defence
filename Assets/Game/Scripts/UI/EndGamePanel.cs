@@ -16,16 +16,9 @@ namespace Assets.Game.Scripts.UI
         [SerializeField] private Button _menuButton;
 
         [SerializeField] private TMP_Text _wavesCountText;
-        [SerializeField] private RectTransform _wavesCountPanel;
-
         [SerializeField] private TMP_Text _killedCountText;
-        [SerializeField] private RectTransform _killedCountPanel;
-
         [SerializeField] private TMP_Text _currencyText;
-        [SerializeField] private RectTransform _currencyPanel;
-
         [SerializeField] private TMP_Text _metaCurrencyText;
-        [SerializeField] private RectTransform _metaCurrencyPanel;
 
         [SerializeField] private PanelAppearanceAnimation _animation;
 
