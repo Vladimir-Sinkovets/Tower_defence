@@ -17,7 +17,7 @@ namespace Assets.Game.Scripts.Buildings
         public void Init()
         {
             _health.OnDied += OnDiedHandler;
-            _health.OnDamagaed += OnDamagedHandler;
+            _health.OnDamaged += OnDamagedHandler;
         }
 
         private void OnDamagedHandler(int _) => OnDamaged?.Invoke();
@@ -27,7 +27,7 @@ namespace Assets.Game.Scripts.Buildings
         private void OnDestroy()
         {
             _health.OnDied -= OnDiedHandler;
-            _health.OnDamagaed -= OnDamagedHandler;
+            _health.OnDamaged -= OnDamagedHandler;
         }
     }
 }

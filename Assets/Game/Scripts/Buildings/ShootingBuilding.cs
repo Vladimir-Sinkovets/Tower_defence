@@ -12,6 +12,7 @@ namespace Assets.Game.Scripts.Buildings
         [SerializeField] private Transform _projectileStartPosition;
         [SerializeField] private Transform _weaponRoot;
         [SerializeField] private WeaponAnimation _preShootAnimation;
+        [SerializeField] private float SearchTargetInterval = 0.2f;
 
         private Registry<Enemy> _enemiesRegistry;
 
@@ -66,7 +67,7 @@ namespace Assets.Game.Scripts.Buildings
             }
             else if (Time.time >= _nextSearchTime)
             {
-                _nextSearchTime = Time.time + 0.2f;
+                _nextSearchTime = Time.time + SearchTargetInterval;
 
                 FindTarget();
             }

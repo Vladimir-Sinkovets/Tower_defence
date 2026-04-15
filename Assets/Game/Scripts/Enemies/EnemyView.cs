@@ -11,20 +11,23 @@ namespace Assets.Game.Scripts.Enemies
         [SerializeField] private GameObject _canvas;
         [SerializeField] private GameObject _modelHideAnimationRoot;
 
+        [SerializeField] private float HideViewDuration = 1.0f;
+        [SerializeField] private float HideViewYPosition = 1.5f;
+
         private Action _currentAttackCallback;
 
-        public void PlayWalkAnimation() => _animator.SetTrigger("Walk");
+        public void PlayWalkAnimation() => _animator.SetTrigger(SimpleEnemyAnimationParameters.Walk);
 
         public void PlayAttackAnimation(Action callback = null)
         {
-            _animator.SetTrigger("Attack");
+            _animator.SetTrigger(SimpleEnemyAnimationParameters.Attack);
 
             _currentAttackCallback = callback;
         }
 
-        public void PlayIdleAnimation() => _animator.SetTrigger("Idle");
+        public void PlayIdleAnimation() => _animator.SetTrigger(SimpleEnemyAnimationParameters.Idle);
 
-        public void PlayDeathAnimation() => _animator.SetTrigger("Death");
+        public void PlayDeathAnimation() => _animator.SetTrigger(SimpleEnemyAnimationParameters.Death);
 
         public void AttckAnimationEventHandler()
         {
@@ -43,7 +46,7 @@ namespace Assets.Game.Scripts.Enemies
         {
             yield return new WaitForSeconds(delay);
 
-            yield return _modelHideAnimationRoot.transform.DOMoveY(_modelHideAnimationRoot.transform.position.y - 1.5f, 1.0f);
+            yield return _modelHideAnimationRoot.transform.DOMoveY(_modelHideAnimationRoot.transform.position.y - HideViewYPosition, HideViewDuration);
         }
 
         private void OnDestroy() => _modelHideAnimationRoot.transform?.DOKill();

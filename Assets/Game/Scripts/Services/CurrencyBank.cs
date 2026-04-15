@@ -19,11 +19,6 @@ namespace Assets.Game.Scripts.Services
             }
         }
 
-        public CurrencyBank()
-        {
-            Total = 0;
-        }
-
         public bool TrySpend(int value)
         {
             if (value > Total)
