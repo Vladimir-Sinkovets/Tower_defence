@@ -1,6 +1,4 @@
-﻿using Assets.Game.Scripts.Enemies;
-using Assets.Game.Scripts.Enemies.Factories;
-using Assets.Game.Scripts.Services;
+﻿using Assets.Game.Scripts.Enemies.Factories;
 using Assets.Game.Scripts.Shared;
 using System.Collections;
 using UnityEngine;
@@ -15,8 +13,8 @@ namespace Assets.Game.Scripts
         [SerializeField] private Health _target;
         [SerializeField] private Transform[] _perimeterPoints;
 
-        private Registry<Enemy> _enemyRegistry;
-        private DiContainer _diContainer;
+        private IInstantiator _instantiator;
+
         private readonly WaitForSeconds _interval = new WaitForSeconds(1.0f);
 
         private bool _isSpawning;
@@ -24,10 +22,9 @@ namespace Assets.Game.Scripts
         public bool IsSpawning { get => _isSpawning; }
 
         [Inject]
-        public void Construct(Registry<Enemy> enemyRegistry, DiContainer diContainer)
+        public void Construct(IInstantiator instantiator)
         {
-            _enemyRegistry = enemyRegistry;
-            _diContainer = diContainer;
+            _instantiator = instantiator;
         }
 
         public IEnumerator SpawnWave(int count)
@@ -38,7 +35,7 @@ namespace Assets.Game.Scripts
             {
                 var spawnPoint = GetRandomPerimeterPoint();
 
-                var enemy = _enemyFactory.Create(_diContainer);
+                var enemy = _enemyFactory.Create(_instantiator);
 
                 enemy.transform.position = spawnPoint;
 
@@ -68,7 +65,6 @@ namespace Assets.Game.Scripts
 
             return randomPoint_0.position;
         }
-
 
         private void OnDrawGizmos()
         {
