@@ -11,6 +11,6 @@ namespace Assets.Game.Scripts.Enemies.Factories
         public float IntervalBetweenAttacks = 1.0f;
         public int Award = 1;
 
-        public abstract Enemy Create(DiContainer container);
+        public abstract Enemy Create(IInstantiator instantiator);
     }
 }

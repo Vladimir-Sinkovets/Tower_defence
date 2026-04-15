@@ -8,12 +8,12 @@ namespace Assets.Game.Scripts.Services
 {
     public class BuildingBuilder
     {
-        private readonly DiContainer _container;
+        private readonly IInstantiator _instantiator;
 
         private BuildingConfig _buildingConfig;
         private Vector3 _position;
 
-        public BuildingBuilder(DiContainer container) => _container = container;
+        public BuildingBuilder(IInstantiator instantiator) => _instantiator = instantiator;
 
         public void SetPosition(Vector3 position) => _position = position;
 
@@ -21,7 +21,7 @@ namespace Assets.Game.Scripts.Services
 
         public IEnumerator Build()
         {
-            var building = _buildingConfig.BuildingFactory.Create(_container);
+            var building = _buildingConfig.BuildingFactory.Create(_instantiator);
 
             building.transform.position = _position;
 

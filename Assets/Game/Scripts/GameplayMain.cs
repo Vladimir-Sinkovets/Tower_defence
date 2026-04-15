@@ -20,7 +20,7 @@ namespace Assets.Game.Scripts
         private GameOverManager _gameOverManager;
         private FieldStartupAnimation _fieldStartupAnimation;
         private BuildingsConfig _buildingsConfig;
-        private DiContainer _container;
+        private IInstantiator _instantiator;
 
         private Tween _shakeTween;
 
@@ -32,7 +32,7 @@ namespace Assets.Game.Scripts
             GameOverManager gameOverManager,
             FieldStartupAnimation fieldStartupAnimation,
             BuildingsConfig buildingsConfig,
-            DiContainer container)
+            IInstantiator instantiator)
         {
             _wavesController = waveController;
             _buildingController = buildingController;
@@ -40,7 +40,7 @@ namespace Assets.Game.Scripts
             _gameOverManager = gameOverManager;
             _fieldStartupAnimation = fieldStartupAnimation;
             _buildingsConfig = buildingsConfig;
-            _container = container;
+            _instantiator = instantiator;
         }
 
         private IEnumerator Start()
@@ -61,7 +61,7 @@ namespace Assets.Game.Scripts
 
         private IEnumerator CreateCastleBuilding()
         {
-            var building = _buildingsConfig.CastleBuilding.Create(_container);
+            var building = _buildingsConfig.CastleBuilding.Create(_instantiator);
 
             building.transform.parent = _castle.transform;
             building.transform.position = _castle.BuildingPosition.transform.position;

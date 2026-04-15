@@ -10,9 +10,9 @@ namespace Assets.Game.Scripts.Enemies.Factories
         
         [SerializeField] private SimpleEnemy _prefab;
 
-        public override Enemy Create(DiContainer container)
+        public override Enemy Create(IInstantiator instantiator)
         {
-            var simpleEnemy = container.InstantiatePrefabForComponent<SimpleEnemy>(_prefab);
+            var simpleEnemy = instantiator.InstantiatePrefabForComponent<SimpleEnemy>(_prefab);
 
             simpleEnemy.Init(this);
 

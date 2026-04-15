@@ -18,9 +18,9 @@ namespace Assets.Game.Scripts.Buildings
 
         [SerializeField] private ShootingBuilding _prefab;
 
-        public override Building Create(DiContainer container)
+        public override Building Create(IInstantiator instantiator)
         {
-            var building = container.InstantiatePrefabForComponent<ShootingBuilding>(_prefab);
+            var building = instantiator.InstantiatePrefabForComponent<ShootingBuilding>(_prefab);
 
             building.Init(config: this);
 
