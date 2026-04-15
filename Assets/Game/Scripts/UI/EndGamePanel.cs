@@ -2,6 +2,7 @@
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets.Game.Scripts.UI
 {
@@ -11,6 +12,8 @@ namespace Assets.Game.Scripts.UI
         public event Action OnMenuButtonClicked;
 
         [SerializeField] private RectTransform _panel;
+        [SerializeField] private Button _restartButton;
+        [SerializeField] private Button _menuButton;
 
         [SerializeField] private TMP_Text _wavesCountText;
         [SerializeField] private RectTransform _wavesCountPanel;
@@ -26,6 +29,12 @@ namespace Assets.Game.Scripts.UI
 
         [SerializeField] private PanelAppearanceAnimation _animation;
 
+        private void Awake()
+        {
+            _restartButton.onClick.AddListener(RestartButtonHandler);
+            _menuButton.onClick.AddListener(MenuButtonHandler);
+        }
+
         public void Open(int wavesCount, int killedEnemyCount, int currencyCount, int metaCurrencyCount)
         {
             _wavesCountText.text = wavesCount.ToString();
@@ -39,7 +48,13 @@ namespace Assets.Game.Scripts.UI
                 _animation.Show();
         }
 
-        public void RestartButtonHandler() => OnRestartButtonClicked?.Invoke();
-        public void MenuButtonHandler() => OnMenuButtonClicked?.Invoke();
+        private void RestartButtonHandler() => OnRestartButtonClicked?.Invoke();
+        private void MenuButtonHandler() => OnMenuButtonClicked?.Invoke();
+
+        private void OnDestroy()
+        {
+            _restartButton.onClick.RemoveAllListeners();
+            _menuButton.onClick.RemoveAllListeners();
+        }
     }
 }
