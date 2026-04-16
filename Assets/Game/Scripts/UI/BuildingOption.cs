@@ -14,14 +14,12 @@ namespace Assets.Game.Scripts.UI
         [SerializeField] private Image _unavailableImage;
         [SerializeField] private TMP_Text _price;
 
-        private BuildingConfig _config;
         private bool _availability;
-
-        public BuildingConfig Config { get => _config; }
+        public BuildingConfig Config { get; private set; }
 
         public void Init(BuildingConfig config, bool availability)
         {
-            _config = config;
+            Config = config;
 
             UpdateOption(availability);
         }
@@ -32,20 +30,20 @@ namespace Assets.Game.Scripts.UI
                 OnClick?.Invoke(this);
         }
 
-        private void OnDestroy()
-        {
-            OnClick = null;
-        }
-
         public void UpdateOption(bool availability)
         {
-            _icon.sprite = _config.Icon;
+            _icon.sprite = Config.Icon;
 
             _availability = availability;
 
             _unavailableImage.gameObject.SetActive(!availability);
 
-            _price.text = $"${_config.Price}";
+            _price.text = $"${Config.Price}";
+        }
+
+        private void OnDestroy()
+        {
+            OnClick = null;
         }
     }
 }

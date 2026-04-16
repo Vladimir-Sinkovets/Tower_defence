@@ -20,9 +20,8 @@ namespace Assets.Game.Scripts.Enemies
         private Registry<Enemy> _enemyRegistry;
         private CurrencyBank _currencyBank;
         private GameStatistics _gameStatistics;
-        private bool _isActive;
 
-        public bool IsActive { get => _isActive; }
+        public bool IsActive { get; private set; }
 
         [Inject]
         public void Construct(Registry<Enemy> enemyRegistry, CurrencyBank currencyBank, GameStatistics gameStatistics)
@@ -64,20 +63,20 @@ namespace Assets.Game.Scripts.Enemies
 
         public override void Activate(Health target)
         {
-            if (_isActive)
+            if (IsActive)
                 return;
 
             _data.Target = target;
 
             _stateMachine.SetStartState<EnemyRunState>();
 
-            _isActive = true;
+            IsActive = true;
         }
 
         private void OnDiedHandler()
         {
             _currencyBank.Add(_data.Config.Award);
-            _gameStatistics.AddKilledEnemy();
+            _gameStatistics.IncreaseKilledEnemyCount();
         }
 
         private void Update() => _stateMachine.Update();
@@ -91,6 +90,6 @@ namespace Assets.Game.Scripts.Enemies
             _enemyRegistry?.Unregister(this);
         }
 
-        public override void Deactivate() => _isActive = false;
+        public override void Deactivate() => IsActive = false;
     }
 }

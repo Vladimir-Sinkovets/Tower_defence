@@ -2,10 +2,8 @@
 {
     public class GameStatistics
     {
-        private int _killedEnemiesCount;
+        public int KilledEnemiesCount { get; private set; }
 
-        public int KilledEnemiesCount { get => _killedEnemiesCount; }
-
-        public void AddKilledEnemy() => _killedEnemiesCount++;
+        public void IncreaseKilledEnemyCount() => KilledEnemiesCount++;
     }
 }

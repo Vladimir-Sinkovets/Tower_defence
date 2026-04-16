@@ -16,10 +16,7 @@ namespace Assets.Game.Scripts
         private IInstantiator _instantiator;
 
         private readonly WaitForSeconds _interval = new WaitForSeconds(1.0f);
-
-        private bool _isSpawning;
-
-        public bool IsSpawning { get => _isSpawning; }
+        public bool IsSpawning { get; private set; }
 
         [Inject]
         public void Construct(IInstantiator instantiator)
@@ -29,7 +26,7 @@ namespace Assets.Game.Scripts
 
         public IEnumerator SpawnWave(int count)
         {
-            _isSpawning = true;
+            IsSpawning = true;
 
             for (int i = 0; i < count; i++)
             {
@@ -44,7 +41,7 @@ namespace Assets.Game.Scripts
                 yield return _interval;
             }
 
-            _isSpawning = false;
+            IsSpawning = false;
         }
 
         private Vector3 GetRandomPerimeterPoint()
