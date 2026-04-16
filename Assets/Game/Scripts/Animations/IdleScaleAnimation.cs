@@ -1,5 +1,4 @@
 ﻿using DG.Tweening;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Assets.Game.Scripts.Animations

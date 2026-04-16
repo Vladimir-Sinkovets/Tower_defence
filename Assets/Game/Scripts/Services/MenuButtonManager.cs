@@ -19,7 +19,7 @@ namespace Assets.Game.Scripts.Services
             _startButton.onClick.AddListener(OnStartClickHandler);
         }
 
-        public void OnStartClickHandler() => _sceneLoader.LoadScene(SceneNames.Game);
+        private void OnStartClickHandler() => _sceneLoader.LoadScene(SceneNames.Game);
 
         private void OnDestroy() => _startButton.onClick.RemoveAllListeners();
     }

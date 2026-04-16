@@ -43,7 +43,7 @@ namespace Assets.Game.Scripts
         {
             _time += Time.deltaTime;
 
-            if (_target != null)
+            if (_target)
             {
                 _targetLastPosition = _target.transform.position;
             }
@@ -60,19 +60,17 @@ namespace Assets.Game.Scripts
 
             transform.position = horizontalPos;
 
-            if (t >= 1f)
-            {
-                if (_target != null)
-                    _target.Health.ApplyDamage(_damage);
+            if (!(t >= 1f)) return;
+            
+            if (_target)
+                _target.Health.ApplyDamage(_damage);
 
-                Destroy(gameObject);
+            Destroy(gameObject);
 
-                if (_hitVFXPrefab != null)
-                {
-                    var vfx = Instantiate(_hitVFXPrefab, transform.position, Quaternion.identity);
-                    Destroy(vfx.gameObject, vfx.main.duration);
-                }
-            }
+            if (!_hitVFXPrefab) return;
+            
+            var vfx = Instantiate(_hitVFXPrefab, transform.position, Quaternion.identity);
+            Destroy(vfx.gameObject, vfx.main.duration);
         }
     }
 }

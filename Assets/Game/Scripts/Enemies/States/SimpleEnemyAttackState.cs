@@ -1,5 +1,4 @@
 ﻿using Assets.Game.Scripts.Common.UniversalStateMachine;
-using System;
 using UnityEngine;
 
 namespace Assets.Game.Scripts.Enemies.States
@@ -15,17 +14,14 @@ namespace Assets.Game.Scripts.Enemies.States
 
         public override void Enter() => _data.Enemy.Health.OnDied += OnEnemyDied;
 
-        public override void Exit()
-        {
-            _data.Enemy.Health.OnDied -= OnEnemyDied;
-        }
+        public override void Exit() => _data.Enemy.Health.OnDied -= OnEnemyDied;
 
         public override void Update()
         {
             if (_isAttacking)
                 return;
 
-            if (_data.Enemy.IsActive == false)
+            if (!_data.Enemy.IsActive)
             {
                 StateSwitcher.SwitchState<EnemyIdleState>();
                 return;
@@ -52,7 +48,7 @@ namespace Assets.Game.Scripts.Enemies.States
 
         private void AttackAnimationEventHandler()
         {
-            if (_data.Enemy.Health.IsDead == true || _data.Enemy.IsActive == false)
+            if (_data.Enemy.Health.IsDead || !_data.Enemy.IsActive)
                 return;
 
             _data.Target.ApplyDamage(_data.Config.Damage);

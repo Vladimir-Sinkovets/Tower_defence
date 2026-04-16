@@ -21,7 +21,7 @@ namespace Assets.Game.Scripts.UI
 
         public void Open(IEnumerable<BuildingConfig> configs, int total)
         {
-            if (_isOpened == false)
+            if (!_isOpened)
             {
                 _panel.SetActive(true);
 
@@ -46,7 +46,7 @@ namespace Assets.Game.Scripts.UI
         {
             _isOpened = false;
 
-            if (_animation != null)
+            if (_animation)
                 _animation.Hide(() =>
                 {
                     _panel.SetActive(false);

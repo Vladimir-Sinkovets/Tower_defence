@@ -8,17 +8,13 @@ namespace Assets.Game.Scripts.Common.UniversalStateMachine
     {
         public bool IsDebug = false;
 
-        private Dictionary<Type, State> _states;
+        private readonly Dictionary<Type, State> _states = new();
         private State _currentState;
 
-        public StateMachine()
+        public void SetStartState<StateT>() where StateT : State
         {
-            _states = new Dictionary<Type, State>();
-        }
-        public void SetStartState<State>()
-        {
-            if (IsDebug) Debug.Log($"Start state - {typeof(State)}");
-            _currentState = _states[typeof(State)];
+            if (IsDebug) Debug.Log($"Start state - {typeof(StateT)}");
+            _currentState = _states[typeof(StateT)];
             _currentState.Enter();
         }
 

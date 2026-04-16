@@ -6,6 +6,7 @@ namespace Assets.Game.Scripts.Enemies.States
     public class SimpleEnemyDeathState : State
     {
         private readonly EnemyStateMachineData _data;
+        private const float DestroyDelay = 3.0f;
 
         public SimpleEnemyDeathState(IStateSwitcher stateSwitcher, EnemyStateMachineData data) : base(stateSwitcher) => _data = data;
 
@@ -17,7 +18,7 @@ namespace Assets.Game.Scripts.Enemies.States
 
             _data.NavMeshAgent.enabled = false;
 
-            Object.Destroy(_data.Enemy.gameObject, 3.0f);
+            Object.Destroy(_data.Enemy.gameObject, DestroyDelay);
         }
 
         public override void Exit() { }

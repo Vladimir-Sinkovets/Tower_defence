@@ -3117,10 +3117,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d1256c007c53424f8dc908aa9be365e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Animations.PanelAppearanceAnimation
-  panel: {fileID: 118647886}
-  direction: 1
-  duration: 0.5
-  ease: 2
+  _panel: {fileID: 118647886}
+  _direction: 1
+  _duration: 0.5
+  _ease: 9
 --- !u!1001 &384664518
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6979,10 +6979,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d1256c007c53424f8dc908aa9be365e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Animations.PanelAppearanceAnimation
-  panel: {fileID: 464419216}
-  direction: 0
-  duration: 0.5
-  ease: 2
+  _panel: {fileID: 464419216}
+  _direction: 0
+  _duration: 0.5
+  _ease: 9
 --- !u!1001 &920683926
 PrefabInstance:
   m_ObjectHideFlags: 0

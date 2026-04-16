@@ -6,44 +6,44 @@ namespace Assets.Game.Scripts.Animations
 {
     public class PanelAppearanceAnimation : MonoBehaviour
     {
-        [SerializeField] private RectTransform panel;
-        [SerializeField] private SlideDirection direction = SlideDirection.FromTop;
-        [SerializeField] private float duration = 0.5f;
-        [SerializeField] private Ease ease = Ease.OutCubic;
+        [SerializeField] private RectTransform _panel;
+        [SerializeField] private SlideDirection _direction = SlideDirection.FromTop;
+        [SerializeField] private float _duration = 0.5f;
+        [SerializeField] private Ease _ease = Ease.OutCubic;
 
-        private Vector2 targetPosition;
-        private Vector2 startPosition;
+        private Vector2 _targetPosition;
+        private Vector2 _startPosition;
 
         private void Awake()
         {
-            targetPosition = panel.anchoredPosition;
-            startPosition = CalculateHiddenPosition();
+            _targetPosition = _panel.anchoredPosition;
+            _startPosition = CalculateHiddenPosition();
         }
 
         private Vector2 CalculateHiddenPosition()
         {
-            var height = panel.rect.height;
+            var height = _panel.rect.height;
 
-            var pivotOffset = direction == SlideDirection.FromTop
-                ? (1f - panel.pivot.y) * height
-                : panel.pivot.y * height;
+            var pivotOffset = _direction == SlideDirection.FromTop
+                ? (1f - _panel.pivot.y) * height
+                : _panel.pivot.y * height;
 
             var totalOffset = height + pivotOffset;
 
-            var directionMultiplier = direction == SlideDirection.FromTop ? 1 : -1;
+            var directionMultiplier = _direction == SlideDirection.FromTop ? 1 : -1;
 
-            return targetPosition + new Vector2(0, totalOffset * directionMultiplier);
+            return _targetPosition + new Vector2(0, totalOffset * directionMultiplier);
         }
 
         public void Show()
         {
-            panel.anchoredPosition = startPosition;
+            _panel.anchoredPosition = _startPosition;
 
-            panel.DOKill();
+            _panel.DOKill();
 
-            panel
-                .DOAnchorPos(targetPosition, duration)
-                .SetEase(ease)
+            _panel
+                .DOAnchorPos(_targetPosition, _duration)
+                .SetEase(_ease)
                 .SetUpdate(true);
         }
 
@@ -51,16 +51,16 @@ namespace Assets.Game.Scripts.Animations
         {
             var hidePosition = CalculateHiddenPosition();
 
-            panel.DOKill();
+            _panel.DOKill();
 
-            panel
-                .DOAnchorPos(hidePosition, duration)
-                .SetEase(ease)
+            _panel
+                .DOAnchorPos(hidePosition, _duration)
+                .SetEase(_ease)
                 .SetUpdate(true)
                 .OnComplete(() => callback?.Invoke());
         }
 
-        private void OnDestroy() => panel.DOKill();
+        private void OnDestroy() => _panel.DOKill();
     }
     public enum SlideDirection
     {

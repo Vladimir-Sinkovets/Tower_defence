@@ -55,7 +55,7 @@ namespace Assets.Game.Scripts.Services
 
             StopBuildings();
 
-            StopBuilingController();
+            StopBuildingController();
 
             var earnedMetaCurrency = CalculateMetaData();
 
@@ -64,8 +64,8 @@ namespace Assets.Game.Scripts.Services
             OpenPanel(earnedMetaCurrency);
         }
 
-        public void OnMenuClickHandler() => _sceneLoader.LoadScene(SceneNames.Menu);
-        public void OnRestartClickHandler() => _sceneLoader.ReloadCurrentScene();
+        private void OnMenuClickHandler() => _sceneLoader.LoadScene(SceneNames.Menu);
+        private void OnRestartClickHandler() => _sceneLoader.ReloadCurrentScene();
 
         private void ApplyMetaData(int value) => _metaCurrencyService.Add(value);
 
@@ -78,7 +78,7 @@ namespace Assets.Game.Scripts.Services
             _currencyBank.Total,
             earnedMetaCurrency);
 
-        private void StopBuilingController() => _buildingController.Stop();
+        private void StopBuildingController() => _buildingController.Stop();
 
         private void StopBuildings()
         {

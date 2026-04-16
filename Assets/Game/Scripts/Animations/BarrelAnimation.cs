@@ -26,7 +26,7 @@ namespace Assets.Game.Scripts.Animations
                 .Join(_barrel.DOScaleY(_squeezeY, _duration)
                     .SetEase(_squeezeYEase))
                 .Join(_barrel.DOScaleX(_squeezeX, _duration)
-                    .SetEase(_squeezeYEase))
+                    .SetEase(_squeezeXEase))
                 .WaitForCompletion();
 
             yield return _barrel.DOScale(_finalScale, _duration)

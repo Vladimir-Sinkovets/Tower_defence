@@ -4,19 +4,19 @@ namespace Assets.Game.Scripts.UI
 {
     public class CanvasLookAtCamera : MonoBehaviour
     {
-        private Camera mainCamera;
+        private Camera _mainCamera;
 
         private void Start()
         {
-            mainCamera = Camera.main;
+            _mainCamera = Camera.main;
         }
 
         private void LateUpdate()
         {
-            if (mainCamera == null) return;
+            if (!_mainCamera) return;
 
-            transform.LookAt(transform.position + mainCamera.transform.rotation * Vector3.forward,
-                 mainCamera.transform.rotation * Vector3.up);
+            transform.LookAt(transform.position + _mainCamera.transform.rotation * Vector3.forward,
+                 _mainCamera.transform.rotation * Vector3.up);
         }
     }
 }

@@ -12,7 +12,7 @@ namespace Assets.Game.Scripts.Buildings
         [SerializeField] private Transform _projectileStartPosition;
         [SerializeField] private Transform _weaponRoot;
         [SerializeField] private WeaponAnimation _preShootAnimation;
-        [SerializeField] private float SearchTargetInterval = 0.2f;
+        [SerializeField] private float _searchTargetInterval = 0.2f;
 
         private Registry<Enemy> _enemiesRegistry;
 
@@ -53,7 +53,7 @@ namespace Assets.Game.Scripts.Buildings
             if (_isStopped)
                 return;
 
-            if (_currentTarget != null)
+            if (_currentTarget)
             {
                 if (Vector3.Distance(_currentTarget.transform.position, transform.position) > _config.AttackRadius)
                 {
@@ -67,7 +67,7 @@ namespace Assets.Game.Scripts.Buildings
             }
             else if (Time.time >= _nextSearchTime)
             {
-                _nextSearchTime = Time.time + SearchTargetInterval;
+                _nextSearchTime = Time.time + _searchTargetInterval;
 
                 FindTarget();
             }
@@ -85,10 +85,10 @@ namespace Assets.Game.Scripts.Buildings
 
         private IEnumerator Shoot()
         {
-            if (_preShootAnimation != null)
+            if (_preShootAnimation)
                 yield return _preShootAnimation.PlayBeforeAttackAnimation();
 
-            if (_config.ShootVFX != null)
+            if (_config.ShootVFX)
             {
                 var vfx = Instantiate(_config.ShootVFX, _projectileStartPosition.position, Quaternion.identity);
 
@@ -127,7 +127,7 @@ namespace Assets.Game.Scripts.Buildings
                 }
             }
 
-            if (nearestEnemy == null)
+            if (!nearestEnemy)
                 return;
 
             _currentTarget = nearestEnemy;
@@ -139,7 +139,7 @@ namespace Assets.Game.Scripts.Buildings
 
         private void RotateWeapon()
         {
-            if (_currentTarget == null) return;
+            if (!_currentTarget) return;
 
             var direction = _currentTarget.transform.position - _weaponRoot.position;
             direction.y = 0f;
@@ -177,7 +177,7 @@ namespace Assets.Game.Scripts.Buildings
 
         private void ClearTarget()
         {
-            if (_currentTarget != null)
+            if (_currentTarget)
             {
                 _currentTarget.Health.OnDied -= OnCurrentTargetDiedHandler;
                 _currentTarget = null;
