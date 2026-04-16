@@ -16,7 +16,7 @@ namespace Assets.Game.Scripts.UI
         [SerializeField] private BuildingOption _buildingOptionPrefab;
         [SerializeField] private PanelAppearanceAnimation _animation;
 
-        private List<BuildingOption> _options = new();
+        private readonly List<BuildingOption> _options = new();
         private bool _isOpened;
 
         public void Open(IEnumerable<BuildingConfig> configs, int total)

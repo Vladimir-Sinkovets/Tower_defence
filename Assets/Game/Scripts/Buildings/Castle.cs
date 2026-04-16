@@ -9,10 +9,8 @@ namespace Assets.Game.Scripts.Buildings
         public event Action OnHpEnded;
         public event Action OnDamaged;
 
-        [SerializeField] private Transform _buildingPosition;
+        [field: SerializeField] public Transform BuildingPosition { get; private set; }
         [SerializeField] private Health _health;
-
-        public Transform BuildingPosition { get => _buildingPosition; }
 
         public void Init()
         {

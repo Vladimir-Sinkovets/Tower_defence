@@ -13,9 +13,7 @@ namespace Assets.Game.Scripts.Services
         private Registry<Enemy> _enemyRegistry;
         private WavesConfig _wavesConfig;
 
-        private int _wavesCount;
-
-        public int WavesCount { get => _wavesCount; }
+        public int WavesCount { get; private set; }
 
         [Inject]
         public void Construct(EnemyWavesSpawner enemyWavesSpawner, WavesConfig wavesConfig, Registry<Enemy> enemyRegistry)
@@ -34,7 +32,7 @@ namespace Assets.Game.Scripts.Services
         {
             while (true)
             {
-                var enemyCount = _wavesConfig.BaseEnemyCount + _wavesCount * _wavesConfig.NewEnemiesPerWave;
+                var enemyCount = _wavesConfig.BaseEnemyCount + WavesCount * _wavesConfig.NewEnemiesPerWave;
 
                 yield return _enemyWavesController.SpawnWave(enemyCount);
 
@@ -44,7 +42,7 @@ namespace Assets.Game.Scripts.Services
 
                 yield return new WaitForSeconds(_wavesConfig.IntervalBetweenWaves);
 
-                _wavesCount++;
+                WavesCount++;
             }
         }
     }

@@ -6963,13 +6963,9 @@ MonoBehaviour:
   _restartButton: {fileID: 1843320852}
   _menuButton: {fileID: 450753823}
   _wavesCountText: {fileID: 982947863}
-  _wavesCountPanel: {fileID: 16456276}
   _killedCountText: {fileID: 46186477}
-  _killedCountPanel: {fileID: 1902170128}
   _currencyText: {fileID: 1151126791}
-  _currencyPanel: {fileID: 556276236}
   _metaCurrencyText: {fileID: 107904585}
-  _metaCurrencyPanel: {fileID: 185326548}
   _animation: {fileID: 910496518}
 --- !u!114 &910496518
 MonoBehaviour:
@@ -12734,6 +12730,8 @@ MonoBehaviour:
   - {fileID: 1468242812}
   - {fileID: 1832927024}
   _scaleDuration: 0.25
+  _finalScale: 0.97
+  _scaleEase: 30
 --- !u!1001 &1656604225
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15459,7 +15457,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71a41234fded6b34bb1e62ffbda2e6ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Buildings.Castle
-  _buildingPosition: {fileID: 1390631840}
+  <BuildingPosition>k__BackingField: {fileID: 1390631840}
   _health: {fileID: 1984246206}
 --- !u!1 &1992888406
 GameObject:
