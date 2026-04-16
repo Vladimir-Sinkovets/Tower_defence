@@ -155,12 +155,7 @@ namespace Assets.Game.Scripts.Buildings
             }
         }
 
-        private void OnCurrentTargetDiedHandler()
-        {
-            _currentTarget.Health.OnDied -= OnCurrentTargetDiedHandler;
-
-            _currentTarget = null;
-        }
+        private void OnCurrentTargetDiedHandler() => ClearTarget();
 
         public override void Stop()
         {
