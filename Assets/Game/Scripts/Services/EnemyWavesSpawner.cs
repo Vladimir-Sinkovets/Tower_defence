@@ -48,19 +48,19 @@ namespace Assets.Game.Scripts
         {
             var index = Random.Range(0, _perimeterPoints.Length);
 
-            var randomPoint_0 = _perimeterPoints[index];
-            var randomPoint_1 = index + 1 < _perimeterPoints.Length ?
+            var firstRandomPoint = _perimeterPoints[index];
+            var secondRandomPoint = index + 1 < _perimeterPoints.Length ?
                 _perimeterPoints[index + 1] :
                 _perimeterPoints[0];
 
-            var spawnPos = Vector3.Lerp(randomPoint_0.position, randomPoint_1.position, Random.value);
+            var spawnPos = Vector3.Lerp(firstRandomPoint.position, secondRandomPoint.position, Random.value);
 
             if (NavMesh.SamplePosition(spawnPos, out NavMeshHit hit, 2f, NavMesh.AllAreas))
             {
                 return hit.position;
             }
 
-            return randomPoint_0.position;
+            return firstRandomPoint.position;
         }
 
         private void OnDrawGizmos()

@@ -37,7 +37,7 @@ namespace Assets.Game.Scripts.UI
 
             _panel.gameObject.SetActive(true);
 
-            if (_animation != null)
+            if (_animation)
                 _animation.Show();
         }
 

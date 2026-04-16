@@ -20,10 +20,8 @@ namespace Assets.Game.Scripts.Animations
                 tile.localScale = Vector3.zero;
             }
 
-            for (int i = 0; i < _tiles.Count; i++)
+            foreach (var tile in _tiles)
             {
-                var tile = _tiles[i];
-
                 Sequence tileSeq = DOTween.Sequence();
 
                 tileSeq.Append(tile.DOScale(_finalScale, _scaleDuration)

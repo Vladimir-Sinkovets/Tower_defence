@@ -33,7 +33,5 @@ namespace Assets.Game.Scripts.Services
         {
             Total += value;
         }
-
-        private void OnEnemyDiedHandler() => Total += 1;
     }
 }

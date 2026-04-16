@@ -100,7 +100,7 @@ namespace Assets.Game.Scripts.Services
             return results.Count > 0;
         }
 
-        public void StartBuilding(Vector3 position)
+        private void StartBuilding(Vector3 position)
         {
             _builder.Clean();
 
