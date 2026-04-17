@@ -21,6 +21,6 @@ namespace Assets.Game.Scripts.Services
 
         private void OnStartClickHandler() => _sceneLoader.LoadScene(SceneNames.Game);
 
-        private void OnDestroy() => _startButton.onClick.RemoveAllListeners();
+        private void OnDestroy() => _startButton.onClick.RemoveListener(OnStartClickHandler);
     }
 }
