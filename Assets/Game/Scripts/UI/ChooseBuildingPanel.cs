@@ -3,6 +3,7 @@ using Assets.Game.Scripts.Buildings;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets.Game.Scripts.UI
 {
@@ -15,9 +16,15 @@ namespace Assets.Game.Scripts.UI
         [SerializeField] private RectTransform _optionsContainer;
         [SerializeField] private BuildingOption _buildingOptionPrefab;
         [SerializeField] private PanelAppearanceAnimation _animation;
+        [SerializeField] private Button _closeButton;
 
         private readonly List<BuildingOption> _options = new();
         private bool _isOpened;
+
+        private void Awake()
+        {
+            _closeButton.onClick.AddListener(OnCloseButtonClickedHandler);
+        }
 
         public void Open(IEnumerable<BuildingConfig> configs, int total)
         {
@@ -61,7 +68,7 @@ namespace Assets.Game.Scripts.UI
             }
         }
 
-        public void OnCloseButtonClickedHandler() => OnCloseButtonClicked?.Invoke();
+        private void OnCloseButtonClickedHandler() => OnCloseButtonClicked?.Invoke();
 
         private void InitializeOptions(IEnumerable<BuildingConfig> configs, int total)
         {
@@ -108,6 +115,11 @@ namespace Assets.Game.Scripts.UI
             _options.Clear();
         }
 
-        private void OnDestroy() => ClearContainer();
+        private void OnDestroy()
+        {
+            _closeButton.onClick.RemoveListener(OnCloseButtonClickedHandler);
+            
+            ClearContainer();
+        }
     }
 }

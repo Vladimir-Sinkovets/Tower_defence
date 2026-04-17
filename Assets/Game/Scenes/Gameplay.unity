@@ -3105,6 +3105,7 @@ MonoBehaviour:
   _optionsContainer: {fileID: 1865312754}
   _buildingOptionPrefab: {fileID: 6354163965170378316, guid: c725b8c29f7ccc645b8a3a514395d357, type: 3}
   _animation: {fileID: 355309994}
+  _closeButton: {fileID: 1133697051}
 --- !u!114 &355309994
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8787,19 +8788,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1133697052}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 355309993}
-        m_TargetAssemblyTypeName: Assets.Game.Scripts.UI.ChooseBuildingPanel, Assembly-CSharp
-        m_MethodName: OnCloseButtonClickedHandler
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1133697052
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11521,7 +11510,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1585752595}
   m_Layer: 5
-  m_Name: GameObject
+  m_Name: CurrencyCounter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

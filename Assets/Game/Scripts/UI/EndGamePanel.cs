@@ -46,8 +46,8 @@ namespace Assets.Game.Scripts.UI
 
         private void OnDestroy()
         {
-            _restartButton.onClick.RemoveAllListeners();
-            _menuButton.onClick.RemoveAllListeners();
+            _restartButton.onClick.RemoveListener(RestartButtonHandler);
+            _menuButton.onClick.RemoveListener(MenuButtonHandler);
         }
     }
 }
