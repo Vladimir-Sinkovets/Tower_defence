@@ -53,7 +53,7 @@ namespace Assets.Game.Scripts.Buildings
             if (_isStopped)
                 return;
 
-            if (_currentTarget)
+            if (_currentTarget != null)
             {
                 if (Vector3.Distance(_currentTarget.transform.position, transform.position) > _config.AttackRadius)
                 {
@@ -85,10 +85,10 @@ namespace Assets.Game.Scripts.Buildings
 
         private IEnumerator Shoot()
         {
-            if (_preShootAnimation)
+            if (_preShootAnimation != null)
                 yield return _preShootAnimation.PlayBeforeAttackAnimation();
 
-            if (_config.ShootVFX)
+            if (_config.ShootVFX != null)
             {
                 var vfx = Instantiate(_config.ShootVFX, _projectileStartPosition.position, Quaternion.identity);
 
@@ -127,7 +127,7 @@ namespace Assets.Game.Scripts.Buildings
                 }
             }
 
-            if (!nearestEnemy)
+            if (nearestEnemy == null)
                 return;
 
             _currentTarget = nearestEnemy;
@@ -139,7 +139,7 @@ namespace Assets.Game.Scripts.Buildings
 
         private void RotateWeapon()
         {
-            if (!_currentTarget) return;
+            if (_currentTarget == null) return;
 
             var direction = _currentTarget.transform.position - _weaponRoot.position;
             direction.y = 0f;
@@ -177,11 +177,10 @@ namespace Assets.Game.Scripts.Buildings
 
         private void ClearTarget()
         {
-            if (_currentTarget)
-            {
-                _currentTarget.Health.OnDied -= OnCurrentTargetDiedHandler;
-                _currentTarget = null;
-            }
+            if (_currentTarget == null) return;
+            
+            _currentTarget.Health.OnDied -= OnCurrentTargetDiedHandler;
+            _currentTarget = null;
         }
     }
 }
