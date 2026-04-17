@@ -14,7 +14,7 @@ namespace Assets.Game.Scripts.UI
         [SerializeField] private Image _unavailableImage;
         [SerializeField] private TMP_Text _price;
 
-        private bool _availability;
+        private bool _isAvailable;
         public BuildingConfig Config { get; private set; }
 
         public void Init(BuildingConfig config, bool availability)
@@ -26,7 +26,7 @@ namespace Assets.Game.Scripts.UI
 
         public void OnClickHandler()
         {
-            if (_availability)
+            if (_isAvailable)
                 OnClick?.Invoke(this);
         }
 
@@ -34,7 +34,7 @@ namespace Assets.Game.Scripts.UI
         {
             _icon.sprite = Config.Icon;
 
-            _availability = availability;
+            _isAvailable = availability;
 
             _unavailableImage.gameObject.SetActive(!availability);
 

@@ -51,7 +51,7 @@ namespace Assets.Game.Scripts.Enemies
 
         private void OnDestroy()
         {
-            if (_modelHideAnimationRoot)
+            if (_modelHideAnimationRoot != null)
                 _modelHideAnimationRoot.transform.DOKill();
         }
     }

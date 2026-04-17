@@ -53,7 +53,7 @@ namespace Assets.Game.Scripts.UI
         {
             _isOpened = false;
 
-            if (_animation)
+            if (_animation != null)
                 _animation.Hide(() =>
                 {
                     _panel.SetActive(false);
