@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.Game.Scripts.UI
+namespace Assets.Game.Scripts.Buildings
 {
     public class BuildingOption : MonoBehaviour
     {
@@ -17,28 +17,23 @@ namespace Assets.Game.Scripts.UI
         private bool _isAvailable;
         public BuildingConfig Config { get; private set; }
 
-        public void Init(BuildingConfig config, bool availability)
+        public void Init(BuildingConfig config, bool isAvailable)
         {
             Config = config;
 
-            UpdateOption(availability);
+            _icon.sprite = Config.Icon;
+
+            _isAvailable = isAvailable;
+
+            _unavailableImage.gameObject.SetActive(!isAvailable);
+
+            _price.text = $"${Config.Price}";
         }
 
         public void OnClickHandler()
         {
             if (_isAvailable)
                 OnClick?.Invoke(this);
-        }
-
-        public void UpdateOption(bool availability)
-        {
-            _icon.sprite = Config.Icon;
-
-            _isAvailable = availability;
-
-            _unavailableImage.gameObject.SetActive(!availability);
-
-            _price.text = $"${Config.Price}";
         }
 
         private void OnDestroy()

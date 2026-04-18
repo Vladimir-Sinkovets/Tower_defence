@@ -3060,7 +3060,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 355309992}
-  - component: {fileID: 355309993}
   - component: {fileID: 355309994}
   m_Layer: 5
   m_Name: ChooseBuildingPanel
@@ -3089,23 +3088,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0.000061035156, y: 0}
   m_SizeDelta: {x: 0.0001, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &355309993
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 355309991}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4265c37441ca0ea43a086a01e510cae8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.UI.ChooseBuildingPanel
-  _panel: {fileID: 355309991}
-  _optionsContainer: {fileID: 1865312754}
-  _buildingOptionPrefab: {fileID: 6354163965170378316, guid: c725b8c29f7ccc645b8a3a514395d357, type: 3}
-  _animation: {fileID: 355309994}
-  _closeButton: {fileID: 1133697051}
 --- !u!114 &355309994
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3262,6 +3244,7 @@ Transform:
   - {fileID: 1646694448}
   - {fileID: 824132533}
   - {fileID: 1784379951}
+  - {fileID: 786797466}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &405241747
@@ -3279,9 +3262,9 @@ MonoBehaviour:
   _wavesSpawner: {fileID: 1646694447}
   _wavesController: {fileID: 824132534}
   _wavesConfig: {fileID: 11400000, guid: e2d770929064cb9429f04b4f05b91882, type: 2}
-  _buildingController: {fileID: 1784379952}
+  _buildingService: {fileID: 1784379952}
   _buildingsConfig: {fileID: 11400000, guid: bb7a5b96a7f4bf9428849ea2877e38c7, type: 2}
-  _chooseBuildingPanel: {fileID: 355309993}
+  _chooseBuildingView: {fileID: 786797467}
   _endGamePanel: {fileID: 910496517}
   _castle: {fileID: 1984246207}
   _metaCurrencyConfig: {fileID: 11400000, guid: 7a6467ea0a848454a9a19b505317eb0b, type: 2}
@@ -6067,6 +6050,57 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: c2252770c12196e4f8709a67a56d9545, type: 3}
   m_PrefabInstance: {fileID: 777378696}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &786797465
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 786797466}
+  - component: {fileID: 786797467}
+  m_Layer: 0
+  m_Name: ChooseBuildingView
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &786797466
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 786797465}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 405241746}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &786797467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 786797465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4265c37441ca0ea43a086a01e510cae8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.UI.ChooseBuildingPanel
+  _panel: {fileID: 355309991}
+  _optionsContainer: {fileID: 1865312754}
+  _buildingOptionPrefab: {fileID: 6354163965170378316, guid: c725b8c29f7ccc645b8a3a514395d357, type: 3}
+  _animation: {fileID: 355309994}
+  _closeButton: {fileID: 1133697051}
+  _planeCenter: {fileID: 1796833159}
+  _pointerPrefab: {fileID: 8900358636403883604, guid: fbaf02a9e84fe4846b5a838d59f96db3, type: 3}
 --- !u!1 &824132532
 GameObject:
   m_ObjectHideFlags: 0
@@ -14056,8 +14090,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1796833159}
+  m_Children: []
   m_Father: {fileID: 405241746}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1784379952
@@ -14072,8 +14105,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7e602167b07b024f98b1d9fd3d16732, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Services.BuildingController
-  _planeCenter: {fileID: 1796833159}
-  _pointerPrefab: {fileID: 8900358636403883604, guid: fbaf02a9e84fe4846b5a838d59f96db3, type: 3}
 --- !u!1 &1796833158
 GameObject:
   m_ObjectHideFlags: 0
@@ -14098,12 +14129,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1796833158}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1784379951}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1816162674
 GameObject:
@@ -16409,6 +16440,7 @@ SceneRoots:
   - {fileID: 405241746}
   - {fileID: 996813203}
   - {fileID: 1316312513}
+  - {fileID: 1796833159}
   - {fileID: 1042056704}
   - {fileID: 970686232}
   - {fileID: 1651697474}

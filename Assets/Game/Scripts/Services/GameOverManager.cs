@@ -19,12 +19,10 @@ namespace Assets.Game.Scripts.Services
         private MetaCurrencyService _metaCurrencyService;
         private SceneLoader _sceneLoader;
         private WavesController _wavesController;
-        private BuildingController _buildingController;
 
         [Inject]
         public void Construct(
             WavesController waveController,
-            BuildingController buildingController,
             Registry<Building> buildingRegistry,
             Registry<Enemy> enemyRegistry,
             EndGamePanel endGamePanel,
@@ -35,7 +33,6 @@ namespace Assets.Game.Scripts.Services
             SceneLoader sceneLoader)
         {
             _wavesController = waveController;
-            _buildingController = buildingController;
             _enemyRegistry = enemyRegistry;
             _buildingRegistry = buildingRegistry;
             _endGamePanel = endGamePanel;
@@ -55,7 +52,7 @@ namespace Assets.Game.Scripts.Services
 
             StopBuildings();
 
-            StopBuildingController();
+            // StopBuildingController();
 
             var earnedMetaCurrency = CalculateMetaData();
 
@@ -77,8 +74,6 @@ namespace Assets.Game.Scripts.Services
             _gameStatistics.KilledEnemiesCount,
             _currencyBank.Total,
             earnedMetaCurrency);
-
-        private void StopBuildingController() => _buildingController.Stop();
 
         private void StopBuildings()
         {

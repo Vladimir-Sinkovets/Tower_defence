@@ -3,6 +3,7 @@ using Assets.Game.Scripts.Buildings;
 using Assets.Game.Scripts.Services;
 using DG.Tweening;
 using System.Collections;
+using Game.Scripts.Buildings;
 using UnityEngine;
 using Zenject;
 
@@ -15,7 +16,6 @@ namespace Assets.Game.Scripts
         private const int ShakeVibrato = 5;
 
         private WavesController _wavesController;
-        private BuildingController _buildingController;
         private Castle _castle;
         private GameOverManager _gameOverManager;
         private FieldStartupAnimation _fieldStartupAnimation;
@@ -27,7 +27,6 @@ namespace Assets.Game.Scripts
         [Inject]
         public void Construct(
             WavesController waveController,
-            BuildingController buildingController,
             Castle castle,
             GameOverManager gameOverManager,
             FieldStartupAnimation fieldStartupAnimation,
@@ -35,7 +34,6 @@ namespace Assets.Game.Scripts
             IInstantiator instantiator)
         {
             _wavesController = waveController;
-            _buildingController = buildingController;
             _castle = castle;
             _gameOverManager = gameOverManager;
             _fieldStartupAnimation = fieldStartupAnimation;
@@ -50,8 +48,6 @@ namespace Assets.Game.Scripts
             yield return CreateCastleBuilding();
 
             _castle.Init();
-
-            _buildingController.Init();
 
             _wavesController.StartWaves();
 
