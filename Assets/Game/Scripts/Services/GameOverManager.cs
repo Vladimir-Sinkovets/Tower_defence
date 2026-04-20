@@ -4,7 +4,6 @@ using Assets.Game.Scripts.Enemies;
 using Assets.Game.Scripts.Shared;
 using Assets.Game.Scripts.UI;
 using System;
-using Assets.Game.Scripts.GameplayCurrency;
 using Zenject;
 
 namespace Assets.Game.Scripts.Services

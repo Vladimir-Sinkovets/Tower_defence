@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using Assets.Game.Scripts.Animations;
-using Assets.Game.Scripts.GameplayCurrency;
 using Assets.Game.Scripts.Services;
 using UnityEngine;
 using Zenject;
