@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Assets.Game.Scripts.Services
+namespace Assets.Game.Scripts.GameplayCurrency
 {
     public class CurrencyBank
     {

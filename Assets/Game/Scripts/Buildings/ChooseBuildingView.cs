@@ -100,7 +100,7 @@ namespace Assets.Game.Scripts.Buildings
             {
                 option.OnClick -= OnOptionClickedHandler;
                 
-                if (option.gameObject)
+                if (option.gameObject != null)
                     Destroy(option.gameObject);
             }
 
