@@ -50,7 +50,7 @@ namespace Assets.Game.Scripts.Buildings
         }
         
 
-        private IEnumerator CreateBuilding(BuildingConfig buildingConfig, Vector2 position)
+        private IEnumerator CreateBuilding(BuildingConfig buildingConfig, Vector3 position)
         {
             var building = buildingConfig.BuildingFactory.Create(_instantiator);
 

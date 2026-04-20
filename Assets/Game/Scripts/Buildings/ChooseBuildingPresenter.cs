@@ -1,11 +1,10 @@
 using System;
 using System.Linq;
-using Assets.Game.Scripts.Buildings;
 using Assets.Game.Scripts.Services;
 using UnityEngine;
 using Zenject;
 
-namespace Game.Scripts.Buildings
+namespace Assets.Game.Scripts.Buildings
 {
     public class ChooseBuildingPresenter : IDisposable
     {
@@ -27,7 +26,7 @@ namespace Game.Scripts.Buildings
             _buildingsConfig = buildingsConfig;
             _currencyBank = currencyBank;
             _buildingService = buildingService;
-
+            
             _chooseBuildingView.OnCloseButtonClicked += OnCloseButtonClickedHandler;
             _chooseBuildingView.OnOptionChosen += OnOptionChosenHandler;
             _chooseBuildingView.OnClicked += OnClickedHandler;
@@ -52,14 +51,14 @@ namespace Game.Scripts.Buildings
             
             _buildingService.SetPosition(position);
             
-            OpenPanel(position);
+            OpenPanel();
             
             _chooseBuildingView.ShowPointer(position);
         }
 
         private void OnCurrencyChangedHandler(int obj) => Render();
 
-        private void OpenPanel(Vector3 position)
+        private void OpenPanel()
         {
             if (_isPanelOpen)
                 return;

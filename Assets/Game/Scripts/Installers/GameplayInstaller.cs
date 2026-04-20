@@ -5,7 +5,6 @@ using Assets.Game.Scripts.Enemies;
 using Assets.Game.Scripts.Input;
 using Assets.Game.Scripts.Services;
 using Assets.Game.Scripts.UI;
-using Game.Scripts.Buildings;
 using UnityEngine;
 using Zenject;
 
@@ -23,6 +22,7 @@ namespace Assets.Game.Scripts.Installers
         [SerializeField] private Castle _castle;
         [SerializeField] private MetaCurrencyConfig _metaCurrencyConfig;
         [SerializeField] private FieldStartupAnimation _fieldStartupAnimation;
+        [SerializeField] private PointSelector _pointSelector;
 
         public override void InstallBindings()
         {
@@ -63,6 +63,8 @@ namespace Assets.Game.Scripts.Installers
             Container.Bind<MetaCurrencyService>().AsSingle();
 
             Container.Bind<SceneLoader>().AsSingle();
+
+            Container.BindInstance(_pointSelector).AsSingle();
         }
     }
 }

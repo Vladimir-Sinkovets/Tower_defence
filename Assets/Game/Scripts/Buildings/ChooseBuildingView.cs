@@ -1,9 +1,7 @@
 ﻿using Assets.Game.Scripts.Animations;
 using System;
 using System.Collections.Generic;
-using Assets.Game.Scripts.Input;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Zenject;
 
@@ -20,32 +18,28 @@ namespace Assets.Game.Scripts.Buildings
         [SerializeField] private BuildingOption _buildingOptionPrefab;
         [SerializeField] private PanelAppearanceAnimation _animation;
         [SerializeField] private Button _closeButton;
-        [SerializeField] private Transform _planeCenter;
         [SerializeField] private Transform _pointerPrefab;
-
-        private GameInput _input;
-        private Camera _mainCamera;
         
         private readonly List<BuildingOption> _options = new();
         private Transform _pointer;
+        
+        private PointSelector _pointSelector;
 
         [Inject]
-        public void Construct(GameInput input)
+        private void Construct(PointSelector pointSelector)
         {
-            _mainCamera = Camera.main;
-            _input = input;
+            _pointSelector = pointSelector;
         }
         
         private void Awake()
         {
-            _input.Touch += OnTouchHandler;
             _closeButton.onClick.AddListener(OnCloseButtonClickedHandler);
+            _pointSelector.OnClicked += OnPointSelectedHandler;
 
             _pointer = Instantiate(_pointerPrefab);
             _pointer.gameObject.SetActive(false);
         }
-        
-        
+
         public void Show()
         {
             _panel.SetActive(true);
@@ -90,47 +84,13 @@ namespace Assets.Game.Scripts.Buildings
                 _options.Add(option);
             }
         }
-        
-        
-        private void OnTouchHandler(Vector2 touchPosition)
-        {
-            if (IsPointOverUI(touchPosition))
-                return;
 
-            var position = GetPoint(touchPosition);
-            
-            OnClicked?.Invoke(position);
-        }
-
-        private void OnCloseButtonClickedHandler() => OnCloseButtonClicked?.Invoke();
+        private void OnPointSelectedHandler(Vector3 point) => OnClicked?.Invoke(point);
         
         private void OnOptionClickedHandler(BuildingOption option) => OnOptionChosen?.Invoke(option.Config);
 
-        private bool IsPointOverUI(Vector2 position)
-        {
-            var eventData = new PointerEventData(EventSystem.current)
-            {
-                position = position
-            };
-
-            var results = new List<RaycastResult>();
-            EventSystem.current.RaycastAll(eventData, results);
-
-            return results.Count > 0;
-        }
-
-        private Vector3 GetPoint(Vector2 touchPosition)
-        {
-            var ray = _mainCamera.ScreenPointToRay(touchPosition);
-
-            var buildPlane = new Plane(Vector3.up, _planeCenter.position);
-
-            if (buildPlane.Raycast(ray, out var enter))
-                return ray.GetPoint(enter);
-
-            return Vector3.zero;
-        }
-
+        private void OnCloseButtonClickedHandler() => OnCloseButtonClicked?.Invoke();
+        
         private void ClearContainer()
         {
             if (_options == null)
@@ -150,7 +110,7 @@ namespace Assets.Game.Scripts.Buildings
         private void OnDestroy()
         {
             _closeButton.onClick.RemoveListener(OnCloseButtonClickedHandler);
-            _input.Touch -= OnTouchHandler;
+            _pointSelector.OnClicked -= OnPointSelectedHandler;
             
             ClearContainer();
         }
