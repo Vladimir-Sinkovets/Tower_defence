@@ -1,11 +1,12 @@
 ﻿using Assets.Game.Scripts.Animations;
 using System;
 using System.Collections.Generic;
+using Assets.Game.Scripts.Buildings;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
-namespace Assets.Game.Scripts.Buildings
+namespace Assets.Game.Scripts.UI.Buildings
 {
     public class ChooseBuildingView : MonoBehaviour, IChooseBuildingView
     {

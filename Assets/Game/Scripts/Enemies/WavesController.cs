@@ -1,11 +1,11 @@
 ﻿using Assets.Game.Scripts.Configs;
-using Assets.Game.Scripts.Enemies;
 using System.Collections;
 using System.Linq;
+using Assets.Game.Scripts.Services;
 using UnityEngine;
 using Zenject;
 
-namespace Assets.Game.Scripts.Services
+namespace Assets.Game.Scripts.Enemies
 {
     public class WavesController : MonoBehaviour
     {

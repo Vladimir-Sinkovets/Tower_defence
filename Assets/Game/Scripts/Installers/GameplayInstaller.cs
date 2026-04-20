@@ -2,10 +2,11 @@
 using Assets.Game.Scripts.Buildings;
 using Assets.Game.Scripts.Configs;
 using Assets.Game.Scripts.Enemies;
-using Assets.Game.Scripts.GameplayCurrency;
 using Assets.Game.Scripts.Input;
 using Assets.Game.Scripts.Services;
 using Assets.Game.Scripts.UI;
+using Assets.Game.Scripts.UI.Buildings;
+using Assets.Game.Scripts.UI.Currency;
 using UnityEngine;
 using Zenject;
 

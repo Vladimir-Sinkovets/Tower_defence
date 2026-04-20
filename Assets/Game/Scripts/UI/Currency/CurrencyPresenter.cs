@@ -1,6 +1,7 @@
 using System;
+using Assets.Game.Scripts.Services;
 
-namespace Assets.Game.Scripts.GameplayCurrency
+namespace Assets.Game.Scripts.UI.Currency
 {
     public class CurrencyPresenter : IDisposable
     {

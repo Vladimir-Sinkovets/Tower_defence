@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.Game.Scripts.Buildings
+namespace Assets.Game.Scripts.UI.Buildings
 {
     public class BuildingOption : MonoBehaviour
     {

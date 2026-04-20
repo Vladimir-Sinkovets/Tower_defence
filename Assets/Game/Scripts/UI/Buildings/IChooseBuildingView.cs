@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Assets.Game.Scripts.Buildings;
 using UnityEngine;
 
-namespace Assets.Game.Scripts.Buildings
+namespace Assets.Game.Scripts.UI.Buildings
 {
     public interface IChooseBuildingView
     {

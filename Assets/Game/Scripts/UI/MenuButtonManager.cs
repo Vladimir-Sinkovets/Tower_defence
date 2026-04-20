@@ -1,9 +1,10 @@
-﻿using Assets.Game.Scripts.Shared;
+﻿using Assets.Game.Scripts.Services;
+using Assets.Game.Scripts.Shared;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
-namespace Assets.Game.Scripts.Services
+namespace Assets.Game.Scripts.UI
 {
     public class MenuButtonManager : MonoBehaviour
     {

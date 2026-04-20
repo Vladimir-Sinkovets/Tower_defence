@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using Zenject;
 
-namespace Assets.Game.Scripts
+namespace Assets.Game.Scripts.Enemies
 {
     public class EnemyWavesSpawner : MonoBehaviour
     {
