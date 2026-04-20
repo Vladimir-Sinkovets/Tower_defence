@@ -8,7 +8,7 @@ namespace Assets.Game.Scripts.Buildings
     public interface IChooseBuildingView
     {
         event Action<Vector3> OnClicked;
-        event Action<BuildingConfig> OnOptionChosen;
+        event Action<int> OnOptionChosen;
         event Action OnCloseButtonClicked;
         
         void Show();
@@ -20,7 +20,9 @@ namespace Assets.Game.Scripts.Buildings
 
     public class BuildingOptionViewModel
     {
-        public BuildingConfig Config;
+        public Sprite Icon;
+        public int Index;
+        public int Price;
         public bool IsAvailable;
     }
 }

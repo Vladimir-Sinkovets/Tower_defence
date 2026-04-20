@@ -10,7 +10,7 @@ namespace Assets.Game.Scripts.Buildings
     public class ChooseBuildingView : MonoBehaviour, IChooseBuildingView
     {
         public event Action<Vector3> OnClicked;
-        public event Action<BuildingConfig> OnOptionChosen;
+        public event Action<int> OnOptionChosen;
         public event Action OnCloseButtonClicked;
 
         [SerializeField] private GameObject _panel;
@@ -77,7 +77,7 @@ namespace Assets.Game.Scripts.Buildings
             {
                 var option = Instantiate(_buildingOptionPrefab, _optionsContainer);
 
-                option.Init(viewModel.Config, viewModel.IsAvailable);
+                option.Init(viewModel.Icon, viewModel.Index, viewModel.Price, viewModel.IsAvailable);
 
                 option.OnClick += OnOptionClickedHandler;
 
@@ -87,7 +87,7 @@ namespace Assets.Game.Scripts.Buildings
 
         private void OnPointSelectedHandler(Vector3 point) => OnClicked?.Invoke(point);
         
-        private void OnOptionClickedHandler(BuildingOption option) => OnOptionChosen?.Invoke(option.Config);
+        private void OnOptionClickedHandler(BuildingOption option) => OnOptionChosen?.Invoke(option.Index);
 
         private void OnCloseButtonClickedHandler() => OnCloseButtonClicked?.Invoke();
         
