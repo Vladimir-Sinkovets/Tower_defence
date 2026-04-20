@@ -15,19 +15,19 @@ namespace Assets.Game.Scripts.Buildings
         [SerializeField] private TMP_Text _price;
 
         private bool _isAvailable;
-        public BuildingConfig Config { get; private set; }
+        public int Index { get; private set; }
 
-        public void Init(BuildingConfig config, bool isAvailable)
+        public void Init(Sprite icon, int index, int price, bool isAvailable)
         {
-            Config = config;
-
-            _icon.sprite = Config.Icon;
+            Index =  index;
+            
+            _icon.sprite = icon;
 
             _isAvailable = isAvailable;
 
             _unavailableImage.gameObject.SetActive(!isAvailable);
 
-            _price.text = $"${Config.Price}";
+            _price.text = $"${price}";
         }
 
         public void OnClickHandler()
@@ -36,9 +36,6 @@ namespace Assets.Game.Scripts.Buildings
                 OnClick?.Invoke(this);
         }
 
-        private void OnDestroy()
-        {
-            OnClick = null;
-        }
+        private void OnDestroy() => OnClick = null;
     }
 }

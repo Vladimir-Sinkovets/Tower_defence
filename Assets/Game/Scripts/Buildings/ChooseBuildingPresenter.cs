@@ -36,8 +36,10 @@ namespace Assets.Game.Scripts.Buildings
 
         private void OnCloseButtonClickedHandler() => ClosePanel();
 
-        private void OnOptionChosenHandler(BuildingConfig config)
+        private void OnOptionChosenHandler(int index)
         {
+            var config = _buildingsConfig.Buildings.ElementAt(index);
+
             if (_buildingService.TryBuild(config) == false)
                 return;
             
@@ -83,9 +85,11 @@ namespace Assets.Game.Scripts.Buildings
         private void Render()
         {
             var viewModels = _buildingsConfig.Buildings
-                .Select(buildingConfig => new BuildingOptionViewModel()
+                .Select((buildingConfig, index) => new BuildingOptionViewModel()
                 {
-                    Config = buildingConfig,
+                    Price = buildingConfig.Price,
+                    Icon = buildingConfig.Icon,
+                    Index = index,
                     IsAvailable = buildingConfig.Price <= _currencyBank.Total,
                 }).ToList();
             
