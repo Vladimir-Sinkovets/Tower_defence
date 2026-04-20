@@ -7,9 +7,9 @@ namespace Assets.Game.Scripts.Buildings
 {
     public interface IChooseBuildingView
     {
+        event Action<Vector3> OnClicked;
         event Action<BuildingConfig> OnOptionChosen;
         event Action OnCloseButtonClicked;
-        event Action<Vector3> OnClicked;
         
         void Show();
         void Hide();
