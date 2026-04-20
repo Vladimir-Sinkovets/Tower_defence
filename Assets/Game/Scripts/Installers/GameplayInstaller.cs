@@ -2,6 +2,7 @@
 using Assets.Game.Scripts.Buildings;
 using Assets.Game.Scripts.Configs;
 using Assets.Game.Scripts.Enemies;
+using Assets.Game.Scripts.GameplayCurrency;
 using Assets.Game.Scripts.Input;
 using Assets.Game.Scripts.Services;
 using Assets.Game.Scripts.UI;
@@ -23,6 +24,7 @@ namespace Assets.Game.Scripts.Installers
         [SerializeField] private MetaCurrencyConfig _metaCurrencyConfig;
         [SerializeField] private FieldStartupAnimation _fieldStartupAnimation;
         [SerializeField] private PointSelector _pointSelector;
+        [SerializeField] private CurrencyView _currencyView;
 
         public override void InstallBindings()
         {
@@ -65,6 +67,10 @@ namespace Assets.Game.Scripts.Installers
             Container.Bind<SceneLoader>().AsSingle();
 
             Container.BindInstance(_pointSelector).AsSingle();
+
+            Container.BindInterfacesAndSelfTo<CurrencyPresenter>().AsSingle().NonLazy();
+            
+            Container.BindInstance<ICurrencyView>(_currencyView).AsSingle();
         }
     }
 }

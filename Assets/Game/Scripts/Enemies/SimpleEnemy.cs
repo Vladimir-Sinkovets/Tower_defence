@@ -1,6 +1,7 @@
 using Assets.Game.Scripts.Common.UniversalStateMachine;
 using Assets.Game.Scripts.Enemies.Factories;
 using Assets.Game.Scripts.Enemies.States;
+using Assets.Game.Scripts.GameplayCurrency;
 using Assets.Game.Scripts.Services;
 using Assets.Game.Scripts.Shared;
 using UnityEngine;

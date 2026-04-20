@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using Assets.Game.Scripts.GameplayCurrency;
 using Assets.Game.Scripts.Services;
 using UnityEngine;
 using Zenject;
@@ -14,6 +15,7 @@ namespace Assets.Game.Scripts.Buildings
         private BuildingService _buildingService;
 
         private bool _isPanelOpen;
+        private Vector3 _position;
 
         [Inject]
         public void Construct(
@@ -40,7 +42,7 @@ namespace Assets.Game.Scripts.Buildings
         {
             var config = _buildingsConfig.Buildings.ElementAt(index);
 
-            if (_buildingService.TryBuild(config) == false)
+            if (_buildingService.TryBuild(config, _position) == false)
                 return;
             
             ClosePanel();
@@ -51,11 +53,11 @@ namespace Assets.Game.Scripts.Buildings
             if (_buildingService.IsPositionAvailable(position) == false)
                 return;
             
-            _buildingService.SetPosition(position);
-            
-            OpenPanel();
+            _position = position;
             
             _chooseBuildingView.ShowPointer(position);
+            
+            OpenPanel();
         }
 
         private void OnCurrencyChangedHandler(int obj) => Render();

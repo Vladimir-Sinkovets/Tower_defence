@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using Assets.Game.Scripts.Animations;
+using Assets.Game.Scripts.GameplayCurrency;
 using Assets.Game.Scripts.Services;
 using UnityEngine;
 using Zenject;
@@ -12,7 +13,6 @@ namespace Assets.Game.Scripts.Buildings
         private CurrencyBank _currencyBank;
         private IInstantiator _instantiator;
         
-        private Vector3 _position;
         private IEnumerator _coroutine;
 
         [Inject]
@@ -26,8 +26,6 @@ namespace Assets.Game.Scripts.Buildings
             _instantiator = instantiator;
         }
 
-        public void SetPosition(Vector3 position) => _position = position;
-
         public bool IsPositionAvailable(Vector3 position)
         {
             foreach (var building in _buildingRegistry.All)
@@ -39,12 +37,12 @@ namespace Assets.Game.Scripts.Buildings
             return true;
         }
 
-        public bool TryBuild(BuildingConfig config)
+        public bool TryBuild(BuildingConfig config, Vector3 position)
         {
             if (_currencyBank.TrySpend(config.Price) == false)
                 return false;
 
-            StartCoroutine(CreateBuilding(config, _position));
+            StartCoroutine(CreateBuilding(config, position));
             
             return true;
         }
