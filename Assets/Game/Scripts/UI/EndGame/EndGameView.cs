@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace Assets.Game.Scripts.UI
 {
-    public class EndGamePanel : MonoBehaviour
+    public class EndGameView : MonoBehaviour, IEndGameView
     {
         public event Action OnRestartButtonClicked;
         public event Action OnMenuButtonClicked;
