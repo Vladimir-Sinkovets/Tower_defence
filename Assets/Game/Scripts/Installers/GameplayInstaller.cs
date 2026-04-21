@@ -20,7 +20,7 @@ namespace Assets.Game.Scripts.Installers
         [SerializeField] private BuildingService _buildingService;
         [SerializeField] private BuildingsConfig _buildingsConfig;
         [SerializeField] private ChooseBuildingView _chooseBuildingView;
-        [SerializeField] private EndGamePanel _endGamePanel;
+        [SerializeField] private EndGameView _endGameView;
         [SerializeField] private Castle _castle;
         [SerializeField] private MetaCurrencyConfig _metaCurrencyConfig;
         [SerializeField] private FieldStartupAnimation _fieldStartupAnimation;
@@ -47,7 +47,7 @@ namespace Assets.Game.Scripts.Installers
 
             Container.BindInterfacesTo<ChooseBuildingView>().FromInstance(_chooseBuildingView).AsSingle();
 
-            Container.BindInstance(_endGamePanel).AsSingle();
+            Container.BindInstance<IEndGameView>(_endGameView).AsSingle();
 
             Container.BindInstance(_fieldStartupAnimation).AsSingle();
 
@@ -72,6 +72,8 @@ namespace Assets.Game.Scripts.Installers
             Container.BindInterfacesAndSelfTo<CurrencyPresenter>().AsSingle().NonLazy();
             
             Container.BindInstance<ICurrencyView>(_currencyView).AsSingle();
+            
+            Container.Bind<EndGamePresenter>().AsSingle().NonLazy();
         }
     }
 }
