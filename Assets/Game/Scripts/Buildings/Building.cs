@@ -28,7 +28,6 @@ namespace Assets.Game.Scripts.Buildings
                 Gizmos.DrawWireSphere(transform.position, RadiusOfOccupiedSpace);
         }
 
-
         protected virtual void OnDestroy() => _buildingRegistry.Unregister(this);
     }
 }

@@ -51,8 +51,8 @@ namespace Assets.Game.Scripts.Services
             {
                 Waves = _wavesController.WavesCount,
                 Kills = _gameStatistics.KilledEnemiesCount,
-                MetaCurrency = _metaCurrencyService.Total,
                 Currency = _currencyBank.Total,
+                EarnedMetaCurrency = earnedMetaCurrency,
             });
         }
 
@@ -83,6 +83,6 @@ namespace Assets.Game.Scripts.Services
         public int Waves;
         public int Kills;
         public int Currency;
-        public int MetaCurrency;
+        public int EarnedMetaCurrency;
     }
 }

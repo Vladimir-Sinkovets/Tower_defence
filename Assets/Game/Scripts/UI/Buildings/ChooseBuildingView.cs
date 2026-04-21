@@ -41,7 +41,7 @@ namespace Assets.Game.Scripts.UI.Buildings
             _pointer.gameObject.SetActive(false);
         }
 
-        public void Show()
+        public void ShowPanel()
         {
             _panel.SetActive(true);
 
@@ -49,7 +49,7 @@ namespace Assets.Game.Scripts.UI.Buildings
                 _animation.Show();
         }
 
-        public void Hide()
+        public void HidePanel()
         {
             if (_animation != null)
                 _animation.Hide(() =>

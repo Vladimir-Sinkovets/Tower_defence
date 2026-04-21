@@ -37,7 +37,7 @@ namespace Assets.Game.Scripts.UI
                 result.Waves, 
                 result.Kills,
                 result.Currency,
-                result.MetaCurrency);
+                result.EarnedMetaCurrency);
 
         private void OnRestartButtonClickedHandler() => _sceneLoader.LoadScene(SceneNames.Game);
         private void OnMenuButtonClickedHandler() => _sceneLoader.LoadScene(SceneNames.Menu);

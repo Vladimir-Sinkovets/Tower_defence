@@ -29,51 +29,61 @@ namespace Assets.Game.Scripts.Installers
 
         public override void InstallBindings()
         {
-            Container.Bind<Registry<Enemy>>().AsSingle();
+            BindServices();
+            BindInput();
+            BindGameManagers();
+            BindRegisters();
+            BindConfigs();
+            BindUI();
+        }
 
-            Container.Bind<Registry<Building>>().AsSingle();
-
-            Container.Bind<GameStatistics>().AsSingle();
-
-            Container.BindInterfacesAndSelfTo<GameOverManager>().AsSingle();
-
-            Container.BindInstance(_wavesSpawner).AsSingle();
-
-            Container.BindInstance(_castle).AsSingle();
-
-            Container.BindInstance(_buildingsConfig).AsSingle();
-
-            Container.BindInstance(_metaCurrencyConfig).AsSingle();
-
-            Container.BindInterfacesTo<ChooseBuildingView>().FromInstance(_chooseBuildingView).AsSingle();
-
-            Container.BindInstance<IEndGameView>(_endGameView).AsSingle();
-
-            Container.BindInstance(_fieldStartupAnimation).AsSingle();
-
-            Container.BindInstance(_buildingService).AsSingle();
-
-            Container.BindInstance(_wavesController).AsSingle();
-
-            Container.BindInstance(_wavesConfig).AsSingle();
-
+        private void BindServices()
+        {
             Container.Bind<CurrencyBank>().AsSingle();
-
-            Container.Bind<ChooseBuildingPresenter>().AsSingle().NonLazy();
-
-            Container.BindInterfacesAndSelfTo<GameInput>().AsSingle();
-
             Container.Bind<MetaCurrencyService>().AsSingle();
-
+            Container.Bind<GameStatistics>().AsSingle();
             Container.Bind<SceneLoader>().AsSingle();
+        }
 
+        private void BindInput()
+        {
+            Container.BindInterfacesAndSelfTo<GameInput>().AsSingle();
             Container.BindInstance(_pointSelector).AsSingle();
+        }
 
+        private void BindGameManagers()
+        {
+            Container.BindInterfacesAndSelfTo<GameOverManager>().AsSingle();
+            Container.BindInstance(_wavesSpawner).AsSingle();
+            Container.BindInstance(_wavesController).AsSingle();
+            Container.BindInstance(_buildingService).AsSingle();
+            Container.BindInstance(_castle).AsSingle();
+            Container.BindInstance(_fieldStartupAnimation).AsSingle();
+        }
+
+        private void BindRegisters()
+        {
+            Container.Bind<Registry<Enemy>>().AsSingle();
+            Container.Bind<Registry<Building>>().AsSingle();
+        }
+
+        private void BindConfigs()
+        {
+            Container.BindInstance(_buildingsConfig).AsSingle();
+            Container.BindInstance(_metaCurrencyConfig).AsSingle();
+            Container.BindInstance(_wavesConfig).AsSingle();
+        }
+
+        private void BindUI()
+        {
             Container.BindInterfacesAndSelfTo<CurrencyPresenter>().AsSingle().NonLazy();
-            
             Container.BindInstance<ICurrencyView>(_currencyView).AsSingle();
             
             Container.Bind<EndGamePresenter>().AsSingle().NonLazy();
+            Container.BindInstance<IEndGameView>(_endGameView).AsSingle();
+
+            Container.Bind<ChooseBuildingPresenter>().AsSingle().NonLazy();
+            Container.BindInstance<IChooseBuildingView>(_chooseBuildingView).AsSingle();
         }
     }
 }

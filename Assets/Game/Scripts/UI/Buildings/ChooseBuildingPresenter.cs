@@ -60,14 +60,14 @@ namespace Assets.Game.Scripts.UI.Buildings
             OpenPanel();
         }
 
-        private void OnCurrencyChangedHandler(int obj) => Render();
+        private void OnCurrencyChangedHandler(int _) => Render();
 
         private void OpenPanel()
         {
             if (_isPanelOpen)
                 return;
             
-            _chooseBuildingView.Show();
+            _chooseBuildingView.ShowPanel();
             Render();
 
             _isPanelOpen = true;
@@ -78,7 +78,7 @@ namespace Assets.Game.Scripts.UI.Buildings
             if (!_isPanelOpen)
                 return;
             
-            _chooseBuildingView.Hide();
+            _chooseBuildingView.HidePanel();
             _chooseBuildingView.HidePointer();
             
             _isPanelOpen = false;
