@@ -1,5 +1,4 @@
-﻿using Assets.Game.Scripts.Buildings;
-using System;
+﻿using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
