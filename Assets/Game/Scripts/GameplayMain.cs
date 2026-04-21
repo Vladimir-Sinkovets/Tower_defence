@@ -1,7 +1,6 @@
 ﻿using Assets.Game.Scripts.Animations;
 using Assets.Game.Scripts.Buildings;
 using Assets.Game.Scripts.Services;
-using DG.Tweening;
 using System.Collections;
 using Assets.Game.Scripts.Enemies;
 using UnityEngine;
@@ -11,18 +10,12 @@ namespace Assets.Game.Scripts
 {
     public class GameplayMain : MonoBehaviour
     {
-        private const float ShakeDuration = 0.1f;
-        private const float ShakeStrength = 0.1f;
-        private const int ShakeVibrato = 5;
-
         private WavesController _wavesController;
         private Castle _castle;
         private GameOverManager _gameOverManager;
         private FieldStartupAnimation _fieldStartupAnimation;
         private BuildingsConfig _buildingsConfig;
         private IInstantiator _instantiator;
-
-        private Tween _shakeTween;
 
         [Inject]
         public void Construct(
@@ -52,7 +45,6 @@ namespace Assets.Game.Scripts
             _wavesController.StartWaves();
 
             _castle.OnHpEnded += OnCastleHpEndedHandler;
-            _castle.OnDamaged += OnCastleDamaged;
         }
 
         private IEnumerator CreateCastleBuilding()
@@ -67,17 +59,6 @@ namespace Assets.Game.Scripts
 
         private void OnCastleHpEndedHandler() => _gameOverManager.GameOver();
 
-        private void OnCastleDamaged()
-        {
-            _shakeTween?.Complete();
-
-            _shakeTween = _castle.transform.DOShakePosition(ShakeDuration, ShakeStrength, ShakeVibrato);
-        }
-
-        private void OnDestroy()
-        {
-            _castle.OnHpEnded -= OnCastleHpEndedHandler;
-            _castle.OnDamaged -= OnCastleDamaged;
-        }
+        private void OnDestroy() => _castle.OnHpEnded -= OnCastleHpEndedHandler;
     }
 }

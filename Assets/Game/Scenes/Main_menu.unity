@@ -197,7 +197,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Installers.MainMenuInstaller
   _metaCurrencyView: {fileID: 321072578}
-  _mainMenuView: {fileID: 0}
+  _mainMenuView: {fileID: 594132902}
 --- !u!1 &321072576
 GameObject:
   m_ObjectHideFlags: 0

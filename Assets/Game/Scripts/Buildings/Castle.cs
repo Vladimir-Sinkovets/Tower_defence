@@ -1,13 +1,19 @@
 ﻿using Assets.Game.Scripts.Shared;
 using System;
+using DG.Tweening;
 using UnityEngine;
 
 namespace Assets.Game.Scripts.Buildings
 {
     public class Castle : MonoBehaviour
     {
+        private const float ShakeDuration = 0.1f;
+        private const float ShakeStrength = 0.1f;
+        private const int ShakeVibrato = 5;
+        
         public event Action OnHpEnded;
-        public event Action OnDamaged;
+
+        private Tween _shakeTween;
 
         [field: SerializeField] public Transform BuildingPosition { get; private set; }
         [SerializeField] private Health _health;
@@ -18,7 +24,12 @@ namespace Assets.Game.Scripts.Buildings
             _health.OnDamaged += OnDamagedHandler;
         }
 
-        private void OnDamagedHandler(int _) => OnDamaged?.Invoke();
+        private void OnDamagedHandler(int _)
+        {
+            _shakeTween?.Complete();
+
+            _shakeTween = transform.DOShakePosition(ShakeDuration, ShakeStrength, ShakeVibrato);
+        }
 
         private void OnDiedHandler() => OnHpEnded?.Invoke();
 
