@@ -25,6 +25,7 @@ namespace Assets.Game.Scripts.Buildings
             _instantiator = instantiator;
         }
 
+        
         public bool IsPositionAvailable(Vector3 position)
         {
             foreach (var building in _buildingRegistry.All)
@@ -45,8 +46,8 @@ namespace Assets.Game.Scripts.Buildings
             
             return true;
         }
-        
 
+        
         private IEnumerator CreateBuilding(BuildingConfig buildingConfig, Vector3 position)
         {
             var building = buildingConfig.BuildingFactory.Create(_instantiator);

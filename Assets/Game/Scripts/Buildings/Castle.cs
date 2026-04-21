@@ -13,17 +13,19 @@ namespace Assets.Game.Scripts.Buildings
         
         public event Action OnHpEnded;
 
-        private Tween _shakeTween;
-
         [field: SerializeField] public Transform BuildingPosition { get; private set; }
         [SerializeField] private Health _health;
 
+        private Tween _shakeTween;
+
+        
         public void Init()
         {
             _health.OnDied += OnDiedHandler;
             _health.OnDamaged += OnDamagedHandler;
         }
 
+        
         private void OnDamagedHandler(int _)
         {
             _shakeTween?.Complete();

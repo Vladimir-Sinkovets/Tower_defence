@@ -10,8 +10,8 @@ namespace Assets.Game.Scripts.UI.Buildings
         event Action<int> OnOptionChosen;
         event Action OnCloseButtonClicked;
         
-        void Show();
-        void Hide();
+        void ShowPanel();
+        void HidePanel();
         void Render(List<BuildingOptionViewModel> options);
         void HidePointer();
         void ShowPointer(Vector3 position);

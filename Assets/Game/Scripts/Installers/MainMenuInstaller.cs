@@ -17,11 +17,9 @@ namespace Assets.Game.Scripts.Installers
             Container.Bind<SceneLoader>().AsSingle();
 
             Container.BindInstance<IMetaCurrencyView>(_metaCurrencyView).AsSingle();
-
             Container.Bind<MetaCurrencyPresenter>().AsSingle().NonLazy();
 
             Container.BindInstance<IMainMenuView>(_mainMenuView).AsSingle();
-
             Container.Bind<MainMenuPresenter>().AsSingle().NonLazy();
         }
     }
