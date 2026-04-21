@@ -1,7 +1,7 @@
 ﻿using Assets.Game.Scripts.Animations;
 using System;
 using System.Collections.Generic;
-using Assets.Game.Scripts.Buildings;
+using Assets.Game.Scripts.Input;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
