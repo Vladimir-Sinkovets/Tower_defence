@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
 
-namespace Assets.Game.Scripts.Buildings
+namespace Assets.Game.Scripts.Input
 {
     public class PointSelector : MonoBehaviour
     {
