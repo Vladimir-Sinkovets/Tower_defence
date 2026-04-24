@@ -5,8 +5,6 @@ using Assets.Game.Scripts.Enemies;
 using Assets.Game.Scripts.Input;
 using Assets.Game.Scripts.Services;
 using Assets.Game.Scripts.UI;
-using Assets.Game.Scripts.UI.Buildings;
-using Assets.Game.Scripts.UI.Currency;
 using UnityEngine;
 using Zenject;
 
@@ -17,13 +15,11 @@ namespace Assets.Game.Scripts.Installers
         [SerializeField] private EnemyWavesSpawner _wavesSpawner;
         [SerializeField] private WavesConfig _wavesConfig;
         [SerializeField] private BuildingsConfig _buildingsConfig;
-        [SerializeField] private ChooseBuildingView _chooseBuildingView;
-        [SerializeField] private EndGameView _endGameView;
         [SerializeField] private MetaCurrencyConfig _metaCurrencyConfig;
         [SerializeField] private FieldStartupAnimation _fieldStartupAnimation;
         [SerializeField] private PointSelector _pointSelector;
-        [SerializeField] private CurrencyView _currencyView;
         [SerializeField] private CoroutineRunner _coroutineRunner;
+        [SerializeField] private HUD _hud;
 
         public override void InstallBindings()
         {
@@ -75,14 +71,15 @@ namespace Assets.Game.Scripts.Installers
 
         private void BindUI()
         {
-            Container.BindInterfacesAndSelfTo<CurrencyPresenter>().AsSingle().NonLazy();
-            Container.BindInstance<ICurrencyView>(_currencyView).AsSingle();
+            Container.BindInstance<HUD>(_hud);
             
-            Container.Bind<EndGamePresenter>().AsSingle().NonLazy();
-            Container.BindInstance<IEndGameView>(_endGameView).AsSingle();
+            // Container.BindInstance<IEndGameView>(_endGameView).AsSingle();
 
-            Container.Bind<ChooseBuildingPresenter>().AsSingle().NonLazy();
-            Container.BindInstance<IChooseBuildingView>(_chooseBuildingView).AsSingle();
+            // Container.BindInstance<IChooseBuildingView>(_chooseBuildingView).AsSingle();
+            
+            // Container.Bind<ChooseBuildingPresenter>().AsSingle().NonLazy();
+            // Container.Bind<EndGamePresenter>().AsSingle().NonLazy();
+            // Container.BindInterfacesAndSelfTo<CurrencyPresenter>().AsSingle().NonLazy();
         }
     }
 }

@@ -5,6 +5,10 @@ using Assets.Game.Scripts.Services;
 using System.Collections;
 using Assets.Game.Scripts.Enemies;
 using Assets.Game.Scripts.Shared;
+using Assets.Game.Scripts.UI;
+using Assets.Game.Scripts.UI.Buildings;
+using Assets.Game.Scripts.UI.CastleHealth;
+using Assets.Game.Scripts.UI.Currency;
 using UnityEngine;
 using Zenject;
 
@@ -20,7 +24,14 @@ namespace Assets.Game.Scripts
         private readonly BuildingsConfig _buildingsConfig;
         private readonly IInstantiator _instantiator;
         private readonly ICoroutineRunner _coroutineRunner;
+        private readonly HUD _hud;
+        
         private Health _castleHealth;
+        
+        private ChooseBuildingPresenter _chooseBuildingPresenter;
+        private CurrencyPresenter _currencyPresenter;
+        private EndGamePresenter _endGamePresenter;
+        private CastleHealthPresenter _castleHealthPresenter;
 
         public GameplayMain(
             WavesController waveController,
@@ -28,7 +39,8 @@ namespace Assets.Game.Scripts
             FieldStartupAnimation fieldStartupAnimation,
             BuildingsConfig buildingsConfig,
             IInstantiator instantiator,
-            ICoroutineRunner coroutineRunner)
+            ICoroutineRunner coroutineRunner,
+            HUD hud)
         {
             _wavesController = waveController;
             _gameOverManager = gameOverManager;
@@ -36,6 +48,7 @@ namespace Assets.Game.Scripts
             _buildingsConfig = buildingsConfig;
             _instantiator = instantiator;
             _coroutineRunner = coroutineRunner;
+            _hud = hud;
         }
 
         public void Initialize()
@@ -49,9 +62,19 @@ namespace Assets.Game.Scripts
             
             yield return CreateCastleBuilding();
 
-            //CreateHUD();
+            CreateHUD();
 
             _wavesController.StartWaves(_castleHealth);
+        }
+
+        private void CreateHUD()
+        {
+            var hud = _instantiator.InstantiatePrefabForComponent<HUD>(_hud);
+
+            _chooseBuildingPresenter = _instantiator.Instantiate<ChooseBuildingPresenter>(new object[] { hud.ChooseBuildingView });
+            _currencyPresenter = _instantiator.Instantiate<CurrencyPresenter>(new object[] { hud.CurrencyView });
+            _endGamePresenter = _instantiator.Instantiate<EndGamePresenter>(new object[] { hud.EndGameView });
+            _castleHealthPresenter = _instantiator.Instantiate<CastleHealthPresenter>(new object[] { hud.CastleHealthView, _castleHealth });
         }
 
         private IEnumerator CreateCastleBuilding()
@@ -77,6 +100,14 @@ namespace Assets.Game.Scripts
 
         private void OnCastleDiedHandler() => _gameOverManager.GameOver();
 
-        public void Dispose() => _castleHealth.OnDied -= OnCastleDiedHandler;
+        public void Dispose()
+        {
+            _currencyPresenter.Dispose();
+            _chooseBuildingPresenter.Dispose();
+            _endGamePresenter.Dispose();
+            _castleHealthPresenter.Dispose();
+            
+            _castleHealth.OnDied -= OnCastleDiedHandler;
+        }
     }
 }

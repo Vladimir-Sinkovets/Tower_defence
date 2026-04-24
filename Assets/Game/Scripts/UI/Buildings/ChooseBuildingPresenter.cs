@@ -9,16 +9,15 @@ namespace Assets.Game.Scripts.UI.Buildings
 {
     public class ChooseBuildingPresenter : IDisposable
     {
-        private IChooseBuildingView _chooseBuildingView;
-        private BuildingsConfig _buildingsConfig;
-        private CurrencyBank _currencyBank;
-        private BuildingService _buildingService;
+        private readonly IChooseBuildingView _chooseBuildingView;
+        private readonly BuildingsConfig _buildingsConfig;
+        private readonly CurrencyBank _currencyBank;
+        private readonly BuildingService _buildingService;
 
         private bool _isPanelOpen;
         private Vector3 _position;
 
-        [Inject]
-        public void Construct(
+        public ChooseBuildingPresenter(
             IChooseBuildingView chooseBuildingView,
             BuildingsConfig buildingsConfig,
             CurrencyBank currencyBank,
