@@ -6,23 +6,24 @@ using Zenject;
 
 namespace Assets.Game.Scripts.Buildings
 {
-    public class BuildingService : MonoBehaviour
+    public class BuildingService
     {
         private Registry<Building> _buildingRegistry;
         private CurrencyBank _currencyBank;
         private IInstantiator _instantiator;
-        
-        private IEnumerator _coroutine;
+        private ICoroutineRunner _coroutineRunner;
 
         [Inject]
         public void Construct(
             Registry<Building> buildingRegistry,
             CurrencyBank currencyBank,
-            IInstantiator instantiator)
+            IInstantiator instantiator,
+            ICoroutineRunner coroutineRunner)
         {
             _buildingRegistry = buildingRegistry;
             _currencyBank = currencyBank;
             _instantiator = instantiator;
+            _coroutineRunner = coroutineRunner;
         }
 
         
@@ -42,7 +43,7 @@ namespace Assets.Game.Scripts.Buildings
             if (_currencyBank.TrySpend(config.Price) == false)
                 return false;
 
-            StartCoroutine(CreateBuilding(config, position));
+            _coroutineRunner.Run(CreateBuilding(config, position));
             
             return true;
         }
@@ -54,15 +55,7 @@ namespace Assets.Game.Scripts.Buildings
 
             building.transform.position = position;
 
-            _coroutine = building.transform.PlayFallDownAppearanceAnimation();
-            
-            yield return _coroutine;
-        }
-        
-        private void OnDestroy()
-        {
-            if (_coroutine != null)
-                StopCoroutine(_coroutine);
+            yield return building.transform.PlayFallDownAppearanceAnimation();
         }
     }
 }

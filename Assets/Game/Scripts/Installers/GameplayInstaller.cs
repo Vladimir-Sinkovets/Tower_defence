@@ -15,9 +15,7 @@ namespace Assets.Game.Scripts.Installers
     public class GameplayInstaller : MonoInstaller
     {
         [SerializeField] private EnemyWavesSpawner _wavesSpawner;
-        [SerializeField] private WavesController _wavesController;
         [SerializeField] private WavesConfig _wavesConfig;
-        [SerializeField] private BuildingService _buildingService;
         [SerializeField] private BuildingsConfig _buildingsConfig;
         [SerializeField] private ChooseBuildingView _chooseBuildingView;
         [SerializeField] private EndGameView _endGameView;
@@ -26,6 +24,7 @@ namespace Assets.Game.Scripts.Installers
         [SerializeField] private FieldStartupAnimation _fieldStartupAnimation;
         [SerializeField] private PointSelector _pointSelector;
         [SerializeField] private CurrencyView _currencyView;
+        [SerializeField] private CoroutineRunner _coroutineRunner;
 
         public override void InstallBindings()
         {
@@ -43,6 +42,7 @@ namespace Assets.Game.Scripts.Installers
             Container.Bind<MetaCurrencyService>().AsSingle();
             Container.Bind<GameStatistics>().AsSingle();
             Container.Bind<SceneLoader>().AsSingle();
+            Container.Bind<ICoroutineRunner>().FromInstance(_coroutineRunner);
         }
 
         private void BindInput()
@@ -53,10 +53,11 @@ namespace Assets.Game.Scripts.Installers
 
         private void BindGameManagers()
         {
+            Container.BindInterfacesAndSelfTo<GameplayMain>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<GameOverManager>().AsSingle();
             Container.BindInstance(_wavesSpawner).AsSingle();
-            Container.BindInstance(_wavesController).AsSingle();
-            Container.BindInstance(_buildingService).AsSingle();
+            Container.BindInterfacesAndSelfTo<WavesController>().AsSingle();
+            Container.Bind<BuildingService>().AsSingle();
             Container.BindInstance(_castle).AsSingle();
             Container.BindInstance(_fieldStartupAnimation).AsSingle();
         }

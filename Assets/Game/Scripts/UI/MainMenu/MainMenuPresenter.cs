@@ -1,8 +1,6 @@
 ﻿using System;
 using Assets.Game.Scripts.Services;
 using Assets.Game.Scripts.Shared;
-using UnityEngine;
-using UnityEngine.UI;
 using Zenject;
 
 namespace Assets.Game.Scripts.UI

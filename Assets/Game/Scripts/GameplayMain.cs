@@ -1,30 +1,31 @@
-﻿using Assets.Game.Scripts.Animations;
+﻿using System;
+using Assets.Game.Scripts.Animations;
 using Assets.Game.Scripts.Buildings;
 using Assets.Game.Scripts.Services;
 using System.Collections;
 using Assets.Game.Scripts.Enemies;
-using UnityEngine;
 using Zenject;
 
 namespace Assets.Game.Scripts
 {
-    public class GameplayMain : MonoBehaviour
+    public class GameplayMain : IInitializable, IDisposable
     {
-        private WavesController _wavesController;
-        private Castle _castle;
-        private GameOverManager _gameOverManager;
-        private FieldStartupAnimation _fieldStartupAnimation;
-        private BuildingsConfig _buildingsConfig;
-        private IInstantiator _instantiator;
+        private readonly WavesController _wavesController;
+        private readonly Castle _castle;
+        private readonly GameOverManager _gameOverManager;
+        private readonly FieldStartupAnimation _fieldStartupAnimation;
+        private readonly BuildingsConfig _buildingsConfig;
+        private readonly IInstantiator _instantiator;
+        private readonly ICoroutineRunner _coroutineRunner;
 
-        [Inject]
-        public void Construct(
+        public GameplayMain(
             WavesController waveController,
             Castle castle,
             GameOverManager gameOverManager,
             FieldStartupAnimation fieldStartupAnimation,
             BuildingsConfig buildingsConfig,
-            IInstantiator instantiator)
+            IInstantiator instantiator,
+            ICoroutineRunner coroutineRunner)
         {
             _wavesController = waveController;
             _castle = castle;
@@ -32,9 +33,15 @@ namespace Assets.Game.Scripts
             _fieldStartupAnimation = fieldStartupAnimation;
             _buildingsConfig = buildingsConfig;
             _instantiator = instantiator;
+            _coroutineRunner = coroutineRunner;
         }
 
-        private IEnumerator Start()
+        public void Initialize()
+        {
+            _coroutineRunner.Run(StartGame());
+        }
+
+        private IEnumerator StartGame()
         {
             yield return _fieldStartupAnimation.Play();
 
@@ -59,6 +66,6 @@ namespace Assets.Game.Scripts
 
         private void OnCastleHpEndedHandler() => _gameOverManager.GameOver();
 
-        private void OnDestroy() => _castle.OnHpEnded -= OnCastleHpEndedHandler;
+        public void Dispose() => _castle.OnHpEnded -= OnCastleHpEndedHandler;
     }
 }
