@@ -9,15 +9,16 @@ namespace Assets.Game.Scripts.Shared
         public event Action<int> OnDamaged;
         public event Action OnDied;
 
-        [SerializeField] private int _startHp;
-        
+        private int _startHp;
         private int _currentHp;
 
         public bool IsDead { get; private set; }
 
-        private void Awake()
+        public void Init(int hp)
         {
-            _currentHp = _startHp;
+            _startHp = hp;
+            _currentHp = hp;
+            
             IsDead = false;
         }
 
@@ -37,15 +38,6 @@ namespace Assets.Game.Scripts.Shared
                 IsDead = true;
                 OnDied?.Invoke();
             }
-        }
-
-        public void ResetHealth()
-        {
-            IsDead = false;
-
-            _currentHp = _startHp;
-
-            OnHpChanged?.Invoke(_currentHp, _startHp);
         }
     }
 }

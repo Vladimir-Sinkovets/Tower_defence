@@ -3,6 +3,7 @@ using Assets.Game.Scripts.Configs;
 using System.Collections;
 using System.Linq;
 using Assets.Game.Scripts.Services;
+using Assets.Game.Scripts.Shared;
 using UnityEngine;
 using Zenject;
 
@@ -32,15 +33,15 @@ namespace Assets.Game.Scripts.Enemies
             _coroutineRunner = coroutineRunner;
         }
 
-        public void StartWaves() => _wavesCoroutine = _coroutineRunner.Run(SpawnWaves());
+        public void StartWaves(Health target) => _wavesCoroutine = _coroutineRunner.Run(SpawnWaves(target));
 
-        private IEnumerator SpawnWaves()
+        private IEnumerator SpawnWaves(Health target)
         {
             while (true)
             {
                 var enemyCount = _wavesConfig.BaseEnemyCount + WavesCount * _wavesConfig.NewEnemiesPerWave;
 
-                yield return _enemyWavesController.SpawnWave(enemyCount);
+                yield return _enemyWavesController.SpawnWave(enemyCount, target);
 
                 yield return new WaitUntil(() => 
                     _enemyWavesController.IsSpawning == false &&

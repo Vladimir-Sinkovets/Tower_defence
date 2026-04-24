@@ -19,7 +19,6 @@ namespace Assets.Game.Scripts.Installers
         [SerializeField] private BuildingsConfig _buildingsConfig;
         [SerializeField] private ChooseBuildingView _chooseBuildingView;
         [SerializeField] private EndGameView _endGameView;
-        [SerializeField] private Castle _castle;
         [SerializeField] private MetaCurrencyConfig _metaCurrencyConfig;
         [SerializeField] private FieldStartupAnimation _fieldStartupAnimation;
         [SerializeField] private PointSelector _pointSelector;
@@ -58,7 +57,6 @@ namespace Assets.Game.Scripts.Installers
             Container.BindInstance(_wavesSpawner).AsSingle();
             Container.BindInterfacesAndSelfTo<WavesController>().AsSingle();
             Container.Bind<BuildingService>().AsSingle();
-            Container.BindInstance(_castle).AsSingle();
             Container.BindInstance(_fieldStartupAnimation).AsSingle();
         }
 
