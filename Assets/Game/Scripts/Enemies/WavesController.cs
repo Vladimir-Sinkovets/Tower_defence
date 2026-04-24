@@ -5,7 +5,6 @@ using System.Linq;
 using Assets.Game.Scripts.Services;
 using Assets.Game.Scripts.Shared;
 using UnityEngine;
-using Zenject;
 
 namespace Assets.Game.Scripts.Enemies
 {
@@ -20,8 +19,7 @@ namespace Assets.Game.Scripts.Enemies
 
         public int WavesCount { get; private set; }
 
-        [Inject]
-        public void Construct(
+        public WavesController(
             EnemyWavesSpawner enemyWavesSpawner,
             WavesConfig wavesConfig,
             Registry<Enemy> enemyRegistry,

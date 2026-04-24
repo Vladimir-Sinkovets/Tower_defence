@@ -13,8 +13,7 @@ namespace Assets.Game.Scripts.Buildings
         private IInstantiator _instantiator;
         private ICoroutineRunner _coroutineRunner;
 
-        [Inject]
-        public void Construct(
+        public BuildingService(
             Registry<Building> buildingRegistry,
             CurrencyBank currencyBank,
             IInstantiator instantiator,

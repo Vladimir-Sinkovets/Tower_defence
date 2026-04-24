@@ -10,8 +10,7 @@ namespace Assets.Game.Scripts.UI
         private SceneLoader _sceneLoader;
         private IMainMenuView _mainMenuView;
 
-        [Inject]
-        public void Construct(SceneLoader sceneLoader, IMainMenuView mainMenuView)
+        public MainMenuPresenter(SceneLoader sceneLoader, IMainMenuView mainMenuView)
         {
             _sceneLoader = sceneLoader;
             _mainMenuView = mainMenuView;
