@@ -3,7 +3,6 @@ using System.Linq;
 using Assets.Game.Scripts.Buildings;
 using Assets.Game.Scripts.Services;
 using UnityEngine;
-using Zenject;
 
 namespace Assets.Game.Scripts.UI.Buildings
 {

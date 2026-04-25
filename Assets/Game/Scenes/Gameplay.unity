@@ -2570,7 +2570,7 @@ MonoBehaviour:
   _fieldStartupAnimation: {fileID: 1651697476}
   _pointSelector: {fileID: 1741565430}
   _coroutineRunner: {fileID: 1209871174}
-  _hud: {fileID: 1538167272293545770, guid: 05ddb41e470c0814b9d15ffb0a60c4f3, type: 3}
+  _hudPrefab: {fileID: 1538167272293545770, guid: 05ddb41e470c0814b9d15ffb0a60c4f3, type: 3}
 --- !u!1001 &428744459
 PrefabInstance:
   m_ObjectHideFlags: 0

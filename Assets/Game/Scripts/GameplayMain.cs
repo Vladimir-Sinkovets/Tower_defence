@@ -24,7 +24,7 @@ namespace Assets.Game.Scripts
         private readonly BuildingsConfig _buildingsConfig;
         private readonly IInstantiator _instantiator;
         private readonly ICoroutineRunner _coroutineRunner;
-        private readonly HUD _hud;
+        private readonly HUD _hudPrefab;
         
         private Health _castleHealth;
         
@@ -40,7 +40,7 @@ namespace Assets.Game.Scripts
             BuildingsConfig buildingsConfig,
             IInstantiator instantiator,
             ICoroutineRunner coroutineRunner,
-            HUD hud)
+            HUD hudPrefab)
         {
             _wavesController = waveController;
             _gameOverManager = gameOverManager;
@@ -48,7 +48,7 @@ namespace Assets.Game.Scripts
             _buildingsConfig = buildingsConfig;
             _instantiator = instantiator;
             _coroutineRunner = coroutineRunner;
-            _hud = hud;
+            _hudPrefab = hudPrefab;
         }
 
         public void Initialize()
@@ -60,7 +60,7 @@ namespace Assets.Game.Scripts
         {
             yield return _fieldStartupAnimation.Play();
             
-            yield return CreateCastleBuilding();
+            yield return CreateCastle();
 
             CreateHUD();
 
@@ -69,7 +69,7 @@ namespace Assets.Game.Scripts
 
         private void CreateHUD()
         {
-            var hud = _instantiator.InstantiatePrefabForComponent<HUD>(_hud);
+            var hud = _instantiator.InstantiatePrefabForComponent<HUD>(_hudPrefab);
 
             _chooseBuildingPresenter = _instantiator.Instantiate<ChooseBuildingPresenter>(new object[] { hud.ChooseBuildingView });
             _currencyPresenter = _instantiator.Instantiate<CurrencyPresenter>(new object[] { hud.CurrencyView });
@@ -77,7 +77,7 @@ namespace Assets.Game.Scripts
             _castleHealthPresenter = _instantiator.Instantiate<CastleHealthPresenter>(new object[] { hud.CastleHealthView, _castleHealth });
         }
 
-        private IEnumerator CreateCastleBuilding()
+        private IEnumerator CreateCastle()
         {
             var castle = new GameObject(CastleRootObjectName);
             
@@ -102,12 +102,12 @@ namespace Assets.Game.Scripts
 
         public void Dispose()
         {
-            _currencyPresenter.Dispose();
-            _chooseBuildingPresenter.Dispose();
-            _endGamePresenter.Dispose();
-            _castleHealthPresenter.Dispose();
-            
-            _castleHealth.OnDied -= OnCastleDiedHandler;
+            _currencyPresenter?.Dispose();
+            _chooseBuildingPresenter?.Dispose();
+            _endGamePresenter?.Dispose();
+            _castleHealthPresenter?.Dispose();
+
+            if (_castleHealth != null) _castleHealth.OnDied -= OnCastleDiedHandler;
         }
     }
 }

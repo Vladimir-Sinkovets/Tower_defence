@@ -5,13 +5,13 @@ namespace Assets.Game.Scripts.Services
 {
     public class CoroutineRunner : MonoBehaviour, ICoroutineRunner
     {
-        public Coroutine Run(IEnumerator coroutine) => base.StartCoroutine(coroutine);
+        public Coroutine Run(IEnumerator coroutine) => StartCoroutine(coroutine);
         
-        public void Stop(Coroutine coroutine) => base.StopCoroutine(coroutine);
+        public void Stop(Coroutine coroutine) => StopCoroutine(coroutine);
         
-        public void StopAll() => base.StopAllCoroutines();
+        public void StopAll() => StopAllCoroutines();
 
-        private void OnDestroy() => base.StopAllCoroutines();
+        private void OnDestroy() => StopAllCoroutines();
     }
 
     public interface ICoroutineRunner

@@ -9,6 +9,7 @@ namespace Assets.Game.Scripts.UI.Buildings
     {
         public event Action<BuildingOption> OnClick;
 
+        [SerializeField] private Button _button;
         [SerializeField] private Image _icon;
         [SerializeField] private Image _unavailableImage;
         [SerializeField] private TMP_Text _price;
@@ -27,14 +28,20 @@ namespace Assets.Game.Scripts.UI.Buildings
             _unavailableImage.gameObject.SetActive(!isAvailable);
 
             _price.text = $"${price}";
+            
+            _button.onClick.AddListener(OnClickHandler);
         }
 
-        public void OnClickHandler()
+        private void OnClickHandler()
         {
             if (_isAvailable)
                 OnClick?.Invoke(this);
         }
 
-        private void OnDestroy() => OnClick = null;
+        private void OnDestroy()
+        {
+            _button.onClick.RemoveListener(OnClickHandler);
+            OnClick = null;
+        }
     }
 }

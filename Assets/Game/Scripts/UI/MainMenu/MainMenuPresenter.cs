@@ -1,14 +1,13 @@
 ﻿using System;
 using Assets.Game.Scripts.Services;
 using Assets.Game.Scripts.Shared;
-using Zenject;
 
 namespace Assets.Game.Scripts.UI
 {
     public class MainMenuPresenter : IDisposable
     {
-        private SceneLoader _sceneLoader;
-        private IMainMenuView _mainMenuView;
+        private readonly SceneLoader _sceneLoader;
+        private readonly IMainMenuView _mainMenuView;
 
         public MainMenuPresenter(SceneLoader sceneLoader, IMainMenuView mainMenuView)
         {

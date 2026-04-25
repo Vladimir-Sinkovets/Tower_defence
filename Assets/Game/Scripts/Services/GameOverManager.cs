@@ -2,7 +2,6 @@
 using Assets.Game.Scripts.Configs;
 using Assets.Game.Scripts.Enemies;
 using System;
-using Zenject;
 
 namespace Assets.Game.Scripts.Services
 {

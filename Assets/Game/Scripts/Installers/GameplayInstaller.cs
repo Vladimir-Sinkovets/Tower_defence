@@ -19,7 +19,7 @@ namespace Assets.Game.Scripts.Installers
         [SerializeField] private FieldStartupAnimation _fieldStartupAnimation;
         [SerializeField] private PointSelector _pointSelector;
         [SerializeField] private CoroutineRunner _coroutineRunner;
-        [SerializeField] private HUD _hud;
+        [SerializeField] private HUD _hudPrefab;
 
         public override void InstallBindings()
         {
@@ -69,17 +69,6 @@ namespace Assets.Game.Scripts.Installers
             Container.BindInstance(_wavesConfig).AsSingle();
         }
 
-        private void BindUI()
-        {
-            Container.BindInstance<HUD>(_hud);
-            
-            // Container.BindInstance<IEndGameView>(_endGameView).AsSingle();
-
-            // Container.BindInstance<IChooseBuildingView>(_chooseBuildingView).AsSingle();
-            
-            // Container.Bind<ChooseBuildingPresenter>().AsSingle().NonLazy();
-            // Container.Bind<EndGamePresenter>().AsSingle().NonLazy();
-            // Container.BindInterfacesAndSelfTo<CurrencyPresenter>().AsSingle().NonLazy();
-        }
+        private void BindUI() => Container.BindInstance(_hudPrefab);
     }
 }

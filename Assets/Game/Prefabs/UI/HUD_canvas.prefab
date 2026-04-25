@@ -573,10 +573,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7eeb1608461a400c8b0344d125ee0566, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.UI.HUD
-  CurrencyView: {fileID: 700308785925014270}
-  ChooseBuildingView: {fileID: 5887098742020213855}
-  EndGameView: {fileID: 4978729623468009417}
-  CastleHealthView: {fileID: 8944398004964905938}
+  <CurrencyView>k__BackingField: {fileID: 700308785925014270}
+  <ChooseBuildingView>k__BackingField: {fileID: 5887098742020213855}
+  <EndGameView>k__BackingField: {fileID: 4978729623468009417}
+  <CastleHealthView>k__BackingField: {fileID: 8944398004964905938}
 --- !u!1 &2624609175729659472
 GameObject:
   m_ObjectHideFlags: 0
