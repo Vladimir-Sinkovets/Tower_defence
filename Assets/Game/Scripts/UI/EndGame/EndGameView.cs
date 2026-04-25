@@ -16,7 +16,7 @@ namespace Assets.Game.Scripts.UI
         [SerializeField] private Button _menuButton;
 
         [SerializeField] private TMP_Text _wavesCountText;
-        [SerializeField] private TMP_Text _killedCountText;
+        [SerializeField] private TMP_Text _killsCountText;
         [SerializeField] private TMP_Text _currencyText;
         [SerializeField] private TMP_Text _metaCurrencyText;
 
@@ -28,19 +28,22 @@ namespace Assets.Game.Scripts.UI
             _menuButton.onClick.AddListener(MenuButtonHandler);
         }
 
-        public void Open(int wavesCount, int killedEnemyCount, int currencyCount, int metaCurrencyCount)
+        public void Open()
         {
-            _wavesCountText.text = wavesCount.ToString();
-            _killedCountText.text = killedEnemyCount.ToString();
-            _currencyText.text = currencyCount.ToString();
-            _metaCurrencyText.text = $"+{metaCurrencyCount}";
-
             _panel.gameObject.SetActive(true);
 
             if (_animation != null)
                 _animation.Show();
         }
-
+        
+        public void ShowWavesCount(int wavesCount) => _wavesCountText.text = wavesCount.ToString();
+        
+        public void ShowKillsCount(int killsCount) => _killsCountText.text = killsCount.ToString();
+        
+        public void ShowCurrency(int currency) => _currencyText.text = currency.ToString();
+        
+        public void ShowEarnedMetaCurrency(int metaCurrency) => _metaCurrencyText.text = metaCurrency.ToString();
+        
         private void RestartButtonHandler() => OnRestartButtonClicked?.Invoke();
         private void MenuButtonHandler() => OnMenuButtonClicked?.Invoke();
 

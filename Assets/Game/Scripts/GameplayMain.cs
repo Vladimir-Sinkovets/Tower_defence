@@ -1,64 +1,113 @@
-﻿using Assets.Game.Scripts.Animations;
+﻿using System;
+using Assets.Game.Scripts.Animations;
 using Assets.Game.Scripts.Buildings;
 using Assets.Game.Scripts.Services;
 using System.Collections;
 using Assets.Game.Scripts.Enemies;
+using Assets.Game.Scripts.Shared;
+using Assets.Game.Scripts.UI;
+using Assets.Game.Scripts.UI.Buildings;
+using Assets.Game.Scripts.UI.CastleHealth;
+using Assets.Game.Scripts.UI.Currency;
 using UnityEngine;
 using Zenject;
 
 namespace Assets.Game.Scripts
 {
-    public class GameplayMain : MonoBehaviour
+    public class GameplayMain : IInitializable, IDisposable
     {
-        private WavesController _wavesController;
-        private Castle _castle;
-        private GameOverManager _gameOverManager;
-        private FieldStartupAnimation _fieldStartupAnimation;
-        private BuildingsConfig _buildingsConfig;
-        private IInstantiator _instantiator;
+        private const string CastleRootObjectName = "Castle"; 
+        
+        private readonly WavesController _wavesController;
+        private readonly GameOverManager _gameOverManager;
+        private readonly FieldStartupAnimation _fieldStartupAnimation;
+        private readonly BuildingsConfig _buildingsConfig;
+        private readonly IInstantiator _instantiator;
+        private readonly ICoroutineRunner _coroutineRunner;
+        private readonly HUD _hudPrefab;
+        
+        private Health _castleHealth;
+        
+        private ChooseBuildingPresenter _chooseBuildingPresenter;
+        private CurrencyPresenter _currencyPresenter;
+        private EndGamePresenter _endGamePresenter;
+        private CastleHealthPresenter _castleHealthPresenter;
 
-        [Inject]
-        public void Construct(
+        public GameplayMain(
             WavesController waveController,
-            Castle castle,
             GameOverManager gameOverManager,
             FieldStartupAnimation fieldStartupAnimation,
             BuildingsConfig buildingsConfig,
-            IInstantiator instantiator)
+            IInstantiator instantiator,
+            ICoroutineRunner coroutineRunner,
+            HUD hudPrefab)
         {
             _wavesController = waveController;
-            _castle = castle;
             _gameOverManager = gameOverManager;
             _fieldStartupAnimation = fieldStartupAnimation;
             _buildingsConfig = buildingsConfig;
             _instantiator = instantiator;
+            _coroutineRunner = coroutineRunner;
+            _hudPrefab = hudPrefab;
         }
 
-        private IEnumerator Start()
+        public void Initialize()
+        {
+            _coroutineRunner.Run(StartGame());
+        }
+
+        private IEnumerator StartGame()
         {
             yield return _fieldStartupAnimation.Play();
+            
+            yield return CreateCastle();
 
-            yield return CreateCastleBuilding();
+            CreateHUD();
 
-            _castle.Init();
-
-            _wavesController.StartWaves();
-
-            _castle.OnHpEnded += OnCastleHpEndedHandler;
+            _wavesController.StartWaves(_castleHealth);
         }
 
-        private IEnumerator CreateCastleBuilding()
+        private void CreateHUD()
         {
+            var hud = _instantiator.InstantiatePrefabForComponent<HUD>(_hudPrefab);
+
+            _chooseBuildingPresenter = _instantiator.Instantiate<ChooseBuildingPresenter>(new object[] { hud.ChooseBuildingView });
+            _currencyPresenter = _instantiator.Instantiate<CurrencyPresenter>(new object[] { hud.CurrencyView });
+            _endGamePresenter = _instantiator.Instantiate<EndGamePresenter>(new object[] { hud.EndGameView });
+            _castleHealthPresenter = _instantiator.Instantiate<CastleHealthPresenter>(new object[] { hud.CastleHealthView, _castleHealth });
+        }
+
+        private IEnumerator CreateCastle()
+        {
+            var castle = new GameObject(CastleRootObjectName);
+            
+            _castleHealth = castle.AddComponent<Health>();
+            _castleHealth.Init(_buildingsConfig.CastleHp);
+            
+            var shaker = castle.AddComponent<DamageShaker>();
+            shaker.Init(_castleHealth);
+            
+            
             var building = _buildingsConfig.CastleBuilding.Create(_instantiator);
 
-            building.transform.parent = _castle.transform;
-            building.transform.position = _castle.BuildingPosition.transform.position;
+            building.transform.parent = castle.transform;
+            building.transform.position = castle.transform.position;
 
             yield return building.transform.PlayFallDownAppearanceAnimation();
+
+            _castleHealth.OnDied += OnCastleDiedHandler;
         }
 
-        private void OnCastleHpEndedHandler() => _gameOverManager.GameOver();
+        private void OnCastleDiedHandler() => _gameOverManager.GameOver();
 
-        private void OnDestroy() => _castle.OnHpEnded -= OnCastleHpEndedHandler;
+        public void Dispose()
+        {
+            _currencyPresenter?.Dispose();
+            _chooseBuildingPresenter?.Dispose();
+            _endGamePresenter?.Dispose();
+            _castleHealthPresenter?.Dispose();
+
+            if (_castleHealth != null) _castleHealth.OnDied -= OnCastleDiedHandler;
+        }
     }
 }

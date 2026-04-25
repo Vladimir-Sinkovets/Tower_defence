@@ -6,6 +6,10 @@ namespace Assets.Game.Scripts.UI
     {
         event Action OnRestartButtonClicked;
         event Action OnMenuButtonClicked;
-        void Open(int wavesCount, int killedEnemyCount, int currencyCount, int metaCurrencyCount);
+        void Open();
+        void ShowWavesCount(int wavesCount);
+        void ShowKillsCount(int killsCount);
+        void ShowCurrency(int currency);
+        void ShowEarnedMetaCurrency(int metaCurrency);
     }
 }

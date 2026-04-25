@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Assets.Game.Scripts.Input;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;

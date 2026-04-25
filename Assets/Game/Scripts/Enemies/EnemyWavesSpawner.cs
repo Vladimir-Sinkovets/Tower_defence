@@ -10,7 +10,6 @@ namespace Assets.Game.Scripts.Enemies
     public class EnemyWavesSpawner : MonoBehaviour
     {
         [SerializeField] private EnemyFactory _enemyFactory;
-        [SerializeField] private Health _target;
         [SerializeField] private Transform[] _perimeterPoints;
 
         private IInstantiator _instantiator;
@@ -24,7 +23,7 @@ namespace Assets.Game.Scripts.Enemies
             _instantiator = instantiator;
         }
 
-        public IEnumerator SpawnWave(int count)
+        public IEnumerator SpawnWave(int count, Health target)
         {
             IsSpawning = true;
 
@@ -36,7 +35,7 @@ namespace Assets.Game.Scripts.Enemies
 
                 enemy.transform.position = spawnPoint;
 
-                enemy.Activate(_target);
+                enemy.Activate(target);
 
                 yield return _interval;
             }

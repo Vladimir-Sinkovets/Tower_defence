@@ -2,7 +2,6 @@
 using Assets.Game.Scripts.Configs;
 using Assets.Game.Scripts.Enemies;
 using System;
-using Zenject;
 
 namespace Assets.Game.Scripts.Services
 {
@@ -18,8 +17,7 @@ namespace Assets.Game.Scripts.Services
         private MetaCurrencyService _metaCurrencyService;
         private WavesController _wavesController;
 
-        [Inject]
-        public void Construct(
+        public GameOverManager(
             WavesController waveController,
             Registry<Building> buildingRegistry,
             Registry<Enemy> enemyRegistry,
