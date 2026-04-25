@@ -5,8 +5,6 @@ using Assets.Game.Scripts.Enemies;
 using Assets.Game.Scripts.Input;
 using Assets.Game.Scripts.Services;
 using Assets.Game.Scripts.UI;
-using Assets.Game.Scripts.UI.Buildings;
-using Assets.Game.Scripts.UI.Currency;
 using UnityEngine;
 using Zenject;
 
@@ -15,17 +13,13 @@ namespace Assets.Game.Scripts.Installers
     public class GameplayInstaller : MonoInstaller
     {
         [SerializeField] private EnemyWavesSpawner _wavesSpawner;
-        [SerializeField] private WavesController _wavesController;
         [SerializeField] private WavesConfig _wavesConfig;
-        [SerializeField] private BuildingService _buildingService;
         [SerializeField] private BuildingsConfig _buildingsConfig;
-        [SerializeField] private ChooseBuildingView _chooseBuildingView;
-        [SerializeField] private EndGameView _endGameView;
-        [SerializeField] private Castle _castle;
         [SerializeField] private MetaCurrencyConfig _metaCurrencyConfig;
         [SerializeField] private FieldStartupAnimation _fieldStartupAnimation;
         [SerializeField] private PointSelector _pointSelector;
-        [SerializeField] private CurrencyView _currencyView;
+        [SerializeField] private CoroutineRunner _coroutineRunner;
+        [SerializeField] private HUD _hudPrefab;
 
         public override void InstallBindings()
         {
@@ -43,6 +37,7 @@ namespace Assets.Game.Scripts.Installers
             Container.Bind<MetaCurrencyService>().AsSingle();
             Container.Bind<GameStatistics>().AsSingle();
             Container.Bind<SceneLoader>().AsSingle();
+            Container.Bind<ICoroutineRunner>().FromInstance(_coroutineRunner);
         }
 
         private void BindInput()
@@ -53,11 +48,11 @@ namespace Assets.Game.Scripts.Installers
 
         private void BindGameManagers()
         {
+            Container.BindInterfacesAndSelfTo<GameplayMain>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<GameOverManager>().AsSingle();
             Container.BindInstance(_wavesSpawner).AsSingle();
-            Container.BindInstance(_wavesController).AsSingle();
-            Container.BindInstance(_buildingService).AsSingle();
-            Container.BindInstance(_castle).AsSingle();
+            Container.BindInterfacesAndSelfTo<WavesController>().AsSingle();
+            Container.Bind<BuildingService>().AsSingle();
             Container.BindInstance(_fieldStartupAnimation).AsSingle();
         }
 
@@ -74,16 +69,6 @@ namespace Assets.Game.Scripts.Installers
             Container.BindInstance(_wavesConfig).AsSingle();
         }
 
-        private void BindUI()
-        {
-            Container.BindInterfacesAndSelfTo<CurrencyPresenter>().AsSingle().NonLazy();
-            Container.BindInstance<ICurrencyView>(_currencyView).AsSingle();
-            
-            Container.Bind<EndGamePresenter>().AsSingle().NonLazy();
-            Container.BindInstance<IEndGameView>(_endGameView).AsSingle();
-
-            Container.Bind<ChooseBuildingPresenter>().AsSingle().NonLazy();
-            Container.BindInstance<IChooseBuildingView>(_chooseBuildingView).AsSingle();
-        }
+        private void BindUI() => Container.BindInstance(_hudPrefab);
     }
 }

@@ -56,7 +56,7 @@ namespace Assets.Game.Scripts.Enemies
 
             Health.OnDied += OnDiedHandler;
 
-            Health.ResetHealth();
+            Health.Init(config.Hp);
 
             _enemyRegistry.Register(this);
         }

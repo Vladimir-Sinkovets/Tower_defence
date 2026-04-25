@@ -1,19 +1,15 @@
 ﻿using System;
 using Assets.Game.Scripts.Services;
 using Assets.Game.Scripts.Shared;
-using UnityEngine;
-using UnityEngine.UI;
-using Zenject;
 
 namespace Assets.Game.Scripts.UI
 {
     public class MainMenuPresenter : IDisposable
     {
-        private SceneLoader _sceneLoader;
-        private IMainMenuView _mainMenuView;
+        private readonly SceneLoader _sceneLoader;
+        private readonly IMainMenuView _mainMenuView;
 
-        [Inject]
-        public void Construct(SceneLoader sceneLoader, IMainMenuView mainMenuView)
+        public MainMenuPresenter(SceneLoader sceneLoader, IMainMenuView mainMenuView)
         {
             _sceneLoader = sceneLoader;
             _mainMenuView = mainMenuView;

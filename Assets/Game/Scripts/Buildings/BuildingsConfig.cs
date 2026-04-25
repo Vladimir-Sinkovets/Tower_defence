@@ -9,6 +9,8 @@ namespace Assets.Game.Scripts.Buildings
     {
         public BuildingFactory CastleBuilding;
 
+        public int CastleHp = 50;
+
         public List<BuildingConfig> Buildings;
     }
 
