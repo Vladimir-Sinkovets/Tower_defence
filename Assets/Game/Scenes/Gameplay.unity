@@ -2547,8 +2547,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1646694448}
-  - {fileID: 1741565431}
-  - {fileID: 1209871175}
+  - {fileID: 1796833159}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &405241747
@@ -2563,14 +2562,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b591ed80f5bd1514d97546c753a60bdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Installers.GameplayInstaller
-  _wavesSpawner: {fileID: 1646694447}
   _wavesConfig: {fileID: 11400000, guid: e2d770929064cb9429f04b4f05b91882, type: 2}
   _buildingsConfig: {fileID: 11400000, guid: bb7a5b96a7f4bf9428849ea2877e38c7, type: 2}
   _metaCurrencyConfig: {fileID: 11400000, guid: 7a6467ea0a848454a9a19b505317eb0b, type: 2}
   _fieldStartupAnimation: {fileID: 1651697476}
-  _pointSelector: {fileID: 1741565430}
-  _coroutineRunner: {fileID: 1209871174}
   _hudPrefab: {fileID: 1538167272293545770, guid: 05ddb41e470c0814b9d15ffb0a60c4f3, type: 3}
+  _perimeterPoints:
+  - {fileID: 1553943986}
+  - {fileID: 1184865287}
+  - {fileID: 1315991034}
+  - {fileID: 1496689257}
+  _planeCenter: {fileID: 1796833159}
+  _windowViewsConfig: {fileID: 11400000, guid: 98874b012a8569341b7329884a6c943c, type: 2}
 --- !u!1001 &428744459
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7291,50 +7294,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: c2252770c12196e4f8709a67a56d9545, type: 3}
   m_PrefabInstance: {fileID: 1208661970}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1209871173
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1209871175}
-  - component: {fileID: 1209871174}
-  m_Layer: 0
-  m_Name: CoroutineRunner
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1209871174
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1209871173}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe0eaeaac2564917a85edd1b75a034d0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Services.CoroutineRunner
---- !u!4 &1209871175
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1209871173}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.19783, y: 0, z: -0.14622}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 405241746}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1217207193
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9890,32 +9849,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1646694448}
-  - component: {fileID: 1646694447}
   m_Layer: 0
-  m_Name: WaveSpawner
+  m_Name: PerimeterPoints
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1646694447
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1646694446}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c0779a28dd977354aa87107a033480fd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.EnemyWavesController
-  _enemyFactory: {fileID: 11400000, guid: 4eacd2ffa4bf8854ea8349d94cb1d1f5, type: 2}
-  _perimeterPoints:
-  - {fileID: 1553943986}
-  - {fileID: 1184865287}
-  - {fileID: 1315991034}
-  - {fileID: 1496689257}
 --- !u!4 &1646694448
 Transform:
   m_ObjectHideFlags: 0
@@ -10987,52 +10927,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: c2252770c12196e4f8709a67a56d9545, type: 3}
   m_PrefabInstance: {fileID: 1737384298}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1741565429
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1741565431}
-  - component: {fileID: 1741565430}
-  m_Layer: 0
-  m_Name: PointSelector
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1741565430
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1741565429}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e83a137529b043d791e8e449ea532aaf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Buildings.PointSelector
-  _planeCenter: {fileID: 1796833159}
---- !u!4 &1741565431
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1741565429}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1796833159}
-  m_Father: {fileID: 405241746}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1759837909
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11580,7 +11474,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1741565431}
+  m_Father: {fileID: 405241746}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1832927023
 PrefabInstance:
@@ -13173,5 +13067,5 @@ SceneRoots:
   - {fileID: 1992888407}
   - {fileID: 405241746}
   - {fileID: 1316312513}
-  - {fileID: 970686232}
   - {fileID: 1651697474}
+  - {fileID: 970686232}

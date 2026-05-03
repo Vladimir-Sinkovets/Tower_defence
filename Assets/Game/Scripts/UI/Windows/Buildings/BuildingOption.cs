@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.Game.Scripts.UI.Buildings
+namespace Assets.Game.Scripts.UI.Windows.Buildings
 {
     public class BuildingOption : MonoBehaviour
     {

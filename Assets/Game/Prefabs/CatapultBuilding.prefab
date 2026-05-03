@@ -197,6 +197,7 @@ GameObject:
   - component: {fileID: 7861309190120896109}
   - component: {fileID: 8884717547047690953}
   - component: {fileID: 6344994068173676564}
+  - component: {fileID: 5764459286101542167}
   - component: {fileID: 7426036207008563013}
   m_Layer: 0
   m_Name: CatapultBuilding
@@ -234,9 +235,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9255a3f7b052e8a4c8fab78f8d10ad64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.BuildingWeapon
+  <AppearanceAnimation>k__BackingField: {fileID: 5764459286101542167}
   _projectileStartPosition: {fileID: 4446439252952627693}
   _weaponRoot: {fileID: 1978038523322021044}
   _preShootAnimation: {fileID: 6344994068173676564}
+  _searchTargetInterval: 0.2
 --- !u!114 &6344994068173676564
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -251,6 +254,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Animations.CatapultAnimation
   _catapult: {fileID: 8613324142691003058}
   _duration: 0.3
+  _attackRotation: {x: 60, y: 0, z: 0}
+  _attackEase: 23
+  _normalRotation: {x: 0, y: 0, z: 0}
+  _returnToNormalEase: 2
+--- !u!114 &5764459286101542167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4344284866999739785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a59189b613cadfd48adef9342aa96722, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Animations.BuildingAppearanceAnimation
+  _target: {fileID: 7861309190120896109}
+  _fallOffestY: 10
+  _moveDuration: 0.5
+  _scaleSqueeze: 1.2
+  _scaleDownY: 0.1
+  _finalScale: 1
+  _scaleDuration: 0.15
 --- !u!208 &7426036207008563013
 NavMeshObstacle:
   m_ObjectHideFlags: 0

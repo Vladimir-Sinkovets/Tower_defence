@@ -1,5 +1,6 @@
-﻿using DG.Tweening;
-using System.Collections;
+﻿using System.Threading;
+using DG.Tweening;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Assets.Game.Scripts.Animations
@@ -18,20 +19,20 @@ namespace Assets.Game.Scripts.Animations
         [SerializeField] private float _finalScale = 1.0f;
         [SerializeField] private Ease _returnToNormalScaleEase = Ease.InQuint;
 
-        public override IEnumerator PlayBeforeAttackAnimation()
+        public override async UniTask PlayBeforeAttackAnimation(CancellationToken ct)
         {
-            yield return DOTween.Sequence()
+            await DOTween.Sequence()
                 .Append(_barrel.DOScaleZ(_squeezeZ, _duration)
                     .SetEase(_squeezeZEase))
                 .Join(_barrel.DOScaleY(_squeezeY, _duration)
                     .SetEase(_squeezeYEase))
                 .Join(_barrel.DOScaleX(_squeezeX, _duration)
                     .SetEase(_squeezeXEase))
-                .WaitForCompletion();
+                .WithCancellation(ct);
 
-            yield return _barrel.DOScale(_finalScale, _duration)
+            await _barrel.DOScale(_finalScale, _duration)
                 .SetEase(_returnToNormalScaleEase)
-                .WaitForCompletion();
+                .WithCancellation(ct);
         }
 
         private void OnDestroy()

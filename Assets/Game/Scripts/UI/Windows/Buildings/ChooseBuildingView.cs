@@ -1,16 +1,15 @@
 ﻿using Assets.Game.Scripts.Animations;
 using System;
 using System.Collections.Generic;
-using Assets.Game.Scripts.Input;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
-using Zenject;
 
-namespace Assets.Game.Scripts.UI.Buildings
+namespace Assets.Game.Scripts.UI.Windows.Buildings
 {
     public class ChooseBuildingView : MonoBehaviour, IChooseBuildingView
     {
-        public event Action<Vector3> OnClicked;
         public event Action<int> OnOptionChosen;
         public event Action OnCloseButtonClicked;
 
@@ -24,23 +23,15 @@ namespace Assets.Game.Scripts.UI.Buildings
         private readonly List<BuildingOption> _options = new();
         private Transform _pointer;
         
-        private PointSelector _pointSelector;
-
-        [Inject]
-        private void Construct(PointSelector pointSelector)
-        {
-            _pointSelector = pointSelector;
-        }
-        
         private void Awake()
         {
             _closeButton.onClick.AddListener(OnCloseButtonClickedHandler);
-            _pointSelector.OnClicked += OnPointSelectedHandler;
 
             _pointer = Instantiate(_pointerPrefab);
             _pointer.gameObject.SetActive(false);
         }
 
+        
         public void ShowPanel()
         {
             _panel.SetActive(true);
@@ -49,17 +40,12 @@ namespace Assets.Game.Scripts.UI.Buildings
                 _animation.Show();
         }
 
-        public void HidePanel()
+        public async UniTask HidePanel(CancellationToken token = default)
         {
             if (_animation != null)
-                _animation.Hide(() =>
-                {
-                    _panel.SetActive(false);
-                });
-            else
-            {
-                _panel.SetActive(false);
-            }
+                await _animation.Hide(token);
+
+            _panel.SetActive(false);
         }
 
         public void ShowPointer(Vector3 position)
@@ -86,7 +72,6 @@ namespace Assets.Game.Scripts.UI.Buildings
             }
         }
 
-        private void OnPointSelectedHandler(Vector3 point) => OnClicked?.Invoke(point);
         
         private void OnOptionClickedHandler(BuildingOption option) => OnOptionChosen?.Invoke(option.Index);
 
@@ -111,7 +96,9 @@ namespace Assets.Game.Scripts.UI.Buildings
         private void OnDestroy()
         {
             _closeButton.onClick.RemoveListener(OnCloseButtonClickedHandler);
-            _pointSelector.OnClicked -= OnPointSelectedHandler;
+
+            if (_pointer != null)
+                Destroy(_pointer.gameObject);
             
             ClearContainer();
         }

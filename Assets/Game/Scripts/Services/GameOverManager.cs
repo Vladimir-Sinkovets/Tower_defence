@@ -2,20 +2,25 @@
 using Assets.Game.Scripts.Configs;
 using Assets.Game.Scripts.Enemies;
 using System;
+using Assets.Game.Scripts.Shared;
+using Assets.Game.Scripts.UI.Windows;
 
 namespace Assets.Game.Scripts.Services
 {
-    public class GameOverManager
+    public class GameOverManager : IDisposable
     {
-        public event Action<GameOverResult> OnGameOver;
+        private readonly Registry<Enemy> _enemyRegistry;
+        private readonly Registry<Building> _buildingRegistry;
+        private readonly GameStatistics _gameStatistics;
+        private readonly CurrencyBank _currencyBank;
+        private readonly MetaCurrencyConfig _metaCurrencyConfig;
+        private readonly MetaCurrencyService _metaCurrencyService;
+        private readonly IWindowsManager _windowsManager;
+        private readonly WavesController _wavesController;
+
+        private Health _castleHealth;
         
-        private Registry<Enemy> _enemyRegistry;
-        private Registry<Building> _buildingRegistry;
-        private GameStatistics _gameStatistics;
-        private CurrencyBank _currencyBank;
-        private MetaCurrencyConfig _metaCurrencyConfig;
-        private MetaCurrencyService _metaCurrencyService;
-        private WavesController _wavesController;
+        public GameOverResult GameOverResult { get; private set; }
 
         public GameOverManager(
             WavesController waveController,
@@ -24,7 +29,8 @@ namespace Assets.Game.Scripts.Services
             GameStatistics gameStatistics,
             CurrencyBank currencyBank,
             MetaCurrencyConfig metaCurrencyConfig,
-            MetaCurrencyService metaCurrencyService)
+            MetaCurrencyService metaCurrencyService,
+            IWindowsManager windowsManager)
         {
             _wavesController = waveController;
             _enemyRegistry = enemyRegistry;
@@ -33,30 +39,45 @@ namespace Assets.Game.Scripts.Services
             _currencyBank = currencyBank;
             _metaCurrencyConfig = metaCurrencyConfig;
             _metaCurrencyService = metaCurrencyService;
+            _windowsManager = windowsManager;
         }
 
-        public void GameOver()
+        public void Init(Health castleHealth)
+        {
+            _castleHealth = castleHealth;
+            castleHealth.OnDied += OnDiedHandler;
+        }
+
+        private void OnDiedHandler() => GameOver();
+
+        private void GameOver()
         {
             StopEnemies();
 
             StopBuildings();
 
-            var earnedMetaCurrency = CalculateMetaData();
+            StopWaves();
+
+            var earnedMetaCurrency = CalculateMetaCurrency();
 
             ApplyMetaData(earnedMetaCurrency);
             
-            OnGameOver?.Invoke(new GameOverResult()
+            GameOverResult = new GameOverResult()
             {
                 Waves = _wavesController.WavesCount,
                 Kills = _gameStatistics.KilledEnemiesCount,
                 Currency = _currencyBank.Total,
                 EarnedMetaCurrency = earnedMetaCurrency,
-            });
+            };
+            
+            _windowsManager.Open(WindowType.EndGame);
         }
+
+        private void StopWaves() => _wavesController.Stop();
 
         private void ApplyMetaData(int value) => _metaCurrencyService.Add(value);
 
-        private int CalculateMetaData() => _wavesController.WavesCount * _metaCurrencyConfig.MetaCurrencyPerWave +
+        private int CalculateMetaCurrency() => _wavesController.WavesCount * _metaCurrencyConfig.MetaCurrencyPerWave +
                 _gameStatistics.KilledEnemiesCount * _metaCurrencyConfig.MetaCurrencyPerKill;
 
         private void StopBuildings()
@@ -73,6 +94,11 @@ namespace Assets.Game.Scripts.Services
             {
                 enemy.Deactivate();
             }
+        }
+        
+        public void Dispose()
+        {
+            _castleHealth.OnDied -= OnDiedHandler;
         }
     }
     

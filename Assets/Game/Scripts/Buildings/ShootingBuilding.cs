@@ -1,7 +1,8 @@
 ﻿using Assets.Game.Scripts.Animations;
 using Assets.Game.Scripts.Enemies;
 using Assets.Game.Scripts.Services;
-using System.Collections;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
@@ -23,6 +24,8 @@ namespace Assets.Game.Scripts.Buildings
         private float _nextShootTime;
         private float _nextSearchTime;
 
+        private CancellationTokenSource _shootCts;
+        
         private bool _isStopped;
 
         [Inject]
@@ -32,21 +35,7 @@ namespace Assets.Game.Scripts.Buildings
 
             _enemiesRegistry = enemyRegistry;
         }
-
-        public void Init(ShootingBuildingFactory config)
-        {
-            base.Init(config);
-
-            _isStopped = false;
-
-            _config = config;
-
-            ClearTarget();
-
-            _nextShootTime = 0f;
-
-            _nextSearchTime = 0f;
-        }
+        
 
         private void Update()
         {
@@ -72,7 +61,39 @@ namespace Assets.Game.Scripts.Buildings
                 FindTarget();
             }
         }
+        
 
+        public void Init(ShootingBuildingFactory config)
+        {
+            base.Init(config);
+
+            _isStopped = false;
+
+            _config = config;
+
+            ClearTarget();
+
+            _nextShootTime = 0f;
+
+            _nextSearchTime = 0f;
+            
+            _shootCts?.Cancel();
+            _shootCts?.Dispose();
+            _shootCts = new CancellationTokenSource();
+        }
+
+        public override void Stop()
+        {
+            _isStopped = true;
+            
+            _shootCts?.Cancel();
+
+            StopAllCoroutines();
+
+            ClearTarget();
+        }
+
+        
         private void Attack()
         {
             if (_nextShootTime > Time.time)
@@ -80,13 +101,13 @@ namespace Assets.Game.Scripts.Buildings
 
             _nextShootTime = Time.time + _config.AttackInterval;
 
-            StartCoroutine(Shoot());
+            Shoot(_shootCts.Token).Forget();
         }
 
-        private IEnumerator Shoot()
+        private async UniTask Shoot(CancellationToken ct)
         {
             if (_preShootAnimation != null)
-                yield return _preShootAnimation.PlayBeforeAttackAnimation();
+                await _preShootAnimation.PlayBeforeAttackAnimation(ct);
 
             if (_config.ShootVFX != null)
             {
@@ -157,15 +178,7 @@ namespace Assets.Game.Scripts.Buildings
 
         private void OnCurrentTargetDiedHandler() => ClearTarget();
 
-        public override void Stop()
-        {
-            _isStopped = true;
-
-            StopAllCoroutines();
-
-            ClearTarget();
-        }
-
+        
         protected override void OnDestroy()
         {
             base.OnDestroy();
@@ -173,6 +186,10 @@ namespace Assets.Game.Scripts.Buildings
             StopAllCoroutines();
 
             ClearTarget();
+            
+            _shootCts?.Cancel();
+            _shootCts?.Dispose();
+            _shootCts = null;
         }
 
         private void ClearTarget()

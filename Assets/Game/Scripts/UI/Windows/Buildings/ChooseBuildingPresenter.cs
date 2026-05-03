@@ -1,40 +1,65 @@
 using System;
 using System.Linq;
+using System.Threading;
 using Assets.Game.Scripts.Buildings;
+using Assets.Game.Scripts.Input;
 using Assets.Game.Scripts.Services;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace Assets.Game.Scripts.UI.Buildings
+namespace Assets.Game.Scripts.UI.Windows.Buildings
 {
-    public class ChooseBuildingPresenter : IDisposable
+    public class ChooseBuildingPresenter : IDisposable, IWindowPresenter
     {
         private readonly IChooseBuildingView _chooseBuildingView;
         private readonly BuildingsConfig _buildingsConfig;
         private readonly CurrencyBank _currencyBank;
         private readonly BuildingService _buildingService;
+        private readonly PointSelector _pointSelector;
+        private readonly IWindowsManager _windowManager;
 
-        private bool _isPanelOpen;
         private Vector3 _position;
+        private CancellationTokenSource _closePanelCts;
 
         public ChooseBuildingPresenter(
             IChooseBuildingView chooseBuildingView,
             BuildingsConfig buildingsConfig,
             CurrencyBank currencyBank,
-            BuildingService buildingService)
+            BuildingService buildingService,
+            PointSelector pointSelector,
+            IWindowsManager windowManager)
         {
             _chooseBuildingView = chooseBuildingView;
             _buildingsConfig = buildingsConfig;
             _currencyBank = currencyBank;
             _buildingService = buildingService;
-            
-            _chooseBuildingView.OnCloseButtonClicked += OnCloseButtonClickedHandler;
-            _chooseBuildingView.OnOptionChosen += OnOptionChosenHandler;
-            _chooseBuildingView.OnClicked += OnClickedHandler;
-
-            _currencyBank.OnCurrencyChanged += OnCurrencyChangedHandler;
+            _pointSelector = pointSelector;
+            _windowManager = windowManager;
         }
 
-        private void OnCloseButtonClickedHandler() => ClosePanel();
+        
+        public void Activate()
+        {
+            _chooseBuildingView.OnCloseButtonClicked += OnCloseButtonClickedHandler;
+            _chooseBuildingView.OnOptionChosen += OnOptionChosenHandler;
+            _pointSelector.OnClicked += OnClickedHandler;
+            _currencyBank.OnCurrencyChanged += OnCurrencyChangedHandler;
+            
+            ShowPanel();
+        }
+
+        public void Deactivate()
+        {
+            _chooseBuildingView.OnCloseButtonClicked -= OnCloseButtonClickedHandler;
+            _chooseBuildingView.OnOptionChosen -= OnOptionChosenHandler;
+            _currencyBank.OnCurrencyChanged -= OnCurrencyChangedHandler;
+            _pointSelector.OnClicked -= OnClickedHandler;
+
+            HidePanel();
+        }
+
+        
+        private void OnCloseButtonClickedHandler() => _windowManager.Close(WindowType.Buildings);
 
         private void OnOptionChosenHandler(int index)
         {
@@ -43,7 +68,7 @@ namespace Assets.Game.Scripts.UI.Buildings
             if (_buildingService.TryBuild(config, _position) == false)
                 return;
             
-            ClosePanel();
+            _windowManager.Close(WindowType.Buildings);
         }
 
         private void OnClickedHandler(Vector3 position)
@@ -54,32 +79,28 @@ namespace Assets.Game.Scripts.UI.Buildings
             _position = position;
             
             _chooseBuildingView.ShowPointer(position);
-            
-            OpenPanel();
         }
 
         private void OnCurrencyChangedHandler(int _) => Render();
 
-        private void OpenPanel()
+        private void ShowPanel()
         {
-            if (_isPanelOpen)
-                return;
+            _closePanelCts?.Cancel();
+            _closePanelCts?.Dispose();
+            _closePanelCts = new CancellationTokenSource();
+            
+            OnClickedHandler(_pointSelector.LastPosition);
             
             _chooseBuildingView.ShowPanel();
+            
             Render();
-
-            _isPanelOpen = true;
         }
 
-        private void ClosePanel()
+        private void HidePanel()
         {
-            if (!_isPanelOpen)
-                return;
-            
-            _chooseBuildingView.HidePanel();
             _chooseBuildingView.HidePointer();
-            
-            _isPanelOpen = false;
+
+            _chooseBuildingView.HidePanel(_closePanelCts.Token).Forget();
         }
 
         private void Render()
@@ -96,12 +117,16 @@ namespace Assets.Game.Scripts.UI.Buildings
             _chooseBuildingView.Render(viewModels);
         }
 
+        
         public void Dispose()
         {
             _chooseBuildingView.OnCloseButtonClicked -= OnCloseButtonClickedHandler;
             _chooseBuildingView.OnOptionChosen -= OnOptionChosenHandler;
             _currencyBank.OnCurrencyChanged -= OnCurrencyChangedHandler;
-            _chooseBuildingView.OnClicked -= OnClickedHandler;
+            _pointSelector.OnClicked -= OnClickedHandler;
+            
+            _closePanelCts?.Cancel();
+            _closePanelCts?.Dispose();
         }
     }
 }
