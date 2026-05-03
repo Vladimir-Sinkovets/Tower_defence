@@ -1,6 +1,7 @@
 ﻿using DG.Tweening;
 using System;
-using System.Collections;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Assets.Game.Scripts.Enemies
@@ -38,15 +39,14 @@ namespace Assets.Game.Scripts.Enemies
 
         public void DisableCanvas() => _canvas.SetActive(false);
 
-        public void EnableCanvas() => _canvas.SetActive(true);
+        public void RemoveModel(float delay = 1.0f) => RemoveModelCoroutine(delay, this.GetCancellationTokenOnDestroy()).Forget();
 
-        public void RemoveModel(float delay = 1.0f) => StartCoroutine(RemoveModelCoroutine(delay));
-
-        private IEnumerator RemoveModelCoroutine(float delay)
+        private async UniTask RemoveModelCoroutine(float delay, CancellationToken ct)
         {
-            yield return new WaitForSeconds(delay);
+            await UniTask.WaitForSeconds(delay, cancellationToken: ct);
 
-            yield return _modelHideAnimationRoot.transform.DOMoveY(_modelHideAnimationRoot.transform.position.y - _hideViewYPosition, _hideViewDuration);
+            await _modelHideAnimationRoot.transform.DOMoveY(_modelHideAnimationRoot.transform.position.y - _hideViewYPosition, _hideViewDuration)
+                .WithCancellation(ct);
         }
 
         private void OnDestroy()

@@ -1,6 +1,7 @@
 ﻿using DG.Tweening;
-using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Assets.Game.Scripts.Animations
@@ -13,22 +14,27 @@ namespace Assets.Game.Scripts.Animations
         [SerializeField] private float _finalScale = 0.97f;
         [SerializeField] private Ease _scaleEase = Ease.OutBounce;
 
-        public IEnumerator Play()
+        public async UniTask Play(CancellationToken ct)
         {
             foreach (var tile in _tiles)
             {
                 tile.localScale = Vector3.zero;
             }
 
+            var tileAnimations = new List<UniTask>();
+            
             foreach (var tile in _tiles)
             {
-                Sequence tileSeq = DOTween.Sequence();
+                var task = tile.DOScale(_finalScale, _scaleDuration)
+                    .SetEase(_scaleEase)
+                    .WithCancellation(ct);
 
-                tileSeq.Append(tile.DOScale(_finalScale, _scaleDuration)
-                    .SetEase(_scaleEase));
-
-                yield return null;
+                tileAnimations.Add(task);
+                
+                await UniTask.NextFrame(ct);
             }
+            
+            await UniTask.WhenAll(tileAnimations);
         }
     }
 }

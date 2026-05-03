@@ -1,30 +1,30 @@
-﻿using System.Collections;
-using Assets.Game.Scripts.Animations;
+﻿using System;
+using System.Threading;
 using Assets.Game.Scripts.Services;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
 namespace Assets.Game.Scripts.Buildings
 {
-    public class BuildingService
+    public class BuildingService : IDisposable
     {
-        private Registry<Building> _buildingRegistry;
-        private CurrencyBank _currencyBank;
-        private IInstantiator _instantiator;
-        private ICoroutineRunner _coroutineRunner;
+        private readonly Registry<Building> _buildingRegistry;
+        private readonly CurrencyBank _currencyBank;
+        private readonly IInstantiator _instantiator;
+        
+        private CancellationTokenSource _cts;
 
         public BuildingService(
             Registry<Building> buildingRegistry,
             CurrencyBank currencyBank,
-            IInstantiator instantiator,
-            ICoroutineRunner coroutineRunner)
+            IInstantiator instantiator)
         {
             _buildingRegistry = buildingRegistry;
             _currencyBank = currencyBank;
             _instantiator = instantiator;
-            _coroutineRunner = coroutineRunner;
         }
-
+        
         
         public bool IsPositionAvailable(Vector3 position)
         {
@@ -41,20 +41,32 @@ namespace Assets.Game.Scripts.Buildings
         {
             if (_currencyBank.TrySpend(config.Price) == false)
                 return false;
+            
+            _cts?.Cancel();
+            _cts?.Dispose();
 
-            _coroutineRunner.Run(CreateBuilding(config, position));
+            _cts = new CancellationTokenSource();
+            
+            CreateBuilding(config, position, _cts.Token).Forget();
             
             return true;
         }
 
         
-        private IEnumerator CreateBuilding(BuildingConfig buildingConfig, Vector3 position)
+        private async UniTaskVoid CreateBuilding(BuildingConfig buildingConfig, Vector3 position, CancellationToken ct)
         {
             var building = buildingConfig.BuildingFactory.Create(_instantiator);
 
             building.transform.position = position;
 
-            yield return building.transform.PlayFallDownAppearanceAnimation();
+            await building.AppearanceAnimation.Play(ct);
+        }
+
+        public void Dispose()
+        {
+            _cts?.Cancel();
+            _cts?.Dispose();
+            _cts = null;
         }
     }
 }

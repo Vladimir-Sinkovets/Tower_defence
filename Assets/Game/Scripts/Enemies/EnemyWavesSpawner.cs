@@ -1,29 +1,29 @@
-﻿using Assets.Game.Scripts.Enemies.Factories;
-using Assets.Game.Scripts.Shared;
-using System.Collections;
+﻿using Assets.Game.Scripts.Shared;
+using System.Threading;
+using Assets.Game.Scripts.Configs;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
 using Zenject;
 
 namespace Assets.Game.Scripts.Enemies
 {
-    public class EnemyWavesSpawner : MonoBehaviour
+    public class EnemyWavesSpawner
     {
-        [SerializeField] private EnemyFactory _enemyFactory;
-        [SerializeField] private Transform[] _perimeterPoints;
-
-        private IInstantiator _instantiator;
-
-        private readonly WaitForSeconds _interval = new WaitForSeconds(1.0f);
+        private readonly IInstantiator _instantiator;
+        private readonly WavesConfig _wavesConfig;
+        private readonly Transform[] _perimeterPoints;
+        
         public bool IsSpawning { get; private set; }
-
-        [Inject]
-        public void Construct(IInstantiator instantiator)
+        
+        public EnemyWavesSpawner(IInstantiator instantiator, WavesConfig wavesConfig, Transform[] perimeterPoints)
         {
             _instantiator = instantiator;
+            _wavesConfig = wavesConfig;
+            _perimeterPoints = perimeterPoints;
         }
 
-        public IEnumerator SpawnWave(int count, Health target)
+        public async UniTask SpawnWave(int count, Health target, CancellationToken ct)
         {
             IsSpawning = true;
 
@@ -31,13 +31,13 @@ namespace Assets.Game.Scripts.Enemies
             {
                 var spawnPoint = GetRandomPerimeterPoint();
 
-                var enemy = _enemyFactory.Create(_instantiator);
+                var enemy = _wavesConfig.EnemyFactory.Create(_instantiator);
 
                 enemy.transform.position = spawnPoint;
 
                 enemy.Activate(target);
 
-                yield return _interval;
+                await UniTask.WaitForSeconds(_wavesConfig.IntervalBetweenEnemies, cancellationToken: ct);
             }
 
             IsSpawning = false;
@@ -55,27 +55,9 @@ namespace Assets.Game.Scripts.Enemies
             var spawnPos = Vector3.Lerp(firstRandomPoint.position, secondRandomPoint.position, Random.value);
 
             if (NavMesh.SamplePosition(spawnPos, out NavMeshHit hit, 2f, NavMesh.AllAreas))
-            {
                 return hit.position;
-            }
 
             return firstRandomPoint.position;
-        }
-
-        private void OnDrawGizmos()
-        {
-            if (_perimeterPoints == null || _perimeterPoints.Length < 2)
-                return;
-
-            Gizmos.color = Color.yellow;
-
-            for (int i = 0; i < _perimeterPoints.Length; i++)
-            {
-                if (i == _perimeterPoints.Length - 1)
-                    Gizmos.DrawLine(_perimeterPoints[i].position, _perimeterPoints[0].position);
-                else
-                    Gizmos.DrawLine(_perimeterPoints[i].position, _perimeterPoints[i + 1].position);
-            }
         }
     }
 }

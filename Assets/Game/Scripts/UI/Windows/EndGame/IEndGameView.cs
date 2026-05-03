@@ -1,6 +1,6 @@
 using System;
 
-namespace Assets.Game.Scripts.UI
+namespace Assets.Game.Scripts.UI.Windows.EndGame
 {
     public interface IEndGameView
     {

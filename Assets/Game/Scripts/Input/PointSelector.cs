@@ -6,33 +6,33 @@ using Zenject;
 
 namespace Assets.Game.Scripts.Input
 {
-    public class PointSelector : MonoBehaviour
+    public class PointSelector : IDisposable, IInitializable
     {
         public event Action<Vector3> OnClicked;
         
-        [SerializeField] private Transform _planeCenter;
+        private readonly Transform _planeCenter;
+        private readonly GameInput _input;
+        private readonly Camera _mainCamera;
         
-        private GameInput _input;
-        private Camera _mainCamera;
-            
-        [Inject]
-        public void Construct(GameInput input)
+        public PointSelector(GameInput input, Transform planeCenter)
         {
             _mainCamera = Camera.main;
             _input = input;
+            _planeCenter = planeCenter;
         }
-        
-        private void Awake()
-        {
-            _input.Touch += OnTouchHandler;
-        }
-        
+
+        public Vector3 LastPosition { get; private set; }
+
+        public void Initialize() => _input.Touch += OnTouchHandler;
+
         private void OnTouchHandler(Vector2 touchPosition)
         {
             if (IsPointOverUI(touchPosition))
                 return;
 
             var position = GetPoint(touchPosition);
+            
+            LastPosition = position;
             
             OnClicked?.Invoke(position);
         }
@@ -62,9 +62,6 @@ namespace Assets.Game.Scripts.Input
             return Vector3.zero;
         }
 
-        private void OnDestroy()
-        {
-            _input.Touch -= OnTouchHandler;
-        }
+        public void Dispose() => _input.Touch -= OnTouchHandler;
     }
 }

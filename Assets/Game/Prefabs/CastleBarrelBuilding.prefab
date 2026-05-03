@@ -107,6 +107,7 @@ GameObject:
   - component: {fileID: 2864936249383356852}
   - component: {fileID: 8849716848535618690}
   - component: {fileID: 5391943246603077655}
+  - component: {fileID: 7434485442287314943}
   m_Layer: 0
   m_Name: CastleBarrelBuilding
   m_TagString: Untagged
@@ -143,9 +144,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9255a3f7b052e8a4c8fab78f8d10ad64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.BuildingWeapon
+  <AppearanceAnimation>k__BackingField: {fileID: 7434485442287314943}
   _projectileStartPosition: {fileID: 2363022085429066481}
   _weaponRoot: {fileID: 5187566578085011401}
   _preShootAnimation: {fileID: 8849716848535618690}
+  _searchTargetInterval: 0.2
 --- !u!114 &8849716848535618690
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -160,6 +163,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Animations.BarrelAnimation
   _barrel: {fileID: 6703299976538145542}
   _duration: 0.1
+  _squeezeZ: 0.6
+  _squeezeZEase: 4
+  _squeezeX: 1.15
+  _squeezeXEase: 4
+  _squeezeY: 1.15
+  _squeezeYEase: 4
+  _finalScale: 1
+  _returnToNormalScaleEase: 14
 --- !u!114 &5391943246603077655
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -176,6 +187,25 @@ MonoBehaviour:
   _scale: 1.1
   _duration: 1.5
   _ease: 2
+--- !u!114 &7434485442287314943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6972865034586705652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a59189b613cadfd48adef9342aa96722, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Animations.BuildingAppearanceAnimation
+  _target: {fileID: 3573163000938159376}
+  _fallOffestY: 10
+  _moveDuration: 0.5
+  _scaleSqueeze: 1.2
+  _scaleDownY: 0.1
+  _finalScale: 1
+  _scaleDuration: 0.15
 --- !u!1 &7943726281735290313
 GameObject:
   m_ObjectHideFlags: 0

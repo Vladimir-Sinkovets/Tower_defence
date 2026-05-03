@@ -1,4 +1,5 @@
-﻿using Assets.Game.Scripts.Services;
+﻿using Assets.Game.Scripts.Animations;
+using Assets.Game.Scripts.Services;
 using UnityEngine;
 using Zenject;
 
@@ -6,6 +7,8 @@ namespace Assets.Game.Scripts.Buildings
 {
     public abstract class Building : MonoBehaviour
     {
+        [field: SerializeField] public BuildingAppearanceAnimation AppearanceAnimation { get; private set; } 
+        
         private Registry<Building> _buildingRegistry;
         private BuildingFactory _config;
 

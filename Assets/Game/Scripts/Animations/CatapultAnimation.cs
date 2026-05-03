@@ -1,5 +1,6 @@
-﻿using DG.Tweening;
-using System.Collections;
+﻿using System.Threading;
+using DG.Tweening;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Assets.Game.Scripts.Animations
@@ -12,16 +13,18 @@ namespace Assets.Game.Scripts.Animations
         [SerializeField] private Vector3 _attackRotation = new (60f, 0f, 0f);
         [SerializeField] private Ease _attackEase = Ease.InElastic;
         [SerializeField] private Vector3 _normalRotation = Vector3.zero;
-        [SerializeField] private Ease _returnToNoramlEase = Ease.InSine;
+        [SerializeField] private Ease _returnToNormalEase = Ease.InSine;
         
-        public override IEnumerator PlayBeforeAttackAnimation()
+        public override async UniTask PlayBeforeAttackAnimation(CancellationToken ct)
         {
-            yield return _catapult.DOLocalRotate(_attackRotation, _duration)
+            await _catapult.DOLocalRotate(_attackRotation, _duration)
                 .SetEase(_attackEase)
-                .WaitForCompletion();
+                .WithCancellation(ct);
 
             _catapult.DOLocalRotate(_normalRotation, _duration)
-                .SetEase(_returnToNoramlEase);
+                .SetEase(_returnToNormalEase)
+                .WithCancellation(ct)
+                .Forget();
         }
 
         private void OnDestroy()

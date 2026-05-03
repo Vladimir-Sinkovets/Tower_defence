@@ -1,17 +1,18 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace Assets.Game.Scripts.UI.Buildings
+namespace Assets.Game.Scripts.UI.Windows.Buildings
 {
     public interface IChooseBuildingView
     {
-        event Action<Vector3> OnClicked;
         event Action<int> OnOptionChosen;
         event Action OnCloseButtonClicked;
         
         void ShowPanel();
-        void HidePanel();
+        UniTask HidePanel(CancellationToken token = default);
         void Render(List<BuildingOptionViewModel> options);
         void HidePointer();
         void ShowPointer(Vector3 position);

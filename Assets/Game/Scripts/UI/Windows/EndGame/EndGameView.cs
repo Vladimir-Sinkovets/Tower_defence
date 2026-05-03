@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.Game.Scripts.UI
+namespace Assets.Game.Scripts.UI.Windows.EndGame
 {
     public class EndGameView : MonoBehaviour, IEndGameView
     {
@@ -28,6 +28,7 @@ namespace Assets.Game.Scripts.UI
             _menuButton.onClick.AddListener(MenuButtonHandler);
         }
 
+        
         public void Open()
         {
             _panel.gameObject.SetActive(true);
@@ -44,9 +45,12 @@ namespace Assets.Game.Scripts.UI
         
         public void ShowEarnedMetaCurrency(int metaCurrency) => _metaCurrencyText.text = metaCurrency.ToString();
         
+        
         private void RestartButtonHandler() => OnRestartButtonClicked?.Invoke();
+        
         private void MenuButtonHandler() => OnMenuButtonClicked?.Invoke();
 
+        
         private void OnDestroy()
         {
             _restartButton.onClick.RemoveListener(RestartButtonHandler);
