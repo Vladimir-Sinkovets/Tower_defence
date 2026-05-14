@@ -2,6 +2,7 @@
 using Assets.Game.Scripts.Configs;
 using Assets.Game.Scripts.Enemies;
 using System;
+using Assets.Game.Scripts.Saves;
 using Assets.Game.Scripts.Shared;
 using Assets.Game.Scripts.UI.Windows;
 
@@ -14,12 +15,12 @@ namespace Assets.Game.Scripts.Services
         private readonly GameStatistics _gameStatistics;
         private readonly CurrencyBank _currencyBank;
         private readonly MetaCurrencyConfig _metaCurrencyConfig;
-        private readonly MetaCurrencyService _metaCurrencyService;
         private readonly IWindowsManager _windowsManager;
         private readonly WavesController _wavesController;
+        private readonly ISaveService _saveService;
 
         private Health _castleHealth;
-        
+
         public GameOverResult GameOverResult { get; private set; }
 
         public GameOverManager(
@@ -29,7 +30,7 @@ namespace Assets.Game.Scripts.Services
             GameStatistics gameStatistics,
             CurrencyBank currencyBank,
             MetaCurrencyConfig metaCurrencyConfig,
-            MetaCurrencyService metaCurrencyService,
+            ISaveService saveService,
             IWindowsManager windowsManager)
         {
             _wavesController = waveController;
@@ -38,7 +39,7 @@ namespace Assets.Game.Scripts.Services
             _gameStatistics = gameStatistics;
             _currencyBank = currencyBank;
             _metaCurrencyConfig = metaCurrencyConfig;
-            _metaCurrencyService = metaCurrencyService;
+            _saveService = saveService;
             _windowsManager = windowsManager;
         }
 
@@ -60,7 +61,7 @@ namespace Assets.Game.Scripts.Services
 
             var earnedMetaCurrency = CalculateMetaCurrency();
 
-            ApplyMetaData(earnedMetaCurrency);
+            ApplySaveData(earnedMetaCurrency, _wavesController.WavesCount);
             
             GameOverResult = new GameOverResult()
             {
@@ -75,10 +76,20 @@ namespace Assets.Game.Scripts.Services
 
         private void StopWaves() => _wavesController.Stop();
 
-        private void ApplyMetaData(int value) => _metaCurrencyService.Add(value);
+        private void ApplySaveData(int earnedMetaCurrency, int wavesCount)
+        {
+            var data = _saveService.GetSaveData();
+
+            data.MetaCurrency += earnedMetaCurrency;
+            
+            if (data.WavesRecord < wavesCount)
+                data.WavesRecord = wavesCount;
+            
+            _saveService.Save(data);
+        }
 
         private int CalculateMetaCurrency() => _wavesController.WavesCount * _metaCurrencyConfig.MetaCurrencyPerWave +
-                _gameStatistics.KilledEnemiesCount * _metaCurrencyConfig.MetaCurrencyPerKill;
+                                               _gameStatistics.KilledEnemiesCount * _metaCurrencyConfig.MetaCurrencyPerKill;
 
         private void StopBuildings()
         {

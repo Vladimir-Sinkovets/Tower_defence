@@ -1,3 +1,4 @@
+using System;
 using Assets.Game.Scripts.Buildings;
 using Assets.Game.Scripts.Input;
 using Assets.Game.Scripts.UI.Windows;
@@ -5,7 +6,7 @@ using UnityEngine;
 
 namespace Assets.Game.Scripts.Services
 {
-    public class PointerRouter
+    public class PointerRouter : IDisposable
     {
         private readonly PointSelector _pointSelector;
         private readonly IWindowsManager _windowsManager;
@@ -25,5 +26,7 @@ namespace Assets.Game.Scripts.Services
             if (_buildingService.IsPositionAvailable(position))
                 _windowsManager.Open(WindowType.Buildings);
         }
+
+        public void Dispose() => _pointSelector.OnClicked -= OnClickedHandler;
     }
 }

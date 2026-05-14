@@ -12,18 +12,20 @@ namespace Assets.Game.Scripts.Animations
         
         private Tween _shakeTween;
         private Health _health;
+        private Transform _root;
 
-        public void Init(Health health)
+        public void Init(Health health, Transform root)
         {
             _health = health;
             _health.OnDamaged += OnDamagedHandler;
+            _root = root;
         }
 
         private void OnDamagedHandler(int _)
         {
             _shakeTween?.Complete();
 
-            _shakeTween = transform.DOShakePosition(ShakeDuration, ShakeStrength, ShakeVibrato);
+            _shakeTween = _root.DOShakePosition(ShakeDuration, ShakeStrength, ShakeVibrato);
         }
 
         private void OnDestroy()

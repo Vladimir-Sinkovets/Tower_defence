@@ -10,8 +10,6 @@ namespace Assets.Game.Scripts.Services
 {
     public class CastleFactory
     {
-        private const string CastleRootObjectName = "Castle"; 
-        
         private readonly BuildingsConfig _buildingsConfig;
         private readonly IInstantiator _instantiator;
         
@@ -25,19 +23,18 @@ namespace Assets.Game.Scripts.Services
 
         public async UniTask<Health> CreateCastle(CancellationToken ct)
         {
-            var castle = new GameObject(CastleRootObjectName);
+            var castleHealth = Object.Instantiate(_buildingsConfig.CastleHealthPrefab);
             
-            var castleHealth = castle.AddComponent<Health>();
             castleHealth.Init(_buildingsConfig.CastleHp);
             
-            var shaker = castle.AddComponent<DamageShaker>();
-            shaker.Init(castleHealth);
+            if (castleHealth.TryGetComponent<DamageShaker>(out var shaker))
+                shaker.Init(castleHealth, castleHealth.transform);
             
             
             var building = _buildingsConfig.CastleBuilding.Create(_instantiator);
 
-            building.transform.parent = castle.transform;
-            building.transform.position = castle.transform.position;
+            building.transform.parent = castleHealth.transform;
+            building.transform.position = castleHealth.transform.position;
 
             await building.AppearanceAnimation.Play(ct);
             

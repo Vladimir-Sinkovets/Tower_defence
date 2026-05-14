@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Assets.Game.Scripts.Shared;
 using UnityEngine;
 
 namespace Assets.Game.Scripts.Buildings
@@ -7,6 +8,7 @@ namespace Assets.Game.Scripts.Buildings
     [CreateAssetMenu(fileName = "Buildings_config", menuName = "Configs/Buildings config")]
     public class BuildingsConfig : ScriptableObject
     {
+        public Health CastleHealthPrefab;
         public BuildingFactory CastleBuilding;
 
         public int CastleHp = 50;

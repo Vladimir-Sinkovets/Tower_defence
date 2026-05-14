@@ -35,11 +35,11 @@ namespace Assets.Game.Scripts.Installers
         private void BindServices()
         {
             Container.Bind<CurrencyBank>().AsSingle();
-            Container.Bind<MetaCurrencyService>().AsSingle();
             Container.Bind<GameStatistics>().AsSingle();
             Container.Bind<SceneLoader>().AsSingle();
             Container.Bind<CastleFactory>().AsSingle();
             Container.Bind<HudFactory>().AsSingle();
+            Container.BindInterfacesAndSelfTo<EnemyAccessor>().AsSingle();
         }
 
         private void BindInput()
@@ -78,7 +78,7 @@ namespace Assets.Game.Scripts.Installers
 
         private void BindUI()
         {
-            Container.Bind<PointerRouter>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<PointerRouter>().AsSingle().NonLazy();
             
             Container.BindInterfacesAndSelfTo<WindowsManager>().AsSingle();
             Container.BindInterfacesAndSelfTo<WindowFactory>().AsSingle();
