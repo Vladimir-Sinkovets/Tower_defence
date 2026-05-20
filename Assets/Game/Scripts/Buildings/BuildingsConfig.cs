@@ -9,18 +9,18 @@ namespace Assets.Game.Scripts.Buildings
     public class BuildingsConfig : ScriptableObject
     {
         public Health CastleHealthPrefab;
-        public BuildingFactory CastleBuilding;
+        public BuildingConfig CastleBuilding;
 
         public int CastleHp = 50;
 
-        public List<BuildingConfig> Buildings;
+        public List<BuildingOptionConfig> Buildings;
     }
 
     [Serializable]
-    public class BuildingConfig
+    public class BuildingOptionConfig
     {
         public Sprite Icon;
-        public BuildingFactory BuildingFactory;
+        public BuildingConfig BuildingConfig;
         public int Price;
     }
 }

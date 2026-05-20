@@ -27,10 +27,4 @@ namespace Assets.Game.Scripts.Saves
             return JsonUtility.FromJson<SaveData>(json);
         }
     }
-
-    public interface ISaveService
-    {
-        void Save(SaveData saveData);
-        SaveData GetSaveData();
-    }
 }

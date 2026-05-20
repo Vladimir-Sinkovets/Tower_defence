@@ -1,28 +1,28 @@
 ﻿using System;
 using System.Threading;
+using Assets.Game.Scripts.Buildings.Interfaces;
 using Assets.Game.Scripts.Services;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using Zenject;
 
-namespace Assets.Game.Scripts.Buildings
+namespace Assets.Game.Scripts.Buildings.Implementations
 {
-    public class BuildingService : IDisposable
+    public class BuildingService : IBuildingService, IDisposable
     {
         private readonly Registry<Building> _buildingRegistry;
         private readonly CurrencyBank _currencyBank;
-        private readonly IInstantiator _instantiator;
+        private readonly IBuildingFactory _buildingFactory;
         
         private CancellationTokenSource _cts;
 
         public BuildingService(
             Registry<Building> buildingRegistry,
             CurrencyBank currencyBank,
-            IInstantiator instantiator)
+            IBuildingFactory buildingFactory)
         {
             _buildingRegistry = buildingRegistry;
             _currencyBank = currencyBank;
-            _instantiator = instantiator;
+            _buildingFactory = buildingFactory;
         }
         
         
@@ -37,9 +37,9 @@ namespace Assets.Game.Scripts.Buildings
             return true;
         }
 
-        public bool TryBuild(BuildingConfig config, Vector3 position)
+        public bool TryBuild(BuildingOptionConfig optionConfig, Vector3 position)
         {
-            if (_currencyBank.TrySpend(config.Price) == false)
+            if (_currencyBank.TrySpend(optionConfig.Price) == false)
                 return false;
             
             _cts?.Cancel();
@@ -47,15 +47,14 @@ namespace Assets.Game.Scripts.Buildings
 
             _cts = new CancellationTokenSource();
             
-            CreateBuilding(config, position, _cts.Token).Forget();
+            CreateBuilding(optionConfig, position, _cts.Token).Forget();
             
             return true;
         }
-
         
-        private async UniTaskVoid CreateBuilding(BuildingConfig buildingConfig, Vector3 position, CancellationToken ct)
+        private async UniTaskVoid CreateBuilding(BuildingOptionConfig buildingOptionConfig, Vector3 position, CancellationToken ct)
         {
-            var building = buildingConfig.BuildingFactory.Create(_instantiator);
+            var building = _buildingFactory.Create(buildingOptionConfig.BuildingConfig);
 
             building.transform.position = position;
 

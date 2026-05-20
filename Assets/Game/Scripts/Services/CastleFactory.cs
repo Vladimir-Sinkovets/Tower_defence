@@ -1,24 +1,24 @@
 using System.Threading;
 using Assets.Game.Scripts.Animations;
 using Assets.Game.Scripts.Buildings;
+using Assets.Game.Scripts.Buildings.Interfaces;
 using Assets.Game.Scripts.Shared;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using Zenject;
 
 namespace Assets.Game.Scripts.Services
 {
     public class CastleFactory
     {
         private readonly BuildingsConfig _buildingsConfig;
-        private readonly IInstantiator _instantiator;
-        
+        private readonly IBuildingFactory _buildingFactory;
+
         private CancellationTokenSource _startGameCts;
 
-        public CastleFactory(BuildingsConfig buildingsConfig, IInstantiator instantiator)
+        public CastleFactory(BuildingsConfig buildingsConfig, IBuildingFactory buildingFactory)
         {
             _buildingsConfig = buildingsConfig;
-            _instantiator = instantiator;
+            _buildingFactory = buildingFactory;
         }
 
         public async UniTask<Health> CreateCastle(CancellationToken ct)
@@ -31,7 +31,7 @@ namespace Assets.Game.Scripts.Services
                 shaker.Init(castleHealth, castleHealth.transform);
             
             
-            var building = _buildingsConfig.CastleBuilding.Create(_instantiator);
+            var building = _buildingFactory.Create(_buildingsConfig.CastleBuilding);
 
             building.transform.parent = castleHealth.transform;
             building.transform.position = castleHealth.transform.position;

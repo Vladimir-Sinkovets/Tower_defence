@@ -17,21 +17,21 @@ namespace Assets.Game.Scripts.Buildings
         [SerializeField] private WeaponAnimation _preShootAnimation;
         [SerializeField] private float _searchTargetInterval = 0.2f;
 
-        private IEnemyAccessor _enemyAccessor;
+        private IInstantiator _instantiator;
 
         private StateMachine _stateMachine;
         private ShootingBuildingStateMachineData _data;
 
         [Inject]
-        public void Construct(Registry<Building> buildingRegistry, IEnemyAccessor enemyAccessor)
+        public void Construct(Registry<Building> buildingRegistry, IInstantiator instantiator)
         {
             base.Construct(buildingRegistry);
-            _enemyAccessor = enemyAccessor;
+            _instantiator =  instantiator;
         }
 
         private void Update() => _stateMachine.Update();
 
-        public void Init(ShootingBuildingFactory config)
+        public override void Init(BuildingConfig config)
         {
             base.Init(config);
 
@@ -47,11 +47,10 @@ namespace Assets.Game.Scripts.Buildings
             };
 
             _stateMachine = new StateMachine();
-            _stateMachine.AddState(new ShootingBuildingWaitState(_data, _stateMachine, _enemyAccessor));
-            _stateMachine.AddState(new ShootingBuildingAttackState(_data, _stateMachine));
-            _stateMachine.AddState(new ShootingBuildingStopState(_stateMachine));
+            _stateMachine.AddState(_instantiator.Instantiate<ShootingBuildingWaitState>(new object[] { _data, _stateMachine }));
+            _stateMachine.AddState(_instantiator.Instantiate<ShootingBuildingAttackState>(new object[] { _data, _stateMachine }));
+            _stateMachine.AddState(_instantiator.Instantiate<ShootingBuildingStopState>(new object[] { _stateMachine }));
             
-
             _stateMachine.SetStartState<ShootingBuildingWaitState>();
         }
 

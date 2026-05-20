@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using Assets.Game.Scripts.Buildings;
+using Assets.Game.Scripts.Buildings.Interfaces;
 using Assets.Game.Scripts.Input;
 using Assets.Game.Scripts.Services;
 using Cysharp.Threading.Tasks;
@@ -14,7 +15,7 @@ namespace Assets.Game.Scripts.UI.Windows.Buildings
         private readonly IChooseBuildingView _chooseBuildingView;
         private readonly BuildingsConfig _buildingsConfig;
         private readonly CurrencyBank _currencyBank;
-        private readonly BuildingService _buildingService;
+        private readonly IBuildingService _buildingService;
         private readonly PointSelector _pointSelector;
         private readonly IWindowsManager _windowManager;
 
@@ -25,7 +26,7 @@ namespace Assets.Game.Scripts.UI.Windows.Buildings
             IChooseBuildingView chooseBuildingView,
             BuildingsConfig buildingsConfig,
             CurrencyBank currencyBank,
-            BuildingService buildingService,
+            IBuildingService buildingService,
             PointSelector pointSelector,
             IWindowsManager windowManager)
         {

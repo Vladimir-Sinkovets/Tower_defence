@@ -1,7 +1,9 @@
 ﻿using Assets.Game.Scripts.Animations;
 using Assets.Game.Scripts.Buildings;
+using Assets.Game.Scripts.Buildings.Implementations;
 using Assets.Game.Scripts.Configs;
 using Assets.Game.Scripts.Enemies;
+using Assets.Game.Scripts.Enemies.Implementations;
 using Assets.Game.Scripts.Input;
 using Assets.Game.Scripts.Services;
 using Assets.Game.Scripts.UI;
@@ -38,8 +40,12 @@ namespace Assets.Game.Scripts.Installers
             Container.Bind<GameStatistics>().AsSingle();
             Container.Bind<SceneLoader>().AsSingle();
             Container.Bind<CastleFactory>().AsSingle();
-            Container.Bind<HudFactory>().AsSingle();
-            Container.BindInterfacesAndSelfTo<EnemyAccessor>().AsSingle();
+            Container.BindInterfacesAndSelfTo<HudFactory>().AsSingle();
+            Container.BindInterfacesTo<EnemyAccessor>().AsSingle();
+            Container.BindInterfacesTo<EnemyFactory>().AsSingle();
+            Container.BindInterfacesTo<BuildingFactory>().AsSingle();
+            Container.BindInterfacesTo<ProjectileFactory>().AsSingle();
+            Container.BindInterfacesTo<VFXFactory>().AsSingle();
         }
 
         private void BindInput()
@@ -55,11 +61,12 @@ namespace Assets.Game.Scripts.Installers
             Container.BindInterfacesAndSelfTo<GameplayEntryPoint>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<GameplayOrchestrator>().AsSingle();
             Container.BindInterfacesAndSelfTo<GameOverManager>().AsSingle();
-            Container.Bind<EnemyWavesSpawner>().AsSingle();
             
             Container.BindInstance(_perimeterPoints).WhenInjectedInto<EnemyWavesSpawner>();
-            Container.BindInterfacesAndSelfTo<WavesController>().AsSingle();
-            Container.BindInterfacesAndSelfTo<BuildingService>().AsSingle();
+            Container.BindInterfacesTo<EnemyWavesSpawner>().AsSingle();
+            
+            Container.BindInterfacesTo<WavesController>().AsSingle();
+            Container.BindInterfacesTo<BuildingService>().AsSingle();
             Container.BindInstance(_fieldStartupAnimation).AsSingle();
         }
 
@@ -80,8 +87,8 @@ namespace Assets.Game.Scripts.Installers
         {
             Container.BindInterfacesAndSelfTo<PointerRouter>().AsSingle().NonLazy();
             
-            Container.BindInterfacesAndSelfTo<WindowsManager>().AsSingle();
-            Container.BindInterfacesAndSelfTo<WindowFactory>().AsSingle();
+            Container.BindInterfacesTo<WindowsManager>().AsSingle();
+            Container.BindInterfacesTo<WindowFactory>().AsSingle();
             Container.BindInstance(_windowViewsConfig);
             Container.BindInstance(_hudPrefab);
         }

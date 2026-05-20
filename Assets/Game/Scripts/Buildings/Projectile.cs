@@ -1,10 +1,13 @@
-﻿using Assets.Game.Scripts.Enemies;
+﻿using System;
+using Assets.Game.Scripts.Enemies;
 using UnityEngine;
 
 namespace Assets.Game.Scripts.Buildings
 {
     public class Projectile : MonoBehaviour
     {
+        public event Action<Vector3> OnHit;
+        
         private Enemy _target;
         private int _damage;
         private float _speed;
@@ -15,9 +18,8 @@ namespace Assets.Game.Scripts.Buildings
         private float _time;
         private float _flightTime;
         private float _arcHeight;
-        private ParticleSystem _hitVFXPrefab;
 
-        public void Init(Enemy target, int damage, float speed, float arcHeight, ParticleSystem hitVFXPrefab = null)
+        public void Init(Enemy target, int damage, float speed, float arcHeight)
         {
             if (target == null)
             {
@@ -35,8 +37,6 @@ namespace Assets.Game.Scripts.Buildings
             var distance = Vector3.Distance(_startPosition, _targetLastPosition);
             _flightTime = distance / _speed;
             _arcHeight = arcHeight;
-
-            _hitVFXPrefab = hitVFXPrefab;
         }
 
         private void Update()
@@ -65,12 +65,14 @@ namespace Assets.Game.Scripts.Buildings
             if (_target != null)
                 _target.Health.ApplyDamage(_damage);
 
-            Destroy(gameObject);
+            OnHit?.Invoke(transform.position);
 
-            if (_hitVFXPrefab == null) return;
-            
-            var vfx = Instantiate(_hitVFXPrefab, transform.position, Quaternion.identity);
-            Destroy(vfx.gameObject, vfx.main.duration);
+            Destroy(gameObject);
+        }
+
+        private void OnDestroy()
+        {
+            OnHit = null;
         }
     }
 }

@@ -2,6 +2,7 @@
 using Assets.Game.Scripts.Configs;
 using Assets.Game.Scripts.Enemies;
 using System;
+using Assets.Game.Scripts.Enemies.Interfaces;
 using Assets.Game.Scripts.Saves;
 using Assets.Game.Scripts.Shared;
 using Assets.Game.Scripts.UI.Windows;
@@ -16,7 +17,7 @@ namespace Assets.Game.Scripts.Services
         private readonly CurrencyBank _currencyBank;
         private readonly MetaCurrencyConfig _metaCurrencyConfig;
         private readonly IWindowsManager _windowsManager;
-        private readonly WavesController _wavesController;
+        private readonly IWavesController _wavesController;
         private readonly ISaveService _saveService;
 
         private Health _castleHealth;
@@ -24,7 +25,7 @@ namespace Assets.Game.Scripts.Services
         public GameOverResult GameOverResult { get; private set; }
 
         public GameOverManager(
-            WavesController waveController,
+            IWavesController waveController,
             Registry<Building> buildingRegistry,
             Registry<Enemy> enemyRegistry,
             GameStatistics gameStatistics,

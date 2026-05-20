@@ -1,4 +1,6 @@
 using System.Threading;
+using Assets.Game.Scripts.Buildings.Implementations;
+using Assets.Game.Scripts.Buildings.Interfaces;
 using Assets.Game.Scripts.Common.UniversalStateMachine;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -8,13 +10,17 @@ namespace Assets.Game.Scripts.Buildings.States
     public class ShootingBuildingAttackState : State
     {
         private readonly ShootingBuildingStateMachineData _data;
-        
+        private readonly IProjectileFactory _projectileFactory;
+        private readonly IVFXFactory _vfxFactory;
+
         private CancellationTokenSource _shootCts;
         private float _nextShootTime;
 
-        public ShootingBuildingAttackState(ShootingBuildingStateMachineData data, IStateSwitcher stateSwitcher) : base(stateSwitcher)
+        public ShootingBuildingAttackState(ShootingBuildingStateMachineData data, IStateSwitcher stateSwitcher, IProjectileFactory projectileFactory, IVFXFactory vfxFactory) : base(stateSwitcher)
         {
             _data = data;
+            _projectileFactory = projectileFactory;
+            _vfxFactory = vfxFactory;
         }
 
         public override void Enter()
@@ -71,17 +77,19 @@ namespace Assets.Game.Scripts.Buildings.States
                 await _data.PreShootAnimation.PlayBeforeAttackAnimation(ct);
 
             if (_data.Config.ShootVFX != null)
-            {
-                var vfx = Object.Instantiate(_data.Config.ShootVFX, _data.ProjectileStartPosition.position, Quaternion.identity);
+                _vfxFactory.Create(_data.Config.ShootVFX, _data.ProjectileStartPosition.position);
 
-                Object.Destroy(vfx.gameObject, vfx.main.duration);
-            }
-
-            var projectile = Object.Instantiate(_data.Config.ProjectilePrefab);
-
-            projectile.transform.position = _data.ProjectileStartPosition.position;
-
-            projectile.Init(_data.CurrentTarget, _data.Config.Damage, _data.Config.ProjectileSpeed, _data.Config.ArcHeight, _data.Config.HitVFX);
+            _projectileFactory.Create(
+                _data.Config.ProjectilePrefab,
+                new  ProjectileData
+                {
+                    Position = _data.ProjectileStartPosition.position,
+                    Target = _data.CurrentTarget,
+                    Damage = _data.Config.Damage,
+                    ProjectileSpeed = _data.Config.ProjectileSpeed,
+                    ArcHeight = _data.Config.ArcHeight,
+                    HitVFXPrefab = _data.Config.HitVFX,
+                });
         }
         
         private void RotateWeapon()

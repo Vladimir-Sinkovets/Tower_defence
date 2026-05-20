@@ -1,5 +1,4 @@
-﻿using Assets.Game.Scripts.Enemies.Factories;
-using Assets.Game.Scripts.Shared;
+﻿using Assets.Game.Scripts.Shared;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -11,7 +10,7 @@ namespace Assets.Game.Scripts.Enemies.States
         public Health Target;
         public NavMeshAgent NavMeshAgent;
         public EnemyView View;
-        public SimpleEnemyFactory Config;
+        public EnemyConfig Config;
         public SimpleEnemy Enemy;
     }
 }

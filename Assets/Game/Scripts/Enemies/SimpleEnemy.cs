@@ -1,5 +1,4 @@
 using Assets.Game.Scripts.Common.UniversalStateMachine;
-using Assets.Game.Scripts.Enemies.Factories;
 using Assets.Game.Scripts.Enemies.States;
 using Assets.Game.Scripts.Services;
 using Assets.Game.Scripts.Shared;
@@ -31,7 +30,7 @@ namespace Assets.Game.Scripts.Enemies
             _gameStatistics = gameStatistics;
         }
 
-        public void Init(SimpleEnemyFactory config)
+        public override void Init(EnemyConfig config)
         {
             _stateMachine = new StateMachine();
             _data = new EnemyStateMachineData();

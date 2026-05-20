@@ -10,14 +10,14 @@ namespace Assets.Game.Scripts.Buildings
         [field: SerializeField] public BuildingAppearanceAnimation AppearanceAnimation { get; private set; } 
         
         private Registry<Building> _buildingRegistry;
-        private BuildingFactory _config;
+        private BuildingConfig _config;
 
         public float RadiusOfOccupiedSpace => _config.RadiusOfOccupiedSpace;
 
         [Inject]
         public virtual void Construct(Registry<Building> buildingRegistry) => _buildingRegistry = buildingRegistry;
 
-        public virtual void Init(BuildingFactory config)
+        public virtual void Init(BuildingConfig config)
         {
             _config = config;
             _buildingRegistry.Register(this);

@@ -8,7 +8,7 @@ namespace Assets.Game.Scripts.Buildings
     {
         public float SearchTargetInterval { get; set; }
         public Enemy CurrentTarget { get; set; }
-        public ShootingBuildingFactory Config { get; set; }
+        public BuildingConfig Config { get; set; }
         public Transform Transform { get; set; }
         public Transform WeaponRoot { get; set; }
         public Transform ProjectileStartPosition { get; set; }

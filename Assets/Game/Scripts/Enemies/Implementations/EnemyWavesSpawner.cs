@@ -1,24 +1,24 @@
 ﻿using Assets.Game.Scripts.Shared;
 using System.Threading;
 using Assets.Game.Scripts.Configs;
+using Assets.Game.Scripts.Enemies.Interfaces;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
-using Zenject;
 
-namespace Assets.Game.Scripts.Enemies
+namespace Assets.Game.Scripts.Enemies.Implementations
 {
-    public class EnemyWavesSpawner
+    public class EnemyWavesSpawner : IEnemyWavesSpawner
     {
-        private readonly IInstantiator _instantiator;
+        private readonly IEnemyFactory _enemyFactory;
         private readonly WavesConfig _wavesConfig;
         private readonly Transform[] _perimeterPoints;
         
         public bool IsSpawning { get; private set; }
         
-        public EnemyWavesSpawner(IInstantiator instantiator, WavesConfig wavesConfig, Transform[] perimeterPoints)
+        public EnemyWavesSpawner(IEnemyFactory enemyFactory, WavesConfig wavesConfig, Transform[] perimeterPoints)
         {
-            _instantiator = instantiator;
+            _enemyFactory = enemyFactory;
             _wavesConfig = wavesConfig;
             _perimeterPoints = perimeterPoints;
         }
@@ -31,7 +31,7 @@ namespace Assets.Game.Scripts.Enemies
             {
                 var spawnPoint = GetRandomPerimeterPoint();
 
-                var enemy = _wavesConfig.EnemyFactory.Create(_instantiator);
+                var enemy = _enemyFactory.Create(_wavesConfig.EnemyConfig);
 
                 enemy.transform.position = spawnPoint;
 

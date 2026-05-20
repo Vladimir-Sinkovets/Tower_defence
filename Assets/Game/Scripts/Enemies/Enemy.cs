@@ -10,5 +10,6 @@ namespace Assets.Game.Scripts.Enemies
         public abstract void Activate(Health target);
 
         public abstract void Deactivate();
+        public abstract void Init(EnemyConfig config);
     }
 }

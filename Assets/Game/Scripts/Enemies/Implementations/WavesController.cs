@@ -2,15 +2,16 @@
 using Assets.Game.Scripts.Configs;
 using System.Linq;
 using System.Threading;
+using Assets.Game.Scripts.Enemies.Interfaces;
 using Assets.Game.Scripts.Services;
 using Assets.Game.Scripts.Shared;
 using Cysharp.Threading.Tasks;
 
-namespace Assets.Game.Scripts.Enemies
+namespace Assets.Game.Scripts.Enemies.Implementations
 {
-    public class WavesController : IDisposable
+    public class WavesController : IWavesController, IDisposable
     {
-        private readonly EnemyWavesSpawner _enemyWavesController;
+        private readonly IEnemyWavesSpawner _enemyWavesController;
         private readonly Registry<Enemy> _enemyRegistry;
         private readonly WavesConfig _wavesConfig;
         
@@ -19,7 +20,7 @@ namespace Assets.Game.Scripts.Enemies
         private CancellationTokenSource _wavesCts;
 
         public WavesController(
-            EnemyWavesSpawner enemyWavesSpawner,
+            IEnemyWavesSpawner enemyWavesSpawner,
             WavesConfig wavesConfig,
             Registry<Enemy> enemyRegistry)
         {

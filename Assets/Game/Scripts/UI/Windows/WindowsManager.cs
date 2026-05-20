@@ -51,14 +51,13 @@ namespace Assets.Game.Scripts.UI.Windows
                 window.Deactivate();
             }
             
+            foreach (var window in _activeScreens.Values)
+            {
+                window.Deactivate();
+            }
+            
             _pool.Clear();
             _activeScreens.Clear();
         }
-    }
-
-    public interface IWindowsManager
-    {
-        public void Open(WindowType type);
-        public void Close(WindowType type);
     }
 }
