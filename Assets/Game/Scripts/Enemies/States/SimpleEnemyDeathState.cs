@@ -20,9 +20,5 @@ namespace Assets.Game.Scripts.Enemies.States
 
             Object.Destroy(_data.Enemy.gameObject, DestroyDelay);
         }
-
-        public override void Exit() { }
-
-        public override void Update() { }
     }
 }

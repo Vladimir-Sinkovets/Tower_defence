@@ -18,13 +18,13 @@ namespace Assets.Game.Scripts.UI.Windows.EndGame
             _view = view;
             _sceneLoader = sceneLoader;
             _gameOverManager = gameOverManager;
-            
-            _view.OnMenuButtonClicked += OnMenuButtonClickedHandler;
-            _view.OnRestartButtonClicked += OnRestartButtonClickedHandler;
         }
 
         public void Activate()
         {
+            _view.OnMenuButtonClicked += OnMenuButtonClickedHandler;
+            _view.OnRestartButtonClicked += OnRestartButtonClickedHandler;
+            
             var result = _gameOverManager.GameOverResult;
             
             _view.Open();
@@ -34,15 +34,15 @@ namespace Assets.Game.Scripts.UI.Windows.EndGame
             _view.ShowEarnedMetaCurrency(result.EarnedMetaCurrency);
         }
 
-        public void Deactivate() { }
-
-        private void OnRestartButtonClickedHandler() => _sceneLoader.LoadScene(SceneNames.Game);
-        private void OnMenuButtonClickedHandler() => _sceneLoader.LoadScene(SceneNames.Menu);
-        
-        public void Dispose()
+        public void Deactivate()
         {
             _view.OnMenuButtonClicked -= OnMenuButtonClickedHandler;
             _view.OnRestartButtonClicked -= OnRestartButtonClickedHandler;
         }
+
+        private void OnRestartButtonClickedHandler() => _sceneLoader.LoadScene(SceneNames.Game);
+        private void OnMenuButtonClickedHandler() => _sceneLoader.LoadScene(SceneNames.Menu);
+        
+        public void Dispose() => Deactivate();
     }
 }

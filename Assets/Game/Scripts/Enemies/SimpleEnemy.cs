@@ -62,6 +62,7 @@ namespace Assets.Game.Scripts.Enemies
 
         public override void Activate(Health target)
         {
+            base.Activate(target);
             if (IsActive)
                 return;
 
@@ -89,6 +90,11 @@ namespace Assets.Game.Scripts.Enemies
             _enemyRegistry?.Unregister(this);
         }
 
-        public override void Deactivate() => IsActive = false;
+        public override void Deactivate()
+        {
+            base.Deactivate();
+            
+            IsActive = false;
+        }
     }
 }

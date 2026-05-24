@@ -1,3 +1,4 @@
+using System;
 using Assets.Game.Scripts.Buildings.Interfaces;
 using Assets.Game.Scripts.Enemies;
 using UnityEngine;
@@ -24,13 +25,20 @@ namespace Assets.Game.Scripts.Buildings.Implementations
 
             projectile.Init(data.Target, data.Damage, data.ProjectileSpeed, data.ArcHeight);
 
-            if (data.HitVFXPrefab != null)
+            var hitVFXPrefab = data.HitVFXPrefab;
+            
+            if (hitVFXPrefab == null)
+                return projectile;
+
+            Action<Vector3> handler = null;
+            
+            handler = (position) =>
             {
-                projectile.OnHit += (position) =>
-                {
-                    _vfxFactory.Create(data.HitVFXPrefab, position);
-                };
-            }
+                _vfxFactory.Create(hitVFXPrefab, position);
+                projectile.OnHit -= handler;
+            };
+            
+            projectile.OnHit += handler;
 
             return projectile;
         }

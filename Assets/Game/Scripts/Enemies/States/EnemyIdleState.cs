@@ -12,15 +12,13 @@ namespace Assets.Game.Scripts.Enemies.States
         {
             _data.View.PlayIdleAnimation();
 
-            _data.Enemy.Health.OnDied += OnEnemyDied;
+            _data.Enemy.OnDied += OnEnemyDied;
         }
 
         public override void Exit()
         {
-            _data.Enemy.Health.OnDied -= OnEnemyDied;
+            _data.Enemy.OnDied -= OnEnemyDied;
         }
-
-        public override void Update() { }
 
         private void OnEnemyDied()
         {

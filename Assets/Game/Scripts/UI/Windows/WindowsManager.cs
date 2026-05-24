@@ -36,7 +36,8 @@ namespace Assets.Game.Scripts.UI.Windows
 
         public void Close(WindowType type)
         {
-            if (!_activeScreens.TryGetValue(type, out var screenEntry)) return;
+            if (!_activeScreens.TryGetValue(type, out var screenEntry))
+                return;
 
             screenEntry.Deactivate();
             

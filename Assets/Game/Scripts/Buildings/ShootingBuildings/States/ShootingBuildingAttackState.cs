@@ -25,7 +25,7 @@ namespace Assets.Game.Scripts.Buildings.States
 
         public override void Enter()
         {
-            _data.CurrentTarget.Health.OnDied += OnCurrentTargetDiedHandler;
+            _data.CurrentTarget.OnDied += OnCurrentTargetDiedHandler;
             _data.ShootingBuilding.OnStopped += OnStoppedHandler;
 
             _nextShootTime = Time.time + _data.Config.AttackInterval;
@@ -39,9 +39,10 @@ namespace Assets.Game.Scripts.Buildings.States
         {
             _data.ShootingBuilding.OnStopped -= OnStoppedHandler;
 
-            if (_data.CurrentTarget == null) return;
+            if (_data.CurrentTarget == null)
+                return;
             
-            _data.CurrentTarget.Health.OnDied -= OnCurrentTargetDiedHandler;
+            _data.CurrentTarget.OnDied -= OnCurrentTargetDiedHandler;
             _data.CurrentTarget = null;
         }
 
@@ -94,7 +95,8 @@ namespace Assets.Game.Scripts.Buildings.States
         
         private void RotateWeapon()
         {
-            if (_data.CurrentTarget == null) return;
+            if (_data.CurrentTarget == null)
+                return;
 
             var direction = _data.CurrentTarget.transform.position - _data.WeaponRoot.position;
             direction.y = 0f;

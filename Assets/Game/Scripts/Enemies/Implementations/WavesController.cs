@@ -51,7 +51,7 @@ namespace Assets.Game.Scripts.Enemies.Implementations
 
                 await UniTask.WaitUntil(() => 
                     _enemyWavesController.IsSpawning == false &&
-                    _enemyRegistry.All.Any(x => !x.Health.IsDead) == false,
+                    _enemyRegistry.All.Any(x => !x.IsDead) == false,
                     cancellationToken: ct);
 
                 await UniTask.WaitForSeconds(_wavesConfig.IntervalBetweenWaves, cancellationToken: ct);

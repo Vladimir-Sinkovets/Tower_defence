@@ -12,9 +12,9 @@ namespace Assets.Game.Scripts.Enemies.States
 
         public SimpleEnemyAttackState(IStateSwitcher stateSwitcher, EnemyStateMachineData data) : base(stateSwitcher) => _data = data;
 
-        public override void Enter() => _data.Enemy.Health.OnDied += OnEnemyDied;
+        public override void Enter() => _data.Enemy.OnDied += OnEnemyDied;
 
-        public override void Exit() => _data.Enemy.Health.OnDied -= OnEnemyDied;
+        public override void Exit() => _data.Enemy.OnDied -= OnEnemyDied;
 
         public override void Update()
         {
@@ -48,7 +48,7 @@ namespace Assets.Game.Scripts.Enemies.States
 
         private void AttackAnimationEventHandler()
         {
-            if (_data.Enemy.Health.IsDead || !_data.Enemy.IsActive)
+            if (_data.Enemy.IsDead || !_data.Enemy.IsActive)
                 return;
 
             _data.Target.ApplyDamage(_data.Config.Damage);

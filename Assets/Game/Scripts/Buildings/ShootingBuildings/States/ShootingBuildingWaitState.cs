@@ -30,7 +30,8 @@ namespace Assets.Game.Scripts.Buildings.States
 
         public override void Update()
         {
-            if (!(Time.time >= _nextSearchTime)) return;
+            if (!(Time.time >= _nextSearchTime))
+                return;
             
             _nextSearchTime = Time.time + _data.SearchTargetInterval;
 
@@ -43,7 +44,8 @@ namespace Assets.Game.Scripts.Buildings.States
         {
             _data.CurrentTarget = _enemyAccessor.FindNearestEnemy(_data.Transform.position, _data.Config.AttackRadius);
 
-            if (_data.CurrentTarget == null) return;
+            if (_data.CurrentTarget == null)
+                return;
             
             StateSwitcher.SwitchState<ShootingBuildingAttackState>();
         }

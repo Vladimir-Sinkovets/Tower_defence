@@ -60,10 +60,11 @@ namespace Assets.Game.Scripts.Buildings
 
             transform.position = horizontalPos;
 
-            if (!(t >= 1f)) return;
+            if (!(t >= 1f))
+                return;
             
             if (_target != null)
-                _target.Health.ApplyDamage(_damage);
+                _target.ApplyDamage(_damage);
 
             OnHit?.Invoke(transform.position);
 

@@ -9,8 +9,8 @@
             StateSwitcher = stateSwitcher;
         }
 
-        public abstract void Enter();
-        public abstract void Exit();
-        public abstract void Update();
+        public virtual void Enter() { }
+        public virtual void Exit() { }
+        public virtual void Update() { }
     }
 }

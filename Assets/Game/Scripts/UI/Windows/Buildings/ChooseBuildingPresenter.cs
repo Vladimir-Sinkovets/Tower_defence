@@ -121,10 +121,7 @@ namespace Assets.Game.Scripts.UI.Windows.Buildings
         
         public void Dispose()
         {
-            _chooseBuildingView.OnCloseButtonClicked -= OnCloseButtonClickedHandler;
-            _chooseBuildingView.OnOptionChosen -= OnOptionChosenHandler;
-            _currencyBank.OnCurrencyChanged -= OnCurrencyChangedHandler;
-            _pointSelector.OnClicked -= OnClickedHandler;
+            Deactivate();
             
             _closePanelCts?.Cancel();
             _closePanelCts?.Dispose();

@@ -13,14 +13,16 @@ namespace Assets.Game.Scripts.Common.UniversalStateMachine
 
         public void SetStartState<StateT>() where StateT : State
         {
-            if (IsDebug) Debug.Log($"Start state - {typeof(StateT)}");
+            if (IsDebug)
+                Debug.Log($"Start state - {typeof(StateT)}");
             _currentState = _states[typeof(StateT)];
             _currentState.Enter();
         }
 
         public void SwitchState<StateT>() where StateT : State
         {
-            if (IsDebug) Debug.Log($"Switch state to {typeof(StateT)}");
+            if (IsDebug)
+                Debug.Log($"Switch state to {typeof(StateT)}");
 
             var state = _states[typeof(StateT)];
 
@@ -31,7 +33,8 @@ namespace Assets.Game.Scripts.Common.UniversalStateMachine
 
         public void AddState<StateT>(StateT instance) where StateT : State
         {
-            if (IsDebug) Debug.Log($"Add state {typeof(StateT)}");
+            if (IsDebug)
+                Debug.Log($"Add state {typeof(StateT)}");
 
             _states.Add(typeof(StateT), instance);
         }
