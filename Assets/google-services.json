@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "974379189219",
+    "project_id": "tower-defence-2cea0",
+    "storage_bucket": "tower-defence-2cea0.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:974379189219:android:2fb2bc60b2e4ec9df056d6",
+        "android_client_info": {
+          "package_name": "com.test.towerdefence"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDEP7Dy1x-vFH4Y720QG1VWgcQ3Cb5sYq0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -17,6 +17,7 @@ namespace Assets.Game.Scripts.Services
         private readonly CurrencyBank _currencyBank;
         private readonly MetaCurrencyConfig _metaCurrencyConfig;
         private readonly IWindowsManager _windowsManager;
+        private readonly IGameplayAnalytics _gameplayAnalytics;
         private readonly IWavesController _wavesController;
         private readonly ISaveService _saveService;
 
@@ -32,7 +33,8 @@ namespace Assets.Game.Scripts.Services
             CurrencyBank currencyBank,
             MetaCurrencyConfig metaCurrencyConfig,
             ISaveService saveService,
-            IWindowsManager windowsManager)
+            IWindowsManager windowsManager,
+            IGameplayAnalytics gameplayAnalytics)
         {
             _wavesController = waveController;
             _enemyRegistry = enemyRegistry;
@@ -42,6 +44,7 @@ namespace Assets.Game.Scripts.Services
             _metaCurrencyConfig = metaCurrencyConfig;
             _saveService = saveService;
             _windowsManager = windowsManager;
+            _gameplayAnalytics = gameplayAnalytics;
         }
 
         public void Init(Health castleHealth)
@@ -73,6 +76,8 @@ namespace Assets.Game.Scripts.Services
             };
             
             _windowsManager.Open(WindowType.EndGame);
+            
+            _gameplayAnalytics.GameOver();
         }
 
         private void StopWaves() => _wavesController.Stop();

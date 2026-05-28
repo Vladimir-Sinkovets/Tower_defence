@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using Assets.Game.Scripts.Buildings.Interfaces;
+using Assets.Game.Scripts.Enemies.Interfaces;
 using Assets.Game.Scripts.Services;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -12,17 +13,25 @@ namespace Assets.Game.Scripts.Buildings.Implementations
         private readonly Registry<Building> _buildingRegistry;
         private readonly CurrencyBank _currencyBank;
         private readonly IBuildingFactory _buildingFactory;
-        
+        private readonly IGameplayAnalytics _gameplayAnalytics;
+        private readonly IWavesController _wavesController;
+
         private CancellationTokenSource _cts;
+        
+        private int _towersCount;
 
         public BuildingService(
             Registry<Building> buildingRegistry,
             CurrencyBank currencyBank,
-            IBuildingFactory buildingFactory)
+            IBuildingFactory buildingFactory,
+            IGameplayAnalytics gameplayAnalytics,
+            IWavesController wavesController)
         {
             _buildingRegistry = buildingRegistry;
             _currencyBank = currencyBank;
             _buildingFactory = buildingFactory;
+            _gameplayAnalytics = gameplayAnalytics;
+            _wavesController = wavesController;
         }
         
         
@@ -48,6 +57,10 @@ namespace Assets.Game.Scripts.Buildings.Implementations
             _cts = new CancellationTokenSource();
             
             CreateBuilding(optionConfig, position, _cts.Token).Forget();
+
+            _towersCount++;
+            
+            _gameplayAnalytics.TowerBuilt(optionConfig.Price, _towersCount, _wavesController.WavesCount);
             
             return true;
         }

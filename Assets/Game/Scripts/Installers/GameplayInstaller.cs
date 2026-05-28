@@ -46,13 +46,14 @@ namespace Assets.Game.Scripts.Installers
             Container.BindInterfacesTo<BuildingFactory>().AsSingle();
             Container.BindInterfacesTo<ProjectileFactory>().AsSingle();
             Container.BindInterfacesTo<VFXFactory>().AsSingle();
+            Container.BindInterfacesAndSelfTo<GameplayAnalytics>().AsSingle();
         }
 
         private void BindInput()
         {
             Container.BindInterfacesAndSelfTo<GameInput>().AsSingle();
 
-            Container.BindInstance(_planeCenter).AsSingle();;
+            Container.BindInstance(_planeCenter).AsSingle();
             Container.BindInterfacesAndSelfTo<PointSelector>().AsSingle();
         }
 
@@ -62,7 +63,7 @@ namespace Assets.Game.Scripts.Installers
             Container.BindInterfacesAndSelfTo<GameplayOrchestrator>().AsSingle();
             Container.BindInterfacesAndSelfTo<GameOverManager>().AsSingle();
 
-            Container.BindInstance(_perimeterPoints).AsSingle();;
+            Container.BindInstance(_perimeterPoints).AsSingle();
             Container.BindInterfacesTo<EnemyWavesSpawner>().AsSingle();
             
             Container.BindInterfacesTo<WavesController>().AsSingle();
@@ -89,8 +90,8 @@ namespace Assets.Game.Scripts.Installers
             
             Container.BindInterfacesTo<WindowsManager>().AsSingle();
             Container.BindInterfacesTo<WindowFactory>().AsSingle();
-            Container.BindInstance(_windowViewsConfig).AsSingle();;
-            Container.BindInstance(_hudPrefab).AsSingle();;
+            Container.BindInstance(_windowViewsConfig).AsSingle();
+            Container.BindInstance(_hudPrefab).AsSingle();
         }
     }
 }

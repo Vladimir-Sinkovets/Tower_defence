@@ -1,7 +1,6 @@
 using System;
 using System.Threading;
 using Assets.Game.Scripts.Animations;
-using Assets.Game.Scripts.Enemies;
 using Assets.Game.Scripts.Enemies.Interfaces;
 using Assets.Game.Scripts.Shared;
 using Cysharp.Threading.Tasks;
@@ -15,7 +14,8 @@ namespace Assets.Game.Scripts.Services
         private readonly FieldStartupAnimation _fieldStartupAnimation;
         private readonly HudFactory _hudFactory;
         private readonly CastleFactory _castleFactory;
-        
+        private readonly IGameplayAnalytics _gameplayAnalytics;
+
         private CancellationTokenSource _startGameCts;
         
         private Health _castleHealth;
@@ -25,13 +25,15 @@ namespace Assets.Game.Scripts.Services
             GameOverManager gameOverManager,
             FieldStartupAnimation fieldStartupAnimation,
             HudFactory hudFactory,
-            CastleFactory castleFactory)
+            CastleFactory castleFactory,
+            IGameplayAnalytics gameplayAnalytics)
         {
             _wavesController = waveController;
             _gameOverManager = gameOverManager;
             _fieldStartupAnimation = fieldStartupAnimation;
             _hudFactory = hudFactory;
             _castleFactory = castleFactory;
+            _gameplayAnalytics = gameplayAnalytics;
         }
 
         public void Init()
@@ -45,6 +47,8 @@ namespace Assets.Game.Scripts.Services
 
         private async UniTaskVoid StartGame(CancellationToken ct)
         {
+            _gameplayAnalytics.GameStarted();
+            
             await _fieldStartupAnimation.Play(ct);
             
             _castleHealth = await _castleFactory.CreateCastle(ct);

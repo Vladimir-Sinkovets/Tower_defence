@@ -30,6 +30,9 @@ namespace Assets.Game.Scripts.Services
             if (castleHealth.TryGetComponent<DamageShaker>(out var shaker))
                 shaker.Init(castleHealth, castleHealth.transform);
             
+            if (castleHealth.TryGetComponent<AnalyticsCastleDamageHandler>(out var handler))
+                handler.Init(castleHealth);
+            
             
             var building = _buildingFactory.Create(_buildingsConfig.CastleBuilding);
 

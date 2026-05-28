@@ -196,7 +196,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 983e69fc7ddecc2459a7dbf1053197ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Installers.MainMenuInstaller
-  mainMenuStatisticsView: {fileID: 321072578}
+  _mainMenuStatisticsView: {fileID: 321072578}
   _mainMenuView: {fileID: 594132902}
 --- !u!1 &321072576
 GameObject:
