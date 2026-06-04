@@ -1,7 +1,7 @@
-﻿using DG.Tweening;
-using System;
+﻿using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using UnityEngine;
 
 namespace Assets.Game.Scripts.Enemies

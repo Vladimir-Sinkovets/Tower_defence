@@ -4,7 +4,8 @@ using System.Threading;
 using Assets.Game.Scripts.Buildings;
 using Assets.Game.Scripts.Buildings.Interfaces;
 using Assets.Game.Scripts.Input;
-using Assets.Game.Scripts.Services;
+using Assets.Game.Scripts.Services.Analytics;
+using Assets.Game.Scripts.Services.CurrencyBanks;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -18,7 +19,7 @@ namespace Assets.Game.Scripts.UI.Windows.Buildings
         private readonly IBuildingService _buildingService;
         private readonly PointSelector _pointSelector;
         private readonly IWindowsManager _windowManager;
-        private readonly IGameplayAnalytics _gameplayAnalytics;
+        private readonly IGameAnalytics _gameAnalytics;
 
         private Vector3 _position;
         private CancellationTokenSource _closePanelCts;
@@ -30,7 +31,7 @@ namespace Assets.Game.Scripts.UI.Windows.Buildings
             IBuildingService buildingService,
             PointSelector pointSelector,
             IWindowsManager windowManager,
-            IGameplayAnalytics gameplayAnalytics)
+            IGameAnalytics gameAnalytics)
         {
             _chooseBuildingView = chooseBuildingView;
             _buildingsConfig = buildingsConfig;
@@ -38,7 +39,7 @@ namespace Assets.Game.Scripts.UI.Windows.Buildings
             _buildingService = buildingService;
             _pointSelector = pointSelector;
             _windowManager = windowManager;
-            _gameplayAnalytics = gameplayAnalytics;
+            _gameAnalytics = gameAnalytics;
         }
 
         
@@ -71,7 +72,7 @@ namespace Assets.Game.Scripts.UI.Windows.Buildings
 
             if (_buildingService.TryBuild(config, _position) == false)
             {
-                _gameplayAnalytics.BuildRejected();
+                _gameAnalytics.BuildRejected();
                 
                 return;
             }

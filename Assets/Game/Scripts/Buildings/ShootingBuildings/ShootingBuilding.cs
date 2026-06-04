@@ -1,8 +1,8 @@
 ﻿using System;
 using Assets.Game.Scripts.Animations;
-using Assets.Game.Scripts.Services;
 using Assets.Game.Scripts.Buildings.States;
 using Assets.Game.Scripts.Common.UniversalStateMachine;
+using Assets.Game.Scripts.Services.Registries;
 using UnityEngine;
 using Zenject;
 
@@ -31,9 +31,9 @@ namespace Assets.Game.Scripts.Buildings
 
         private void Update() => _stateMachine.Update();
 
-        public override void Init(BuildingConfig config)
+        public override void Init(BuildingConfig config, BuildingType buildingType)
         {
-            base.Init(config);
+            base.Init(config, buildingType);
 
             _data = new ShootingBuildingStateMachineData
             {
@@ -44,6 +44,7 @@ namespace Assets.Game.Scripts.Buildings
                 ProjectileStartPosition = _projectileStartPosition,
                 PreShootAnimation = _preShootAnimation,
                 ShootingBuilding = this,
+                BuildingType = buildingType,
             };
 
             _stateMachine = new StateMachine();

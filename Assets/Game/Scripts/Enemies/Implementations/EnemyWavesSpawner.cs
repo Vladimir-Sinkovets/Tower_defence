@@ -1,7 +1,7 @@
-﻿using Assets.Game.Scripts.Shared;
-using System.Threading;
+﻿using System.Threading;
 using Assets.Game.Scripts.Configs;
 using Assets.Game.Scripts.Enemies.Interfaces;
+using Assets.Game.Scripts.Shared;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;

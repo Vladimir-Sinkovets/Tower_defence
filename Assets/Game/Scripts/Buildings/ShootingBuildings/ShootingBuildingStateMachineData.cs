@@ -14,5 +14,6 @@ namespace Assets.Game.Scripts.Buildings
         public Transform ProjectileStartPosition { get; set; }
         public WeaponAnimation PreShootAnimation { get; set; }
         public ShootingBuilding ShootingBuilding { get; set; }
+        public BuildingType BuildingType { get; set; }
     }
 }

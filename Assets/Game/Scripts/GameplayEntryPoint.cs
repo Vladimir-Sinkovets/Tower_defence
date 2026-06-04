@@ -1,4 +1,4 @@
-﻿using Assets.Game.Scripts.Services;
+﻿using Assets.Game.Scripts.Services.GameplayOrchestrators;
 using Zenject;
 
 namespace Assets.Game.Scripts

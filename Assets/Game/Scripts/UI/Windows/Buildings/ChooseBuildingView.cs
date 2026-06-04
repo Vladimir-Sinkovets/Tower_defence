@@ -1,7 +1,7 @@
-﻿using Assets.Game.Scripts.Animations;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using Assets.Game.Scripts.Animations;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;

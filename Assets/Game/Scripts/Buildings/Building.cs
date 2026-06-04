@@ -1,5 +1,5 @@
 ﻿using Assets.Game.Scripts.Animations;
-using Assets.Game.Scripts.Services;
+using Assets.Game.Scripts.Services.Registries;
 using UnityEngine;
 using Zenject;
 
@@ -17,7 +17,7 @@ namespace Assets.Game.Scripts.Buildings
         [Inject]
         public virtual void Construct(Registry<Building> buildingRegistry) => _buildingRegistry = buildingRegistry;
 
-        public virtual void Init(BuildingConfig config)
+        public virtual void Init(BuildingConfig config, BuildingType buildingType)
         {
             _config = config;
             _buildingRegistry.Register(this);

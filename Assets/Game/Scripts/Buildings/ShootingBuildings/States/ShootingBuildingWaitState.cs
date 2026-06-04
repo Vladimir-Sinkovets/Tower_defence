@@ -1,5 +1,5 @@
 using Assets.Game.Scripts.Common.UniversalStateMachine;
-using Assets.Game.Scripts.Services;
+using Assets.Game.Scripts.Services.EnemyAccessors;
 using UnityEngine;
 
 namespace Assets.Game.Scripts.Buildings.States

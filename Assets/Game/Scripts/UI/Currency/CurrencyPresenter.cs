@@ -1,5 +1,5 @@
 using System;
-using Assets.Game.Scripts.Services;
+using Assets.Game.Scripts.Services.CurrencyBanks;
 
 namespace Assets.Game.Scripts.UI.Currency
 {

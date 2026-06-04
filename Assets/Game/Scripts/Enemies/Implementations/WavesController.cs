@@ -1,9 +1,10 @@
 ﻿using System;
-using Assets.Game.Scripts.Configs;
 using System.Linq;
 using System.Threading;
+using Assets.Game.Scripts.Configs;
 using Assets.Game.Scripts.Enemies.Interfaces;
-using Assets.Game.Scripts.Services;
+using Assets.Game.Scripts.Services.Analytics;
+using Assets.Game.Scripts.Services.Registries;
 using Assets.Game.Scripts.Shared;
 using Cysharp.Threading.Tasks;
 
@@ -13,7 +14,7 @@ namespace Assets.Game.Scripts.Enemies.Implementations
     {
         private readonly IEnemyWavesSpawner _enemyWavesController;
         private readonly Registry<Enemy> _enemyRegistry;
-        private readonly IGameplayAnalytics _gameplayAnalytics;
+        private readonly IGameAnalytics _gameAnalytics;
         private readonly WavesConfig _wavesConfig;
         
         public int WavesCount { get; private set; }
@@ -24,11 +25,11 @@ namespace Assets.Game.Scripts.Enemies.Implementations
             IEnemyWavesSpawner enemyWavesSpawner,
             WavesConfig wavesConfig,
             Registry<Enemy> enemyRegistry,
-            IGameplayAnalytics gameplayAnalytics)
+            IGameAnalytics gameAnalytics)
         {
             _enemyWavesController = enemyWavesSpawner;
             _enemyRegistry = enemyRegistry;
-            _gameplayAnalytics = gameplayAnalytics;
+            _gameAnalytics = gameAnalytics;
             _wavesConfig = wavesConfig;
         }
 
@@ -50,7 +51,7 @@ namespace Assets.Game.Scripts.Enemies.Implementations
             {
                 var enemyCount = _wavesConfig.BaseEnemyCount + WavesCount * _wavesConfig.NewEnemiesPerWave;
                 
-                _gameplayAnalytics.WaveStarted(WavesCount, enemyCount);
+                _gameAnalytics.WaveStarted(WavesCount, enemyCount);
 
                 await _enemyWavesController.SpawnWave(enemyCount, target, ct);
 
@@ -59,7 +60,7 @@ namespace Assets.Game.Scripts.Enemies.Implementations
                     _enemyRegistry.All.Any(x => !x.IsDead) == false,
                     cancellationToken: ct);
 
-                _gameplayAnalytics.WaveCompleted(WavesCount, enemyCount);
+                _gameAnalytics.WaveCompleted(WavesCount, enemyCount);
                 
                 await UniTask.WaitForSeconds(_wavesConfig.IntervalBetweenWaves, cancellationToken: ct);
 

@@ -1,5 +1,5 @@
-﻿using Assets.Game.Scripts.Animations;
-using System;
+﻿using System;
+using Assets.Game.Scripts.Animations;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

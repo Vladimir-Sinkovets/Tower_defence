@@ -1,4 +1,4 @@
-using Assets.Game.Scripts.Services;
+using Assets.Game.Scripts.Services.Analytics;
 using Assets.Game.Scripts.Shared;
 using UnityEngine;
 using Zenject;
@@ -7,11 +7,11 @@ namespace Assets.Game.Scripts.Buildings
 {
     public class AnalyticsCastleDamageHandler : MonoBehaviour
     {
-        private IGameplayAnalytics _gameplayAnalytics;
+        private IGameAnalytics _gameAnalytics;
         private Health _health;
 
         [Inject]
-        public void Construct(IGameplayAnalytics gameplayAnalytics) => _gameplayAnalytics = gameplayAnalytics;
+        public void Construct(IGameAnalytics gameAnalytics) => _gameAnalytics = gameAnalytics;
 
         public void Init(Health health)
         {
@@ -20,7 +20,7 @@ namespace Assets.Game.Scripts.Buildings
             _health.OnDamaged += OnDamageHandler;
         }
 
-        private void OnDamageHandler(int obj) => _gameplayAnalytics.CastleDamaged();
+        private void OnDamageHandler(int obj) => _gameAnalytics.CastleDamaged();
 
         private void OnDestroy() => _health.OnDamaged -= OnDamageHandler;
     }

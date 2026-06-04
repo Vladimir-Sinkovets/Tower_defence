@@ -47,11 +47,6 @@ namespace Assets.Game.Scripts.UI.Windows
         
         public void Dispose()
         {
-            foreach (var window in _pool.Values)
-            {
-                window.Deactivate();
-            }
-            
             foreach (var window in _activeScreens.Values)
             {
                 window.Deactivate();

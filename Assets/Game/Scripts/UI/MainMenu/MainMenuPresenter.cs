@@ -1,10 +1,11 @@
 ﻿using System;
-using Assets.Game.Scripts.Services;
+using Assets.Game.Scripts.Services.SceneLoaders;
 using Assets.Game.Scripts.Shared;
+using Zenject;
 
 namespace Assets.Game.Scripts.UI
 {
-    public class MainMenuPresenter : IDisposable
+    public class MainMenuPresenter : IInitializable, IDisposable
     {
         private readonly SceneLoader _sceneLoader;
         private readonly IMainMenuView _mainMenuView;
@@ -13,7 +14,10 @@ namespace Assets.Game.Scripts.UI
         {
             _sceneLoader = sceneLoader;
             _mainMenuView = mainMenuView;
-
+        }
+        
+        public void Initialize()
+        {
             _mainMenuView.OnStartClick += OnStartClickHandler;
         }
 

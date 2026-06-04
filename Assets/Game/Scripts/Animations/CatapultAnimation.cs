@@ -1,6 +1,6 @@
 ﻿using System.Threading;
-using DG.Tweening;
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using UnityEngine;
 
 namespace Assets.Game.Scripts.Animations

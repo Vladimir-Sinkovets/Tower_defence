@@ -1,6 +1,7 @@
-﻿using Assets.Game.Scripts.Services;
+﻿using Assets.Game.Scripts.Services.SceneLoaders;
 using Assets.Game.Scripts.UI;
 using Assets.Game.Scripts.UI.MainMenuStatistics;
+using Assets.Game.Scripts.UI.UpgradePanel;
 using UnityEngine;
 using Zenject;
 
@@ -10,16 +11,20 @@ namespace Assets.Game.Scripts.Installers
     {
         [SerializeField] private MainMenuStatisticsView _mainMenuStatisticsView;
         [SerializeField] private MainMenuView _mainMenuView;
+        [SerializeField] private UpgradePanelView _upgradePanelView;
         
         public override void InstallBindings()
         {
             Container.Bind<SceneLoader>().AsSingle();
 
             Container.BindInstance<IMainMenuStatisticsView>(_mainMenuStatisticsView).AsSingle();
-            Container.Bind<MainMenuStatisticsPresenter>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<MainMenuStatisticsPresenter>().AsSingle();
 
             Container.BindInstance<IMainMenuView>(_mainMenuView).AsSingle();
-            Container.Bind<MainMenuPresenter>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<MainMenuPresenter>().AsSingle();
+
+            Container.BindInstance<IUpgradePanelView>(_upgradePanelView).AsSingle();
+            Container.BindInterfacesAndSelfTo<UpgradePanelPresenter>().AsSingle();
         }
     }
 }

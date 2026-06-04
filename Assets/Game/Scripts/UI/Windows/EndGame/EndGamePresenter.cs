@@ -1,5 +1,7 @@
 using System;
-using Assets.Game.Scripts.Services;
+using Assets.Game.Scripts.Services.Analytics;
+using Assets.Game.Scripts.Services.GameOverManagers;
+using Assets.Game.Scripts.Services.SceneLoaders;
 using Assets.Game.Scripts.Shared;
 
 namespace Assets.Game.Scripts.UI.Windows.EndGame
@@ -9,18 +11,18 @@ namespace Assets.Game.Scripts.UI.Windows.EndGame
         private readonly IEndGameView _view;
         private readonly SceneLoader _sceneLoader;
         private readonly GameOverManager _gameOverManager;
-        private readonly IGameplayAnalytics _gameplayAnalytics;
+        private readonly IGameAnalytics _gameAnalytics;
 
         public EndGamePresenter(
             IEndGameView view,
             SceneLoader sceneLoader,
             GameOverManager gameOverManager,
-            IGameplayAnalytics gameplayAnalytics)
+            IGameAnalytics gameAnalytics)
         {
             _view = view;
             _sceneLoader = sceneLoader;
             _gameOverManager = gameOverManager;
-            _gameplayAnalytics = gameplayAnalytics;
+            _gameAnalytics = gameAnalytics;
         }
 
         public void Activate()
@@ -45,14 +47,14 @@ namespace Assets.Game.Scripts.UI.Windows.EndGame
 
         private void OnRestartButtonClickedHandler()
         {
-            _gameplayAnalytics.SessionRestarted();
+            _gameAnalytics.SessionRestarted();
             
             _sceneLoader.LoadScene(SceneNames.Game);
         }
 
         private void OnMenuButtonClickedHandler()
         {
-            _gameplayAnalytics.ReturnedToMenu();
+            _gameAnalytics.ReturnedToMenu();
             
             _sceneLoader.LoadScene(SceneNames.Menu);
         }

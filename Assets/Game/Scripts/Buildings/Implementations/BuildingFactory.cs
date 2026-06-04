@@ -9,11 +9,11 @@ namespace Assets.Game.Scripts.Buildings.Implementations
 
         public BuildingFactory(IInstantiator instantiator) => _instantiator = instantiator;
 
-        public Building Create(BuildingConfig config)
+        public Building Create(BuildingConfig config, BuildingType buildingType)
         {
             var building = _instantiator.InstantiatePrefabForComponent<ShootingBuilding>(config.Prefab);
 
-            building.Init(config);
+            building.Init(config, buildingType);
 
             return building;
         }

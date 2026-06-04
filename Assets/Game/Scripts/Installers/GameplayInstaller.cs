@@ -5,9 +5,23 @@ using Assets.Game.Scripts.Configs;
 using Assets.Game.Scripts.Enemies;
 using Assets.Game.Scripts.Enemies.Implementations;
 using Assets.Game.Scripts.Input;
-using Assets.Game.Scripts.Services;
+using Assets.Game.Scripts.Services.Analytics;
+using Assets.Game.Scripts.Services.CastleFactories;
+using Assets.Game.Scripts.Services.CurrencyBanks;
+using Assets.Game.Scripts.Services.EnemyAccessors;
+using Assets.Game.Scripts.Services.GameOverManagers;
+using Assets.Game.Scripts.Services.GameplayOrchestrators;
+using Assets.Game.Scripts.Services.GameResultSavers;
+using Assets.Game.Scripts.Services.GameStoppers;
+using Assets.Game.Scripts.Services.HudFactories;
+using Assets.Game.Scripts.Services.PointerRouters;
+using Assets.Game.Scripts.Services.Registries;
+using Assets.Game.Scripts.Services.RewardCalculators;
+using Assets.Game.Scripts.Services.SceneLoaders;
+using Assets.Game.Scripts.Services.Statistics;
 using Assets.Game.Scripts.UI;
 using Assets.Game.Scripts.UI.Windows;
+using Assets.Game.Scripts.Upgrades;
 using UnityEngine;
 using Zenject;
 
@@ -40,13 +54,14 @@ namespace Assets.Game.Scripts.Installers
             Container.Bind<GameStatistics>().AsSingle();
             Container.Bind<SceneLoader>().AsSingle();
             Container.Bind<CastleFactory>().AsSingle();
+            Container.BindInterfacesTo<BuildingUpgradeApplier>().AsSingle();
             Container.BindInterfacesAndSelfTo<HudFactory>().AsSingle();
             Container.BindInterfacesTo<EnemyAccessor>().AsSingle();
             Container.BindInterfacesTo<EnemyFactory>().AsSingle();
             Container.BindInterfacesTo<BuildingFactory>().AsSingle();
             Container.BindInterfacesTo<ProjectileFactory>().AsSingle();
             Container.BindInterfacesTo<VFXFactory>().AsSingle();
-            Container.BindInterfacesAndSelfTo<GameplayAnalytics>().AsSingle();
+            Container.BindInterfacesAndSelfTo<GameAnalytics>().AsSingle();
         }
 
         private void BindInput()
@@ -61,7 +76,6 @@ namespace Assets.Game.Scripts.Installers
         {
             Container.BindInterfacesAndSelfTo<GameplayEntryPoint>().AsSingle();
             Container.BindInterfacesAndSelfTo<GameplayOrchestrator>().AsSingle();
-            Container.BindInterfacesAndSelfTo<GameOverManager>().AsSingle();
 
             Container.BindInstance(_perimeterPoints).AsSingle();
             Container.BindInterfacesTo<EnemyWavesSpawner>().AsSingle();
@@ -69,6 +83,11 @@ namespace Assets.Game.Scripts.Installers
             Container.BindInterfacesTo<WavesController>().AsSingle();
             Container.BindInterfacesTo<BuildingService>().AsSingle();
             Container.BindInstance(_fieldStartupAnimation).AsSingle();
+            
+            Container.BindInterfacesAndSelfTo<GameOverManager>().AsSingle();
+            Container.BindInterfacesTo<GameResultSaver>().AsSingle();
+            Container.BindInterfacesTo<GameStopper>().AsSingle();
+            Container.BindInterfacesTo<RewardCalculator>().AsSingle();
         }
 
         private void BindRegisters()

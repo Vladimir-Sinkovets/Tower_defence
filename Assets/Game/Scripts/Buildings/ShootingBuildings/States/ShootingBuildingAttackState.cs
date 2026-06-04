@@ -2,6 +2,7 @@ using System.Threading;
 using Assets.Game.Scripts.Buildings.Implementations;
 using Assets.Game.Scripts.Buildings.Interfaces;
 using Assets.Game.Scripts.Common.UniversalStateMachine;
+using Assets.Game.Scripts.Upgrades;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -12,15 +13,22 @@ namespace Assets.Game.Scripts.Buildings.States
         private readonly ShootingBuildingStateMachineData _data;
         private readonly IProjectileFactory _projectileFactory;
         private readonly IVFXFactory _vfxFactory;
+        private readonly IBuildingUpgradeApplier _buildingUpgradeApplier;
 
         private CancellationTokenSource _shootCts;
         private float _nextShootTime;
 
-        public ShootingBuildingAttackState(ShootingBuildingStateMachineData data, IStateSwitcher stateSwitcher, IProjectileFactory projectileFactory, IVFXFactory vfxFactory) : base(stateSwitcher)
+        public ShootingBuildingAttackState(
+            ShootingBuildingStateMachineData data,
+            IStateSwitcher stateSwitcher,
+            IProjectileFactory projectileFactory,
+            IVFXFactory vfxFactory,
+            IBuildingUpgradeApplier buildingUpgradeApplier) : base(stateSwitcher)
         {
             _data = data;
             _projectileFactory = projectileFactory;
             _vfxFactory = vfxFactory;
+            _buildingUpgradeApplier = buildingUpgradeApplier;
         }
 
         public override void Enter()
@@ -28,7 +36,7 @@ namespace Assets.Game.Scripts.Buildings.States
             _data.CurrentTarget.OnDied += OnCurrentTargetDiedHandler;
             _data.ShootingBuilding.OnStopped += OnStoppedHandler;
 
-            _nextShootTime = Time.time + _data.Config.AttackInterval;
+            SetNextShootTime();
             
             _shootCts?.Cancel();
             _shootCts?.Dispose();
@@ -67,9 +75,15 @@ namespace Assets.Game.Scripts.Buildings.States
             if (_nextShootTime > Time.time)
                 return;
 
-            _nextShootTime = Time.time + _data.Config.AttackInterval;
+            SetNextShootTime();
 
             Shoot(_shootCts.Token).Forget();
+        }
+
+        private void SetNextShootTime()
+        {
+            _nextShootTime = Time.time +
+                _buildingUpgradeApplier.ApplyBuildingAttackSpeedUpgrade(_data.Config.AttackInterval, _data.BuildingType);
         }
 
         private async UniTask Shoot(CancellationToken ct)
@@ -86,7 +100,7 @@ namespace Assets.Game.Scripts.Buildings.States
                 {
                     Position = _data.ProjectileStartPosition.position,
                     Target = _data.CurrentTarget,
-                    Damage = _data.Config.Damage,
+                    Damage = _buildingUpgradeApplier.ApplyBuildingDamageUpgrade(_data.Config.Damage, _data.BuildingType),
                     ProjectileSpeed = _data.Config.ProjectileSpeed,
                     ArcHeight = _data.Config.ArcHeight,
                     HitVFXPrefab = _data.Config.HitVFX,
