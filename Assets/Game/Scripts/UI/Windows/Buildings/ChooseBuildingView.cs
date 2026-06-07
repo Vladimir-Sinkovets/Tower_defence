@@ -20,8 +20,9 @@ namespace Assets.Game.Scripts.UI.Windows.Buildings
         [SerializeField] private Button _closeButton;
         [SerializeField] private Transform _pointerPrefab;
         
-        private readonly List<BuildingOption> _options = new();
         private Transform _pointer;
+
+        private readonly List<BuildingOption> _options = new();
         
         private void Awake()
         {
@@ -55,24 +56,40 @@ namespace Assets.Game.Scripts.UI.Windows.Buildings
         }
 
         public void HidePointer() => _pointer.gameObject.SetActive((false));
-
+        
         public void Render(List<BuildingOptionViewModel> viewModels)
         {
-            ClearContainer();
+            EnsureOptionsCount(viewModels.Count);
+            
+            for (var i = 0; i < viewModels.Count; i++)
+            {
+                var viewModel = viewModels[i];
+                var option = _options[i];
+                
+                option.gameObject.SetActive(true);
 
-            foreach (var viewModel in viewModels)
+                option.Setup(viewModel.Icon, viewModel.Index, viewModel.Price, viewModel.IsAvailable);
+            }
+
+            for (int i = viewModels.Count; i < _options.Count; i++)
+            {
+                _options[i].gameObject.SetActive(false);
+            }
+        }
+
+        private void EnsureOptionsCount(int count)
+        {
+            for (var i = _options.Count; i < count; i++)
             {
                 var option = Instantiate(_buildingOptionPrefab, _optionsContainer);
 
-                option.Init(viewModel.Icon, viewModel.Index, viewModel.Price, viewModel.IsAvailable);
-
                 option.OnClick += OnOptionClickedHandler;
-
+                    
                 _options.Add(option);
             }
         }
 
-        
+
         private void OnOptionClickedHandler(BuildingOption option) => OnOptionChosen?.Invoke(option.Index);
 
         private void OnCloseButtonClickedHandler() => OnCloseButtonClicked?.Invoke();

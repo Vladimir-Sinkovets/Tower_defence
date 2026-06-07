@@ -1,6 +1,6 @@
 namespace Assets.Game.Scripts.Services.Analytics
 {
-    public interface IGameAnalytics
+    public interface IAnalytics
     {
         void GameStarted();
         void WaveStarted(int waveNumber, int enemiesToSpawn);

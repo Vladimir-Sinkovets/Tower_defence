@@ -19,7 +19,7 @@ namespace Assets.Game.Scripts.UI.Windows.Buildings
         private readonly IBuildingService _buildingService;
         private readonly PointSelector _pointSelector;
         private readonly IWindowsManager _windowManager;
-        private readonly IGameAnalytics _gameAnalytics;
+        private readonly IAnalytics _analytics;
 
         private Vector3 _position;
         private CancellationTokenSource _closePanelCts;
@@ -31,7 +31,7 @@ namespace Assets.Game.Scripts.UI.Windows.Buildings
             IBuildingService buildingService,
             PointSelector pointSelector,
             IWindowsManager windowManager,
-            IGameAnalytics gameAnalytics)
+            IAnalytics analytics)
         {
             _chooseBuildingView = chooseBuildingView;
             _buildingsConfig = buildingsConfig;
@@ -39,7 +39,7 @@ namespace Assets.Game.Scripts.UI.Windows.Buildings
             _buildingService = buildingService;
             _pointSelector = pointSelector;
             _windowManager = windowManager;
-            _gameAnalytics = gameAnalytics;
+            _analytics = analytics;
         }
 
         
@@ -72,7 +72,7 @@ namespace Assets.Game.Scripts.UI.Windows.Buildings
 
             if (_buildingService.TryBuild(config, _position) == false)
             {
-                _gameAnalytics.BuildRejected();
+                _analytics.BuildRejected();
                 
                 return;
             }

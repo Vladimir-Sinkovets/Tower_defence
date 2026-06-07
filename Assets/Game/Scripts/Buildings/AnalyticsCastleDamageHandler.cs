@@ -1,27 +1,24 @@
+using System;
 using Assets.Game.Scripts.Services.Analytics;
 using Assets.Game.Scripts.Shared;
-using UnityEngine;
-using Zenject;
 
 namespace Assets.Game.Scripts.Buildings
 {
-    public class AnalyticsCastleDamageHandler : MonoBehaviour
+    public class AnalyticsCastleDamageHandler : IDisposable
     {
-        private IGameAnalytics _gameAnalytics;
-        private Health _health;
+        private readonly IAnalytics _analytics;
+        private readonly Health _health;
 
-        [Inject]
-        public void Construct(IGameAnalytics gameAnalytics) => _gameAnalytics = gameAnalytics;
-
-        public void Init(Health health)
+        public AnalyticsCastleDamageHandler(IAnalytics analytics, Health health)
         {
+            _analytics = analytics;
             _health = health;
-
+            
             _health.OnDamaged += OnDamageHandler;
         }
 
-        private void OnDamageHandler(int obj) => _gameAnalytics.CastleDamaged();
+        private void OnDamageHandler(int obj) => _analytics.CastleDamaged();
 
-        private void OnDestroy() => _health.OnDamaged -= OnDamageHandler;
+        public void Dispose() => _health.OnDamaged -= OnDamageHandler;
     }
 }

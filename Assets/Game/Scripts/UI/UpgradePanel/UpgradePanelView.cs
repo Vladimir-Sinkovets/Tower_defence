@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using Assets.Game.Scripts.Animations;
 using Cysharp.Threading.Tasks;
@@ -31,19 +32,35 @@ namespace Assets.Game.Scripts.UI.UpgradePanel
             _panel.SetActive(false);
         }
 
-        public void UpdateUpgradeList(IEnumerable<UpgradePanelViewModel> viewModels)
+        public void UpdateUpgradeList(List<UpgradePanelViewModel> viewModels)
         {
-            ClearContainer();
+            EnsureUpgradesCount(viewModels.Count);
 
-            foreach (var viewModel in viewModels)
+            for (var i = 0; i < viewModels.Count; i++)
             {
-                var upgradeButton = Instantiate(_upgradeButtonPrefab, _container);
+                var viewModel = viewModels[i];
+                var upgradeButton = _upgradeButtons[i];
+                
+                upgradeButton.gameObject.SetActive(true);
                 
                 upgradeButton.Init(viewModel);
+            }
 
-                upgradeButton.OnClicked += UpgradeClickedHandler;
-                
-                _upgradeButtons.Add(upgradeButton);
+            for (var i = viewModels.Count; i < _upgradeButtons.Count; i++)
+            {
+                _upgradeButtons[i].gameObject.SetActive(false);
+            }
+        }
+
+        private void EnsureUpgradesCount(int count)
+        {
+            for (var i = _upgradeButtons.Count; i < count; i++)
+            {
+                var upgrade = Instantiate(_upgradeButtonPrefab, _container);
+
+                upgrade.OnClicked += UpgradeClickedHandler;
+                    
+                _upgradeButtons.Add(upgrade);
             }
         }
 
@@ -79,6 +96,8 @@ namespace Assets.Game.Scripts.UI.UpgradePanel
         {
             _openButton.onClick.RemoveListener(OnOpenButtonClickedHandler);
             _closeButton.onClick.RemoveListener(OnCloseButtonClickedHandler);
+            
+            ClearContainer();
         }
 
         private void UpgradeClickedHandler(string id) => OnUpgradeClicked?.Invoke(id);

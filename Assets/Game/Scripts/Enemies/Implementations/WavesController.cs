@@ -14,22 +14,23 @@ namespace Assets.Game.Scripts.Enemies.Implementations
     {
         private readonly IEnemyWavesSpawner _enemyWavesController;
         private readonly Registry<Enemy> _enemyRegistry;
-        private readonly IGameAnalytics _gameAnalytics;
+        private readonly IAnalytics _analytics;
         private readonly WavesConfig _wavesConfig;
         
         public int WavesCount { get; private set; }
 
         private CancellationTokenSource _wavesCts;
+        private int _aliveEnemyCount;
 
         public WavesController(
             IEnemyWavesSpawner enemyWavesSpawner,
             WavesConfig wavesConfig,
             Registry<Enemy> enemyRegistry,
-            IGameAnalytics gameAnalytics)
+            IAnalytics analytics)
         {
             _enemyWavesController = enemyWavesSpawner;
             _enemyRegistry = enemyRegistry;
-            _gameAnalytics = gameAnalytics;
+            _analytics = analytics;
             _wavesConfig = wavesConfig;
         }
 
@@ -39,6 +40,9 @@ namespace Assets.Game.Scripts.Enemies.Implementations
             _wavesCts?.Dispose();
             
             _wavesCts = new CancellationTokenSource();
+
+            _enemyRegistry.OnRegistered += OnRegisteredHandler;
+            _enemyRegistry.OnUnregistered += OnUnregisteredHandler;
             
             SpawnWaves(target, _wavesCts.Token).Forget();
         }
@@ -51,22 +55,33 @@ namespace Assets.Game.Scripts.Enemies.Implementations
             {
                 var enemyCount = _wavesConfig.BaseEnemyCount + WavesCount * _wavesConfig.NewEnemiesPerWave;
                 
-                _gameAnalytics.WaveStarted(WavesCount, enemyCount);
+                _analytics.WaveStarted(WavesCount, enemyCount);
 
                 await _enemyWavesController.SpawnWave(enemyCount, target, ct);
 
                 await UniTask.WaitUntil(() => 
                     _enemyWavesController.IsSpawning == false &&
-                    _enemyRegistry.All.Any(x => !x.IsDead) == false,
+                    _aliveEnemyCount == 0,
                     cancellationToken: ct);
 
-                _gameAnalytics.WaveCompleted(WavesCount, enemyCount);
+                _analytics.WaveCompleted(WavesCount, enemyCount);
                 
                 await UniTask.WaitForSeconds(_wavesConfig.IntervalBetweenWaves, cancellationToken: ct);
 
                 WavesCount++;
             }
         }
+
+        
+        private void OnRegisteredHandler(Enemy enemy)
+        {
+            _aliveEnemyCount++;
+            enemy.OnDied += OnEnemyDiedHandler;
+        }
+        
+        private void OnUnregisteredHandler(Enemy enemy) => enemy.OnDied -= OnEnemyDiedHandler;
+        
+        private void OnEnemyDiedHandler() => _aliveEnemyCount--;
 
         public void Dispose()
         {

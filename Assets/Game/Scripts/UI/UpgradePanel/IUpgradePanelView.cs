@@ -12,6 +12,6 @@ namespace Assets.Game.Scripts.UI.UpgradePanel
         void ShowPanel();
         UniTask ClosePanel();
         void Init();
-        void UpdateUpgradeList(IEnumerable<UpgradePanelViewModel> viewModels);
+        void UpdateUpgradeList(List<UpgradePanelViewModel> viewModels);
     }
 }

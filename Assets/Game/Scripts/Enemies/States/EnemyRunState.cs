@@ -11,7 +11,7 @@ namespace Assets.Game.Scripts.Enemies.States
 
         public override void Enter()
         {
-            _data.NavMeshAgent.SetDestination(_data.Target.transform.position);
+            _data.NavMeshAgent.SetDestination(_data.Target.Transform.position);
 
             _data.View.PlayWalkAnimation();
 
@@ -32,7 +32,7 @@ namespace Assets.Game.Scripts.Enemies.States
             {
                 StateSwitcher.SwitchState<EnemyIdleState>();
             }
-            else if (Vector3.Distance(_data.Transform.position, _data.Target.transform.position) <= _data.Config.AttackRange)
+            else if (Vector3.Distance(_data.Transform.position, _data.Target.Transform.position) <= _data.Config.AttackRange)
             {
                 StateSwitcher.SwitchState<SimpleEnemyAttackState>();
             }

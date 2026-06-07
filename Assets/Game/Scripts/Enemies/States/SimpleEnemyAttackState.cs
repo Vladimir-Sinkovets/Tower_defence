@@ -27,7 +27,7 @@ namespace Assets.Game.Scripts.Enemies.States
                 return;
             }
 
-            if (Vector3.Distance(_data.Transform.position, _data.Target.transform.position) > _data.Config.AttackRange)
+            if (Vector3.Distance(_data.Transform.position, _data.Target.Transform.position) > _data.Config.AttackRange)
             {
                 StateSwitcher.SwitchState<EnemyRunState>();
                 return;

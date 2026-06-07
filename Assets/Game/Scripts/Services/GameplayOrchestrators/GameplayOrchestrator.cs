@@ -18,7 +18,7 @@ namespace Assets.Game.Scripts.Services.GameplayOrchestrators
         private readonly FieldStartupAnimation _fieldStartupAnimation;
         private readonly HudFactory _hudFactory;
         private readonly CastleFactory _castleFactory;
-        private readonly IGameAnalytics _gameAnalytics;
+        private readonly IAnalytics _analytics;
 
         private CancellationTokenSource _startGameCts;
         
@@ -30,14 +30,14 @@ namespace Assets.Game.Scripts.Services.GameplayOrchestrators
             FieldStartupAnimation fieldStartupAnimation,
             HudFactory hudFactory,
             CastleFactory castleFactory,
-            IGameAnalytics gameAnalytics)
+            IAnalytics analytics)
         {
             _wavesController = waveController;
             _gameOverManager = gameOverManager;
             _fieldStartupAnimation = fieldStartupAnimation;
             _hudFactory = hudFactory;
             _castleFactory = castleFactory;
-            _gameAnalytics = gameAnalytics;
+            _analytics = analytics;
         }
 
         public void Init()
@@ -51,7 +51,7 @@ namespace Assets.Game.Scripts.Services.GameplayOrchestrators
 
         private async UniTaskVoid StartGame(CancellationToken ct)
         {
-            _gameAnalytics.GameStarted();
+            _analytics.GameStarted();
             
             await _fieldStartupAnimation.Play(ct);
             

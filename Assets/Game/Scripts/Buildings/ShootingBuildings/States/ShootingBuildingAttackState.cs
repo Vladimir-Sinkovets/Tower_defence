@@ -2,7 +2,7 @@ using System.Threading;
 using Assets.Game.Scripts.Buildings.Implementations;
 using Assets.Game.Scripts.Buildings.Interfaces;
 using Assets.Game.Scripts.Common.UniversalStateMachine;
-using Assets.Game.Scripts.Upgrades;
+using Assets.Game.Scripts.Upgrades.Interfaces;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 

@@ -19,7 +19,7 @@ namespace Assets.Game.Scripts.Services.GameOverManagers
         private readonly GameStatistics _gameStatistics;
         private readonly CurrencyBank _currencyBank;
         private readonly IWindowsManager _windowsManager;
-        private readonly IGameAnalytics _gameAnalytics;
+        private readonly IAnalytics _analytics;
         private readonly IGameResultSaver _gameResultSaver;
         private readonly IGameStopper _gameStopper;
         private readonly IRewardCalculator _rewardCalculator;
@@ -37,7 +37,7 @@ namespace Assets.Game.Scripts.Services.GameOverManagers
             GameStatistics gameStatistics,
             CurrencyBank currencyBank,
             IWindowsManager windowsManager,
-            IGameAnalytics gameAnalytics)
+            IAnalytics analytics)
         {
             _gameResultSaver = gameResultSaver;
             _gameStopper = gameStopper;
@@ -46,7 +46,7 @@ namespace Assets.Game.Scripts.Services.GameOverManagers
             _gameStatistics = gameStatistics;
             _currencyBank = currencyBank;
             _windowsManager = windowsManager;
-            _gameAnalytics = gameAnalytics;
+            _analytics = analytics;
         }
 
         public void Init(Health castleHealth)
@@ -75,7 +75,7 @@ namespace Assets.Game.Scripts.Services.GameOverManagers
             
             _windowsManager.Open(WindowType.EndGame);
             
-            _gameAnalytics.GameOver();
+            _analytics.GameOver();
         }
 
         public void Dispose() => _castleHealth.OnDied -= OnDiedHandler;

@@ -15,7 +15,7 @@ namespace Assets.Game.Scripts.Buildings.Implementations
         private readonly Registry<Building> _buildingRegistry;
         private readonly CurrencyBank _currencyBank;
         private readonly IBuildingFactory _buildingFactory;
-        private readonly IGameAnalytics _gameAnalytics;
+        private readonly IAnalytics _analytics;
         private readonly IWavesController _wavesController;
 
         private CancellationTokenSource _cts;
@@ -26,13 +26,13 @@ namespace Assets.Game.Scripts.Buildings.Implementations
             Registry<Building> buildingRegistry,
             CurrencyBank currencyBank,
             IBuildingFactory buildingFactory,
-            IGameAnalytics gameAnalytics,
+            IAnalytics analytics,
             IWavesController wavesController)
         {
             _buildingRegistry = buildingRegistry;
             _currencyBank = currencyBank;
             _buildingFactory = buildingFactory;
-            _gameAnalytics = gameAnalytics;
+            _analytics = analytics;
             _wavesController = wavesController;
         }
         
@@ -62,7 +62,7 @@ namespace Assets.Game.Scripts.Buildings.Implementations
 
             _towersCount++;
             
-            _gameAnalytics.TowerBuilt(optionConfig.Price, _towersCount, _wavesController.WavesCount);
+            _analytics.TowerBuilt(optionConfig.Price, _towersCount, _wavesController.WavesCount);
             
             return true;
         }

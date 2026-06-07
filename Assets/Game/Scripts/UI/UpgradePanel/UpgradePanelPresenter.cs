@@ -1,8 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Assets.Game.Scripts.Saves;
-using Assets.Game.Scripts.Upgrades;
+using Assets.Game.Scripts.Upgrades.Interfaces;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Zenject;
@@ -11,71 +9,49 @@ namespace Assets.Game.Scripts.UI.UpgradePanel
 {
     public class UpgradePanelPresenter : IInitializable, IDisposable
     {
-        private readonly UpgradeConfigs _configs;
-        private readonly ISaveService _saveService;
         private readonly IUpgradePanelView _upgradePanelView;
+        private readonly IUpgradeService _upgradeService;
 
-        public UpgradePanelPresenter(UpgradeConfigs configs, ISaveService saveService, IUpgradePanelView upgradePanelView)
+        public UpgradePanelPresenter(IUpgradePanelView upgradePanelView, IUpgradeService upgradeService)
         {
-            _configs = configs;
-            _saveService = saveService;
             _upgradePanelView = upgradePanelView;
+            _upgradeService = upgradeService;
+        }
 
+        public void Initialize()
+        {
             _upgradePanelView.OnCloseButtonClicked += OnCloseButtonClickedHandler;
             _upgradePanelView.OnOpenButtonClicked += OnOpenButtonClickedHandler;
             _upgradePanelView.OnUpgradeClicked += OnUpgradeClickedHandler;
-        }
 
-        public void Initialize() => _upgradePanelView.Init();
+            _upgradePanelView.Init();
+        }
 
         private void Render()
         {
-            var viewModels = _configs.List
-                .Select(u => new UpgradePanelViewModel()
+            var viewModels = _upgradeService.Upgrades
+                .Select(upgrade => new UpgradePanelViewModel()
                 {
-                    Name = u.Name,
-                    Level = GetLevel(u.Id),
-                    Cost = u.GetCostByLevel(GetLevel(u.Id)),
-                    Icon = u.Icon,
-                    IsAvailable = IsAvailable(u.GetCostByLevel(GetLevel(u.Id))),
-                    Upgrade = $"+{u.Upgrade}{u.Unit}",
-                    Id = u.Id,
-                });
+                    Name = upgrade.Name,
+                    Level = _upgradeService.GetLevel(upgrade),
+                    Cost = _upgradeService.GetLevelCost(upgrade),
+                    Icon = upgrade.Icon,
+                    IsAvailable = _upgradeService.IsAvailable(upgrade),
+                    Upgrade = $"+{upgrade.Upgrade}{upgrade.Unit}",
+                    Id = upgrade.Id,
+                }).ToList();
             
             _upgradePanelView.UpdateUpgradeList(viewModels);
         }
 
-        private bool IsAvailable(int getCostByLevel) => _saveService.GetSaveData().MetaCurrency >= getCostByLevel;
-
-        private int GetLevel(string upgradeId)
-        {
-            var data = _saveService.GetSaveData();
-
-            return data.Upgrades.GetValueOrDefault(upgradeId, 0);
-        }
-
         private void OnUpgradeClickedHandler(string id)
         {
-            var data = _saveService.GetSaveData();
+            var upgrade = _upgradeService.GetUpgrade(id);
             
-            var upgrade = _configs.List.FirstOrDefault(u => u.Id == id);
-            if (upgrade == null)
+            if (!_upgradeService.IsAvailable(upgrade))
                 return;
-            
-            var currentLevel = GetLevel(id);
-            var cost = upgrade.GetCostByLevel(currentLevel);
-            
-            if (data.MetaCurrency < cost)
-                return;
-            
-            data.MetaCurrency -= cost;
 
-            if (!data.Upgrades.TryAdd(id, 1))
-            {
-                data.Upgrades[id] += 1;
-            }
-
-            _saveService.Save(data);
+            _upgradeService.BuyUpgrade(upgrade);
             
             Render();
         }

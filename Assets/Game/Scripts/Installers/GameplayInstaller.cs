@@ -21,7 +21,7 @@ using Assets.Game.Scripts.Services.SceneLoaders;
 using Assets.Game.Scripts.Services.Statistics;
 using Assets.Game.Scripts.UI;
 using Assets.Game.Scripts.UI.Windows;
-using Assets.Game.Scripts.Upgrades;
+using Assets.Game.Scripts.Upgrades.Implementations;
 using UnityEngine;
 using Zenject;
 
@@ -61,7 +61,7 @@ namespace Assets.Game.Scripts.Installers
             Container.BindInterfacesTo<BuildingFactory>().AsSingle();
             Container.BindInterfacesTo<ProjectileFactory>().AsSingle();
             Container.BindInterfacesTo<VFXFactory>().AsSingle();
-            Container.BindInterfacesAndSelfTo<GameAnalytics>().AsSingle();
+            Container.BindInterfacesAndSelfTo<Analytics>().AsSingle();
         }
 
         private void BindInput()

@@ -4,7 +4,7 @@ using Firebase.Analytics;
 
 namespace Assets.Game.Scripts.Services.Analytics
 {
-    public class GameAnalytics : IGameAnalytics
+    public class Analytics : IAnalytics
     {
         private const string GameStartedEventName = "game_started";
         private const string MetaCurrencyTotalParameterName = "meta_currency_total";
@@ -31,7 +31,7 @@ namespace Assets.Game.Scripts.Services.Analytics
         private readonly ISaveService _saveService;
         private readonly CurrencyBank _currencyBank;
 
-        public GameAnalytics(ISaveService saveService, CurrencyBank currencyBank)
+        public Analytics(ISaveService saveService, CurrencyBank currencyBank)
         {
             _saveService = saveService;
             _currencyBank = currencyBank;

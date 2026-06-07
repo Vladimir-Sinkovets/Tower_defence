@@ -1,6 +1,6 @@
 using Assets.Game.Scripts.Buildings;
 
-namespace Assets.Game.Scripts.Upgrades
+namespace Assets.Game.Scripts.Upgrades.Interfaces
 {
     public interface IBuildingUpgradeApplier
     {

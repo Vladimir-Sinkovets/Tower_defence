@@ -7,8 +7,8 @@ namespace Assets.Game.Scripts.Enemies
     public abstract class Enemy : MonoBehaviour
     {
         public event Action OnDied;
-        
-        [field: SerializeField] protected Health Health { get; private set; }
+
+        protected Health Health;
         
         public bool IsDead => Health.IsDead;
 

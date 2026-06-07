@@ -1,9 +1,10 @@
 using System;
 using Assets.Game.Scripts.Buildings;
 using Assets.Game.Scripts.Saves;
+using Assets.Game.Scripts.Upgrades.Interfaces;
 using UnityEngine;
 
-namespace Assets.Game.Scripts.Upgrades
+namespace Assets.Game.Scripts.Upgrades.Implementations
 {
     public class BuildingUpgradeApplier : IBuildingUpgradeApplier
     {

@@ -4,6 +4,7 @@ using Assets.Game.Scripts.Services.CurrencyBanks;
 using Assets.Game.Scripts.Services.Registries;
 using Assets.Game.Scripts.Services.Statistics;
 using Assets.Game.Scripts.Shared;
+using Assets.Game.Scripts.UI.HealthBar;
 using UnityEngine;
 using UnityEngine.AI;
 using Zenject;
@@ -14,6 +15,7 @@ namespace Assets.Game.Scripts.Enemies
     {
         [SerializeField] private NavMeshAgent _navMeshAgent;
         [SerializeField] private EnemyView _enemyView;
+        [SerializeField] private HealthBarView _healthBarView;
 
         private StateMachine _stateMachine;
         private EnemyStateMachineData _data;
@@ -21,6 +23,7 @@ namespace Assets.Game.Scripts.Enemies
         private Registry<Enemy> _enemyRegistry;
         private CurrencyBank _currencyBank;
         private GameStatistics _gameStatistics;
+        private HealthBarPresenter _healthPresenter;
 
         public bool IsActive { get; private set; }
 
@@ -34,34 +37,13 @@ namespace Assets.Game.Scripts.Enemies
 
         public override void Init(EnemyConfig config)
         {
-            _stateMachine = new StateMachine();
-            _data = new EnemyStateMachineData();
-
-            _stateMachine.AddState(new EnemyRunState(_stateMachine, _data));
-            _stateMachine.AddState(new EnemyIdleState(_stateMachine, _data));
-            _stateMachine.AddState(new SimpleEnemyAttackState(_stateMachine, _data));
-            _stateMachine.AddState(new SimpleEnemyDeathState(_stateMachine, _data));
-
-            _navMeshAgent.speed = config.Speed;
-
-            _data.NavMeshAgent = _navMeshAgent;
-            _data.Transform = transform;
-            _data.View = _enemyView;
-            _data.Config = config;
-            _data.Enemy = this;
-
-            _navMeshAgent.enabled = true;
-            _navMeshAgent.Warp(transform.position);
-            _navMeshAgent.ResetPath();
-            _navMeshAgent.velocity = Vector3.zero;
-
-            Health.OnDied += OnDiedHandler;
-
-            Health.Init(config.Hp);
+            SetUpStateMachine(config);
+            SetUpNavMesh(config);
+            SetUpHealth(config);
 
             _enemyRegistry.Register(this);
         }
-
+        
         public override void Activate(Health target)
         {
             base.Activate(target);
@@ -75,6 +57,50 @@ namespace Assets.Game.Scripts.Enemies
             IsActive = true;
         }
 
+        public override void Deactivate()
+        {
+            base.Deactivate();
+            
+            IsActive = false;
+        }
+
+        
+        private void SetUpHealth(EnemyConfig config)
+        {
+            Health = new Health(config.Hp, transform);
+            Health.OnDied += OnDiedHandler;
+
+            _healthPresenter = new HealthBarPresenter(Health, _healthBarView);
+        }
+
+        private void SetUpNavMesh(EnemyConfig config)
+        {
+            _navMeshAgent.speed = config.Speed;
+            _navMeshAgent.enabled = true;
+            _navMeshAgent.Warp(transform.position);
+            _navMeshAgent.ResetPath();
+            _navMeshAgent.velocity = Vector3.zero;
+        }
+
+        private void SetUpStateMachine(EnemyConfig config)
+        {
+            _data = new EnemyStateMachineData
+            {
+                NavMeshAgent = _navMeshAgent,
+                Transform = transform,
+                View = _enemyView,
+                Config = config,
+                Enemy = this
+            };
+            
+            _stateMachine = new StateMachine();
+            _stateMachine.AddState(new EnemyRunState(_stateMachine, _data));
+            _stateMachine.AddState(new EnemyIdleState(_stateMachine, _data));
+            _stateMachine.AddState(new SimpleEnemyAttackState(_stateMachine, _data));
+            _stateMachine.AddState(new SimpleEnemyDeathState(_stateMachine, _data));
+        }
+
+
         private void OnDiedHandler()
         {
             _currencyBank.Add(_data.Config.Award);
@@ -83,20 +109,15 @@ namespace Assets.Game.Scripts.Enemies
 
         private void Update() => _stateMachine.Update();
 
-        protected void OnDestroy()
+        private void OnDestroy()
         {
             Health.OnDied -= OnDiedHandler;
 
             _stateMachine.Dispose();
 
             _enemyRegistry?.Unregister(this);
-        }
-
-        public override void Deactivate()
-        {
-            base.Deactivate();
             
-            IsActive = false;
+            _healthPresenter?.Dispose();
         }
     }
 }

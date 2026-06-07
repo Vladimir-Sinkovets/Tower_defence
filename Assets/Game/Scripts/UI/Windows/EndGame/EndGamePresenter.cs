@@ -11,18 +11,18 @@ namespace Assets.Game.Scripts.UI.Windows.EndGame
         private readonly IEndGameView _view;
         private readonly SceneLoader _sceneLoader;
         private readonly GameOverManager _gameOverManager;
-        private readonly IGameAnalytics _gameAnalytics;
+        private readonly IAnalytics _analytics;
 
         public EndGamePresenter(
             IEndGameView view,
             SceneLoader sceneLoader,
             GameOverManager gameOverManager,
-            IGameAnalytics gameAnalytics)
+            IAnalytics analytics)
         {
             _view = view;
             _sceneLoader = sceneLoader;
             _gameOverManager = gameOverManager;
-            _gameAnalytics = gameAnalytics;
+            _analytics = analytics;
         }
 
         public void Activate()
@@ -47,14 +47,14 @@ namespace Assets.Game.Scripts.UI.Windows.EndGame
 
         private void OnRestartButtonClickedHandler()
         {
-            _gameAnalytics.SessionRestarted();
+            _analytics.SessionRestarted();
             
             _sceneLoader.LoadScene(SceneNames.Game);
         }
 
         private void OnMenuButtonClickedHandler()
         {
-            _gameAnalytics.ReturnedToMenu();
+            _analytics.ReturnedToMenu();
             
             _sceneLoader.LoadScene(SceneNames.Menu);
         }

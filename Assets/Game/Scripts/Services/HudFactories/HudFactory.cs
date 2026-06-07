@@ -2,8 +2,8 @@ using System;
 using System.Threading;
 using Assets.Game.Scripts.Shared;
 using Assets.Game.Scripts.UI;
-using Assets.Game.Scripts.UI.CastleHealth;
 using Assets.Game.Scripts.UI.Currency;
+using Assets.Game.Scripts.UI.HealthBar;
 using Zenject;
 
 namespace Assets.Game.Scripts.Services.HudFactories
@@ -14,7 +14,7 @@ namespace Assets.Game.Scripts.Services.HudFactories
         private readonly HUD _hudPrefab;
         
         private CurrencyPresenter _currencyPresenter;
-        private CastleHealthPresenter _castleHealthPresenter;
+        private HealthBarPresenter _castleHealthPresenter;
         
         private CancellationTokenSource _startGameCts;
 
@@ -29,7 +29,7 @@ namespace Assets.Game.Scripts.Services.HudFactories
             var hud = _instantiator.InstantiatePrefabForComponent<HUD>(_hudPrefab);
 
             _currencyPresenter = _instantiator.Instantiate<CurrencyPresenter>(new object[] { hud.CurrencyView });
-            _castleHealthPresenter = _instantiator.Instantiate<CastleHealthPresenter>(new object[] { hud.CastleHealthView, castleHealth });
+            _castleHealthPresenter = _instantiator.Instantiate<HealthBarPresenter>(new object[] { hud.HealthBarView, castleHealth });
         }
 
         public void Dispose()

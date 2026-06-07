@@ -2,6 +2,7 @@
 using Assets.Game.Scripts.UI;
 using Assets.Game.Scripts.UI.MainMenuStatistics;
 using Assets.Game.Scripts.UI.UpgradePanel;
+using Assets.Game.Scripts.Upgrades.Implementations;
 using UnityEngine;
 using Zenject;
 
@@ -17,6 +18,8 @@ namespace Assets.Game.Scripts.Installers
         {
             Container.Bind<SceneLoader>().AsSingle();
 
+            Container.BindInterfacesTo<UpgradeService>().AsSingle();
+            
             Container.BindInstance<IMainMenuStatisticsView>(_mainMenuStatisticsView).AsSingle();
             Container.BindInterfacesAndSelfTo<MainMenuStatisticsPresenter>().AsSingle();
 

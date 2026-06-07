@@ -8,7 +8,6 @@ namespace Assets.Game.Scripts.Buildings
     [CreateAssetMenu(fileName = "Buildings_config", menuName = "Configs/Buildings config")]
     public class BuildingsConfig : ScriptableObject
     {
-        public Health CastleHealthPrefab;
         public BuildingConfig CastleBuilding;
 
         public int CastleHp = 50;

@@ -17,7 +17,12 @@ namespace Assets.Game.Scripts.UI.Windows.Buildings
         private bool _isAvailable;
         public int Index { get; private set; }
 
-        public void Init(Sprite icon, int index, int price, bool isAvailable)
+        private void Awake()
+        {
+            _button.onClick.AddListener(OnClickHandler);
+        }
+
+        public void Setup(Sprite icon, int index, int price, bool isAvailable)
         {
             Index =  index;
             
@@ -28,8 +33,6 @@ namespace Assets.Game.Scripts.UI.Windows.Buildings
             _unavailableImage.gameObject.SetActive(!isAvailable);
 
             _price.text = $"${price}";
-            
-            _button.onClick.AddListener(OnClickHandler);
         }
 
         private void OnClickHandler()
