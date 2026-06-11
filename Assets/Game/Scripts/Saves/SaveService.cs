@@ -1,47 +1,19 @@
-using System;
-using System.Collections.Generic;
 using Newtonsoft.Json;
 using UnityEngine;
-using Zenject;
 
 namespace Assets.Game.Scripts.Saves
 {
-    public class SaveService : ISaveService, IInitializable
+    public class SaveService : ISaveService
     {
-        private const string PlayerPrefsKey = "SaveData";
+        private readonly SaveData _saveData;
 
-        public event Action OnSaved;
+        public SaveService(SaveData saveData) => _saveData = saveData;
 
-        private SaveData _saveData;
-
-        public void Initialize()
+        public void Save()
         {
-            var json = PlayerPrefs.GetString(PlayerPrefsKey);
-
-            if (string.IsNullOrEmpty(json))
-            {
-                _saveData = new SaveData()
-                {
-                    MetaCurrency = 0,
-                    WavesRecord = 0,
-                    Upgrades = new Dictionary<string, int>(),
-                };
-            }
-            else
-            {
-                _saveData = JsonConvert.DeserializeObject<SaveData>(json);
-            }
-        }
-
-        public void Save(SaveData saveData)
-        {
-            var json = JsonConvert.SerializeObject(saveData);
+            var json = JsonConvert.SerializeObject(_saveData);
             
-            PlayerPrefs.SetString(PlayerPrefsKey, json);
-            
-            OnSaved?.Invoke();
+            PlayerPrefs.SetString(SaveConstants.PlayerPrefsKey, json);
         }
-
-        public SaveData GetSaveData() => _saveData;
     }
 }

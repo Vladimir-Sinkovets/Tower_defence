@@ -23,6 +23,8 @@ namespace Assets.Game.Scripts.UI.UpgradePanel
             _upgradePanelView.OnCloseButtonClicked += OnCloseButtonClickedHandler;
             _upgradePanelView.OnOpenButtonClicked += OnOpenButtonClickedHandler;
             _upgradePanelView.OnUpgradeClicked += OnUpgradeClickedHandler;
+            
+            _upgradeService.OnUpgradesChanged += OnUpgradesChangedHandler;
 
             _upgradePanelView.Init();
         }
@@ -52,8 +54,6 @@ namespace Assets.Game.Scripts.UI.UpgradePanel
                 return;
 
             _upgradeService.BuyUpgrade(upgrade);
-            
-            Render();
         }
         
         private void OnOpenButtonClickedHandler()
@@ -62,7 +62,9 @@ namespace Assets.Game.Scripts.UI.UpgradePanel
             
             _upgradePanelView.ShowPanel();
         }
-        
+
+        private void OnUpgradesChangedHandler() => Render();
+
         private void OnCloseButtonClickedHandler() => _upgradePanelView.ClosePanel().Forget();
         
         public void Dispose()
@@ -70,6 +72,8 @@ namespace Assets.Game.Scripts.UI.UpgradePanel
             _upgradePanelView.OnCloseButtonClicked -= OnCloseButtonClickedHandler;
             _upgradePanelView.OnOpenButtonClicked -= OnOpenButtonClickedHandler;
             _upgradePanelView.OnUpgradeClicked -= OnUpgradeClickedHandler;
+            
+            _upgradeService.OnUpgradesChanged -= OnUpgradesChangedHandler;
         }
     }
 

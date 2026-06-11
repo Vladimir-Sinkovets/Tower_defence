@@ -1,6 +1,5 @@
 using Assets.Game.Scripts.Saves;
 using Assets.Game.Scripts.Services.CurrencyBanks;
-using Firebase.Analytics;
 
 namespace Assets.Game.Scripts.Services.Analytics
 {
@@ -28,56 +27,58 @@ namespace Assets.Game.Scripts.Services.Analytics
         private const string WaveNumberParameterName = "wave_number";
         private const string CoinsRemainingParameterName = "coins_remaining";
         
-        private readonly ISaveService _saveService;
+        private readonly SaveData _saveData;
         private readonly CurrencyBank _currencyBank;
+        private readonly IAnalyticsProvider _analyticsProvider;
 
-        public Analytics(ISaveService saveService, CurrencyBank currencyBank)
+        public Analytics(SaveData saveData, CurrencyBank currencyBank, IAnalyticsProvider analyticsProvider)
         {
-            _saveService = saveService;
+            _saveData = saveData;
             _currencyBank = currencyBank;
+            _analyticsProvider = analyticsProvider;
         }
 
         public void GameStarted()
         {
-            var metaCurrency = _saveService.GetSaveData().MetaCurrency;
+            var metaCurrency = _saveData.MetaCurrency;
             
-            FirebaseAnalytics.LogEvent(GameStartedEventName, new Parameter(MetaCurrencyTotalParameterName, metaCurrency));
+            _analyticsProvider.LogEvent(GameStartedEventName, new AnalyticsParameter(MetaCurrencyTotalParameterName, metaCurrency));
         }
 
         public void WaveStarted(int waveNumber, int enemiesToSpawn) =>
-            FirebaseAnalytics.LogEvent(WaveStartedEventName,
-                new Parameter(WaveNumberParameterName, waveNumber),
-                new Parameter(EnemiesToSpawnParameterName, enemiesToSpawn));
+            _analyticsProvider.LogEvent(WaveStartedEventName,
+                new AnalyticsParameter(WaveNumberParameterName, waveNumber),
+                new AnalyticsParameter(EnemiesToSpawnParameterName, enemiesToSpawn));
 
         public void WaveCompleted(int waveNumber, int towersBuilt)
         {
             var coinsRemaining = _currencyBank.Total;
             
-            FirebaseAnalytics.LogEvent(WaveCompletedEventName,
-                new Parameter(WaveNumberParameterName, waveNumber),
-                new Parameter(TowersBuiltParameterName, towersBuilt),
-                new Parameter(CoinsRemainingParameterName, coinsRemaining));
+            _analyticsProvider.LogEvent(WaveCompletedEventName,
+                new AnalyticsParameter(WaveNumberParameterName, waveNumber),
+                new AnalyticsParameter(TowersBuiltParameterName, towersBuilt),
+                new AnalyticsParameter(CoinsRemainingParameterName, coinsRemaining));
         }
 
         public void TowerBuilt(int coinsSpent, int towersTotal, int waveNumber)
         {
             var coinsRemaining = _currencyBank.Total;
             
-            FirebaseAnalytics.LogEvent(TowerBuiltEventName,
-                new Parameter(WaveNumberParameterName, waveNumber),
-                new Parameter(CoinsSpentParameterName, coinsSpent),
-                new Parameter(CoinsRemainingParameterName, coinsRemaining),
-                new Parameter(TowersTotalParameterName, towersTotal));
+            _analyticsProvider.LogEvent(TowerBuiltEventName,
+                new AnalyticsParameter(WaveNumberParameterName, waveNumber),
+                new AnalyticsParameter(CoinsSpentParameterName, coinsSpent),
+                new AnalyticsParameter(CoinsRemainingParameterName, coinsRemaining),
+                new AnalyticsParameter(TowersTotalParameterName, towersTotal));
         }
 
-        public void BuildRejected() => FirebaseAnalytics.LogEvent(BuildRejectedEventName);
+        public void BuildRejected() => _analyticsProvider.LogEvent(BuildRejectedEventName);
 
-        public void CastleDamaged() => FirebaseAnalytics.LogEvent(CastleDamagedEventName);
+        public void CastleDamaged() => _analyticsProvider.LogEvent(CastleDamagedEventName);
 
-        public void GameOver() => FirebaseAnalytics.LogEvent(GameOverEventName);
+        public void GameOver() => _analyticsProvider.LogEvent(GameOverEventName);
 
-        public void SessionRestarted() => FirebaseAnalytics.LogEvent(SessionRestartedEventName);
+        public void SessionRestarted() => _analyticsProvider.LogEvent(SessionRestartedEventName);
 
-        public void ReturnedToMenu() => FirebaseAnalytics.LogEvent(ReturnedToMenuEventName);
+        public void ReturnedToMenu() => _analyticsProvider.LogEvent(ReturnedToMenuEventName);
     }
 }

@@ -14,11 +14,17 @@ namespace Assets.Game.Scripts.Input
         private readonly GameInput _input;
         private readonly Camera _mainCamera;
         
+        private readonly PointerEventData _cachedEventData;
+        private readonly List<RaycastResult> _cachedRaycastResult;
+        
         public PointSelector(GameInput input, Transform planeCenter)
         {
             _mainCamera = Camera.main;
             _input = input;
             _planeCenter = planeCenter;
+            
+            _cachedEventData = new PointerEventData(EventSystem.current);
+            _cachedRaycastResult = new List<RaycastResult>();
         }
 
         public Vector3 LastPosition { get; private set; }
@@ -39,15 +45,12 @@ namespace Assets.Game.Scripts.Input
 
         private bool IsPointOverUI(Vector2 position)
         {
-            var eventData = new PointerEventData(EventSystem.current)
-            {
-                position = position
-            };
+            _cachedEventData.position = position;
+            _cachedRaycastResult.Clear();
 
-            var results = new List<RaycastResult>();
-            EventSystem.current.RaycastAll(eventData, results);
+            EventSystem.current.RaycastAll(_cachedEventData, _cachedRaycastResult);
 
-            return results.Count > 0;
+            return _cachedRaycastResult.Count > 0;
         }
 
         private Vector3 GetPoint(Vector2 touchPosition)

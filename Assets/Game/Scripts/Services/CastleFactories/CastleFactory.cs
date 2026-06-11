@@ -12,6 +12,8 @@ namespace Assets.Game.Scripts.Services.CastleFactories
 {
     public class CastleFactory
     {
+        private const string CastleRootGameObjectName = "Root";
+        
         private readonly BuildingsConfig _buildingsConfig;
         private readonly IBuildingFactory _buildingFactory;
         private readonly IBuildingUpgradeApplier _buildingUpgradeApplier;
@@ -33,7 +35,7 @@ namespace Assets.Game.Scripts.Services.CastleFactories
 
         public async UniTask<Health> CreateCastle(CancellationToken ct)
         {
-            var root = new GameObject("Root");
+            var root = new GameObject(CastleRootGameObjectName);
             var disposeHandler = root.AddComponent<DisposeOnDestroy>();
 
             var castleHealth = CreateHealth(root);

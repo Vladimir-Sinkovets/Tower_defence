@@ -9,12 +9,12 @@ namespace Assets.Game.Scripts.Upgrades.Implementations
     public class BuildingUpgradeApplier : IBuildingUpgradeApplier
     {
         private readonly UpgradeConfigs _upgradeConfigs;
-        private readonly ISaveService _saveService;
+        private readonly SaveData _saveData;
 
-        public BuildingUpgradeApplier(UpgradeConfigs upgradeConfigs, ISaveService saveService)
+        public BuildingUpgradeApplier(UpgradeConfigs upgradeConfigs, SaveData saveData)
         {
             _upgradeConfigs = upgradeConfigs;
-            _saveService = saveService;
+            _saveData = saveData;
         }
         
         public int ApplyBuildingDamageUpgrade(int baseDamage, BuildingType buildingType)
@@ -56,11 +56,6 @@ namespace Assets.Game.Scripts.Upgrades.Implementations
             return (int) upgrade.ApplyEffect(level, baseHp);
         }
         
-        private int GetUpgradeLevel(UpgradeConfig upgrade)
-        {
-            var data = _saveService.GetSaveData();
-
-            return data.GetUpgradeLevel(upgrade.Id);
-        }
+        private int GetUpgradeLevel(UpgradeConfig upgrade) => _saveData.Upgrades.GetValueOrDefault(upgrade.Id, UpgradeConstants.UpgradeLevel);
     }
 }

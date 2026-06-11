@@ -62,6 +62,7 @@ namespace Assets.Game.Scripts.Installers
             Container.BindInterfacesTo<ProjectileFactory>().AsSingle();
             Container.BindInterfacesTo<VFXFactory>().AsSingle();
             Container.BindInterfacesAndSelfTo<Analytics>().AsSingle();
+            Container.BindInterfacesTo<FirebaseAnalyticsProvider>().AsSingle();
         }
 
         private void BindInput()

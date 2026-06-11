@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Threading;
 using Assets.Game.Scripts.Configs;
 using Assets.Game.Scripts.Enemies.Interfaces;
@@ -47,7 +46,13 @@ namespace Assets.Game.Scripts.Enemies.Implementations
             SpawnWaves(target, _wavesCts.Token).Forget();
         }
 
-        public void Stop() => _wavesCts?.Cancel();
+        public void Stop()
+        {
+            _enemyRegistry.OnRegistered -= OnRegisteredHandler;
+            _enemyRegistry.OnUnregistered -= OnUnregisteredHandler;
+
+            _wavesCts?.Cancel();
+        }
 
         private async UniTaskVoid SpawnWaves(Health target, CancellationToken ct)
         {
@@ -85,6 +90,9 @@ namespace Assets.Game.Scripts.Enemies.Implementations
 
         public void Dispose()
         {
+            _enemyRegistry.OnRegistered -= OnRegisteredHandler;
+            _enemyRegistry.OnUnregistered -= OnUnregisteredHandler;
+            
             _wavesCts?.Cancel();
             _wavesCts?.Dispose();
             _wavesCts = null;

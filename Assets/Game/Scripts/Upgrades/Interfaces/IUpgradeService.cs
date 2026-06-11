@@ -1,9 +1,11 @@
+using System;
 using System.Collections.Generic;
 
 namespace Assets.Game.Scripts.Upgrades.Interfaces
 {
     public interface IUpgradeService
     {
+        event Action OnUpgradesChanged;
         IEnumerable<UpgradeConfig> Upgrades { get; }
         int GetLevel(UpgradeConfig config);
         int GetLevelCost(UpgradeConfig config);

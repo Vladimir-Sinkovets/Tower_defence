@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using Assets.Game.Scripts.Animations;
 using Cysharp.Threading.Tasks;

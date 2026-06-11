@@ -20,6 +20,8 @@ namespace Assets.Game.Scripts.UI.UpgradePanel
         private bool _isAvailable;
         private string _id;
 
+        private void Awake() => _applyButton.onClick.AddListener(OnApplyButtonClickedHandler);
+
         public void Init(UpgradePanelViewModel viewModel)
         {
             _iconImage.sprite = viewModel.Icon;
@@ -30,8 +32,6 @@ namespace Assets.Game.Scripts.UI.UpgradePanel
 
             _isAvailable = viewModel.IsAvailable;
             _redPanel.SetActive(!viewModel.IsAvailable);
-
-            _applyButton.onClick.AddListener(OnApplyButtonClickedHandler);
 
             _id = viewModel.Id;
         }

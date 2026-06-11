@@ -13,6 +13,9 @@ namespace Assets.Game.Scripts.Installers
         public override void InstallBindings()
         {
             Container.BindInterfacesTo<SaveService>().AsSingle();
+            Container.BindInterfacesTo<SaveDataLoader>().AsSingle();
+            
+            Container.BindInterfacesAndSelfTo<SaveData>().AsSingle();
             
             Container.BindInterfacesAndSelfTo<FirebaseSetup>().AsSingle();
 
