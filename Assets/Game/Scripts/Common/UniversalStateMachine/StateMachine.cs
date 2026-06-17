@@ -44,6 +44,12 @@ namespace Assets.Game.Scripts.Common.UniversalStateMachine
         public void Dispose()
         {
             _currentState.Exit();
+
+            foreach (var state in _states)
+            {
+                if (state.Value is IDisposable disposable)
+                    disposable.Dispose();
+            }
         }
     }
 }

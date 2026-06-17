@@ -1,4 +1,5 @@
 using System.Threading;
+using System.Threading.Tasks;
 using Assets.Game.Scripts.Animations;
 using Assets.Game.Scripts.Buildings;
 using Assets.Game.Scripts.Buildings.Interfaces;
@@ -33,25 +34,25 @@ namespace Assets.Game.Scripts.Services.CastleFactories
             _instantiator = instantiator;
         }
 
-        public async UniTask<Health> CreateCastle(CancellationToken ct)
+        public async UniTask<(Health, Transform)> CreateCastle(CancellationToken ct)
         {
             var root = new GameObject(CastleRootGameObjectName);
             var disposeHandler = root.AddComponent<DisposeOnDestroy>();
 
-            var castleHealth = CreateHealth(root);
+            var castleHealth = CreateHealth();
             
             RegisterDisposables(castleHealth, root, disposeHandler);
 
-            var building = CreateBuilding(root);
+            var building = await CreateBuilding(root);
 
             await building.AppearanceAnimation.Play(ct);
             
-            return castleHealth;
+            return (castleHealth, root.transform);
         }
 
-        private Building CreateBuilding(GameObject root)
+        private async Task<Building> CreateBuilding(GameObject root)
         {
-            var building = _buildingFactory.Create(_buildingsConfig.CastleBuilding, BuildingType.Castle);
+            var building = await _buildingFactory.Create(_buildingsConfig.CastleBuilding, BuildingType.Castle);
 
             building.transform.SetParent(root.transform);
             building.transform.position = root.transform.position;
@@ -66,10 +67,11 @@ namespace Assets.Game.Scripts.Services.CastleFactories
             disposeHandler.Add(shaker, handler);
         }
 
-        private Health CreateHealth(GameObject root)
+        private Health CreateHealth()
         {
             var castleHp = _buildingUpgradeApplier.ApplyCastleHpUpgrade(_buildingsConfig.CastleHp);
-            var castleHealth = new Health(castleHp, root.transform);
+            var castleHealth = new Health(castleHp);
+            
             return castleHealth;
         }
     }

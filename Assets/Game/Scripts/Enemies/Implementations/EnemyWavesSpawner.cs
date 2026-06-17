@@ -23,7 +23,7 @@ namespace Assets.Game.Scripts.Enemies.Implementations
             _perimeterPoints = perimeterPoints;
         }
 
-        public async UniTask SpawnWave(int count, Health target, CancellationToken ct)
+        public async UniTask SpawnWave(int count, Health targetHealth, Transform targetTransform, CancellationToken ct)
         {
             IsSpawning = true;
 
@@ -31,11 +31,11 @@ namespace Assets.Game.Scripts.Enemies.Implementations
             {
                 var spawnPoint = GetRandomPerimeterPoint();
 
-                var enemy = _enemyFactory.Create(_wavesConfig.EnemyConfig);
+                var enemy = await _enemyFactory.Create(_wavesConfig.EnemyConfig);
 
                 enemy.transform.position = spawnPoint;
 
-                enemy.Activate(target);
+                enemy.Activate(targetHealth, targetTransform);
 
                 await UniTask.WaitForSeconds(_wavesConfig.IntervalBetweenEnemies, cancellationToken: ct);
             }

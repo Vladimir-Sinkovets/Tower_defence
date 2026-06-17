@@ -18,4 +18,9 @@ MonoBehaviour:
   IntervalBetweenAttacks: 1
   Award: 1
   Damage: 2
-  Prefab: {fileID: 3887083065228993146, guid: 3a30612356179e54a99e73c8e3e2ece0, type: 3}
+  Prefab:
+    m_AssetGUID: 3a30612356179e54a99e73c8e3e2ece0
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0

@@ -1,4 +1,5 @@
 using Assets.Game.Scripts.Saves;
+using Assets.Game.Scripts.Services.AssetProviders;
 using Assets.Game.Scripts.Services.FirebaseSetups;
 using Assets.Game.Scripts.Upgrades;
 using UnityEngine;
@@ -16,6 +17,8 @@ namespace Assets.Game.Scripts.Installers
             Container.BindInterfacesTo<SaveDataLoader>().AsSingle();
             
             Container.BindInterfacesAndSelfTo<SaveData>().AsSingle();
+            
+            Container.BindInterfacesTo<AddressableAssetProvider>().AsSingle();
             
             Container.BindInterfacesAndSelfTo<FirebaseSetup>().AsSingle();
 

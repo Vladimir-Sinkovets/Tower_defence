@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace Assets.Game.Scripts.Buildings
 {
@@ -12,9 +13,9 @@ namespace Assets.Game.Scripts.Buildings
         public int Damage = 1;
         public float RotationSpeed = 360.0f;
         public float ArcHeight = 0.4f;
-        public Projectile ProjectilePrefab;
-        public ParticleSystem ShootVFX;
-        public ParticleSystem HitVFX;
-        public ShootingBuilding Prefab;
+        public AssetReference ProjectilePrefab;
+        public AssetReference ShootVFXPrefab;
+        public AssetReference HitVFXPrefab;
+        public AssetReference Prefab;
     }
 }

@@ -2566,7 +2566,12 @@ MonoBehaviour:
   _buildingsConfig: {fileID: 11400000, guid: bb7a5b96a7f4bf9428849ea2877e38c7, type: 2}
   _metaCurrencyConfig: {fileID: 11400000, guid: 7a6467ea0a848454a9a19b505317eb0b, type: 2}
   _fieldStartupAnimation: {fileID: 1651697476}
-  _hudPrefab: {fileID: 1538167272293545770, guid: 05ddb41e470c0814b9d15ffb0a60c4f3, type: 3}
+  _hudPrefab:
+    m_AssetGUID: 05ddb41e470c0814b9d15ffb0a60c4f3
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
   _perimeterPoints:
   - {fileID: 1553943986}
   - {fileID: 1184865287}

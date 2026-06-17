@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace Assets.Game.Scripts.Enemies
 {
@@ -11,6 +12,6 @@ namespace Assets.Game.Scripts.Enemies
         public float IntervalBetweenAttacks = 1.0f;
         public int Award = 1;
         public int Damage = 2;
-        public Enemy Prefab;
+        public AssetReference Prefab;
     }
 }

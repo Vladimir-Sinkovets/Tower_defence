@@ -6,6 +6,7 @@ using Assets.Game.Scripts.Services.Analytics;
 using Assets.Game.Scripts.Services.Registries;
 using Assets.Game.Scripts.Shared;
 using Cysharp.Threading.Tasks;
+using UnityEngine;
 
 namespace Assets.Game.Scripts.Enemies.Implementations
 {
@@ -33,7 +34,7 @@ namespace Assets.Game.Scripts.Enemies.Implementations
             _wavesConfig = wavesConfig;
         }
 
-        public void StartWaves(Health target)
+        public void StartWaves(Health targetHealth, Transform targetTransform)
         {
             _wavesCts?.Cancel();
             _wavesCts?.Dispose();
@@ -43,7 +44,7 @@ namespace Assets.Game.Scripts.Enemies.Implementations
             _enemyRegistry.OnRegistered += OnRegisteredHandler;
             _enemyRegistry.OnUnregistered += OnUnregisteredHandler;
             
-            SpawnWaves(target, _wavesCts.Token).Forget();
+            SpawnWaves(targetHealth, targetTransform, _wavesCts.Token).Forget();
         }
 
         public void Stop()
@@ -54,7 +55,7 @@ namespace Assets.Game.Scripts.Enemies.Implementations
             _wavesCts?.Cancel();
         }
 
-        private async UniTaskVoid SpawnWaves(Health target, CancellationToken ct)
+        private async UniTaskVoid SpawnWaves(Health targetHealth, Transform targetTransform, CancellationToken ct)
         {
             while (ct.IsCancellationRequested == false)
             {
@@ -62,7 +63,7 @@ namespace Assets.Game.Scripts.Enemies.Implementations
                 
                 _analytics.WaveStarted(WavesCount, enemyCount);
 
-                await _enemyWavesController.SpawnWave(enemyCount, target, ct);
+                await _enemyWavesController.SpawnWave(enemyCount, targetHealth, targetTransform, ct);
 
                 await UniTask.WaitUntil(() => 
                     _enemyWavesController.IsSpawning == false &&

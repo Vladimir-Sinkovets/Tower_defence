@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 
 namespace Assets.Game.Scripts.UI.Windows
 {
@@ -18,14 +19,14 @@ namespace Assets.Game.Scripts.UI.Windows
         }
         
         
-        public void Open(WindowType type)
+        public async UniTask Open(WindowType type)
         {
             if (_activeScreens.TryGetValue(type, out var _))
                 return;
 
             if (!_pool.TryGetValue(type, out var window))
             {
-                window = _factory.Create(type);
+                window = await _factory.Create(type);
                 _pool.Add(type, window);
             }
 

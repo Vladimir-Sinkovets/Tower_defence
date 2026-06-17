@@ -19,10 +19,10 @@ using Assets.Game.Scripts.Services.Registries;
 using Assets.Game.Scripts.Services.RewardCalculators;
 using Assets.Game.Scripts.Services.SceneLoaders;
 using Assets.Game.Scripts.Services.Statistics;
-using Assets.Game.Scripts.UI;
 using Assets.Game.Scripts.UI.Windows;
 using Assets.Game.Scripts.Upgrades.Implementations;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using Zenject;
 
 namespace Assets.Game.Scripts.Installers
@@ -33,7 +33,7 @@ namespace Assets.Game.Scripts.Installers
         [SerializeField] private BuildingsConfig _buildingsConfig;
         [SerializeField] private MetaCurrencyConfig _metaCurrencyConfig;
         [SerializeField] private FieldStartupAnimation _fieldStartupAnimation;
-        [SerializeField] private HUD _hudPrefab;
+        [SerializeField] private AssetReference _hudPrefab;
         [SerializeField] private Transform[] _perimeterPoints;
         [SerializeField] private Transform _planeCenter;
         [SerializeField] private WindowViewsConfig _windowViewsConfig;

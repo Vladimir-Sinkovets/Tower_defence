@@ -1,7 +1,9 @@
+using System.Threading.Tasks;
+
 namespace Assets.Game.Scripts.Enemies.Interfaces
 {
     public interface IEnemyFactory
     {
-        Enemy Create(EnemyConfig config);
+        Task<Enemy> Create(EnemyConfig config);
     }
 }

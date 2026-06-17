@@ -1,5 +1,4 @@
 ﻿using System;
-using UnityEngine;
 
 namespace Assets.Game.Scripts.Shared
 {
@@ -9,18 +8,15 @@ namespace Assets.Game.Scripts.Shared
         public event Action<int> OnDamaged;
         public event Action OnDied;
 
-        public Transform Transform => _transform;
 
         private readonly int _startHp;
-        private readonly Transform _transform;
         private int _currentHp;
 
         public bool IsDead { get; private set; }
 
-        public Health(int hp, Transform transform)
+        public Health(int hp)
         {
             _startHp = hp;
-            _transform = transform;
             _currentHp = hp;
             
             IsDead = false;

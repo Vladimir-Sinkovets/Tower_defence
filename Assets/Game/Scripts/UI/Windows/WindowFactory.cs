@@ -1,6 +1,9 @@
 using System;
+using Assets.Game.Scripts.Services.AssetProviders;
 using Assets.Game.Scripts.UI.Windows.Buildings;
 using Assets.Game.Scripts.UI.Windows.EndGame;
+using Cysharp.Threading.Tasks;
+using UnityEngine;
 using Zenject;
 
 namespace Assets.Game.Scripts.UI.Windows
@@ -9,20 +12,24 @@ namespace Assets.Game.Scripts.UI.Windows
     {
         private readonly WindowViewsConfig _config;
         private readonly IInstantiator _instantiator;
+        private readonly IAssetProvider _assetProvider;
 
-        public WindowFactory(WindowViewsConfig config, IInstantiator instantiator)
+        public WindowFactory(WindowViewsConfig config, IInstantiator instantiator, IAssetProvider assetProvider)
         {
             _config = config;
             _instantiator = instantiator;
+            _assetProvider = assetProvider;
         }
         
-        public IWindowPresenter Create(WindowType type)
+        public async UniTask<IWindowPresenter> Create(WindowType type)
         {
             switch (type)
             {
                 case WindowType.Buildings:
+
+                    var chooseBuildingViewPrefab = await _assetProvider.Load<GameObject>(_config.ChooseBuildingViewPrefab);
                     
-                    var chooseBuildingView = _instantiator.InstantiatePrefabForComponent<ChooseBuildingView>(_config.ChooseBuildingViewPrefab);
+                    var chooseBuildingView = _instantiator.InstantiatePrefabForComponent<ChooseBuildingView>(chooseBuildingViewPrefab.GetComponent<ChooseBuildingView>());
 
                     var chooseBuildingPresenter = _instantiator.Instantiate<ChooseBuildingPresenter>(new[] { chooseBuildingView });
 
@@ -30,7 +37,9 @@ namespace Assets.Game.Scripts.UI.Windows
                 
                 case WindowType.EndGame:
                     
-                    var endGameView = _instantiator.InstantiatePrefabForComponent<EndGameView>(_config.EndGameViewPrefab);
+                    var endGameViewPrefab = await _assetProvider.Load<GameObject>(_config.EndGameViewPrefab);
+                    
+                    var endGameView = _instantiator.InstantiatePrefabForComponent<EndGameView>(endGameViewPrefab.GetComponent<EndGameView>());
 
                     var endGamePresenter = _instantiator.Instantiate<EndGamePresenter>(new[] { endGameView });
 

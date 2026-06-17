@@ -1,0 +1,78 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default Local Group
+  m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
+  m_GroupName: Default Local Group
+  m_GUID: a39614aec155c444da340de4798ee1f7
+  m_SerializeEntries:
+  - m_GUID: 05ddb41e470c0814b9d15ffb0a60c4f3
+    m_Address: Assets/Game/Prefabs/UI/HUD_canvas.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1d715366b67a61f4abc8a4cd099fc1f0
+    m_Address: Assets/Game/Prefabs/CastleBarrelBuilding.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3a30612356179e54a99e73c8e3e2ece0
+    m_Address: Assets/Game/Prefabs/Enemy.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7902838574831e4478afc9cd68a8d958
+    m_Address: Assets/Game/Prefabs/CFXR3 Hit Fire B (Air).prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 81d4625e71f607a45aaf4d454fa0b9f2
+    m_Address: Assets/Game/Prefabs/UI/ChooseBuildingCanvas.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b4c60f9ad1883514eb42a602ebb59268
+    m_Address: Assets/Game/Prefabs/BarrelBuilding.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c77931573eaa6f147b287c00d3d3fbfc
+    m_Address: Assets/Game/Prefabs/Barrel_projectile.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c7cce3b88f8783142952bbd299cccf20
+    m_Address: Assets/Game/Prefabs/UI/EndGameCanvas.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d4ed3d9ac2acf47408d1a95223214702
+    m_Address: Assets/Game/Prefabs/CatapultBuilding.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e7668afd988943942aafd650a2f30c4c
+    m_Address: Assets/Game/Prefabs/CFXR Explosion 1.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fab406a5f664d5b4788c91a09f564d4f
+    m_Address: Assets/Game/Prefabs/Catapult_projectile.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 79bd34670495a3b44bc203d3b401a6e7, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 12cbdfa9da96aa646bf492c590be3bc5, type: 2}
+    - {fileID: 11400000, guid: 9ad33a4e487dec14cae379b20af56ac8, type: 2}

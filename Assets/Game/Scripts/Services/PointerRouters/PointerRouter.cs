@@ -2,6 +2,7 @@ using System;
 using Assets.Game.Scripts.Buildings.Interfaces;
 using Assets.Game.Scripts.Input;
 using Assets.Game.Scripts.UI.Windows;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Assets.Game.Scripts.Services.PointerRouters
@@ -24,7 +25,7 @@ namespace Assets.Game.Scripts.Services.PointerRouters
         private void OnClickedHandler(Vector3 position)
         {
             if (_buildingService.IsPositionAvailable(position))
-                _windowsManager.Open(WindowType.Buildings);
+                _windowsManager.Open(WindowType.Buildings).Forget();
         }
 
         public void Dispose() => _pointSelector.OnClicked -= OnClickedHandler;

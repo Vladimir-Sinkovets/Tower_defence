@@ -19,7 +19,27 @@ MonoBehaviour:
   Damage: 6
   RotationSpeed: 360
   ArcHeight: 0.4
-  ProjectilePrefab: {fileID: 5064200408351446433, guid: fab406a5f664d5b4788c91a09f564d4f, type: 3}
-  ShootVFX: {fileID: 0}
-  HitVFX: {fileID: 2504214343621411456, guid: 7902838574831e4478afc9cd68a8d958, type: 3}
-  Prefab: {fileID: 8884717547047690953, guid: d4ed3d9ac2acf47408d1a95223214702, type: 3}
+  ProjectilePrefab:
+    m_AssetGUID: fab406a5f664d5b4788c91a09f564d4f
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
+  ShootVFXPrefab:
+    m_AssetGUID: 
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
+  HitVFXPrefab:
+    m_AssetGUID: 7902838574831e4478afc9cd68a8d958
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
+  Prefab:
+    m_AssetGUID: d4ed3d9ac2acf47408d1a95223214702
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0

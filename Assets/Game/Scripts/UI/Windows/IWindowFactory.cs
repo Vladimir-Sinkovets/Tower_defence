@@ -1,7 +1,9 @@
+using Cysharp.Threading.Tasks;
+
 namespace Assets.Game.Scripts.UI.Windows
 {
     public interface IWindowFactory
     {
-        IWindowPresenter Create(WindowType type);
+        UniTask<IWindowPresenter> Create(WindowType type);
     }
 }

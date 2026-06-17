@@ -6,7 +6,6 @@ using Assets.Game.Scripts.Services.Analytics;
 using Assets.Game.Scripts.Services.CastleFactories;
 using Assets.Game.Scripts.Services.GameOverManagers;
 using Assets.Game.Scripts.Services.HudFactories;
-using Assets.Game.Scripts.Shared;
 using Cysharp.Threading.Tasks;
 
 namespace Assets.Game.Scripts.Services.GameplayOrchestrators
@@ -21,8 +20,6 @@ namespace Assets.Game.Scripts.Services.GameplayOrchestrators
         private readonly IAnalytics _analytics;
 
         private CancellationTokenSource _startGameCts;
-        
-        private Health _castleHealth;
 
         public GameplayOrchestrator(
             IWavesController waveController,
@@ -55,13 +52,13 @@ namespace Assets.Game.Scripts.Services.GameplayOrchestrators
             
             await _fieldStartupAnimation.Play(ct);
             
-            _castleHealth = await _castleFactory.CreateCastle(ct);
+            var (castleHealth, castleTransform) = await _castleFactory.CreateCastle(ct);
 
-            _hudFactory.CreateHUD(_castleHealth);
+            await _hudFactory.CreateHUD(castleHealth);
 
-            _wavesController.StartWaves(_castleHealth);
+            _wavesController.StartWaves(castleHealth, castleTransform);
             
-            _gameOverManager.Init(_castleHealth);
+            _gameOverManager.Init(castleHealth);
         }
 
         public void Dispose()

@@ -7,7 +7,8 @@ namespace Assets.Game.Scripts.Enemies.States
     public class EnemyStateMachineData
     {
         public Transform Transform;
-        public Health Target;
+        public Health TargetHealth;
+        public Transform TargetTransform;
         public NavMeshAgent NavMeshAgent;
         public EnemyView View;
         public EnemyConfig Config;

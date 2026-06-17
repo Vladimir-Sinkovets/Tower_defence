@@ -44,13 +44,14 @@ namespace Assets.Game.Scripts.Enemies
             _enemyRegistry.Register(this);
         }
         
-        public override void Activate(Health target)
+        public override void Activate(Health targetHealth, Transform targetTransform)
         {
-            base.Activate(target);
+            base.Activate(targetHealth, targetTransform);
             if (IsActive)
                 return;
 
-            _data.Target = target;
+            _data.TargetHealth = targetHealth;
+            _data.TargetTransform = targetTransform;
 
             _stateMachine.SetStartState<EnemyRunState>();
 
@@ -67,7 +68,7 @@ namespace Assets.Game.Scripts.Enemies
         
         private void SetUpHealth(EnemyConfig config)
         {
-            Health = new Health(config.Hp, transform);
+            Health = new Health(config.Hp);
             Health.OnDied += OnDiedHandler;
 
             _healthPresenter = new HealthBarPresenter(Health, _healthBarView);

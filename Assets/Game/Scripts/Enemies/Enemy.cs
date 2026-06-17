@@ -12,7 +12,7 @@ namespace Assets.Game.Scripts.Enemies
         
         public bool IsDead => Health.IsDead;
 
-        public virtual void Activate(Health target) => Health.OnDied += OnDiedHandler;
+        public virtual void Activate(Health targetHealth, Transform targetTransform) => Health.OnDied += OnDiedHandler;
 
         public virtual void Deactivate() => Health.OnDied -= OnDiedHandler;
         

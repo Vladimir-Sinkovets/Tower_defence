@@ -69,7 +69,7 @@ namespace Assets.Game.Scripts.Buildings.Implementations
         
         private async UniTaskVoid CreateBuilding(BuildingOptionConfig buildingOptionConfig, Vector3 position, CancellationToken ct)
         {
-            var building = _buildingFactory.Create(buildingOptionConfig.BuildingConfig, BuildingType.Tower);
+            var building = await _buildingFactory.Create(buildingOptionConfig.BuildingConfig, BuildingType.Tower);
 
             building.transform.position = position;
 

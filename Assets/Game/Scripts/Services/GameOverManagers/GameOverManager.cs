@@ -10,6 +10,7 @@ using Assets.Game.Scripts.Services.RewardCalculators;
 using Assets.Game.Scripts.Services.Statistics;
 using Assets.Game.Scripts.Shared;
 using Assets.Game.Scripts.UI.Windows;
+using Cysharp.Threading.Tasks;
 
 namespace Assets.Game.Scripts.Services.GameOverManagers
 {
@@ -73,7 +74,7 @@ namespace Assets.Game.Scripts.Services.GameOverManagers
                 EarnedMetaCurrency = earnedMetaCurrency,
             };
             
-            _windowsManager.Open(WindowType.EndGame);
+            _windowsManager.Open(WindowType.EndGame).Forget();
             
             _analytics.GameOver();
         }

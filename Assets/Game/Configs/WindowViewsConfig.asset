@@ -12,5 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b808954837e04018a2f28088f2af9065, type: 3}
   m_Name: WindowViewsConfig
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.UI.Windows.WindowViewsConfig
-  ChooseBuildingViewPrefab: {fileID: 3477350675969822657, guid: 81d4625e71f607a45aaf4d454fa0b9f2, type: 3}
-  EndGameViewPrefab: {fileID: 9085701393409740129, guid: c7cce3b88f8783142952bbd299cccf20, type: 3}
+  ChooseBuildingViewPrefab:
+    m_AssetGUID: 81d4625e71f607a45aaf4d454fa0b9f2
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
+  EndGameViewPrefab:
+    m_AssetGUID: c7cce3b88f8783142952bbd299cccf20
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0

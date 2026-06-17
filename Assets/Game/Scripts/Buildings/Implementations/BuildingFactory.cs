@@ -1,4 +1,7 @@
 ﻿using Assets.Game.Scripts.Buildings.Interfaces;
+using Assets.Game.Scripts.Services.AssetProviders;
+using Cysharp.Threading.Tasks;
+using UnityEngine;
 using Zenject;
 
 namespace Assets.Game.Scripts.Buildings.Implementations
@@ -6,12 +9,19 @@ namespace Assets.Game.Scripts.Buildings.Implementations
     public class BuildingFactory : IBuildingFactory
     {
         private readonly IInstantiator _instantiator;
+        private readonly IAssetProvider _assetProvider;
 
-        public BuildingFactory(IInstantiator instantiator) => _instantiator = instantiator;
-
-        public Building Create(BuildingConfig config, BuildingType buildingType)
+        public BuildingFactory(IInstantiator instantiator, IAssetProvider assetProvider)
         {
-            var building = _instantiator.InstantiatePrefabForComponent<ShootingBuilding>(config.Prefab);
+            _instantiator = instantiator;
+            _assetProvider = assetProvider;
+        }
+
+        public async UniTask<Building> Create(BuildingConfig config, BuildingType buildingType)
+        {
+            var prefab = await _assetProvider.Load<GameObject>(config.Prefab);
+            
+            var building = _instantiator.InstantiatePrefabForComponent<ShootingBuilding>(prefab);
 
             building.Init(config, buildingType);
 
