@@ -1,7 +1,9 @@
+using System.Linq;
 using Assets.Game.Scripts.Buildings;
 using Assets.Game.Scripts.Enemies;
 using Assets.Game.Scripts.Enemies.Interfaces;
 using Assets.Game.Scripts.Services.Registries;
+using Assets.Game.Scripts.Shared;
 
 namespace Assets.Game.Scripts.Services.GameStoppers
 {
@@ -29,7 +31,7 @@ namespace Assets.Game.Scripts.Services.GameStoppers
 
         private void StopBuildings()
         {
-            foreach (var building in _buildingRegistry.All)
+            foreach (var building in _buildingRegistry.All.OfType<IStoppable>())
             {
                 building.Stop();
             }

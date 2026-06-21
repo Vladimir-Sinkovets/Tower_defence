@@ -15,15 +15,13 @@ namespace Assets.Game.Scripts.Buildings
         public float RadiusOfOccupiedSpace => _config.RadiusOfOccupiedSpace;
 
         [Inject]
-        public virtual void Construct(Registry<Building> buildingRegistry) => _buildingRegistry = buildingRegistry;
+        public void Construct(Registry<Building> buildingRegistry) => _buildingRegistry = buildingRegistry;
 
         public virtual void Init(BuildingConfig config, BuildingType buildingType)
         {
             _config = config;
             _buildingRegistry.Register(this);
         }
-
-        public abstract void Stop();
 
         private void OnDrawGizmos()
         {

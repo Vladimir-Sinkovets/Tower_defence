@@ -3,12 +3,13 @@ using Assets.Game.Scripts.Animations;
 using Assets.Game.Scripts.Buildings.States;
 using Assets.Game.Scripts.Common.UniversalStateMachine;
 using Assets.Game.Scripts.Services.Registries;
+using Assets.Game.Scripts.Shared;
 using UnityEngine;
 using Zenject;
 
 namespace Assets.Game.Scripts.Buildings
 {
-    public class ShootingBuilding : Building
+    public class ShootingBuilding : Building, IStoppable
     {
         public event Action OnStopped;
         
@@ -55,7 +56,7 @@ namespace Assets.Game.Scripts.Buildings
             _stateMachine.SetStartState<ShootingBuildingWaitState>();
         }
 
-        public override void Stop() => OnStopped?.Invoke();
+        public void Stop() => OnStopped?.Invoke();
         
         protected override void OnDestroy()
         {

@@ -1,9 +1,11 @@
 using System;
+using System.Collections.Generic;
 using Assets.Game.Scripts.Services.AssetProviders;
 using Assets.Game.Scripts.UI.Windows.Buildings;
 using Assets.Game.Scripts.UI.Windows.EndGame;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using Zenject;
 
 namespace Assets.Game.Scripts.UI.Windows
@@ -13,41 +15,39 @@ namespace Assets.Game.Scripts.UI.Windows
         private readonly WindowViewsConfig _config;
         private readonly IInstantiator _instantiator;
         private readonly IAssetProvider _assetProvider;
+        
+        private readonly Dictionary<WindowType, Func<UniTask<IWindowPresenter>>> _factoryDelegates;
 
         public WindowFactory(WindowViewsConfig config, IInstantiator instantiator, IAssetProvider assetProvider)
         {
             _config = config;
             _instantiator = instantiator;
             _assetProvider = assetProvider;
+            
+            _factoryDelegates = new Dictionary<WindowType, Func<UniTask<IWindowPresenter>>>
+            {
+                [WindowType.Buildings] = () => CreateWindow<ChooseBuildingView, ChooseBuildingPresenter>(_config.ChooseBuildingViewPrefab),
+                [WindowType.EndGame] = () => CreateWindow<EndGameView, EndGamePresenter>(_config.EndGameViewPrefab),
+            };
         }
-        
+
+        private async UniTask<IWindowPresenter> CreateWindow<TView, TPresenter>(AssetReference prefabReference) where TView : MonoBehaviour
+        {
+            var prefab = await _assetProvider.Load<GameObject>(prefabReference);
+
+            var view = _instantiator.InstantiatePrefabForComponent<TView>(prefab.GetComponent<TView>());
+
+            var presenter = _instantiator.Instantiate<TPresenter>(new object[] { view });
+
+            return (IWindowPresenter)presenter;
+        }
+
         public async UniTask<IWindowPresenter> Create(WindowType type)
         {
-            switch (type)
-            {
-                case WindowType.Buildings:
+            if (_factoryDelegates.TryGetValue(type, out var factory))
+                return await factory();
 
-                    var chooseBuildingViewPrefab = await _assetProvider.Load<GameObject>(_config.ChooseBuildingViewPrefab);
-                    
-                    var chooseBuildingView = _instantiator.InstantiatePrefabForComponent<ChooseBuildingView>(chooseBuildingViewPrefab.GetComponent<ChooseBuildingView>());
-
-                    var chooseBuildingPresenter = _instantiator.Instantiate<ChooseBuildingPresenter>(new[] { chooseBuildingView });
-
-                    return chooseBuildingPresenter;
-                
-                case WindowType.EndGame:
-                    
-                    var endGameViewPrefab = await _assetProvider.Load<GameObject>(_config.EndGameViewPrefab);
-                    
-                    var endGameView = _instantiator.InstantiatePrefabForComponent<EndGameView>(endGameViewPrefab.GetComponent<EndGameView>());
-
-                    var endGamePresenter = _instantiator.Instantiate<EndGamePresenter>(new[] { endGameView });
-
-                    return endGamePresenter;
-                
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
-            }
+            throw new ArgumentOutOfRangeException(nameof(type), type, $"No factory registered for window type {type}");
         }
     }
 }

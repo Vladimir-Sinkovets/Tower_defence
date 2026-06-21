@@ -21,8 +21,6 @@ namespace Assets.Game.Scripts.Services.HudFactories
         private CurrencyPresenter _currencyPresenter;
         private HealthBarPresenter _castleHealthPresenter;
         
-        private CancellationTokenSource _startGameCts;
-
         public HudFactory(IInstantiator instantiator, AssetReference hudPrefab, IAssetProvider assetProvider)
         {
             _instantiator = instantiator;

@@ -20,8 +20,6 @@ namespace Assets.Game.Scripts.Services.CastleFactories
         private readonly IBuildingUpgradeApplier _buildingUpgradeApplier;
         private readonly IInstantiator _instantiator;
 
-        private CancellationTokenSource _startGameCts;
-
         public CastleFactory(
             BuildingsConfig buildingsConfig,
             IBuildingFactory buildingFactory,

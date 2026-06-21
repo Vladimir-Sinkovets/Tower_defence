@@ -16,7 +16,6 @@ namespace Assets.Game.Scripts.Services.GameOverManagers
 {
     public class GameOverManager : IDisposable
     {
-        private readonly Registry<Building> _buildingRegistry;
         private readonly GameStatistics _gameStatistics;
         private readonly CurrencyBank _currencyBank;
         private readonly IWindowsManager _windowsManager;
