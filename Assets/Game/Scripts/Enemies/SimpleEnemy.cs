@@ -37,18 +37,20 @@ namespace Assets.Game.Scripts.Enemies
 
         public override void Init(EnemyConfig config)
         {
+            base.Init(config);
             SetUpStateMachine(config);
             SetUpNavMesh(config);
-            SetUpHealth(config);
+            SetUpHealthView();
 
             _enemyRegistry.Register(this);
         }
         
         public override void Activate(Health targetHealth, Transform targetTransform)
         {
-            base.Activate(targetHealth, targetTransform);
             if (IsActive)
                 return;
+            
+            base.Activate(targetHealth, targetTransform);
 
             _data.TargetHealth = targetHealth;
             _data.TargetTransform = targetTransform;
@@ -66,12 +68,10 @@ namespace Assets.Game.Scripts.Enemies
         }
 
         
-        private void SetUpHealth(EnemyConfig config)
+        private void SetUpHealthView()
         {
-            Health = new Health(config.Hp);
-            Health.OnDied += OnDiedHandler;
-
             _healthPresenter = new HealthBarPresenter(Health, _healthBarView);
+            _healthPresenter.Init();
         }
 
         private void SetUpNavMesh(EnemyConfig config)
@@ -102,8 +102,10 @@ namespace Assets.Game.Scripts.Enemies
         }
 
 
-        private void OnDiedHandler()
+        protected override void OnDiedHandler()
         {
+            base.OnDiedHandler();
+            
             _currencyBank.Add(_data.Config.Award);
             _gameStatistics.IncreaseKilledEnemyCount();
         }

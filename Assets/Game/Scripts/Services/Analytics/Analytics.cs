@@ -27,20 +27,20 @@ namespace Assets.Game.Scripts.Services.Analytics
         private const string WaveNumberParameterName = "wave_number";
         private const string CoinsRemainingParameterName = "coins_remaining";
         
-        private readonly SaveData _saveData;
+        private readonly ISaveService _saveService;
         private readonly CurrencyBank _currencyBank;
         private readonly IAnalyticsProvider _analyticsProvider;
 
-        public Analytics(SaveData saveData, CurrencyBank currencyBank, IAnalyticsProvider analyticsProvider)
+        public Analytics(ISaveService saveService, CurrencyBank currencyBank, IAnalyticsProvider analyticsProvider)
         {
-            _saveData = saveData;
+            _saveService = saveService;
             _currencyBank = currencyBank;
             _analyticsProvider = analyticsProvider;
         }
 
         public void GameStarted()
         {
-            var metaCurrency = _saveData.MetaCurrency;
+            var metaCurrency = _saveService.MetaCurrency;
             
             _analyticsProvider.LogEvent(GameStartedEventName, new AnalyticsParameter(MetaCurrencyTotalParameterName, metaCurrency));
         }

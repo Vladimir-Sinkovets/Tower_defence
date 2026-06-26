@@ -3,29 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using Assets.Game.Scripts.Saves;
 using Assets.Game.Scripts.Upgrades.Interfaces;
+using Zenject;
 
 namespace Assets.Game.Scripts.Upgrades.Implementations
 {
-    public class UpgradeService : IUpgradeService, IDisposable
+    public class UpgradeService : IUpgradeService, IDisposable, IInitializable
     {
         public event Action OnUpgradesChanged;
 
         private readonly ISaveService _saveService;
-        private readonly SaveData _saveData;
         private readonly UpgradeConfigs _configs;
 
-        public UpgradeService(ISaveService saveService, SaveData saveData, UpgradeConfigs configs)
+        public UpgradeService(ISaveService saveService, UpgradeConfigs configs)
         {
             _saveService = saveService;
-            _saveData = saveData;
             _configs = configs;
-
-            _saveData.OnUpgradesChanged += OnUpgradesChangedHandler;
         }
+        
+        public void Initialize() => _saveService.OnUpgradesChanged += OnUpgradesChangedHandler;
 
         public IEnumerable<UpgradeConfig> Upgrades => _configs.List;
 
-        public int GetLevel(UpgradeConfig upgrade) => _saveData.Upgrades.GetValueOrDefault(upgrade.Id, 0);
+        public int GetLevel(UpgradeConfig upgrade) => _saveService.Upgrades.GetValueOrDefault(upgrade.Id, 0);
 
         public int GetLevelCost(UpgradeConfig upgrade) => upgrade.GetCostByLevel(GetLevel(upgrade));
 
@@ -33,7 +32,7 @@ namespace Assets.Game.Scripts.Upgrades.Implementations
         {
             var cost = GetLevelCost(upgrade);
 
-            return _saveData.MetaCurrency >= cost;
+            return _saveService.MetaCurrency >= cost;
         }
 
         public void BuyUpgrade(UpgradeConfig upgrade)
@@ -43,11 +42,12 @@ namespace Assets.Game.Scripts.Upgrades.Implementations
             
             var cost = GetLevelCost(upgrade);
             
-            _saveData.MetaCurrency -= cost;
+            _saveService.MetaCurrency -= cost;
 
-            if (!_saveData.Upgrades.TryAdd(upgrade.Id, UpgradeConstants.FirstLevel))
+            if (!_saveService.TryAddUpgrade(upgrade.Id, UpgradeConstants.FirstLevel))
             {
-                _saveData.Upgrades[upgrade.Id] += UpgradeConstants.LevelIncrease;
+                var newLevel = _saveService.Upgrades[upgrade.Id] + UpgradeConstants.LevelIncrease;
+                _saveService.SetUpgrade(upgrade.Id, newLevel);
             }
 
             _saveService.Save();
@@ -57,6 +57,6 @@ namespace Assets.Game.Scripts.Upgrades.Implementations
 
         private void OnUpgradesChangedHandler() => OnUpgradesChanged?.Invoke();
 
-        public void Dispose() => _saveData.OnUpgradesChanged -= OnUpgradesChangedHandler;
+        public void Dispose() => _saveService.OnUpgradesChanged -= OnUpgradesChangedHandler;
     }
 }

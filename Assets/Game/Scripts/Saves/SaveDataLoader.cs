@@ -6,9 +6,9 @@ namespace Assets.Game.Scripts.Saves
 {
     public class SaveDataLoader : IInitializable
     {
-        private readonly SaveData _saveData;
+        private readonly ISaveService _saveService;
         
-        public SaveDataLoader(SaveData saveData) => _saveData = saveData;
+        public SaveDataLoader(ISaveService saveService) => _saveService = saveService;
         
         public void Initialize()
         {
@@ -16,17 +16,16 @@ namespace Assets.Game.Scripts.Saves
 
             if (string.IsNullOrEmpty(json))
             {
-                _saveData.MetaCurrency = 0;
-                _saveData.WavesRecord = 0;
-                _saveData.Upgrades.Clear();
+                _saveService.MetaCurrency = 0;
+                _saveService.WavesRecord = 0;
             }
             else
             {
                 var saveData = JsonConvert.DeserializeObject<SaveData>(json);
                 
-                _saveData.MetaCurrency = saveData.MetaCurrency;
-                _saveData.WavesRecord = saveData.WavesRecord;
-                _saveData.Upgrades = saveData.Upgrades;
+                _saveService.MetaCurrency = saveData.MetaCurrency;
+                _saveService.WavesRecord = saveData.WavesRecord;
+                _saveService.SetUpgrades(saveData.Upgrades);
             }
         }
     }

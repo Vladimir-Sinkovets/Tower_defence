@@ -10,9 +10,12 @@ namespace Assets.Game.Scripts.UI.Currency
 
         public CurrencyPresenter(CurrencyBank currencyBank, ICurrencyView view)
         {
-            _currencyBank =  currencyBank;
+            _currencyBank = currencyBank;
             _view = view;
+        }
 
+        public void Init()
+        {
             _currencyBank.OnCurrencyChanged += OnCurrencyChangedHandler;
             
             _view.SetCurrencyText($"${_currencyBank.Total}");

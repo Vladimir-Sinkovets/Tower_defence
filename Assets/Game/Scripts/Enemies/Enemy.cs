@@ -15,11 +15,11 @@ namespace Assets.Game.Scripts.Enemies
         public virtual void Activate(Health targetHealth, Transform targetTransform) => Health.OnDied += OnDiedHandler;
 
         public virtual void Deactivate() => Health.OnDied -= OnDiedHandler;
-        
-        public abstract void Init(EnemyConfig config);
+
+        public virtual void Init(EnemyConfig config) => Health = new Health(config.Hp);
 
         public void ApplyDamage(int damage) => Health.ApplyDamage(damage);
         
-        private void OnDiedHandler() => OnDied?.Invoke();
+        protected virtual void OnDiedHandler() => OnDied?.Invoke();
     }
 }

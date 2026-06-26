@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Assets.Game.Scripts.Buildings;
 using Assets.Game.Scripts.Saves;
 using Assets.Game.Scripts.Upgrades.Interfaces;
@@ -9,12 +10,12 @@ namespace Assets.Game.Scripts.Upgrades.Implementations
     public class BuildingUpgradeApplier : IBuildingUpgradeApplier
     {
         private readonly UpgradeConfigs _upgradeConfigs;
-        private readonly SaveData _saveData;
+        private readonly ISaveService _saveService;
 
-        public BuildingUpgradeApplier(UpgradeConfigs upgradeConfigs, SaveData saveData)
+        public BuildingUpgradeApplier(UpgradeConfigs upgradeConfigs, ISaveService saveService)
         {
             _upgradeConfigs = upgradeConfigs;
-            _saveData = saveData;
+            _saveService = saveService;
         }
         
         public int ApplyBuildingDamageUpgrade(int baseDamage, BuildingType buildingType)
@@ -56,6 +57,6 @@ namespace Assets.Game.Scripts.Upgrades.Implementations
             return (int) upgrade.ApplyEffect(level, baseHp);
         }
         
-        private int GetUpgradeLevel(UpgradeConfig upgrade) => _saveData.Upgrades.GetValueOrDefault(upgrade.Id, UpgradeConstants.UpgradeLevel);
+        private int GetUpgradeLevel(UpgradeConfig upgrade) => _saveService.Upgrades.GetValueOrDefault(upgrade.Id, UpgradeConstants.UpgradeLevel);
     }
 }

@@ -1,5 +1,4 @@
 using System;
-using System.Threading;
 using Assets.Game.Scripts.Services.AssetProviders;
 using Assets.Game.Scripts.Shared;
 using Assets.Game.Scripts.UI;
@@ -35,7 +34,10 @@ namespace Assets.Game.Scripts.Services.HudFactories
             var hud = _instantiator.InstantiatePrefabForComponent<HUD>(prefab.GetComponent<HUD>());
 
             _currencyPresenter = _instantiator.Instantiate<CurrencyPresenter>(new object[] { hud.CurrencyView });
+            _currencyPresenter.Init();
+            
             _castleHealthPresenter = _instantiator.Instantiate<HealthBarPresenter>(new object[] { hud.HealthBarView, castleHealth });
+            _castleHealthPresenter.Init();
         }
 
         public void Dispose()

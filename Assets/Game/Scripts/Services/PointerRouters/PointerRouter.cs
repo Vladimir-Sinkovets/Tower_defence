@@ -4,10 +4,11 @@ using Assets.Game.Scripts.Input;
 using Assets.Game.Scripts.UI.Windows;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using Zenject;
 
 namespace Assets.Game.Scripts.Services.PointerRouters
 {
-    public class PointerRouter : IDisposable
+    public class PointerRouter : IDisposable, IInitializable
     {
         private readonly PointSelector _pointSelector;
         private readonly IWindowsManager _windowsManager;
@@ -18,9 +19,9 @@ namespace Assets.Game.Scripts.Services.PointerRouters
             _pointSelector = pointSelector;
             _windowsManager = windowsManager;
             _buildingService = buildingService;
-
-            _pointSelector.OnClicked += OnClickedHandler;
         }
+        
+        public void Initialize() => _pointSelector.OnClicked += OnClickedHandler;
 
         private void OnClickedHandler(Vector3 position)
         {

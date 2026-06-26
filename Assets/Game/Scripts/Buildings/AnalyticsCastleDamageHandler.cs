@@ -13,9 +13,9 @@ namespace Assets.Game.Scripts.Buildings
         {
             _analytics = analytics;
             _health = health;
-            
-            _health.OnDamaged += OnDamageHandler;
         }
+        
+        public void Init() => _health.OnDamaged += OnDamageHandler;
 
         private void OnDamageHandler(int obj) => _analytics.CastleDamaged();
 

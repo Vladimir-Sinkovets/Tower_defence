@@ -12,7 +12,6 @@ namespace Assets.Game.Scripts.UI.Windows
 {
     public class WindowFactory : IWindowFactory
     {
-        private readonly WindowViewsConfig _config;
         private readonly IInstantiator _instantiator;
         private readonly IAssetProvider _assetProvider;
         
@@ -20,14 +19,13 @@ namespace Assets.Game.Scripts.UI.Windows
 
         public WindowFactory(WindowViewsConfig config, IInstantiator instantiator, IAssetProvider assetProvider)
         {
-            _config = config;
             _instantiator = instantiator;
             _assetProvider = assetProvider;
             
             _factoryDelegates = new Dictionary<WindowType, Func<UniTask<IWindowPresenter>>>
             {
-                [WindowType.Buildings] = () => CreateWindow<ChooseBuildingView, ChooseBuildingPresenter>(_config.ChooseBuildingViewPrefab),
-                [WindowType.EndGame] = () => CreateWindow<EndGameView, EndGamePresenter>(_config.EndGameViewPrefab),
+                [WindowType.Buildings] = () => CreateWindow<ChooseBuildingView, ChooseBuildingPresenter>(config.ChooseBuildingViewPrefab),
+                [WindowType.EndGame] = () => CreateWindow<EndGameView, EndGamePresenter>(config.EndGameViewPrefab),
             };
         }
 

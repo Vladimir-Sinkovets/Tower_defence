@@ -1,19 +1,18 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Zenject;
 
 namespace Assets.Game.Scripts.Input
 {
-    public class GameInput : IDisposable
+    public class GameInput : IDisposable, IInitializable
     {
         public event Action<Vector2> Touch;
 
-        private readonly InputActions _inputActions;
+        private readonly InputActions _inputActions = new();
 
-        public GameInput()
+        public void Initialize()
         {
-            _inputActions = new();
-
             _inputActions.Gameplay.Enable();
 
             _inputActions.Gameplay.Touch.performed += OnTouchPerformedHandler;

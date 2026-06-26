@@ -62,6 +62,8 @@ namespace Assets.Game.Scripts.Services.CastleFactories
             var shaker = _instantiator.Instantiate<DamageShaker>(new object[] { castleHealth, root.transform });
             var handler = _instantiator.Instantiate<AnalyticsCastleDamageHandler>(new object[] { castleHealth });
             
+            handler.Init();
+            
             disposeHandler.Add(shaker, handler);
         }
 

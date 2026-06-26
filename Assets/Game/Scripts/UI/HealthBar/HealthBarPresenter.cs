@@ -12,9 +12,9 @@ namespace Assets.Game.Scripts.UI.HealthBar
         {
             _health = health;
             _view = view;
-            
-            _health.OnHpChanged += OnHpChangedHandler;
         }
+
+        public void Init() => _health.OnHpChanged += OnHpChangedHandler;
 
         private void OnHpChangedHandler(int currentHp, int maxHp) => _view.UpdateBar(currentHp / (float)maxHp);
 
