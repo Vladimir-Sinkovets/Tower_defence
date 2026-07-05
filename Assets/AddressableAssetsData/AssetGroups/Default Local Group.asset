@@ -45,6 +45,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bc3a9cee84b2ffa46840e429aa861835
+    m_Address: Assets/Game/Prefabs/UI/ContinueCanvas.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c77931573eaa6f147b287c00d3d3fbfc
     m_Address: Assets/Game/Prefabs/Barrel_projectile.prefab
     m_ReadOnly: 0

@@ -12,7 +12,7 @@ namespace Assets.Game.Scripts.Services.Analytics
                 parameters.Select(CreateParameter).ToArray());
         }
 
-        private static Parameter CreateParameter(AnalyticsParameter parameter)
+        private Parameter CreateParameter(AnalyticsParameter parameter)
         {
             return parameter.Value switch
             {

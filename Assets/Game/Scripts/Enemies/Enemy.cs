@@ -12,14 +12,20 @@ namespace Assets.Game.Scripts.Enemies
         
         public bool IsDead => Health.IsDead;
 
-        public virtual void Activate(Health targetHealth, Transform targetTransform) => Health.OnDied += OnDiedHandler;
+        public abstract void Activate();
 
-        public virtual void Deactivate() => Health.OnDied -= OnDiedHandler;
+        public abstract void Deactivate();
 
-        public virtual void Init(EnemyConfig config) => Health = new Health(config.Hp);
+        public virtual void Init(EnemyConfig config, Health targetHealth, Transform targetTransform)
+        {
+            Health = new Health(config.Hp);
+            Health.OnDied += OnDiedHandler;
+        }
 
         public void ApplyDamage(int damage) => Health.ApplyDamage(damage);
         
         protected virtual void OnDiedHandler() => OnDied?.Invoke();
+
+        public void OnDestroy() => Health.OnDied -= OnDiedHandler;
     }
 }

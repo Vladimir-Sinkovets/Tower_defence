@@ -35,7 +35,9 @@ namespace Assets.Game.Scripts.Enemies.Implementations
 
                 enemy.transform.position = spawnPoint;
 
-                enemy.Activate(targetHealth, targetTransform);
+                enemy.Init(_wavesConfig.EnemyConfig, targetHealth, targetTransform);
+
+                enemy.Activate();
 
                 await UniTask.WaitForSeconds(_wavesConfig.IntervalBetweenEnemies, cancellationToken: ct);
             }

@@ -8,5 +8,6 @@ namespace Assets.Game.Scripts.UI.Windows
     {
         public AssetReference ChooseBuildingViewPrefab;
         public AssetReference EndGameViewPrefab;
+        public AssetReference ContinueByAdViewPrefab;
     }
 }

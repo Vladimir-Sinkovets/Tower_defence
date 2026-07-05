@@ -1,6 +1,6 @@
 using System;
 using Assets.Game.Scripts.Services.Analytics;
-using Assets.Game.Scripts.Services.GameOverManagers;
+using Assets.Game.Scripts.Services.GameResults;
 using Assets.Game.Scripts.Services.SceneLoaders;
 using Assets.Game.Scripts.Shared;
 
@@ -10,18 +10,18 @@ namespace Assets.Game.Scripts.UI.Windows.EndGame
     {
         private readonly IEndGameView _view;
         private readonly SceneLoader _sceneLoader;
-        private readonly GameOverManager _gameOverManager;
+        private readonly IGameResultCalculator _gameResultCalculator;
         private readonly IAnalytics _analytics;
 
         public EndGamePresenter(
             IEndGameView view,
             SceneLoader sceneLoader,
-            GameOverManager gameOverManager,
+            IGameResultCalculator gameResultCalculator,
             IAnalytics analytics)
         {
             _view = view;
             _sceneLoader = sceneLoader;
-            _gameOverManager = gameOverManager;
+            _gameResultCalculator = gameResultCalculator;
             _analytics = analytics;
         }
 
@@ -30,7 +30,7 @@ namespace Assets.Game.Scripts.UI.Windows.EndGame
             _view.OnMenuButtonClicked += OnMenuButtonClickedHandler;
             _view.OnRestartButtonClicked += OnRestartButtonClickedHandler;
             
-            var result = _gameOverManager.GameOverResult;
+            var result = _gameResultCalculator.GameOverResult;
             
             _view.Open();
             _view.ShowWavesCount(result.Waves);
@@ -38,11 +38,13 @@ namespace Assets.Game.Scripts.UI.Windows.EndGame
             _view.ShowCurrency(result.Currency);
             _view.ShowEarnedMetaCurrency(result.EarnedMetaCurrency);
         }
-
+        
         public void Deactivate()
         {
             _view.OnMenuButtonClicked -= OnMenuButtonClickedHandler;
             _view.OnRestartButtonClicked -= OnRestartButtonClickedHandler;
+
+            _view.Close();
         }
 
         private void OnRestartButtonClickedHandler()

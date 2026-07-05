@@ -10,7 +10,7 @@ namespace Assets.Game.Scripts.Enemies
     {
         [SerializeField] private Animator _animator;
         [SerializeField] private GameObject _canvas;
-        [SerializeField] private GameObject _modelHideAnimationRoot;
+        [SerializeField] private Transform _modelHideAnimationRoot;
 
         [SerializeField] private float _hideViewDuration = 1.0f;
         [SerializeField] private float _hideViewYPosition = 1.5f;
@@ -45,14 +45,14 @@ namespace Assets.Game.Scripts.Enemies
         {
             await UniTask.WaitForSeconds(delay, cancellationToken: ct);
 
-            await _modelHideAnimationRoot.transform.DOMoveY(_modelHideAnimationRoot.transform.position.y - _hideViewYPosition, _hideViewDuration)
+            await _modelHideAnimationRoot.DOMoveY(_modelHideAnimationRoot.position.y - _hideViewYPosition, _hideViewDuration)
                 .WithCancellation(ct);
         }
 
         private void OnDestroy()
         {
             if (_modelHideAnimationRoot != null)
-                _modelHideAnimationRoot.transform.DOKill();
+                _modelHideAnimationRoot.DOKill();
         }
     }
 }

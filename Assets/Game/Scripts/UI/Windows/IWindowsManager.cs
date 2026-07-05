@@ -6,5 +6,6 @@ namespace Assets.Game.Scripts.UI.Windows
     {
         public UniTask Open(WindowType type);
         public void Close(WindowType type);
+        void CloseAll();
     }
 }

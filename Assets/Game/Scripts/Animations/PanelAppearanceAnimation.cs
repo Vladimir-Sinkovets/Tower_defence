@@ -33,7 +33,7 @@ namespace Assets.Game.Scripts.Animations
                 .SetUpdate(true);
         }
 
-        public async UniTask Hide(CancellationToken token)
+        public async UniTask Hide(CancellationToken token = default)
         {
             var hidePosition = CalculateHiddenPosition();
 

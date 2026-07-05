@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Waves_config
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Configs.WavesConfig
   EnemyConfig: {fileID: 11400000, guid: 4eacd2ffa4bf8854ea8349d94cb1d1f5, type: 2}
-  BaseEnemyCount: 10
+  BaseEnemyCount: 25
   NewEnemiesPerWave: 1
   IntervalBetweenWaves: 3
-  IntervalBetweenEnemies: 1
+  IntervalBetweenEnemies: 0.1

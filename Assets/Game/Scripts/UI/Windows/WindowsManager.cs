@@ -45,6 +45,15 @@ namespace Assets.Game.Scripts.UI.Windows
             _activeScreens.Remove(type);
         }
 
+        public void CloseAll()
+        {
+            foreach (var screen in _activeScreens.Values)
+            {
+                screen.Deactivate();
+            }
+            
+            _activeScreens.Clear();
+        }
         
         public void Dispose()
         {

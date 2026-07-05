@@ -1,4 +1,5 @@
 using Assets.Game.Scripts.Saves;
+using Assets.Game.Scripts.Services.Ads;
 using Assets.Game.Scripts.Services.AssetProviders;
 using Assets.Game.Scripts.Services.FirebaseSetups;
 using Assets.Game.Scripts.Upgrades;
@@ -10,6 +11,7 @@ namespace Assets.Game.Scripts.Installers
     public class GlobalInstaller : MonoInstaller
     {
         [SerializeField] private UpgradeConfigs _upgradeConfigs;
+        [SerializeField] private AdsConfig _adsConfig;
         
         public override void InstallBindings()
         {
@@ -20,6 +22,12 @@ namespace Assets.Game.Scripts.Installers
             Container.BindInterfacesTo<AddressableAssetProvider>().AsSingle();
             
             Container.BindInterfacesAndSelfTo<FirebaseSetup>().AsSingle();
+
+            Container.BindInterfacesTo<UnityAdsInitializer>().AsSingle();
+            
+            Container.BindInterfacesTo<UnityAdsService>().AsSingle();
+            
+            Container.BindInstance(_adsConfig).AsSingle();
 
             Container.BindInstance(_upgradeConfigs).AsSingle();
         }

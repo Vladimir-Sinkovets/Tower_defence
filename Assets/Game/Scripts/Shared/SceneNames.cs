@@ -3,6 +3,6 @@
     public static class SceneNames
     {
         public const string Menu = "Main_menu";
-        public const string Game = "Gameplay";
+        public const string Game = "Game_play";
     }
 }

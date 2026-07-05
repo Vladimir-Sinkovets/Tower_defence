@@ -12,6 +12,7 @@ namespace Assets.Game.Scripts.Buildings
     public class ShootingBuilding : Building, IStoppable
     {
         public event Action OnStopped;
+        public event Action OnResume;
         
         [SerializeField] private Transform _projectileStartPosition;
         [SerializeField] private Transform _weaponRoot;
@@ -51,13 +52,14 @@ namespace Assets.Game.Scripts.Buildings
             _stateMachine = new StateMachine();
             _stateMachine.AddState(_instantiator.Instantiate<ShootingBuildingWaitState>(new object[] { _data, _stateMachine }));
             _stateMachine.AddState(_instantiator.Instantiate<ShootingBuildingAttackState>(new object[] { _data, _stateMachine }));
-            _stateMachine.AddState(_instantiator.Instantiate<ShootingBuildingStopState>(new object[] { _stateMachine }));
+            _stateMachine.AddState(_instantiator.Instantiate<ShootingBuildingStopState>(new object[] { _data, _stateMachine }));
             
             _stateMachine.SetStartState<ShootingBuildingWaitState>();
         }
 
         public void Stop() => OnStopped?.Invoke();
-        
+        public void Resume() => OnResume?.Invoke();
+
         protected override void OnDestroy()
         {
             base.OnDestroy();

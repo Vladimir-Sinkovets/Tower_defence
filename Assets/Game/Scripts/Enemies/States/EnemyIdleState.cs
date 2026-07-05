@@ -20,6 +20,14 @@ namespace Assets.Game.Scripts.Enemies.States
             _data.Enemy.OnDied -= OnEnemyDied;
         }
 
+        public override void Update()
+        {
+            if (_data.Enemy.IsActive)
+            {
+                StateSwitcher.SwitchState<EnemyRunState>();
+            }
+        }
+
         private void OnEnemyDied()
         {
             StateSwitcher.SwitchState<SimpleEnemyDeathState>();

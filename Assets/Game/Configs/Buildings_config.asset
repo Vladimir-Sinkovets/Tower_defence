@@ -12,9 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86e582c52f8fb184da5cb67891e60aeb, type: 3}
   m_Name: Buildings_config
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Buildings.BuildingsConfig
-  CastleHealthPrefab: {fileID: 8164487601312330376, guid: 518d452c4c03c3d449d8537d0bd2406b, type: 3}
   CastleBuilding: {fileID: 11400000, guid: d58705c70fbd5dc46aef25cede3267dc, type: 2}
-  CastleHp: 50
+  CastleHp: 10
   Buildings:
   - Icon: {fileID: 21300000, guid: 188ebcf3299cbe04ba6b0d4fa5c162cf, type: 3}
     BuildingConfig: {fileID: 11400000, guid: 31165a143cce00c45a578d172235e812, type: 2}

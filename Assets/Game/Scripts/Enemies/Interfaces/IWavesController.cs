@@ -8,5 +8,6 @@ namespace Assets.Game.Scripts.Enemies.Interfaces
         int WavesCount { get; }
         void StartWaves(Health target, Transform targetTransform);
         void Stop();
+        void Resume();
     }
 }

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Simple_enemy_factory
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Enemies.Factories.SimpleEnemyFactory
   Hp: 10
-  Speed: 1
+  Speed: 2
   AttackRange: 1
   IntervalBetweenAttacks: 1
   Award: 1

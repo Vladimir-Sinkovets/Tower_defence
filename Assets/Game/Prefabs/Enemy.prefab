@@ -562,7 +562,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Enemy.EnemyView
   _animator: {fileID: 4913932138852090868}
   _canvas: {fileID: 8272443485462244588}
-  _modelHideAnimationRoot: {fileID: 2313532400928715547}
+  _modelHideAnimationRoot: {fileID: 5984009649443817744}
   _hideViewDuration: 1
   _hideViewYPosition: 1.5
 --- !u!4 &2133199707065573520 stripped

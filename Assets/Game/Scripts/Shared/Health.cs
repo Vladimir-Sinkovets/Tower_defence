@@ -8,7 +8,6 @@ namespace Assets.Game.Scripts.Shared
         public event Action<int> OnDamaged;
         public event Action OnDied;
 
-
         private readonly int _startHp;
         private int _currentHp;
 
@@ -38,6 +37,15 @@ namespace Assets.Game.Scripts.Shared
                 IsDead = true;
                 OnDied?.Invoke();
             }
+        }
+
+        public void Reset()
+        {
+            IsDead = false;
+            
+            _currentHp = _startHp;
+            
+            OnHpChanged?.Invoke(_currentHp, _startHp);
         }
     }
 }

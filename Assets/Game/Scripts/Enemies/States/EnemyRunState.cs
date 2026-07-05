@@ -11,8 +11,9 @@ namespace Assets.Game.Scripts.Enemies.States
 
         public override void Enter()
         {
-            _data.NavMeshAgent.SetDestination(_data.TargetTransform.position);
-
+            if (_data.NavMeshAgent != null && _data.NavMeshAgent.isOnNavMesh)
+                _data.NavMeshAgent.isStopped = false;
+            
             _data.View.PlayWalkAnimation();
 
             _data.Enemy.OnDied += OnEnemyDied;
@@ -28,6 +29,8 @@ namespace Assets.Game.Scripts.Enemies.States
 
         public override void Update()
         {
+            _data.NavMeshAgent.SetDestination(_data.TargetTransform.position);
+
             if (!_data.Enemy.IsActive)
             {
                 StateSwitcher.SwitchState<EnemyIdleState>();

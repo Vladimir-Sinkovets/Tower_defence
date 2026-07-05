@@ -11,10 +11,15 @@ namespace Assets.Game.Scripts.Services.GameResultSavers
             _saveService = saveService;
         }
 
-        public void ApplySaveData(int earnedMetaCurrency, int wavesCount)
+        public void ApplyMetaCurrency(int earnedMetaCurrency)
         {
             _saveService.MetaCurrency += earnedMetaCurrency;
             
+            _saveService.Save();
+        }
+
+        public void ApplyWavesRecord(int wavesCount)
+        {
             if (_saveService.WavesRecord < wavesCount)
                 _saveService.WavesRecord = wavesCount;
             

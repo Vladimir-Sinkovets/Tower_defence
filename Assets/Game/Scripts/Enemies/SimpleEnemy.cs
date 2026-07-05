@@ -35,38 +35,37 @@ namespace Assets.Game.Scripts.Enemies
             _gameStatistics = gameStatistics;
         }
 
-        public override void Init(EnemyConfig config)
+        public override void Init(EnemyConfig config, Health targetHealth, Transform targetTransform)
         {
-            base.Init(config);
-            SetUpStateMachine(config);
+            base.Init(config, targetHealth, targetTransform);
+
+            _data = new EnemyStateMachineData
+            {
+                NavMeshAgent = _navMeshAgent,
+                Transform = transform,
+                View = _enemyView,
+                Config = config,
+                TargetHealth = targetHealth,
+                TargetTransform = targetTransform,
+                Enemy = this
+            };
+            
             SetUpNavMesh(config);
+            SetUpStateMachine();
             SetUpHealthView();
 
             _enemyRegistry.Register(this);
         }
         
-        public override void Activate(Health targetHealth, Transform targetTransform)
+        public override void Activate()
         {
-            if (IsActive)
-                return;
-            
-            base.Activate(targetHealth, targetTransform);
-
-            _data.TargetHealth = targetHealth;
-            _data.TargetTransform = targetTransform;
-
-            _stateMachine.SetStartState<EnemyRunState>();
-
             IsActive = true;
         }
 
         public override void Deactivate()
         {
-            base.Deactivate();
-            
             IsActive = false;
         }
-
         
         private void SetUpHealthView()
         {
@@ -83,22 +82,15 @@ namespace Assets.Game.Scripts.Enemies
             _navMeshAgent.velocity = Vector3.zero;
         }
 
-        private void SetUpStateMachine(EnemyConfig config)
+        private void SetUpStateMachine()
         {
-            _data = new EnemyStateMachineData
-            {
-                NavMeshAgent = _navMeshAgent,
-                Transform = transform,
-                View = _enemyView,
-                Config = config,
-                Enemy = this
-            };
-            
             _stateMachine = new StateMachine();
             _stateMachine.AddState(new EnemyRunState(_stateMachine, _data));
             _stateMachine.AddState(new EnemyIdleState(_stateMachine, _data));
             _stateMachine.AddState(new SimpleEnemyAttackState(_stateMachine, _data));
             _stateMachine.AddState(new SimpleEnemyDeathState(_stateMachine, _data));
+            
+            _stateMachine.SetStartState<EnemyRunState>();
         }
 
 
@@ -110,10 +102,12 @@ namespace Assets.Game.Scripts.Enemies
             _gameStatistics.IncreaseKilledEnemyCount();
         }
 
-        private void Update() => _stateMachine.Update();
+        private void Update() => _stateMachine?.Update();
 
-        private void OnDestroy()
+        private new void OnDestroy()
         {
+            base.OnDestroy();
+            
             Health.OnDied -= OnDiedHandler;
 
             _stateMachine.Dispose();

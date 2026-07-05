@@ -21,6 +21,7 @@ namespace Assets.Game.Scripts.Enemies.Implementations
 
         private CancellationTokenSource _wavesCts;
         private int _aliveEnemyCount;
+        private bool _isStopped;
 
         public WavesController(
             IEnemyWavesSpawner enemyWavesSpawner,
@@ -47,18 +48,16 @@ namespace Assets.Game.Scripts.Enemies.Implementations
             SpawnWaves(targetHealth, targetTransform, _wavesCts.Token).Forget();
         }
 
-        public void Stop()
-        {
-            _enemyRegistry.OnRegistered -= OnRegisteredHandler;
-            _enemyRegistry.OnUnregistered -= OnUnregisteredHandler;
+        public void Stop() => _isStopped = true;
 
-            _wavesCts?.Cancel();
-        }
+        public void Resume() => _isStopped = false;
 
         private async UniTaskVoid SpawnWaves(Health targetHealth, Transform targetTransform, CancellationToken ct)
         {
             while (ct.IsCancellationRequested == false)
             {
+                await UniTask.WaitWhile(() => _isStopped, cancellationToken: _wavesCts.Token);
+                
                 var enemyCount = _wavesConfig.BaseEnemyCount + WavesCount * _wavesConfig.NewEnemiesPerWave;
                 
                 _analytics.WaveStarted(WavesCount, enemyCount);
@@ -77,7 +76,6 @@ namespace Assets.Game.Scripts.Enemies.Implementations
                 WavesCount++;
             }
         }
-
         
         private void OnRegisteredHandler(Enemy enemy)
         {

@@ -1,6 +1,7 @@
 ﻿using Assets.Game.Scripts.Animations;
 using Assets.Game.Scripts.Buildings;
 using Assets.Game.Scripts.Buildings.Implementations;
+using Assets.Game.Scripts.Buildings.States;
 using Assets.Game.Scripts.Configs;
 using Assets.Game.Scripts.Enemies;
 using Assets.Game.Scripts.Enemies.Implementations;
@@ -11,7 +12,9 @@ using Assets.Game.Scripts.Services.CurrencyBanks;
 using Assets.Game.Scripts.Services.EnemyAccessors;
 using Assets.Game.Scripts.Services.GameOverManagers;
 using Assets.Game.Scripts.Services.GameplayOrchestrators;
+using Assets.Game.Scripts.Services.GameResults;
 using Assets.Game.Scripts.Services.GameResultSavers;
+using Assets.Game.Scripts.Services.GameResumeServices;
 using Assets.Game.Scripts.Services.GameStoppers;
 using Assets.Game.Scripts.Services.HudFactories;
 using Assets.Game.Scripts.Services.PointerRouters;
@@ -63,6 +66,9 @@ namespace Assets.Game.Scripts.Installers
             Container.BindInterfacesTo<VFXFactory>().AsSingle();
             Container.BindInterfacesAndSelfTo<Analytics>().AsSingle();
             Container.BindInterfacesTo<FirebaseAnalyticsProvider>().AsSingle();
+
+            Container.Bind<ShootingAssetLoader>().AsTransient();
+            Container.Bind<ShootingExecutor>().AsTransient();
         }
 
         private void BindInput()
@@ -77,6 +83,7 @@ namespace Assets.Game.Scripts.Installers
         {
             Container.BindInterfacesAndSelfTo<GameplayEntryPoint>().AsSingle();
             Container.BindInterfacesAndSelfTo<GameplayOrchestrator>().AsSingle();
+            Container.BindInterfacesTo<GameResumeService>().AsSingle();
 
             Container.BindInstance(_perimeterPoints).AsSingle();
             Container.BindInterfacesTo<EnemyWavesSpawner>().AsSingle();
@@ -89,6 +96,7 @@ namespace Assets.Game.Scripts.Installers
             Container.BindInterfacesTo<GameResultSaver>().AsSingle();
             Container.BindInterfacesTo<GameStopper>().AsSingle();
             Container.BindInterfacesTo<RewardCalculator>().AsSingle();
+            Container.BindInterfacesTo<GameResultCalculator>().AsSingle();
         }
 
         private void BindRegisters()

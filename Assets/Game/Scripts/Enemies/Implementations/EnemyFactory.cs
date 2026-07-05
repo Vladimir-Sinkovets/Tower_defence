@@ -23,8 +23,6 @@ namespace Assets.Game.Scripts.Enemies.Implementations
             
             var enemy = _instantiator.InstantiatePrefabForComponent<Enemy>(prefab.GetComponent<Enemy>());
 
-            enemy.Init(config);
-
             return enemy;
         }
     }
