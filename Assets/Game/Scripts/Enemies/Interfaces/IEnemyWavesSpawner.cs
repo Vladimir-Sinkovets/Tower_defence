@@ -9,5 +9,7 @@ namespace Assets.Game.Scripts.Enemies.Interfaces
     {
         bool IsSpawning { get; }
         UniTask SpawnWave(int count, Health targetHealth, Transform targetTransform, CancellationToken ct);
+        void Stop();
+        void Resume();
     }
 }

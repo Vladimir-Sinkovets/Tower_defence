@@ -48,9 +48,17 @@ namespace Assets.Game.Scripts.Enemies.Implementations
             SpawnWaves(targetHealth, targetTransform, _wavesCts.Token).Forget();
         }
 
-        public void Stop() => _isStopped = true;
+        public void Stop()
+        {
+            _isStopped = true;
+            _enemyWavesController.Stop();
+        }
 
-        public void Resume() => _isStopped = false;
+        public void Resume()
+        {
+            _isStopped = false;
+            _enemyWavesController.Resume();
+        }
 
         private async UniTaskVoid SpawnWaves(Health targetHealth, Transform targetTransform, CancellationToken ct)
         {
@@ -70,6 +78,8 @@ namespace Assets.Game.Scripts.Enemies.Implementations
                     cancellationToken: ct);
 
                 _analytics.WaveCompleted(WavesCount, enemyCount);
+                
+                await UniTask.WaitWhile(() => _isStopped, cancellationToken: _wavesCts.Token);
                 
                 await UniTask.WaitForSeconds(_wavesConfig.IntervalBetweenWaves, cancellationToken: ct);
 

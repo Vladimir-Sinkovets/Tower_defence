@@ -13,7 +13,8 @@ namespace Assets.Game.Scripts.Enemies.Implementations
         private readonly IEnemyFactory _enemyFactory;
         private readonly WavesConfig _wavesConfig;
         private readonly Transform[] _perimeterPoints;
-        
+        private bool _isStopped;
+
         public bool IsSpawning { get; private set; }
         
         public EnemyWavesSpawner(IEnemyFactory enemyFactory, WavesConfig wavesConfig, Transform[] perimeterPoints)
@@ -29,6 +30,8 @@ namespace Assets.Game.Scripts.Enemies.Implementations
 
             for (int i = 0; i < count; i++)
             {
+                await UniTask.WaitWhile(() => _isStopped, cancellationToken: ct);
+
                 var spawnPoint = GetRandomPerimeterPoint();
 
                 var enemy = await _enemyFactory.Create(_wavesConfig.EnemyConfig);
@@ -39,11 +42,16 @@ namespace Assets.Game.Scripts.Enemies.Implementations
 
                 enemy.Activate();
 
+                await UniTask.WaitWhile(() => _isStopped, cancellationToken: ct);
+                
                 await UniTask.WaitForSeconds(_wavesConfig.IntervalBetweenEnemies, cancellationToken: ct);
             }
 
             IsSpawning = false;
         }
+
+        public void Stop() => _isStopped = true;
+        public void Resume() => _isStopped = false;
 
         private Vector3 GetRandomPerimeterPoint()
         {
