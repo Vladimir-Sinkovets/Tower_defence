@@ -2,11 +2,11 @@
 
 namespace Assets.Game.Scripts.Enemies.States
 {
-    public class EnemyIdleState : State
+    public class SimpleEnemyIdleState : State
     {
-        private readonly EnemyStateMachineData _data;
+        private readonly SimpleEnemyStateMachineData _data;
 
-        public EnemyIdleState(IStateSwitcher stateSwitcher, EnemyStateMachineData data) : base(stateSwitcher) => _data = data;
+        public SimpleEnemyIdleState(IStateSwitcher stateSwitcher, SimpleEnemyStateMachineData data) : base(stateSwitcher) => _data = data;
 
         public override void Enter()
         {
@@ -24,7 +24,7 @@ namespace Assets.Game.Scripts.Enemies.States
         {
             if (_data.Enemy.IsActive)
             {
-                StateSwitcher.SwitchState<EnemyRunState>();
+                StateSwitcher.SwitchState<SimpleEnemyRunState>();
             }
         }
 

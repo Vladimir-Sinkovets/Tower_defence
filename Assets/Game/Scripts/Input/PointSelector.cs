@@ -17,7 +17,7 @@ namespace Assets.Game.Scripts.Input
         private readonly PointerEventData _cachedEventData;
         private readonly List<RaycastResult> _cachedRaycastResult;
 
-        public bool IsStopped { get; set; }
+        private bool _disabled;
         
         public PointSelector(GameInput input, Transform planeCenter)
         {
@@ -28,6 +28,9 @@ namespace Assets.Game.Scripts.Input
             _cachedEventData = new PointerEventData(EventSystem.current);
             _cachedRaycastResult = new List<RaycastResult>();
         }
+        
+        public void Enable() => _disabled = false;
+        public void Disable() => _disabled = true;
 
         public Vector3 LastPosition { get; private set; }
 
@@ -35,7 +38,7 @@ namespace Assets.Game.Scripts.Input
 
         private void OnTouchHandler(Vector2 touchPosition)
         {
-            if (IsStopped)
+            if (_disabled)
                 return;
             
             if (IsPointOverUI(touchPosition))

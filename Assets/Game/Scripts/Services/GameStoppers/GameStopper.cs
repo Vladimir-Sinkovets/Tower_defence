@@ -67,7 +67,7 @@ namespace Assets.Game.Scripts.Services.GameStoppers
 
         private void ResumeWaves() => _waveController.Resume();
         
-        private void EnableInput() => _pointSelector.IsStopped = false;
+        private void EnableInput() => _pointSelector.Enable();
 
         private void StopBuildings()
         {
@@ -87,6 +87,6 @@ namespace Assets.Game.Scripts.Services.GameStoppers
 
         private void StopWaves() => _waveController.Stop();
 
-        private void DisableInput() => _pointSelector.IsStopped = true;
+        private void DisableInput() => _pointSelector.Disable();
     }
 }

@@ -5,10 +5,10 @@ namespace Assets.Game.Scripts.Enemies.States
 {
     public class SimpleEnemyDeathState : State
     {
-        private readonly EnemyStateMachineData _data;
+        private readonly SimpleEnemyStateMachineData _data;
         private const float DestroyDelay = 3.0f;
 
-        public SimpleEnemyDeathState(IStateSwitcher stateSwitcher, EnemyStateMachineData data) : base(stateSwitcher) => _data = data;
+        public SimpleEnemyDeathState(IStateSwitcher stateSwitcher, SimpleEnemyStateMachineData data) : base(stateSwitcher) => _data = data;
 
         public override void Enter()
         {

@@ -5,12 +5,12 @@ namespace Assets.Game.Scripts.Enemies.States
 {
     public class SimpleEnemyAttackState : State
     {
-        private readonly EnemyStateMachineData _data;
+        private readonly SimpleEnemyStateMachineData _data;
 
         private bool _isAttacking;
         private float _nextAttackTime;
 
-        public SimpleEnemyAttackState(IStateSwitcher stateSwitcher, EnemyStateMachineData data) : base(stateSwitcher) => _data = data;
+        public SimpleEnemyAttackState(IStateSwitcher stateSwitcher, SimpleEnemyStateMachineData data) : base(stateSwitcher) => _data = data;
 
         public override void Enter() => _data.Enemy.OnDied += OnEnemyDied;
 
@@ -23,13 +23,13 @@ namespace Assets.Game.Scripts.Enemies.States
 
             if (!_data.Enemy.IsActive)
             {
-                StateSwitcher.SwitchState<EnemyIdleState>();
+                StateSwitcher.SwitchState<SimpleEnemyIdleState>();
                 return;
             }
 
             if (Vector3.Distance(_data.Transform.position, _data.TargetTransform.position) > _data.Config.AttackRange)
             {
-                StateSwitcher.SwitchState<EnemyRunState>();
+                StateSwitcher.SwitchState<SimpleEnemyRunState>();
                 return;
             }
 

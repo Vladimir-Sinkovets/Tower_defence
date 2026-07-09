@@ -25,12 +25,17 @@ namespace Assets.Game.Scripts.Services.Ads
 #endif
         }
 
-        async UniTask IAdsRewardService.ShowAdAsync(CancellationToken cancellationToken) => await ShowAdAsync(_adRewardId, cancellationToken);
-        async UniTask IAdsRewardService.LoadAdAsync(CancellationToken cancellationToken) => await LoadAdAsync(_adRewardId, cancellationToken);
+        async UniTask IAdsRewardService.ShowAdAsync(CancellationToken cancellationToken)
+        {
+            await LoadAdAsync(_adRewardId, cancellationToken);
+            await ShowAdAsync(_adRewardId, cancellationToken);
+        }
 
-        async UniTask IInterstitialAdsService.ShowAdAsync(CancellationToken cancellationToken) => await ShowAdAsync(_adInterstitialId, cancellationToken);
-        async UniTask IInterstitialAdsService.LoadAdAsync(CancellationToken cancellationToken) => await LoadAdAsync(_adInterstitialId, cancellationToken);
-        
+        async UniTask IInterstitialAdsService.ShowAdAsync(CancellationToken cancellationToken)
+        {
+            await LoadAdAsync(_adInterstitialId, cancellationToken);
+            await ShowAdAsync(_adInterstitialId, cancellationToken);
+        }
         
         private async UniTask LoadAdAsync(string adId, CancellationToken cancellationToken = default)
         {

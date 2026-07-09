@@ -6,6 +6,5 @@ namespace Assets.Game.Scripts.Services.Ads
     public interface IInterstitialAdsService
     {
         UniTask ShowAdAsync(CancellationToken cancellationToken = default);
-        UniTask LoadAdAsync(CancellationToken cancellationToken = default);
     }
 }

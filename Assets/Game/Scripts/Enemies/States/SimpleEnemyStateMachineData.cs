@@ -4,14 +4,14 @@ using UnityEngine.AI;
 
 namespace Assets.Game.Scripts.Enemies.States
 {
-    public class EnemyStateMachineData
+    public class SimpleEnemyStateMachineData
     {
         public Transform Transform;
         public Health TargetHealth;
         public Transform TargetTransform;
         public NavMeshAgent NavMeshAgent;
-        public EnemyView View;
+        public SimpleEnemyView View;
         public EnemyConfig Config;
-        public SimpleEnemy Enemy;
+        public Enemy Enemy;
     }
 }

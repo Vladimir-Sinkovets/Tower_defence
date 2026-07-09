@@ -1,5 +1,4 @@
-﻿using Assets.Game.Scripts.Services.Ads;
-using Assets.Game.Scripts.Services.SceneLoaders;
+﻿using Assets.Game.Scripts.Services.SceneLoaders;
 using Assets.Game.Scripts.UI;
 using Assets.Game.Scripts.UI.MainMenuStatistics;
 using Assets.Game.Scripts.UI.UpgradePanel;
@@ -29,8 +28,6 @@ namespace Assets.Game.Scripts.Installers
 
             Container.BindInstance<IUpgradePanelView>(_upgradePanelView).AsSingle();
             Container.BindInterfacesAndSelfTo<UpgradePanelPresenter>().AsSingle();
-            
-            Container.BindInterfacesAndSelfTo<MainMenuInterstitialAdsManager>().AsSingle();
         }
     }
 }

@@ -25,6 +25,8 @@ namespace Assets.Game.Scripts.Installers
 
             Container.BindInterfacesTo<UnityAdsInitializer>().AsSingle();
             
+            Container.BindInterfacesAndSelfTo<MainMenuInterstitialAdsManager>().AsSingle();
+            
             Container.BindInterfacesTo<UnityAdsService>().AsSingle();
             
             Container.BindInstance(_adsConfig).AsSingle();

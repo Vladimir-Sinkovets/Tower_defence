@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
   _navMeshAgent: {fileID: 838242292948046785}
-  _enemyView: {fileID: 8780912966657089858}
+  _simpleEnemyView: {fileID: 8780912966657089858}
   _healthBarView: {fileID: 2489598095558346151}
 --- !u!195 &838242292948046785
 NavMeshAgent:

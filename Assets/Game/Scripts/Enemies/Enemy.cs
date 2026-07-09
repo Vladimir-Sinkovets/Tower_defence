@@ -9,12 +9,14 @@ namespace Assets.Game.Scripts.Enemies
         public event Action OnDied;
 
         protected Health Health;
+
+        public bool IsActive { get; private set; }
         
         public bool IsDead => Health.IsDead;
+        
+        public void Activate() => IsActive = true;
 
-        public abstract void Activate();
-
-        public abstract void Deactivate();
+        public void Deactivate() => IsActive = false;
 
         public virtual void Init(EnemyConfig config, Health targetHealth, Transform targetTransform)
         {
@@ -26,6 +28,6 @@ namespace Assets.Game.Scripts.Enemies
         
         protected virtual void OnDiedHandler() => OnDied?.Invoke();
 
-        public void OnDestroy() => Health.OnDied -= OnDiedHandler;
+        protected void OnDestroy() => Health.OnDied -= OnDiedHandler;
     }
 }

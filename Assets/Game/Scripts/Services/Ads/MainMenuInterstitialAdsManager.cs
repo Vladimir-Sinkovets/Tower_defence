@@ -1,13 +1,16 @@
 using System;
 using System.Threading;
+using Assets.Game.Scripts.Shared;
 using Cysharp.Threading.Tasks;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 using Zenject;
 
 namespace Assets.Game.Scripts.Services.Ads
 {
     public class MainMenuInterstitialAdsManager : IInitializable, IDisposable
     {
-        private static int _adsCallCount;
+        private int _adsCallCount;
         
         private readonly IInterstitialAdsService _interstitialAdsService;
         
@@ -15,7 +18,15 @@ namespace Assets.Game.Scripts.Services.Ads
 
         public MainMenuInterstitialAdsManager(IInterstitialAdsService interstitialAdsService) => _interstitialAdsService = interstitialAdsService;
 
-        public void Initialize() => ShowAd();
+        public void Initialize() => SceneManager.sceneLoaded += OnSceneLoaded;
+
+        private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        {
+            if (scene.name == SceneNames.Menu)
+            {
+                ShowAd().Forget();
+            }
+        }
 
         private async UniTask ShowAd()
         {
@@ -26,12 +37,13 @@ namespace Assets.Game.Scripts.Services.Ads
             
             _cancellationTokenSource = new CancellationTokenSource();
             
-            await _interstitialAdsService.LoadAdAsync(_cancellationTokenSource.Token);
-            
             await _interstitialAdsService.ShowAdAsync(_cancellationTokenSource.Token);
         }
 
-
-        public void Dispose() => _cancellationTokenSource?.Cancel();
+        public void Dispose()
+        {
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+            _cancellationTokenSource?.Cancel();
+        }
     }
 }

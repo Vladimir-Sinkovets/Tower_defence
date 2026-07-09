@@ -3,11 +3,11 @@ using UnityEngine;
 
 namespace Assets.Game.Scripts.Enemies.States
 {
-    public class EnemyRunState : State
+    public class SimpleEnemyRunState : State
     {
-        private readonly EnemyStateMachineData _data;
+        private readonly SimpleEnemyStateMachineData _data;
 
-        public EnemyRunState(IStateSwitcher stateSwitcher, EnemyStateMachineData data) : base(stateSwitcher) => _data = data;
+        public SimpleEnemyRunState(IStateSwitcher stateSwitcher, SimpleEnemyStateMachineData data) : base(stateSwitcher) => _data = data;
 
         public override void Enter()
         {
@@ -33,7 +33,7 @@ namespace Assets.Game.Scripts.Enemies.States
 
             if (!_data.Enemy.IsActive)
             {
-                StateSwitcher.SwitchState<EnemyIdleState>();
+                StateSwitcher.SwitchState<SimpleEnemyIdleState>();
             }
             else if (Vector3.Distance(_data.Transform.position, _data.TargetTransform.position) <= _data.Config.AttackRange)
             {

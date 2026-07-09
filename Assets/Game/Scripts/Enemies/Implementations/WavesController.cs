@@ -7,10 +7,11 @@ using Assets.Game.Scripts.Services.Registries;
 using Assets.Game.Scripts.Shared;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using Zenject;
 
 namespace Assets.Game.Scripts.Enemies.Implementations
 {
-    public class WavesController : IWavesController, IDisposable
+    public class WavesController : IWavesController, IInitializable, IDisposable
     {
         private readonly IEnemyWavesSpawner _enemyWavesController;
         private readonly Registry<Enemy> _enemyRegistry;
@@ -35,15 +36,18 @@ namespace Assets.Game.Scripts.Enemies.Implementations
             _wavesConfig = wavesConfig;
         }
 
+        public void Initialize()
+        {
+            _enemyRegistry.OnRegistered += OnRegisteredHandler;
+            _enemyRegistry.OnUnregistered += OnUnregisteredHandler;
+        }
+
         public void StartWaves(Health targetHealth, Transform targetTransform)
         {
             _wavesCts?.Cancel();
             _wavesCts?.Dispose();
             
             _wavesCts = new CancellationTokenSource();
-
-            _enemyRegistry.OnRegistered += OnRegisteredHandler;
-            _enemyRegistry.OnUnregistered += OnUnregisteredHandler;
             
             SpawnWaves(targetHealth, targetTransform, _wavesCts.Token).Forget();
         }

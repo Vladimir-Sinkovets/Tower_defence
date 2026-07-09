@@ -49,6 +49,11 @@ namespace Assets.Game.Scripts.Buildings
                 BuildingType = buildingType,
             };
 
+            SetUpStateMachine();
+        }
+
+        private void SetUpStateMachine()
+        {
             _stateMachine = new StateMachine();
             _stateMachine.AddState(_instantiator.Instantiate<ShootingBuildingWaitState>(new object[] { _data, _stateMachine }));
             _stateMachine.AddState(_instantiator.Instantiate<ShootingBuildingAttackState>(new object[] { _data, _stateMachine }));

@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Assets.Game.Scripts.Enemies
 {
-    public class EnemyView : MonoBehaviour
+    public class SimpleEnemyView : MonoBehaviour
     {
         [SerializeField] private Animator _animator;
         [SerializeField] private GameObject _canvas;

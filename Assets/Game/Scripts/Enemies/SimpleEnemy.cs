@@ -14,36 +14,36 @@ namespace Assets.Game.Scripts.Enemies
     public class SimpleEnemy : Enemy
     {
         [SerializeField] private NavMeshAgent _navMeshAgent;
-        [SerializeField] private EnemyView _enemyView;
+        [SerializeField] private SimpleEnemyView _simpleEnemyView;
         [SerializeField] private HealthBarView _healthBarView;
 
         private StateMachine _stateMachine;
-        private EnemyStateMachineData _data;
+        private SimpleEnemyStateMachineData _data;
 
         private Registry<Enemy> _enemyRegistry;
         private CurrencyBank _currencyBank;
         private GameStatistics _gameStatistics;
         private HealthBarPresenter _healthPresenter;
-
-        public bool IsActive { get; private set; }
+        private IInstantiator _instantiator;
 
         [Inject]
-        public void Construct(Registry<Enemy> enemyRegistry, CurrencyBank currencyBank, GameStatistics gameStatistics)
+        public void Construct(Registry<Enemy> enemyRegistry, CurrencyBank currencyBank, GameStatistics gameStatistics, IInstantiator instantiator)
         {
             _enemyRegistry = enemyRegistry;
             _currencyBank = currencyBank;
             _gameStatistics = gameStatistics;
+            _instantiator = instantiator;
         }
 
         public override void Init(EnemyConfig config, Health targetHealth, Transform targetTransform)
         {
             base.Init(config, targetHealth, targetTransform);
 
-            _data = new EnemyStateMachineData
+            _data = new SimpleEnemyStateMachineData
             {
                 NavMeshAgent = _navMeshAgent,
                 Transform = transform,
-                View = _enemyView,
+                View = _simpleEnemyView,
                 Config = config,
                 TargetHealth = targetHealth,
                 TargetTransform = targetTransform,
@@ -55,16 +55,6 @@ namespace Assets.Game.Scripts.Enemies
             SetUpHealthView();
 
             _enemyRegistry.Register(this);
-        }
-        
-        public override void Activate()
-        {
-            IsActive = true;
-        }
-
-        public override void Deactivate()
-        {
-            IsActive = false;
         }
         
         private void SetUpHealthView()
@@ -85,14 +75,13 @@ namespace Assets.Game.Scripts.Enemies
         private void SetUpStateMachine()
         {
             _stateMachine = new StateMachine();
-            _stateMachine.AddState(new EnemyRunState(_stateMachine, _data));
-            _stateMachine.AddState(new EnemyIdleState(_stateMachine, _data));
-            _stateMachine.AddState(new SimpleEnemyAttackState(_stateMachine, _data));
-            _stateMachine.AddState(new SimpleEnemyDeathState(_stateMachine, _data));
+            _stateMachine.AddState(_instantiator.Instantiate<SimpleEnemyRunState>(new object[] { _data, _stateMachine }));
+            _stateMachine.AddState(_instantiator.Instantiate<SimpleEnemyIdleState>(new object[] { _data, _stateMachine }));
+            _stateMachine.AddState(_instantiator.Instantiate<SimpleEnemyAttackState>(new object[] { _data, _stateMachine }));
+            _stateMachine.AddState(_instantiator.Instantiate<SimpleEnemyDeathState>(new object[] { _data, _stateMachine }));
             
-            _stateMachine.SetStartState<EnemyRunState>();
+            _stateMachine.SetStartState<SimpleEnemyRunState>();
         }
-
 
         protected override void OnDiedHandler()
         {
@@ -104,7 +93,7 @@ namespace Assets.Game.Scripts.Enemies
 
         private void Update() => _stateMachine?.Update();
 
-        private new void OnDestroy()
+        private void OnDestroy()
         {
             base.OnDestroy();
             

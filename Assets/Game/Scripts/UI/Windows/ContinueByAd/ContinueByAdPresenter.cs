@@ -47,8 +47,6 @@ namespace Assets.Game.Scripts.UI.Windows.ContinueByAd
 
         private async UniTask ShowAdAsync()
         {
-            await _adsRewardService.LoadAdAsync();
-
             await _adsRewardService.ShowAdAsync();
 
             _gameResumeService.Resume();
