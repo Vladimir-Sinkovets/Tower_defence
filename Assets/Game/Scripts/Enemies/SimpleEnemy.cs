@@ -96,8 +96,6 @@ namespace Assets.Game.Scripts.Enemies
         private void OnDestroy()
         {
             base.OnDestroy();
-            
-            Health.OnDied -= OnDiedHandler;
 
             _stateMachine.Dispose();
 

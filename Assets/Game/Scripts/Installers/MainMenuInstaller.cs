@@ -1,5 +1,4 @@
-﻿using Assets.Game.Scripts.Services.SceneLoaders;
-using Assets.Game.Scripts.UI;
+﻿using Assets.Game.Scripts.UI;
 using Assets.Game.Scripts.UI.MainMenuStatistics;
 using Assets.Game.Scripts.UI.UpgradePanel;
 using Assets.Game.Scripts.Upgrades.Implementations;
@@ -16,8 +15,6 @@ namespace Assets.Game.Scripts.Installers
         
         public override void InstallBindings()
         {
-            Container.Bind<SceneLoader>().AsSingle();
-
             Container.BindInterfacesTo<UpgradeService>().AsSingle();
             
             Container.BindInstance<IMainMenuStatisticsView>(_mainMenuStatisticsView).AsSingle();

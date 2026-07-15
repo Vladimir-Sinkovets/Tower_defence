@@ -20,7 +20,6 @@ using Assets.Game.Scripts.Services.HudFactories;
 using Assets.Game.Scripts.Services.PointerRouters;
 using Assets.Game.Scripts.Services.Registries;
 using Assets.Game.Scripts.Services.RewardCalculators;
-using Assets.Game.Scripts.Services.SceneLoaders;
 using Assets.Game.Scripts.Services.Statistics;
 using Assets.Game.Scripts.UI.Windows;
 using Assets.Game.Scripts.Upgrades.Implementations;
@@ -55,7 +54,6 @@ namespace Assets.Game.Scripts.Installers
         {
             Container.Bind<CurrencyBank>().AsSingle();
             Container.Bind<GameStatistics>().AsSingle();
-            Container.Bind<SceneLoader>().AsSingle();
             Container.Bind<CastleFactory>().AsSingle();
             Container.BindInterfacesTo<BuildingUpgradeApplier>().AsSingle();
             Container.BindInterfacesAndSelfTo<HudFactory>().AsSingle();
@@ -64,11 +62,10 @@ namespace Assets.Game.Scripts.Installers
             Container.BindInterfacesTo<BuildingFactory>().AsSingle();
             Container.BindInterfacesTo<ProjectileFactory>().AsSingle();
             Container.BindInterfacesTo<VFXFactory>().AsSingle();
-            Container.BindInterfacesAndSelfTo<Analytics>().AsSingle();
-            Container.BindInterfacesTo<FirebaseAnalyticsProvider>().AsSingle();
 
             Container.Bind<ShootingAssetLoader>().AsTransient();
             Container.Bind<ShootingExecutor>().AsTransient();
+            Container.BindInterfacesAndSelfTo<Analytics>().AsSingle();
         }
 
         private void BindInput()

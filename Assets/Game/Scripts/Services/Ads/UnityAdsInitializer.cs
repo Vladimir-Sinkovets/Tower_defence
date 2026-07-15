@@ -12,9 +12,7 @@ namespace Assets.Game.Scripts.Services.Ads
 
         public UnityAdsInitializer(AdsConfig config) => _config = config;
 
-        public void Initialize() => InitializeAds();
-
-        private void InitializeAds()
+        public void Initialize()
         {
 #if UNITY_IOS
             _gameId = _config.IOSGameId;

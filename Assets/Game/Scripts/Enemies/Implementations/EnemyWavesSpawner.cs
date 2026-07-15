@@ -10,6 +10,8 @@ namespace Assets.Game.Scripts.Enemies.Implementations
 {
     public class EnemyWavesSpawner : IEnemyWavesSpawner
     {
+        private const float NavMeshSamplePositionMaxDistance = 2.0f;
+        
         private readonly IEnemyFactory _enemyFactory;
         private readonly WavesConfig _wavesConfig;
         private readonly Transform[] _perimeterPoints;
@@ -64,7 +66,7 @@ namespace Assets.Game.Scripts.Enemies.Implementations
 
             var spawnPos = Vector3.Lerp(firstRandomPoint.position, secondRandomPoint.position, Random.value);
 
-            if (NavMesh.SamplePosition(spawnPos, out NavMeshHit hit, 2f, NavMesh.AllAreas))
+            if (NavMesh.SamplePosition(spawnPos, out NavMeshHit hit, NavMeshSamplePositionMaxDistance, NavMesh.AllAreas))
                 return hit.position;
 
             return firstRandomPoint.position;

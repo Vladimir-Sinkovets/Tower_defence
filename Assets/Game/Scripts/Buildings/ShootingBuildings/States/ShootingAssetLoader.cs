@@ -14,17 +14,15 @@ namespace Assets.Game.Scripts.Buildings.States
         public Projectile CachedProjectilePrefab { get; private set; }
         public ParticleSystem CachedHitVFXPrefab { get; private set; }
         
-        private AssetReference _shootVFXPrefab; 
-        private AssetReference _projectilePrefab; 
-        private AssetReference _hitVFXPrefab; 
+        private AssetReference _shootVFXPrefab;
+        private AssetReference _projectilePrefab;
+        private AssetReference _hitVFXPrefab;
         
         private bool _assetsLoaded;
+        private bool _isLoading;
         private UniTask _loadAssetsTask;
         
-        public ShootingAssetLoader(IAssetProvider assetProvider)
-        {
-            _assetProvider = assetProvider;
-        }
+        public ShootingAssetLoader(IAssetProvider assetProvider) => _assetProvider = assetProvider;
 
         public async UniTask EnsureAssetsLoaded(
             AssetReference shootVFXPrefab,
@@ -32,20 +30,30 @@ namespace Assets.Game.Scripts.Buildings.States
             AssetReference hitVFXPrefab,
             CancellationToken ct = default)
         {
-            if (_assetsLoaded) return;
+            if (_assetsLoaded)
+                return;
+            
+            if (_isLoading)
+            {
+                await _loadAssetsTask;
+                return;
+            }
             
             _shootVFXPrefab = shootVFXPrefab;
             _projectilePrefab = projectilePrefab;
             _hitVFXPrefab = hitVFXPrefab;
-
-            if (_loadAssetsTask.Status != UniTaskStatus.Succeeded && 
-                _loadAssetsTask.Status != UniTaskStatus.Faulted)
+            
+            _isLoading = true;
+            
+            _loadAssetsTask = LoadAssetsAsync(ct);
+            
+            try
             {
-                await _loadAssetsTask.SuppressCancellationThrow();
+                await _loadAssetsTask;
             }
-            else
+            finally
             {
-                await LoadAssetsAsync(ct);
+                _isLoading = false;
             }
         }
         
@@ -78,17 +86,17 @@ namespace Assets.Game.Scripts.Buildings.States
         }
         
         public void UnloadAssets()
-        {        
-            if (_assetsLoaded)
-            {
-                _assetProvider.Unload(_shootVFXPrefab);
-                _assetProvider.Unload(_projectilePrefab);
-                _assetProvider.Unload(_hitVFXPrefab);
-                _assetsLoaded = false;
-                CachedShootVFXPrefab = null;
-                CachedProjectilePrefab = null;
-                CachedHitVFXPrefab = null;
-            }
+        {
+            if (!_assetsLoaded)
+                return;
+            
+            _assetProvider.Unload(_shootVFXPrefab);
+            _assetProvider.Unload(_projectilePrefab);
+            _assetProvider.Unload(_hitVFXPrefab);
+            _assetsLoaded = false;
+            CachedShootVFXPrefab = null;
+            CachedProjectilePrefab = null;
+            CachedHitVFXPrefab = null;
         }
     }
 }
