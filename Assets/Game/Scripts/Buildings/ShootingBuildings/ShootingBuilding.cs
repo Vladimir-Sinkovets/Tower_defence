@@ -2,6 +2,7 @@
 using Assets.Game.Scripts.Animations;
 using Assets.Game.Scripts.Buildings.States;
 using Assets.Game.Scripts.Common.UniversalStateMachine;
+using Assets.Game.Scripts.Services.Configs.Buildings;
 using Assets.Game.Scripts.Services.Registries;
 using Assets.Game.Scripts.Shared;
 using UnityEngine;
@@ -33,13 +34,14 @@ namespace Assets.Game.Scripts.Buildings
 
         private void Update() => _stateMachine.Update();
 
-        public override void Init(BuildingConfig config, BuildingType buildingType)
+        public override void Init(BuildingConfig config, BuildingSettings settings, BuildingType buildingType)
         {
-            base.Init(config, buildingType);
+            base.Init(config, settings, buildingType);
 
             _data = new ShootingBuildingStateMachineData
             {
                 SearchTargetInterval = _searchTargetInterval,
+                Settings = settings,
                 Config = config,
                 Transform = transform,
                 WeaponRoot = _weaponRoot,

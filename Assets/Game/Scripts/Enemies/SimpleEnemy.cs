@@ -1,5 +1,7 @@
 using Assets.Game.Scripts.Common.UniversalStateMachine;
 using Assets.Game.Scripts.Enemies.States;
+using Assets.Game.Scripts.Services.Configs;
+using Assets.Game.Scripts.Services.Configs.Enemies;
 using Assets.Game.Scripts.Services.CurrencyBanks;
 using Assets.Game.Scripts.Services.Registries;
 using Assets.Game.Scripts.Services.Statistics;
@@ -35,22 +37,22 @@ namespace Assets.Game.Scripts.Enemies
             _instantiator = instantiator;
         }
 
-        public override void Init(EnemyConfig config, Health targetHealth, Transform targetTransform)
+        public override void Init(EnemySettings settings, Health targetHealth, Transform targetTransform)
         {
-            base.Init(config, targetHealth, targetTransform);
+            base.Init(settings, targetHealth, targetTransform);
 
             _data = new SimpleEnemyStateMachineData
             {
                 NavMeshAgent = _navMeshAgent,
                 Transform = transform,
                 View = _simpleEnemyView,
-                Config = config,
+                Settings = settings,
                 TargetHealth = targetHealth,
                 TargetTransform = targetTransform,
                 Enemy = this
             };
             
-            SetUpNavMesh(config);
+            SetUpNavMesh();
             SetUpStateMachine();
             SetUpHealthView();
 
@@ -63,9 +65,9 @@ namespace Assets.Game.Scripts.Enemies
             _healthPresenter.Init();
         }
 
-        private void SetUpNavMesh(EnemyConfig config)
+        private void SetUpNavMesh()
         {
-            _navMeshAgent.speed = config.Speed;
+            _navMeshAgent.speed = _data.Settings.Speed;
             _navMeshAgent.enabled = true;
             _navMeshAgent.Warp(transform.position);
             _navMeshAgent.ResetPath();
@@ -87,7 +89,7 @@ namespace Assets.Game.Scripts.Enemies
         {
             base.OnDiedHandler();
             
-            _currencyBank.Add(_data.Config.Award);
+            _currencyBank.Add(_data.Settings.Award);
             _gameStatistics.IncreaseKilledEnemyCount();
         }
 

@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Assets.Game.Scripts.Animations;
 using Assets.Game.Scripts.Buildings;
 using Assets.Game.Scripts.Buildings.Interfaces;
+using Assets.Game.Scripts.Services.Configs;
 using Assets.Game.Scripts.Shared;
 using Assets.Game.Scripts.Upgrades.Interfaces;
 using Cysharp.Threading.Tasks;
@@ -19,17 +20,20 @@ namespace Assets.Game.Scripts.Services.CastleFactories
         private readonly IBuildingFactory _buildingFactory;
         private readonly IBuildingUpgradeApplier _buildingUpgradeApplier;
         private readonly IInstantiator _instantiator;
+        private readonly GameSettings _gameSettings;
 
         public CastleFactory(
             BuildingsConfig buildingsConfig,
             IBuildingFactory buildingFactory,
             IBuildingUpgradeApplier buildingUpgradeApplier,
-            IInstantiator instantiator)
+            IInstantiator instantiator,
+            GameSettingsService gameSettingsService)
         {
             _buildingsConfig = buildingsConfig;
             _buildingFactory = buildingFactory;
             _buildingUpgradeApplier = buildingUpgradeApplier;
             _instantiator = instantiator;
+            _gameSettings = gameSettingsService.GameSettings;
         }
 
         public async UniTask<(Health, Transform)> CreateCastle(CancellationToken ct)
@@ -50,7 +54,7 @@ namespace Assets.Game.Scripts.Services.CastleFactories
 
         private async Task<Building> CreateBuilding(GameObject root)
         {
-            var building = await _buildingFactory.Create(_buildingsConfig.CastleBuilding, BuildingType.Castle);
+            var building = await _buildingFactory.Create(_buildingsConfig.CastleBuilding, _gameSettings.CastleSettings.CastleBuilding, BuildingType.Castle);
 
             building.transform.SetParent(root.transform);
             building.transform.position = root.transform.position;
@@ -69,7 +73,7 @@ namespace Assets.Game.Scripts.Services.CastleFactories
 
         private Health CreateHealth()
         {
-            var castleHp = _buildingUpgradeApplier.ApplyCastleHpUpgrade(_buildingsConfig.CastleHp);
+            var castleHp = _buildingUpgradeApplier.ApplyCastleHpUpgrade(_gameSettings.CastleSettings.CastleHp);
             var castleHealth = new Health(castleHp);
             
             return castleHealth;

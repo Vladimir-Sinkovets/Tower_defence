@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using Assets.Game.Scripts.Configs;
 using Assets.Game.Scripts.Enemies.Interfaces;
+using Assets.Game.Scripts.Services.Configs;
 using Assets.Game.Scripts.Shared;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -16,14 +17,16 @@ namespace Assets.Game.Scripts.Enemies.Implementations
         private readonly WavesConfig _wavesConfig;
         private readonly Transform[] _perimeterPoints;
         private bool _isStopped;
+        private readonly GameSettings _gameSettings;
 
         public bool IsSpawning { get; private set; }
         
-        public EnemyWavesSpawner(IEnemyFactory enemyFactory, WavesConfig wavesConfig, Transform[] perimeterPoints)
+        public EnemyWavesSpawner(IEnemyFactory enemyFactory, WavesConfig wavesConfig, Transform[] perimeterPoints, GameSettingsService gameSettingsService)
         {
             _enemyFactory = enemyFactory;
             _wavesConfig = wavesConfig;
             _perimeterPoints = perimeterPoints;
+            _gameSettings = gameSettingsService.GameSettings;
         }
 
         public async UniTask SpawnWave(int count, Health targetHealth, Transform targetTransform, CancellationToken ct)
@@ -40,13 +43,13 @@ namespace Assets.Game.Scripts.Enemies.Implementations
 
                 enemy.transform.position = spawnPoint;
 
-                enemy.Init(_wavesConfig.EnemyConfig, targetHealth, targetTransform);
+                enemy.Init(_gameSettings.WavesSettings.EnemySettings, targetHealth, targetTransform);
 
                 enemy.Activate();
 
                 await UniTask.WaitWhile(() => _isStopped, cancellationToken: ct);
                 
-                await UniTask.WaitForSeconds(_wavesConfig.IntervalBetweenEnemies, cancellationToken: ct);
+                await UniTask.WaitForSeconds(_gameSettings.WavesSettings.IntervalBetweenEnemies, cancellationToken: ct);
             }
 
             IsSpawning = false;

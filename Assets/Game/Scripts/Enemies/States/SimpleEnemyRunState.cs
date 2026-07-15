@@ -35,7 +35,7 @@ namespace Assets.Game.Scripts.Enemies.States
             {
                 StateSwitcher.SwitchState<SimpleEnemyIdleState>();
             }
-            else if (Vector3.Distance(_data.Transform.position, _data.TargetTransform.position) <= _data.Config.AttackRange)
+            else if (Vector3.Distance(_data.Transform.position, _data.TargetTransform.position) <= _data.Settings.AttackRange)
             {
                 StateSwitcher.SwitchState<SimpleEnemyAttackState>();
             }

@@ -42,7 +42,7 @@ namespace Assets.Game.Scripts.Buildings.States
 
         private void FindTarget()
         {
-            _data.CurrentTarget = _enemyAccessor.FindNearestEnemy(_data.Transform.position, _data.Config.AttackRadius);
+            _data.CurrentTarget = _enemyAccessor.FindNearestEnemy(_data.Transform.position, _data.Settings.AttackRadius);
 
             if (_data.CurrentTarget == null)
                 return;

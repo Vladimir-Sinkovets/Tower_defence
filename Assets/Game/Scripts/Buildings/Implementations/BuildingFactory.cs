@@ -1,5 +1,6 @@
 ﻿using Assets.Game.Scripts.Buildings.Interfaces;
 using Assets.Game.Scripts.Services.AssetProviders;
+using Assets.Game.Scripts.Services.Configs.Buildings;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Zenject;
@@ -17,13 +18,13 @@ namespace Assets.Game.Scripts.Buildings.Implementations
             _assetProvider = assetProvider;
         }
 
-        public async UniTask<Building> Create(BuildingConfig config, BuildingType buildingType)
+        public async UniTask<Building> Create(BuildingConfig config, BuildingSettings settings, BuildingType buildingType)
         {
             var prefab = await _assetProvider.Load<GameObject>(config.Prefab);
             
             var building = _instantiator.InstantiatePrefabForComponent<ShootingBuilding>(prefab);
 
-            building.Init(config, buildingType);
+            building.Init(config, settings, buildingType);
 
             return building;
         }

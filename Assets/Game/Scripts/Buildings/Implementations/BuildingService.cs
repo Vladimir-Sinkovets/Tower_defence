@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Linq;
 using System.Threading;
 using Assets.Game.Scripts.Buildings.Interfaces;
 using Assets.Game.Scripts.Enemies.Interfaces;
 using Assets.Game.Scripts.Services.Analytics;
+using Assets.Game.Scripts.Services.Configs;
 using Assets.Game.Scripts.Services.CurrencyBanks;
 using Assets.Game.Scripts.Services.Registries;
 using Cysharp.Threading.Tasks;
@@ -17,6 +19,7 @@ namespace Assets.Game.Scripts.Buildings.Implementations
         private readonly IBuildingFactory _buildingFactory;
         private readonly IAnalytics _analytics;
         private readonly IWavesController _wavesController;
+        private readonly GameSettings _gameSettings;
 
         private CancellationTokenSource _cts;
         
@@ -27,13 +30,15 @@ namespace Assets.Game.Scripts.Buildings.Implementations
             CurrencyBank currencyBank,
             IBuildingFactory buildingFactory,
             IAnalytics analytics,
-            IWavesController wavesController)
+            IWavesController wavesController,
+            GameSettingsService gameSettingsService)
         {
             _buildingRegistry = buildingRegistry;
             _currencyBank = currencyBank;
             _buildingFactory = buildingFactory;
             _analytics = analytics;
             _wavesController = wavesController;
+            _gameSettings = gameSettingsService.GameSettings;
         }
         
         
@@ -48,9 +53,11 @@ namespace Assets.Game.Scripts.Buildings.Implementations
             return true;
         }
 
-        public bool TryBuild(BuildingOptionConfig optionConfig, Vector3 position)
+        public bool TryBuild(BuildingConfig config, Vector3 position)
         {
-            if (_currencyBank.TrySpend(optionConfig.Price) == false)
+            var price = _gameSettings.BuildingSettings.FirstOrDefault(s => s.Id == config.Id).Price;
+            
+            if (_currencyBank.TrySpend(price) == false)
                 return false;
             
             _cts?.Cancel();
@@ -58,18 +65,20 @@ namespace Assets.Game.Scripts.Buildings.Implementations
 
             _cts = new CancellationTokenSource();
             
-            CreateBuilding(optionConfig, position, _cts.Token).Forget();
+            CreateBuilding(config, position, _cts.Token).Forget();
 
             _towersCount++;
             
-            _analytics.TowerBuilt(optionConfig.Price, _towersCount, _wavesController.WavesCount);
+            _analytics.TowerBuilt(price, _towersCount, _wavesController.WavesCount);
             
             return true;
         }
         
-        private async UniTaskVoid CreateBuilding(BuildingOptionConfig buildingOptionConfig, Vector3 position, CancellationToken ct)
+        private async UniTaskVoid CreateBuilding(BuildingConfig buildingConfig, Vector3 position, CancellationToken ct)
         {
-            var building = await _buildingFactory.Create(buildingOptionConfig.BuildingConfig, BuildingType.Tower);
+            var settings = _gameSettings.BuildingSettings.FirstOrDefault(s => s.Id == buildingConfig.Id);
+            
+            var building = await _buildingFactory.Create(buildingConfig, settings, BuildingType.Tower);
 
             building.transform.position = position;
 

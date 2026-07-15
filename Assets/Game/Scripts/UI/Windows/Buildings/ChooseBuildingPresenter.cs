@@ -5,6 +5,7 @@ using Assets.Game.Scripts.Buildings;
 using Assets.Game.Scripts.Buildings.Interfaces;
 using Assets.Game.Scripts.Input;
 using Assets.Game.Scripts.Services.Analytics;
+using Assets.Game.Scripts.Services.Configs;
 using Assets.Game.Scripts.Services.CurrencyBanks;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -20,6 +21,7 @@ namespace Assets.Game.Scripts.UI.Windows.Buildings
         private readonly PointSelector _pointSelector;
         private readonly IWindowsManager _windowManager;
         private readonly IAnalytics _analytics;
+        private readonly GameSettings _gameSettings;
 
         private Vector3 _position;
         private CancellationTokenSource _closePanelCts;
@@ -31,7 +33,8 @@ namespace Assets.Game.Scripts.UI.Windows.Buildings
             IBuildingService buildingService,
             PointSelector pointSelector,
             IWindowsManager windowManager,
-            IAnalytics analytics)
+            IAnalytics analytics,
+            GameSettingsService gameSettingsService)
         {
             _chooseBuildingView = chooseBuildingView;
             _buildingsConfig = buildingsConfig;
@@ -40,6 +43,7 @@ namespace Assets.Game.Scripts.UI.Windows.Buildings
             _pointSelector = pointSelector;
             _windowManager = windowManager;
             _analytics = analytics;
+            _gameSettings = gameSettingsService.GameSettings;
         }
 
         
@@ -117,10 +121,10 @@ namespace Assets.Game.Scripts.UI.Windows.Buildings
             var viewModels = _buildingsConfig.Buildings
                 .Select((buildingConfig, index) => new BuildingOptionViewModel()
                 {
-                    Price = buildingConfig.Price,
+                    Price = _gameSettings.BuildingSettings[index].Price,
                     Icon = buildingConfig.Icon,
                     Index = index,
-                    IsAvailable = buildingConfig.Price <= _currencyBank.Total,
+                    IsAvailable = _gameSettings.BuildingSettings[index].Price <= _currencyBank.Total,
                 }).ToList();
             
             _chooseBuildingView.Render(viewModels);

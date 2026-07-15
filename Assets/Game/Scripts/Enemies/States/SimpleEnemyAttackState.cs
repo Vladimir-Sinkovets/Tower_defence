@@ -27,7 +27,7 @@ namespace Assets.Game.Scripts.Enemies.States
                 return;
             }
 
-            if (Vector3.Distance(_data.Transform.position, _data.TargetTransform.position) > _data.Config.AttackRange)
+            if (Vector3.Distance(_data.Transform.position, _data.TargetTransform.position) > _data.Settings.AttackRange)
             {
                 StateSwitcher.SwitchState<SimpleEnemyRunState>();
                 return;
@@ -51,11 +51,11 @@ namespace Assets.Game.Scripts.Enemies.States
             if (_data.Enemy.IsDead || !_data.Enemy.IsActive)
                 return;
 
-            _data.TargetHealth.ApplyDamage(_data.Config.Damage);
+            _data.TargetHealth.ApplyDamage(_data.Settings.Damage);
 
             _isAttacking = false;
 
-            _nextAttackTime = Time.time + _data.Config.IntervalBetweenAttacks;
+            _nextAttackTime = Time.time + _data.Settings.IntervalBetweenAttacks;
         }
 
         private void OnEnemyDied()

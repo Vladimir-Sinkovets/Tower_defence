@@ -41,7 +41,7 @@ namespace Assets.Game.Scripts.Buildings.States
 
         public override void Update()
         {
-            if (Vector3.Distance(_data.CurrentTarget.transform.position, _data.Transform.position) > _data.Config.AttackRadius)
+            if (Vector3.Distance(_data.CurrentTarget.transform.position, _data.Transform.position) > _data.Settings.AttackRadius)
             {
                 StateSwitcher.SwitchState<ShootingBuildingWaitState>();
                 
@@ -70,7 +70,7 @@ namespace Assets.Game.Scripts.Buildings.States
                 _data.WeaponRoot.rotation = Quaternion.RotateTowards(
                     _data.WeaponRoot.rotation,
                     targetRotation,
-                    _data.Config.RotationSpeed * Time.deltaTime
+                    _data.Settings.RotationSpeed * Time.deltaTime
                 );
             }
         }

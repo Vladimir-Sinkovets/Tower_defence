@@ -2,6 +2,7 @@ using Assets.Game.Scripts.Saves;
 using Assets.Game.Scripts.Services.Ads;
 using Assets.Game.Scripts.Services.Analytics;
 using Assets.Game.Scripts.Services.AssetProviders;
+using Assets.Game.Scripts.Services.Configs;
 using Assets.Game.Scripts.Services.FirebaseSetups;
 using Assets.Game.Scripts.Services.SceneLoaders;
 using Assets.Game.Scripts.Upgrades;
@@ -38,6 +39,8 @@ namespace Assets.Game.Scripts.Installers
             Container.Bind<SceneLoader>().AsSingle();
             
             Container.BindInterfacesTo<FirebaseAnalyticsProvider>().AsSingle();
+            
+            Container.BindInterfacesAndSelfTo<GameSettingsService>().AsSingle();
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Game.Scripts.Buildings
@@ -9,16 +8,6 @@ namespace Assets.Game.Scripts.Buildings
     {
         public BuildingConfig CastleBuilding;
 
-        public int CastleHp = 50;
-
-        public List<BuildingOptionConfig> Buildings;
-    }
-
-    [Serializable]
-    public class BuildingOptionConfig
-    {
-        public Sprite Icon;
-        public BuildingConfig BuildingConfig;
-        public int Price;
+        public List<BuildingConfig> Buildings;
     }
 }

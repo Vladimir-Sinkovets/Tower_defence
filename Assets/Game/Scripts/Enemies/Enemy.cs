@@ -1,4 +1,5 @@
 ﻿using System;
+using Assets.Game.Scripts.Services.Configs.Enemies;
 using Assets.Game.Scripts.Shared;
 using UnityEngine;
 
@@ -18,9 +19,9 @@ namespace Assets.Game.Scripts.Enemies
 
         public void Deactivate() => IsActive = false;
 
-        public virtual void Init(EnemyConfig config, Health targetHealth, Transform targetTransform)
+        public virtual void Init(EnemySettings settings, Health targetHealth, Transform targetTransform)
         {
-            Health = new Health(config.Hp);
+            Health = new Health(settings.Hp);
             Health.OnDied += OnDiedHandler;
         }
 

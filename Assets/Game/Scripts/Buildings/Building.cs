@@ -1,4 +1,5 @@
 ﻿using Assets.Game.Scripts.Animations;
+using Assets.Game.Scripts.Services.Configs.Buildings;
 using Assets.Game.Scripts.Services.Registries;
 using UnityEngine;
 using Zenject;
@@ -10,22 +11,22 @@ namespace Assets.Game.Scripts.Buildings
         [field: SerializeField] public BuildingAppearanceAnimation AppearanceAnimation { get; private set; } 
         
         private Registry<Building> _buildingRegistry;
-        private BuildingConfig _config;
+        private BuildingSettings _settings;
 
-        public float RadiusOfOccupiedSpace => _config.RadiusOfOccupiedSpace;
+        public float RadiusOfOccupiedSpace => _settings.RadiusOfOccupiedSpace;
 
         [Inject]
         public void Construct(Registry<Building> buildingRegistry) => _buildingRegistry = buildingRegistry;
 
-        public virtual void Init(BuildingConfig config, BuildingType buildingType)
+        public virtual void Init(BuildingConfig config, BuildingSettings settings, BuildingType buildingType)
         {
-            _config = config;
+            _settings = settings;
             _buildingRegistry.Register(this);
         }
 
         private void OnDrawGizmos()
         {
-            if (_config != null)
+            if (_settings != null)
                 Gizmos.DrawWireSphere(transform.position, RadiusOfOccupiedSpace);
         }
 

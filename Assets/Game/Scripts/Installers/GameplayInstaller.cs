@@ -33,7 +33,6 @@ namespace Assets.Game.Scripts.Installers
     {
         [SerializeField] private WavesConfig _wavesConfig;
         [SerializeField] private BuildingsConfig _buildingsConfig;
-        [SerializeField] private MetaCurrencyConfig _metaCurrencyConfig;
         [SerializeField] private FieldStartupAnimation _fieldStartupAnimation;
         [SerializeField] private AssetReference _hudPrefab;
         [SerializeField] private Transform[] _perimeterPoints;
@@ -105,7 +104,6 @@ namespace Assets.Game.Scripts.Installers
         private void BindConfigs()
         {
             Container.BindInstance(_buildingsConfig).AsSingle();
-            Container.BindInstance(_metaCurrencyConfig).AsSingle();
             Container.BindInstance(_wavesConfig).AsSingle();
         }
 

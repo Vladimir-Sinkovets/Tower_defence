@@ -62,7 +62,7 @@ namespace Assets.Game.Scripts.Buildings.States
         private void SetNextShootTime()
         {
             _nextShootTime = Time.time +
-                             _buildingUpgradeApplier.ApplyBuildingAttackSpeedUpgrade(_data.Config.AttackInterval, _data.BuildingType);
+                             _buildingUpgradeApplier.ApplyBuildingAttackSpeedUpgrade(_data.Settings.AttackInterval, _data.BuildingType);
         }
 
         private async UniTask Shoot(CancellationToken ct)
@@ -85,9 +85,9 @@ namespace Assets.Game.Scripts.Buildings.States
                 {
                     Position = _data.ProjectileStartPosition.position,
                     Target = _data.CurrentTarget,
-                    Damage = _buildingUpgradeApplier.ApplyBuildingDamageUpgrade(_data.Config.Damage, _data.BuildingType),
-                    ProjectileSpeed = _data.Config.ProjectileSpeed,
-                    ArcHeight = _data.Config.ArcHeight,
+                    Damage = _buildingUpgradeApplier.ApplyBuildingDamageUpgrade(_data.Settings.Damage, _data.BuildingType),
+                    ProjectileSpeed = _data.Settings.ProjectileSpeed,
+                    ArcHeight = _data.Settings.ArcHeight,
                     HitVFXPrefab = _assetLoader.CachedHitVFXPrefab,
                 });
         }

@@ -12,12 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6742d251089ec80469cf0623e2200fe5, type: 3}
   m_Name: Simple_enemy_factory
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Enemies.Factories.SimpleEnemyFactory
-  Hp: 10
-  Speed: 2
-  AttackRange: 1
-  IntervalBetweenAttacks: 1
-  Award: 1
-  Damage: 2
+  Id: enemy
   Prefab:
     m_AssetGUID: 3a30612356179e54a99e73c8e3e2ece0
     m_SubObjectName: 

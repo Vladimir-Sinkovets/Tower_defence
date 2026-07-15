@@ -12,13 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44676b8239aec3844ae03ad8d15b84fe, type: 3}
   m_Name: Barrel
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Buildings.BuildingConfig
-  RadiusOfOccupiedSpace: 1
-  AttackRadius: 4
-  AttackInterval: 1
-  ProjectileSpeed: 4
-  Damage: 5
-  RotationSpeed: 360
-  ArcHeight: 0.4
+  Id: barrel
+  Icon: {fileID: 21300000, guid: 188ebcf3299cbe04ba6b0d4fa5c162cf, type: 3}
   ProjectilePrefab:
     m_AssetGUID: c77931573eaa6f147b287c00d3d3fbfc
     m_SubObjectName: 
