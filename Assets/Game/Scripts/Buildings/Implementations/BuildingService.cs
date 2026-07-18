@@ -19,7 +19,7 @@ namespace Assets.Game.Scripts.Buildings.Implementations
         private readonly IBuildingFactory _buildingFactory;
         private readonly IAnalytics _analytics;
         private readonly IWavesController _wavesController;
-        private readonly GameSettings _gameSettings;
+        private readonly GameSettingsService _gameSettingsService;
 
         private CancellationTokenSource _cts;
         
@@ -38,7 +38,7 @@ namespace Assets.Game.Scripts.Buildings.Implementations
             _buildingFactory = buildingFactory;
             _analytics = analytics;
             _wavesController = wavesController;
-            _gameSettings = gameSettingsService.GameSettings;
+            _gameSettingsService = gameSettingsService;
         }
         
         
@@ -53,11 +53,16 @@ namespace Assets.Game.Scripts.Buildings.Implementations
             return true;
         }
 
-        public bool TryBuild(BuildingConfig config, Vector3 position)
+        public async UniTask<bool> TryBuildAsync(BuildingConfig config, Vector3 position)
         {
-            var price = _gameSettings.BuildingSettings.FirstOrDefault(s => s.Id == config.Id).Price;
+            var gameSettings = await _gameSettingsService.GetSettingsAsync();
             
-            if (_currencyBank.TrySpend(price) == false)
+            var buildingSetting = gameSettings.BuildingSettings.FirstOrDefault(s => s.Id == config.Id);
+            
+            if (buildingSetting == null)
+                return false;
+            
+            if (!_currencyBank.TrySpend(buildingSetting.Price))
                 return false;
             
             _cts?.Cancel();
@@ -65,24 +70,26 @@ namespace Assets.Game.Scripts.Buildings.Implementations
 
             _cts = new CancellationTokenSource();
             
-            CreateBuilding(config, position, _cts.Token).Forget();
+            CreateBuildingAsync(config, position, _cts.Token).Forget();
 
             _towersCount++;
             
-            _analytics.TowerBuilt(price, _towersCount, _wavesController.WavesCount);
+            _analytics.TowerBuilt(buildingSetting.Price, _towersCount, _wavesController.WavesCount);
             
             return true;
         }
         
-        private async UniTaskVoid CreateBuilding(BuildingConfig buildingConfig, Vector3 position, CancellationToken ct)
+        private async UniTaskVoid CreateBuildingAsync(BuildingConfig buildingConfig, Vector3 position, CancellationToken ct)
         {
-            var settings = _gameSettings.BuildingSettings.FirstOrDefault(s => s.Id == buildingConfig.Id);
+            var gameSettings = await _gameSettingsService.GetSettingsAsync();
             
-            var building = await _buildingFactory.Create(buildingConfig, settings, BuildingType.Tower);
+            var settings = gameSettings.BuildingSettings.FirstOrDefault(s => s.Id == buildingConfig.Id);
+            
+            var building = await _buildingFactory.CreateAsync(buildingConfig, settings, BuildingType.Tower);
 
             building.transform.position = position;
 
-            await building.AppearanceAnimation.Play(ct);
+            await building.AppearanceAnimation.PlayAsync(ct);
         }
 
         public void Dispose()

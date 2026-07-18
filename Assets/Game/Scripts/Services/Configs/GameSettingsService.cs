@@ -1,6 +1,5 @@
 using System;
-using Assets.Game.Scripts.Upgrades;
-using Firebase.Extensions;
+using Cysharp.Threading.Tasks;
 using Firebase.RemoteConfig;
 using Newtonsoft.Json;
 using UnityEngine;
@@ -10,48 +9,39 @@ namespace Assets.Game.Scripts.Services.Configs
 {
     public class GameSettingsService : IInitializable
     {
-        private readonly UpgradeConfigs _upgradesConfig;
         private const string GameConfigKey = "Game_config";
+
+        private GameSettings _gameSettings;
+
+        public async UniTask<GameSettings> GetSettingsAsync()
+        {
+            await UniTask.WaitUntil(() => _gameSettings != null);
+            
+            return _gameSettings;
+        }
         
-        public GameSettings GameSettings { get; private set; }
+        public void Initialize() => FetchRemoteConfigAsync();
 
-        public GameSettingsService(UpgradeConfigs upgradesConfig) => _upgradesConfig = upgradesConfig;
-
-        public void Initialize() => FetchRemoteConfig();
-
-        private void FetchRemoteConfig()
+        private async UniTask FetchRemoteConfigAsync()
         {
             TimeSpan cacheTime = TimeSpan.Zero; 
 
-            FirebaseRemoteConfig.DefaultInstance.FetchAsync(cacheTime)
-                .ContinueWithOnMainThread(fetchTask => {
-                    if (fetchTask.IsCompleted) {
-                        FirebaseRemoteConfig.DefaultInstance.ActivateAsync()
-                            .ContinueWithOnMainThread(activateTask => {
-                                if (activateTask.IsCompleted) {
-                                    Debug.Log("Configuration updated");
-                                    SetConfig();
-                                }
-                            });
-                    } else {
-                        Debug.LogError("Configuration update error");
-                    }
-                });
-        }
-
-        private void SetConfig()
-        {
-            var dict = FirebaseRemoteConfig.DefaultInstance.AllValues;
-
-            var json = dict[GameConfigKey].StringValue;
+            await FirebaseRemoteConfig.DefaultInstance.FetchAsync(cacheTime);
             
-            GameSettings = JsonConvert.DeserializeObject<GameSettings>(json);
+            var activated = await FirebaseRemoteConfig.DefaultInstance.ActivateAsync();
+
+            if (activated)
+            {
+                var json = FirebaseRemoteConfig.DefaultInstance.AllValues[GameConfigKey].StringValue;
             
-            GameSettings.UpgradesSettings.CastleAttackSpeedUpgradeSettings.Icon = _upgradesConfig.CastleAttackSpeedUpgradeIcon;
-            GameSettings.UpgradesSettings.CastleDamageUpgradeSettings.Icon = _upgradesConfig.CastleDamageUpgradeIcon;
-            GameSettings.UpgradesSettings.CastleHpUpgradeSettings.Icon = _upgradesConfig.CastleHpUpgradeIcon;
-            GameSettings.UpgradesSettings.TowerAttackSpeedUpgradeSettings.Icon = _upgradesConfig.TowerAttackSpeedUpgradeIcon;
-            GameSettings.UpgradesSettings.TowerDamageUpgradeSettings.Icon = _upgradesConfig.TowerDamageUpgradeIcon;
+                _gameSettings = JsonConvert.DeserializeObject<GameSettings>(json);
+                
+                Debug.Log("Configuration updated");
+            }
+            else
+            {
+                Debug.LogError("Configuration update error");
+            }
         }
     }
 }

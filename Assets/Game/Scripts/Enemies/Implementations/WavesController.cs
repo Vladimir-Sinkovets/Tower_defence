@@ -16,8 +16,8 @@ namespace Assets.Game.Scripts.Enemies.Implementations
         private readonly IEnemyWavesSpawner _enemyWavesController;
         private readonly Registry<Enemy> _enemyRegistry;
         private readonly IAnalytics _analytics;
-        private readonly GameSettings _gameSettings;
-        
+        private readonly GameSettingsService _gameSettingsService;
+
         public int WavesCount { get; private set; }
 
         private CancellationTokenSource _wavesCts;
@@ -33,7 +33,7 @@ namespace Assets.Game.Scripts.Enemies.Implementations
             _enemyWavesController = enemyWavesSpawner;
             _enemyRegistry = enemyRegistry;
             _analytics = analytics;
-            _gameSettings = gameSettingsService.GameSettings;
+            _gameSettingsService = gameSettingsService;
         }
 
         public void Initialize()
@@ -49,7 +49,7 @@ namespace Assets.Game.Scripts.Enemies.Implementations
             
             _wavesCts = new CancellationTokenSource();
             
-            SpawnWaves(targetHealth, targetTransform, _wavesCts.Token).Forget();
+            SpawnWavesAsync(targetHealth, targetTransform, _wavesCts.Token).Forget();
         }
 
         public void Stop()
@@ -64,19 +64,21 @@ namespace Assets.Game.Scripts.Enemies.Implementations
             _enemyWavesController.Resume();
         }
 
-        private async UniTaskVoid SpawnWaves(Health targetHealth, Transform targetTransform, CancellationToken ct)
+        private async UniTaskVoid SpawnWavesAsync(Health targetHealth, Transform targetTransform, CancellationToken ct)
         {
+            var gameSettings = await _gameSettingsService.GetSettingsAsync();
+            
             while (ct.IsCancellationRequested == false)
             {
                 await UniTask.WaitWhile(() => _isStopped, cancellationToken: _wavesCts.Token);
                 
-                var enemyCount = _gameSettings.WavesSettings.BaseEnemyCount + WavesCount * _gameSettings.WavesSettings.NewEnemiesPerWave;
+                var enemyCount = gameSettings.WavesSettings.BaseEnemyCount + WavesCount * gameSettings.WavesSettings.NewEnemiesPerWave;
                 
                 _analytics.WaveStarted(WavesCount, enemyCount);
 
-                await _enemyWavesController.SpawnWave(enemyCount, targetHealth, targetTransform, ct);
+                await _enemyWavesController.SpawnWaveAsync(enemyCount, targetHealth, targetTransform, ct);
 
-                await UniTask.WaitUntil(() => 
+                await UniTask.WaitUntil(() =>
                     _enemyWavesController.IsSpawning == false &&
                     _aliveEnemyCount == 0,
                     cancellationToken: ct);
@@ -85,7 +87,7 @@ namespace Assets.Game.Scripts.Enemies.Implementations
                 
                 await UniTask.WaitWhile(() => _isStopped, cancellationToken: _wavesCts.Token);
                 
-                await UniTask.WaitForSeconds(_gameSettings.WavesSettings.IntervalBetweenWaves, cancellationToken: ct);
+                await UniTask.WaitForSeconds(gameSettings.WavesSettings.IntervalBetweenWaves, cancellationToken: ct);
 
                 WavesCount++;
             }

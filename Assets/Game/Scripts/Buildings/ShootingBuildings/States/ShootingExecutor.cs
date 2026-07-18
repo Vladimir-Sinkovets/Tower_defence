@@ -36,13 +36,13 @@ namespace Assets.Game.Scripts.Buildings.States
         {
             _data = data;
 
-            SetNextShootTime();
+            SetNextShootTimeAsync().Forget();
             
             _shootCts?.Cancel();
             _shootCts?.Dispose();
             _shootCts = new CancellationTokenSource();
 
-            _assetLoader.EnsureAssetsLoaded(
+            _assetLoader.EnsureAssetsLoadedAsync(
                 _data.Config.ShootVFXPrefab, 
                 _data.Config.ProjectilePrefab,
                 _data.Config.HitVFXPrefab).Forget();
@@ -53,28 +53,28 @@ namespace Assets.Game.Scripts.Buildings.States
             if (_nextShootTime > Time.time)
                 return;
 
-            SetNextShootTime();
+            await SetNextShootTimeAsync();
 
-            await Shoot(_shootCts.Token);
+            await ShootAsync(_shootCts.Token);
         }
 
 
-        private void SetNextShootTime()
+        private async UniTask SetNextShootTimeAsync()
         {
-            _nextShootTime = Time.time +
-                             _buildingUpgradeApplier.ApplyBuildingAttackSpeedUpgrade(_data.Settings.AttackInterval, _data.BuildingType);
+            _nextShootTime = Time.time + 
+                             await _buildingUpgradeApplier.ApplyBuildingAttackSpeedUpgradeAsync(_data.Settings.AttackInterval, _data.BuildingType);
         }
 
-        private async UniTask Shoot(CancellationToken ct)
+        private async UniTask ShootAsync(CancellationToken ct)
         {
-            await _assetLoader.EnsureAssetsLoaded(
+            await _assetLoader.EnsureAssetsLoadedAsync(
                 _data.Config.ShootVFXPrefab, 
                 _data.Config.ProjectilePrefab,
                 _data.Config.HitVFXPrefab,
                 ct);
             
             if (_data.PreShootAnimation != null)
-                await _data.PreShootAnimation.PlayBeforeAttackAnimation(ct);
+                await _data.PreShootAnimation.PlayBeforeAttackAnimationAsync(ct);
             
             if (_assetLoader.CachedShootVFXPrefab != null)
                 _vfxFactory.Create(_assetLoader.CachedShootVFXPrefab, _data.ProjectileStartPosition.position);
@@ -85,7 +85,7 @@ namespace Assets.Game.Scripts.Buildings.States
                 {
                     Position = _data.ProjectileStartPosition.position,
                     Target = _data.CurrentTarget,
-                    Damage = _buildingUpgradeApplier.ApplyBuildingDamageUpgrade(_data.Settings.Damage, _data.BuildingType),
+                    Damage = await _buildingUpgradeApplier.ApplyBuildingDamageUpgradeAsync(_data.Settings.Damage, _data.BuildingType),
                     ProjectileSpeed = _data.Settings.ProjectileSpeed,
                     ArcHeight = _data.Settings.ArcHeight,
                     HitVFXPrefab = _assetLoader.CachedHitVFXPrefab,
@@ -94,6 +94,7 @@ namespace Assets.Game.Scripts.Buildings.States
 
         public void Dispose()
         {
+            _shootCts?.Cancel();
             _shootCts?.Dispose();
             
             _assetLoader.UnloadAssets();

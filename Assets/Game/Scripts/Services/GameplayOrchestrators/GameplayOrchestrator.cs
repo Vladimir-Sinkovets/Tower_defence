@@ -56,7 +56,7 @@ namespace Assets.Game.Scripts.Services.GameplayOrchestrators
             
             await _fieldStartupAnimation.Play(ct);
             
-            var (castleHealth, castleTransform) = await _castleFactory.CreateCastle(ct);
+            var (castleHealth, castleTransform) = await _castleFactory.CreateCastleAsync(ct);
 
             await _hudFactory.CreateHUD(castleHealth);
 

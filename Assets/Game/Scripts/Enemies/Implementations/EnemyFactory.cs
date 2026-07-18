@@ -17,7 +17,7 @@ namespace Assets.Game.Scripts.Enemies.Implementations
             _assetProvider = assetProvider;
         }
         
-        public async Task<Enemy> Create(EnemyConfig config)
+        public async Task<Enemy> CreateAsync(EnemyConfig config)
         {
             var prefab = await _assetProvider.Load<GameObject>(config.Prefab);
             

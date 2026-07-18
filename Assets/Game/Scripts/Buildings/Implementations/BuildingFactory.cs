@@ -18,7 +18,7 @@ namespace Assets.Game.Scripts.Buildings.Implementations
             _assetProvider = assetProvider;
         }
 
-        public async UniTask<Building> Create(BuildingConfig config, BuildingSettings settings, BuildingType buildingType)
+        public async UniTask<Building> CreateAsync(BuildingConfig config, BuildingSettings settings, BuildingType buildingType)
         {
             var prefab = await _assetProvider.Load<GameObject>(config.Prefab);
             

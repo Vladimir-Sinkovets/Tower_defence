@@ -16,8 +16,8 @@ namespace Assets.Game.Scripts.Enemies.Implementations
         private readonly IEnemyFactory _enemyFactory;
         private readonly WavesConfig _wavesConfig;
         private readonly Transform[] _perimeterPoints;
+        private readonly GameSettingsService _gameSettingsService;
         private bool _isStopped;
-        private readonly GameSettings _gameSettings;
 
         public bool IsSpawning { get; private set; }
         
@@ -26,12 +26,14 @@ namespace Assets.Game.Scripts.Enemies.Implementations
             _enemyFactory = enemyFactory;
             _wavesConfig = wavesConfig;
             _perimeterPoints = perimeterPoints;
-            _gameSettings = gameSettingsService.GameSettings;
+            _gameSettingsService = gameSettingsService;
         }
 
-        public async UniTask SpawnWave(int count, Health targetHealth, Transform targetTransform, CancellationToken ct)
+        public async UniTask SpawnWaveAsync(int count, Health targetHealth, Transform targetTransform, CancellationToken ct)
         {
             IsSpawning = true;
+            
+            var gameSettings = await _gameSettingsService.GetSettingsAsync();
 
             for (int i = 0; i < count; i++)
             {
@@ -39,17 +41,17 @@ namespace Assets.Game.Scripts.Enemies.Implementations
 
                 var spawnPoint = GetRandomPerimeterPoint();
 
-                var enemy = await _enemyFactory.Create(_wavesConfig.EnemyConfig);
+                var enemy = await _enemyFactory.CreateAsync(_wavesConfig.EnemyConfig);
 
                 enemy.transform.position = spawnPoint;
 
-                enemy.Init(_gameSettings.WavesSettings.EnemySettings, targetHealth, targetTransform);
+                enemy.Init(gameSettings.WavesSettings.EnemySettings, targetHealth, targetTransform);
 
                 enemy.Activate();
 
                 await UniTask.WaitWhile(() => _isStopped, cancellationToken: ct);
                 
-                await UniTask.WaitForSeconds(_gameSettings.WavesSettings.IntervalBetweenEnemies, cancellationToken: ct);
+                await UniTask.WaitForSeconds(gameSettings.WavesSettings.IntervalBetweenEnemies, cancellationToken: ct);
             }
 
             IsSpawning = false;

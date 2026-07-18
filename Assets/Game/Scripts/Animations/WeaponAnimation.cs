@@ -6,6 +6,6 @@ namespace Assets.Game.Scripts.Animations
 {
     public abstract class WeaponAnimation : MonoBehaviour
     {
-        public abstract UniTask PlayBeforeAttackAnimation(CancellationToken ct);
+        public abstract UniTask PlayBeforeAttackAnimationAsync(CancellationToken ct);
     }
 }

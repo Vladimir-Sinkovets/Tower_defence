@@ -12,8 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14fcc19816bd45268a9c2f1cdc4dbd5f, type: 3}
   m_Name: UpgradeConfigs
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Upgrades.UpgradeConfigs
-  CastleAttackSpeedUpgradeIcon: {fileID: 21300000, guid: 58d3f9f8758a0a34898acaa50d12bdb4, type: 3}
-  CastleDamageUpgradeIcon: {fileID: 21300000, guid: 58d3f9f8758a0a34898acaa50d12bdb4, type: 3}
-  CastleHpUpgradeIcon: {fileID: 21300000, guid: 58d3f9f8758a0a34898acaa50d12bdb4, type: 3}
-  TowerAttackSpeedUpgradeIcon: {fileID: 21300000, guid: 188ebcf3299cbe04ba6b0d4fa5c162cf, type: 3}
-  TowerDamageUpgradeIcon: {fileID: 21300000, guid: 188ebcf3299cbe04ba6b0d4fa5c162cf, type: 3}
+  Configs:
+  - Id: Castle_attack_speed_upgrade
+    Icon: {fileID: 21300000, guid: 58d3f9f8758a0a34898acaa50d12bdb4, type: 3}
+  - Id: Castle_damage_upgrade
+    Icon: {fileID: 21300000, guid: 58d3f9f8758a0a34898acaa50d12bdb4, type: 3}
+  - Id: Castle_hp_upgrade
+    Icon: {fileID: 21300000, guid: 58d3f9f8758a0a34898acaa50d12bdb4, type: 3}
+  - Id: Tower_attack_speed_upgrade
+    Icon: {fileID: 21300000, guid: 188ebcf3299cbe04ba6b0d4fa5c162cf, type: 3}
+  - Id: Tower_damage_upgrade
+    Icon: {fileID: 21300000, guid: 188ebcf3299cbe04ba6b0d4fa5c162cf, type: 3}

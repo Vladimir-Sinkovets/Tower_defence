@@ -8,7 +8,7 @@ namespace Assets.Game.Scripts.Enemies.Interfaces
     public interface IEnemyWavesSpawner
     {
         bool IsSpawning { get; }
-        UniTask SpawnWave(int count, Health targetHealth, Transform targetTransform, CancellationToken ct);
+        UniTask SpawnWaveAsync(int count, Health targetHealth, Transform targetTransform, CancellationToken ct);
         void Stop();
         void Resume();
     }

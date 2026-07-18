@@ -15,7 +15,7 @@ namespace Assets.Game.Scripts.Animations
         [SerializeField] private float _finalScale = 1.0f;
         [SerializeField] private float _scaleDuration = 0.15f;
 
-        public async UniTask Play(CancellationToken ct)
+        public async UniTask PlayAsync(CancellationToken ct)
         {
             var buildingGroundPosition = _target.position;
 

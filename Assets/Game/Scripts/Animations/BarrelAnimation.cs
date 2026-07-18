@@ -19,7 +19,7 @@ namespace Assets.Game.Scripts.Animations
         [SerializeField] private float _finalScale = 1.0f;
         [SerializeField] private Ease _returnToNormalScaleEase = Ease.InQuint;
 
-        public override async UniTask PlayBeforeAttackAnimation(CancellationToken ct)
+        public override async UniTask PlayBeforeAttackAnimationAsync(CancellationToken ct)
         {
             await DOTween.Sequence()
                 .Append(_barrel.DOScaleZ(_squeezeZ, _duration)

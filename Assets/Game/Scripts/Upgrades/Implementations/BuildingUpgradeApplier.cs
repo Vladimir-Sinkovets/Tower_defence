@@ -5,60 +5,72 @@ using Assets.Game.Scripts.Saves;
 using Assets.Game.Scripts.Services.Configs;
 using Assets.Game.Scripts.Services.Configs.Upgrades;
 using Assets.Game.Scripts.Upgrades.Interfaces;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Assets.Game.Scripts.Upgrades.Implementations
 {
     public class BuildingUpgradeApplier : IBuildingUpgradeApplier
     {
+        private readonly GameSettingsService _gameSettingsService;
         private readonly ISaveService _saveService;
-        private readonly UpgradesSettings _upgradesSettings;
 
         public BuildingUpgradeApplier(GameSettingsService gameSettingsService, ISaveService saveService)
         {
-            _upgradesSettings = gameSettingsService.GameSettings.UpgradesSettings;
+            _gameSettingsService = gameSettingsService;
             _saveService = saveService;
         }
         
-        public int ApplyBuildingDamageUpgrade(int baseDamage, BuildingType buildingType)
+        public async UniTask<int> ApplyBuildingDamageUpgradeAsync(int baseDamage, BuildingType buildingType)
         {
+            var upgradesSettings = (await _gameSettingsService.GetSettingsAsync()).UpgradesSettings;
+            
             UpgradeSettings upgrade = buildingType switch
             {
-                BuildingType.Tower => _upgradesSettings.TowerDamageUpgradeSettings,
-                BuildingType.Castle => _upgradesSettings.CastleDamageUpgradeSettings,
+                BuildingType.Tower => upgradesSettings.TowerDamageUpgradeSettings,
+                BuildingType.Castle => upgradesSettings.CastleDamageUpgradeSettings,
                 
                 _ => throw new ArgumentOutOfRangeException(nameof(buildingType), buildingType, null)
             };
             
-            var level = GetUpgradeLevel(upgrade);
+            var level = await GetUpgradeLevelAsync(upgrade);
 
             return Mathf.RoundToInt(upgrade.ApplyEffect(level, baseDamage));
         }
         
-        public float ApplyBuildingAttackSpeedUpgrade(float baseInterval, BuildingType buildingType)
+        public async UniTask<float> ApplyBuildingAttackSpeedUpgradeAsync(float baseInterval, BuildingType buildingType)
         {
+            var upgradesSettings = (await _gameSettingsService.GetSettingsAsync()).UpgradesSettings;
+            
             UpgradeSettings upgrade = buildingType switch
             {
-                BuildingType.Tower => _upgradesSettings.TowerAttackSpeedUpgradeSettings,
-                BuildingType.Castle => _upgradesSettings.CastleAttackSpeedUpgradeSettings,
+                BuildingType.Tower => upgradesSettings.TowerAttackSpeedUpgradeSettings,
+                BuildingType.Castle => upgradesSettings.CastleAttackSpeedUpgradeSettings,
                 
                 _ => throw new ArgumentOutOfRangeException(nameof(buildingType), buildingType, null)
             };
             
-            var level = GetUpgradeLevel(upgrade);
+            var level = await GetUpgradeLevelAsync(upgrade);
 
             return upgrade.ApplyEffect(level, baseInterval);
         }
 
-        public int ApplyCastleHpUpgrade(int baseHp)
+        public async UniTask<int> ApplyCastleHpUpgradeAsync(int baseHp)
         {
-            var upgrade = _upgradesSettings.CastleHpUpgradeSettings;
+            var upgradesSettings = (await _gameSettingsService.GetSettingsAsync()).UpgradesSettings;
             
-            var level = GetUpgradeLevel(upgrade);
+            var upgrade = upgradesSettings.CastleHpUpgradeSettings;
+            
+            var level = await GetUpgradeLevelAsync(upgrade);
             
             return (int) upgrade.ApplyEffect(level, baseHp);
         }
         
-        private int GetUpgradeLevel(UpgradeSettings upgrade) => _saveService.Upgrades.GetValueOrDefault(upgrade.Id, _upgradesSettings.UpgradeLevel);
+        private async UniTask<int> GetUpgradeLevelAsync(UpgradeSettings upgrade)
+        {
+            var upgradesSettings = (await _gameSettingsService.GetSettingsAsync()).UpgradesSettings;
+            
+            return _saveService.Upgrades.GetValueOrDefault(upgrade.Id, upgradesSettings.UpgradeLevel);
+        }
     }
 }

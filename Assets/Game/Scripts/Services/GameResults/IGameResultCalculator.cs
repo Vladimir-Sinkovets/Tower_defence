@@ -1,8 +1,10 @@
+using Cysharp.Threading.Tasks;
+
 namespace Assets.Game.Scripts.Services.GameResults
 {
     public interface IGameResultCalculator
     {
-        GameOverResult Calculate();
+        UniTask<GameOverResult> CalculateAsync();
         GameOverResult GameOverResult { get; }
     }
 }

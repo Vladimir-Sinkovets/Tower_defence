@@ -29,15 +29,17 @@ namespace Assets.Game.Scripts.UI.UpgradePanel
             _upgradePanelView.Init();
         }
 
-        private void Render()
+        private async UniTask RenderAsync()
         {
-            var viewModels = _upgradeService.Upgrades
+            var upgrades = await _upgradeService.GetUpgradesAsync();
+            
+            var viewModels = upgrades
                 .Select(upgrade => new UpgradePanelViewModel()
                 {
                     Name = upgrade.Name,
                     Level = _upgradeService.GetLevel(upgrade),
                     Cost = _upgradeService.GetLevelCost(upgrade),
-                    Icon = upgrade.Icon,
+                    Icon = _upgradeService.GetIcon(upgrade.Id),
                     IsAvailable = _upgradeService.IsAvailable(upgrade),
                     Upgrade = $"+{upgrade.Upgrade}{upgrade.Unit}",
                     Id = upgrade.Id,
@@ -46,24 +48,26 @@ namespace Assets.Game.Scripts.UI.UpgradePanel
             _upgradePanelView.UpdateUpgradeList(viewModels);
         }
 
-        private void OnUpgradeClickedHandler(string id)
+        private void OnUpgradeClickedHandler(string id) => OnUpgradeClickedHandlerAsync(id).Forget();
+
+        private async UniTask OnUpgradeClickedHandlerAsync(string id)
         {
-            var upgrade = _upgradeService.GetUpgrade(id);
+            var upgrade = await _upgradeService.GetUpgrade(id);
             
             if (!_upgradeService.IsAvailable(upgrade))
                 return;
 
-            _upgradeService.BuyUpgrade(upgrade);
+            _upgradeService.BuyUpgradeAsync(upgrade).Forget();
         }
-        
+
         private void OnOpenButtonClickedHandler()
         {
-            Render();
+            RenderAsync().Forget();
             
             _upgradePanelView.ShowPanel();
         }
 
-        private void OnUpgradesChangedHandler() => Render();
+        private void OnUpgradesChangedHandler() => RenderAsync().Forget();
 
         private void OnCloseButtonClickedHandler() => _upgradePanelView.ClosePanel().Forget();
         

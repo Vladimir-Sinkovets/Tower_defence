@@ -1,15 +1,20 @@
 using Assets.Game.Scripts.Services.Configs;
+using Cysharp.Threading.Tasks;
 
 namespace Assets.Game.Scripts.Services.RewardCalculators
 {
     public class RewardCalculator : IRewardCalculator
     {
-        private readonly GameSettings _gameSettings;
+        private readonly GameSettingsService _gameSettingsService;
 
-        public RewardCalculator(GameSettingsService gameSettingsService) => _gameSettings = gameSettingsService.GameSettings;
+        public RewardCalculator(GameSettingsService gameSettingsService) => _gameSettingsService = gameSettingsService;
 
-        public int CalculateMetaCurrency(int wavesCount, int killedEnemiesCount) =>
-            wavesCount * _gameSettings.MetaCurrencySettings.MetaCurrencyPerWave +
-            killedEnemiesCount * _gameSettings.MetaCurrencySettings.MetaCurrencyPerKill;
+        public async UniTask<int> CalculateMetaCurrencyAsync(int wavesCount, int killedEnemiesCount)
+        {
+            var gameSettings = await _gameSettingsService.GetSettingsAsync();
+            
+            return wavesCount * gameSettings.MetaCurrencySettings.MetaCurrencyPerWave +
+                   killedEnemiesCount * gameSettings.MetaCurrencySettings.MetaCurrencyPerKill;
+        }
     }
 }

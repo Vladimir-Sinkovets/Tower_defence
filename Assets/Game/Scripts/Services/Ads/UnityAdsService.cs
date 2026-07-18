@@ -14,8 +14,8 @@ namespace Assets.Game.Scripts.Services.Ads
         public UnityAdsService(AdsConfig config)
         {
 #if UNITY_IOS
-            _adRewardId = config.IOSAdUnitId;
-            _adInterstitialId = config.IOSInterstitialUnitId
+            _adRewardId = config.IOSRewardAdId;
+            _adInterstitialId = config.IOSInterstitialAdId;
 #elif UNITY_ANDROID
             _adRewardId = config.AndroidRewardAdId;
             _adInterstitialId = config.AndroidInterstitialAdId;

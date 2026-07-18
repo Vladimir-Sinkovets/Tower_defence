@@ -58,7 +58,7 @@ namespace Assets.Game.Scripts.UI.Windows.ContinueByAd
         {
             _windowsManager.Close(WindowType.ContinueByAd);
             
-            _gameOverManager.GameOver();
+            _gameOverManager.GameOverAsync();
         }
     }
 }

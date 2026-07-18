@@ -2,6 +2,7 @@ using Assets.Game.Scripts.Enemies.Interfaces;
 using Assets.Game.Scripts.Services.CurrencyBanks;
 using Assets.Game.Scripts.Services.RewardCalculators;
 using Assets.Game.Scripts.Services.Statistics;
+using Cysharp.Threading.Tasks;
 
 namespace Assets.Game.Scripts.Services.GameResults
 {
@@ -26,9 +27,9 @@ namespace Assets.Game.Scripts.Services.GameResults
             _gameStatistics = gameStatistics;
         }
         
-        public GameOverResult Calculate()
+        public async UniTask<GameOverResult> CalculateAsync()
         {
-            var earnedMetaCurrency = _rewardCalculator.CalculateMetaCurrency(_wavesController.WavesCount, _gameStatistics.KilledEnemiesCount);
+            var earnedMetaCurrency = await _rewardCalculator.CalculateMetaCurrencyAsync(_wavesController.WavesCount, _gameStatistics.KilledEnemiesCount);
 
             GameOverResult = new GameOverResult()
             {

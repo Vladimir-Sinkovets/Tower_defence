@@ -6,6 +6,6 @@ namespace Assets.Game.Scripts.Buildings.Interfaces
 {
     public interface IBuildingFactory
     {
-        UniTask<Building> Create(BuildingConfig config, BuildingSettings settings, BuildingType buildingType);
+        UniTask<Building> CreateAsync(BuildingConfig config, BuildingSettings settings, BuildingType buildingType);
     }
 }

@@ -19,12 +19,11 @@ namespace Assets.Game.Scripts.Buildings.States
         private AssetReference _hitVFXPrefab;
         
         private bool _assetsLoaded;
-        private bool _isLoading;
         private UniTask _loadAssetsTask;
         
         public ShootingAssetLoader(IAssetProvider assetProvider) => _assetProvider = assetProvider;
 
-        public async UniTask EnsureAssetsLoaded(
+        public async UniTask EnsureAssetsLoadedAsync(
             AssetReference shootVFXPrefab,
             AssetReference projectilePrefab,
             AssetReference hitVFXPrefab,
@@ -33,7 +32,7 @@ namespace Assets.Game.Scripts.Buildings.States
             if (_assetsLoaded)
                 return;
             
-            if (_isLoading)
+            if (_loadAssetsTask.Status == UniTaskStatus.Pending)
             {
                 await _loadAssetsTask;
                 return;
@@ -42,47 +41,49 @@ namespace Assets.Game.Scripts.Buildings.States
             _shootVFXPrefab = shootVFXPrefab;
             _projectilePrefab = projectilePrefab;
             _hitVFXPrefab = hitVFXPrefab;
-            
-            _isLoading = true;
-            
-            _loadAssetsTask = LoadAssetsAsync(ct);
-            
+
             try
             {
+                _loadAssetsTask = LoadAssetsAsync(ct);
+                
                 await _loadAssetsTask;
             }
-            finally
+            catch (Exception ex)
             {
-                _isLoading = false;
+                CachedShootVFXPrefab = null;
+                CachedProjectilePrefab = null;
+                CachedHitVFXPrefab = null;
+                
+                _assetProvider.Unload(_shootVFXPrefab);
+                _assetProvider.Unload(_projectilePrefab);
+                _assetProvider.Unload(_hitVFXPrefab);
+
+                _loadAssetsTask = default;
+                
+                Debug.LogError($"Failed to load shooting assets: {ex}");
+
+                throw;
             }
         }
         
         private async UniTask LoadAssetsAsync(CancellationToken ct = default)
         {
-            try
-            {
-                GameObject shootVFX = null;
-                GameObject projectile = null;
-                GameObject hitVFX = null;
-                
-                if (_shootVFXPrefab.RuntimeKeyIsValid())
-                    shootVFX = await _assetProvider.Load<GameObject>(_shootVFXPrefab, ct);
-                if (_projectilePrefab.RuntimeKeyIsValid())
-                    projectile = await _assetProvider.Load<GameObject>(_projectilePrefab, ct);
-                if (_hitVFXPrefab.RuntimeKeyIsValid())
-                    hitVFX = await _assetProvider.Load<GameObject>(_hitVFXPrefab, ct);
+            GameObject shootVFX = null;
+            GameObject projectile = null;
+            GameObject hitVFX = null;
+            
+            if (_shootVFXPrefab.RuntimeKeyIsValid())
+                shootVFX = await _assetProvider.Load<GameObject>(_shootVFXPrefab, ct);
+            if (_projectilePrefab.RuntimeKeyIsValid())
+                projectile = await _assetProvider.Load<GameObject>(_projectilePrefab, ct);
+            if (_hitVFXPrefab.RuntimeKeyIsValid())
+                hitVFX = await _assetProvider.Load<GameObject>(_hitVFXPrefab, ct);
 
-                CachedShootVFXPrefab = shootVFX?.GetComponent<ParticleSystem>();
-                CachedProjectilePrefab = projectile?.GetComponent<Projectile>();
-                CachedHitVFXPrefab = hitVFX?.GetComponent<ParticleSystem>();
+            CachedShootVFXPrefab = shootVFX?.GetComponent<ParticleSystem>();
+            CachedProjectilePrefab = projectile?.GetComponent<Projectile>();
+            CachedHitVFXPrefab = hitVFX?.GetComponent<ParticleSystem>();
 
-                _assetsLoaded = true;
-            }
-            catch (OperationCanceledException) { }
-            catch (Exception ex)
-            {
-                Debug.LogError($"Failed to load shooting assets: {ex}");
-            }
+            _assetsLoaded = true;
         }
         
         public void UnloadAssets()

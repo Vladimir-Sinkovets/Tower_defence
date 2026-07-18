@@ -95,7 +95,7 @@ namespace Assets.Game.Scripts.Enemies
 
         private void Update() => _stateMachine?.Update();
 
-        private void OnDestroy()
+        protected override void OnDestroy()
         {
             base.OnDestroy();
 

@@ -15,7 +15,7 @@ namespace Assets.Game.Scripts.Animations
         [SerializeField] private Vector3 _normalRotation = Vector3.zero;
         [SerializeField] private Ease _returnToNormalEase = Ease.InSine;
         
-        public override async UniTask PlayBeforeAttackAnimation(CancellationToken ct)
+        public override async UniTask PlayBeforeAttackAnimationAsync(CancellationToken ct)
         {
             await _catapult.DOLocalRotate(_attackRotation, _duration)
                 .SetEase(_attackEase)

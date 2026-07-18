@@ -29,6 +29,6 @@ namespace Assets.Game.Scripts.Enemies
         
         protected virtual void OnDiedHandler() => OnDied?.Invoke();
 
-        protected void OnDestroy() => Health.OnDied -= OnDiedHandler;
+        protected virtual void OnDestroy() => Health.OnDied -= OnDiedHandler;
     }
 }
