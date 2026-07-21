@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b808954837e04018a2f28088f2af9065, type: 3}
-  m_Name: WindowViewsConfig
+  m_Name: Window_views_config
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.UI.Windows.WindowViewsConfig
   ChooseBuildingViewPrefab:
     m_AssetGUID: 81d4625e71f607a45aaf4d454fa0b9f2

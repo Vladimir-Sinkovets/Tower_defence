@@ -2564,7 +2564,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Installers.GameplayInstaller
   _wavesConfig: {fileID: 11400000, guid: e2d770929064cb9429f04b4f05b91882, type: 2}
   _buildingsConfig: {fileID: 11400000, guid: bb7a5b96a7f4bf9428849ea2877e38c7, type: 2}
-  _metaCurrencyConfig: {fileID: 11400000, guid: 7a6467ea0a848454a9a19b505317eb0b, type: 2}
   _fieldStartupAnimation: {fileID: 1651697476}
   _hudPrefab:
     m_AssetGUID: 05ddb41e470c0814b9d15ffb0a60c4f3
@@ -2579,6 +2578,7 @@ MonoBehaviour:
   - {fileID: 1496689257}
   _planeCenter: {fileID: 1796833159}
   _windowViewsConfig: {fileID: 11400000, guid: 98874b012a8569341b7329884a6c943c, type: 2}
+  _gameplayConfig: {fileID: 11400000, guid: c6ffb17a685e76349800e8fc63b1296b, type: 2}
 --- !u!1001 &428744459
 PrefabInstance:
   m_ObjectHideFlags: 0

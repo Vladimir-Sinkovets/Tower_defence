@@ -8,6 +8,7 @@ using Assets.Game.Scripts.Enemies.Implementations;
 using Assets.Game.Scripts.Input;
 using Assets.Game.Scripts.Services.Analytics;
 using Assets.Game.Scripts.Services.CastleFactories;
+using Assets.Game.Scripts.Services.ContinueGameServices;
 using Assets.Game.Scripts.Services.CurrencyBanks;
 using Assets.Game.Scripts.Services.EnemyAccessors;
 using Assets.Game.Scripts.Services.GameOverManagers;
@@ -38,6 +39,7 @@ namespace Assets.Game.Scripts.Installers
         [SerializeField] private Transform[] _perimeterPoints;
         [SerializeField] private Transform _planeCenter;
         [SerializeField] private WindowViewsConfig _windowViewsConfig;
+        [SerializeField] private GameplayConfig _gameplayConfig;
         
         public override void InstallBindings()
         {
@@ -65,6 +67,7 @@ namespace Assets.Game.Scripts.Installers
             Container.Bind<ShootingAssetLoader>().AsTransient();
             Container.Bind<ShootingExecutor>().AsTransient();
             Container.BindInterfacesAndSelfTo<Analytics>().AsSingle();
+            Container.BindInterfacesAndSelfTo<ContinueGameService>().AsSingle();
         }
 
         private void BindInput()
@@ -105,6 +108,7 @@ namespace Assets.Game.Scripts.Installers
         {
             Container.BindInstance(_buildingsConfig).AsSingle();
             Container.BindInstance(_wavesConfig).AsSingle();
+            Container.BindInstance(_gameplayConfig).AsSingle();
         }
 
         private void BindUI()

@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50b3835d99b74aec9239fa7cdad4b1ef, type: 3}
+  m_Name: In_app_purchases_config
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Services.Purchases.Configs.InAppPurchasesConfig
+  Products:
+  - Id: coins500
+    Action:
+      rid: 3815796150172123387
+  - Id: coins1500
+    Action:
+      rid: 3815796150172123388
+  - Id: coins4000
+    Action:
+      rid: 3815796150172123389
+  - Id: coins10000
+    Action:
+      rid: 3815796150172123390
+  - Id: disable_ads
+    Action:
+      rid: 3815796150172123391
+  references:
+    version: 2
+    RefIds:
+    - rid: 3815796150172123387
+      type: {class: AddCoinsPurchaseAction, ns: Assets.Game.Scripts.Services.Purchases.Configs, asm: Assembly-CSharp}
+      data:
+        Amount: 500
+    - rid: 3815796150172123388
+      type: {class: AddCoinsPurchaseAction, ns: Assets.Game.Scripts.Services.Purchases.Configs, asm: Assembly-CSharp}
+      data:
+        Amount: 1500
+    - rid: 3815796150172123389
+      type: {class: AddCoinsPurchaseAction, ns: Assets.Game.Scripts.Services.Purchases.Configs, asm: Assembly-CSharp}
+      data:
+        Amount: 4000
+    - rid: 3815796150172123390
+      type: {class: AddCoinsPurchaseAction, ns: Assets.Game.Scripts.Services.Purchases.Configs, asm: Assembly-CSharp}
+      data:
+        Amount: 10000
+    - rid: 3815796150172123391
+      type: {class: DisableAdsPurchaseAction, ns: Assets.Game.Scripts.Services.Purchases.Configs, asm: Assembly-CSharp}
+      data: 

@@ -4,6 +4,8 @@ using Assets.Game.Scripts.Services.Analytics;
 using Assets.Game.Scripts.Services.AssetProviders;
 using Assets.Game.Scripts.Services.Configs;
 using Assets.Game.Scripts.Services.FirebaseSetups;
+using Assets.Game.Scripts.Services.Purchases;
+using Assets.Game.Scripts.Services.Purchases.Configs;
 using Assets.Game.Scripts.Services.SceneLoaders;
 using Assets.Game.Scripts.Upgrades;
 using UnityEngine;
@@ -15,6 +17,7 @@ namespace Assets.Game.Scripts.Installers
     {
         [SerializeField] private UpgradeConfigs _upgradeConfigs;
         [SerializeField] private AdsConfig _adsConfig;
+        [SerializeField] private InAppPurchasesConfig _inAppPurchasesConfig;
         
         public override void InstallBindings()
         {
@@ -41,6 +44,12 @@ namespace Assets.Game.Scripts.Installers
             Container.BindInterfacesTo<FirebaseAnalyticsProvider>().AsSingle();
             
             Container.BindInterfacesAndSelfTo<GameSettingsService>().AsSingle();
+            
+            Container.BindInterfacesAndSelfTo<InAppPurchaseManager>().AsSingle();
+            
+            Container.BindInterfacesAndSelfTo<InAppPurchaseExecutor>().AsSingle();
+            
+            Container.BindInstance(_inAppPurchasesConfig).AsSingle();
         }
     }
 }

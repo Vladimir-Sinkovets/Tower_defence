@@ -32,6 +32,8 @@ namespace Assets.Game.Scripts.Saves
                 WavesRecordChanged?.Invoke();
             }
         }
+        
+        public bool IsaAdsDisabled => _saveData.IsaAdsDisabled;
 
         public IReadOnlyDictionary<string, int> Upgrades => _saveData.Upgrades;
         
@@ -57,6 +59,8 @@ namespace Assets.Game.Scripts.Saves
             
             OnUpgradesChanged?.Invoke();
         }
+
+        public void DisableAds() => _saveData.IsaAdsDisabled = true;
 
         public void Save()
         {

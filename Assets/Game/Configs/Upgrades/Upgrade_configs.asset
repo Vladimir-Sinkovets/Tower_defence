@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 14fcc19816bd45268a9c2f1cdc4dbd5f, type: 3}
-  m_Name: UpgradeConfigs
+  m_Name: Upgrade_configs
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Upgrades.UpgradeConfigs
   Configs:
   - Id: Castle_attack_speed_upgrade

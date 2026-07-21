@@ -4,9 +4,9 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.Game.Scripts.UI.Windows.ContinueByAd
+namespace Assets.Game.Scripts.UI.Windows.ContinuePanel
 {
-    public class ContinueByAdView : MonoBehaviour, IContinueByAdView
+    public class ContinueView : MonoBehaviour, IContinueView
     {
         public event Action OnContinueButtonClicked;
         public event Action OnDeclineButtonClicked;
@@ -38,6 +38,8 @@ namespace Assets.Game.Scripts.UI.Windows.ContinueByAd
 
             _panel.gameObject.SetActive(false);
         }
+
+        public void SetContinueButtonActive(bool isActive) => _continueButton.interactable = isActive;
 
         private void DeclineButtonHandler() => OnDeclineButtonClicked?.Invoke();
 

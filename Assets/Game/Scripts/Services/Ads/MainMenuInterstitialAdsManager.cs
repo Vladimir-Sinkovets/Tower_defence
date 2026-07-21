@@ -1,8 +1,8 @@
 using System;
 using System.Threading;
+using Assets.Game.Scripts.Saves;
 using Assets.Game.Scripts.Shared;
 using Cysharp.Threading.Tasks;
-using UnityEngine;
 using UnityEngine.SceneManagement;
 using Zenject;
 
@@ -13,10 +13,15 @@ namespace Assets.Game.Scripts.Services.Ads
         private int _adsCallCount;
         
         private readonly IInterstitialAdsService _interstitialAdsService;
-        
+        private readonly ISaveService _saveService;
+
         private CancellationTokenSource _cancellationTokenSource;
 
-        public MainMenuInterstitialAdsManager(IInterstitialAdsService interstitialAdsService) => _interstitialAdsService = interstitialAdsService;
+        public MainMenuInterstitialAdsManager(IInterstitialAdsService interstitialAdsService, ISaveService saveService)
+        {
+            _interstitialAdsService = interstitialAdsService;
+            _saveService = saveService;
+        }
 
         public void Initialize() => SceneManager.sceneLoaded += OnSceneLoaded;
 
@@ -30,6 +35,9 @@ namespace Assets.Game.Scripts.Services.Ads
 
         private async UniTask ShowAd()
         {
+            if (_saveService.IsaAdsDisabled)
+                return;
+            
             _adsCallCount++;
             
             if (_adsCallCount % 2 != 0)

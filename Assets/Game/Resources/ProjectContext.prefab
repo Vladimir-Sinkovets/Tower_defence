@@ -76,3 +76,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Installers.GlobalInstaller
   _upgradeConfigs: {fileID: 11400000, guid: fff597f787461744aaa37b5cc47c7212, type: 2}
   _adsConfig: {fileID: 11400000, guid: 1b8b5ececd77eae499b9e152c1419ed7, type: 2}
+  _inAppPurchasesConfig: {fileID: 11400000, guid: 53db687270cf0b44496edab0fdb3248e, type: 2}

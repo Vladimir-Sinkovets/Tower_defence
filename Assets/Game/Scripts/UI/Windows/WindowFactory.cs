@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Assets.Game.Scripts.Services.AssetProviders;
 using Assets.Game.Scripts.UI.Windows.Buildings;
-using Assets.Game.Scripts.UI.Windows.ContinueByAd;
+using Assets.Game.Scripts.UI.Windows.ContinuePanel;
 using Assets.Game.Scripts.UI.Windows.EndGame;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -27,7 +27,7 @@ namespace Assets.Game.Scripts.UI.Windows
             {
                 [WindowType.Buildings] = () => CreateWindow<ChooseBuildingView, ChooseBuildingPresenter>(config.ChooseBuildingViewPrefab),
                 [WindowType.EndGame] = () => CreateWindow<EndGameView, EndGamePresenter>(config.EndGameViewPrefab),
-                [WindowType.ContinueByAd] = () => CreateWindow<ContinueByAdView, ContinueByAdPresenter>(config.ContinueByAdViewPrefab),
+                [WindowType.ContinueByAd] = () => CreateWindow<ContinueView, ContinuePresenter>(config.ContinueByAdViewPrefab),
             };
         }
 
