@@ -12,18 +12,19 @@ namespace Assets.Game.Scripts.Upgrades.Implementations
 {
     public class BuildingUpgradeApplier : IBuildingUpgradeApplier
     {
-        private readonly GameSettingsService _gameSettingsService;
         private readonly ISaveService _saveService;
+        private readonly GameSettings _settings;
 
         public BuildingUpgradeApplier(GameSettingsService gameSettingsService, ISaveService saveService)
         {
-            _gameSettingsService = gameSettingsService;
+            _settings = gameSettingsService.Settings;
             _saveService = saveService;
+            
         }
         
-        public async UniTask<int> ApplyBuildingDamageUpgradeAsync(int baseDamage, BuildingType buildingType)
+        public int ApplyBuildingDamageUpgrade(int baseDamage, BuildingType buildingType)
         {
-            var upgradesSettings = (await _gameSettingsService.GetSettingsAsync()).UpgradesSettings;
+            var upgradesSettings = _settings.UpgradesSettings;
             
             UpgradeSettings upgrade = buildingType switch
             {
@@ -33,14 +34,14 @@ namespace Assets.Game.Scripts.Upgrades.Implementations
                 _ => throw new ArgumentOutOfRangeException(nameof(buildingType), buildingType, null)
             };
             
-            var level = await GetUpgradeLevelAsync(upgrade);
+            var level = GetUpgradeLevel(upgrade);
 
             return Mathf.RoundToInt(upgrade.ApplyEffect(level, baseDamage));
         }
         
-        public async UniTask<float> ApplyBuildingAttackSpeedUpgradeAsync(float baseInterval, BuildingType buildingType)
+        public float ApplyBuildingAttackSpeedUpgrade(float baseInterval, BuildingType buildingType)
         {
-            var upgradesSettings = (await _gameSettingsService.GetSettingsAsync()).UpgradesSettings;
+            var upgradesSettings = _settings.UpgradesSettings;
             
             UpgradeSettings upgrade = buildingType switch
             {
@@ -50,25 +51,25 @@ namespace Assets.Game.Scripts.Upgrades.Implementations
                 _ => throw new ArgumentOutOfRangeException(nameof(buildingType), buildingType, null)
             };
             
-            var level = await GetUpgradeLevelAsync(upgrade);
+            var level = GetUpgradeLevel(upgrade);
 
             return upgrade.ApplyEffect(level, baseInterval);
         }
 
-        public async UniTask<int> ApplyCastleHpUpgradeAsync(int baseHp)
+        public int ApplyCastleHpUpgrade(int baseHp)
         {
-            var upgradesSettings = (await _gameSettingsService.GetSettingsAsync()).UpgradesSettings;
+            var upgradesSettings = _settings.UpgradesSettings;
             
             var upgrade = upgradesSettings.CastleHpUpgradeSettings;
             
-            var level = await GetUpgradeLevelAsync(upgrade);
+            var level = GetUpgradeLevel(upgrade);
             
             return (int) upgrade.ApplyEffect(level, baseHp);
         }
         
-        private async UniTask<int> GetUpgradeLevelAsync(UpgradeSettings upgrade)
+        private int GetUpgradeLevel(UpgradeSettings upgrade)
         {
-            var upgradesSettings = (await _gameSettingsService.GetSettingsAsync()).UpgradesSettings;
+            var upgradesSettings = _settings.UpgradesSettings;
             
             return _saveService.Upgrades.GetValueOrDefault(upgrade.Id, upgradesSettings.UpgradeLevel);
         }

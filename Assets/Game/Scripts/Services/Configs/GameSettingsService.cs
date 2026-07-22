@@ -7,24 +7,15 @@ using Zenject;
 
 namespace Assets.Game.Scripts.Services.Configs
 {
-    public class GameSettingsService : IInitializable
+    public class GameSettingsService
     {
         private const string GameConfigKey = "Game_config";
 
-        private GameSettings _gameSettings;
-
-        public async UniTask<GameSettings> GetSettingsAsync()
-        {
-            await UniTask.WaitUntil(() => _gameSettings != null);
-            
-            return _gameSettings;
-        }
+        public GameSettings Settings { get; private set; }
         
-        public void Initialize() => FetchRemoteConfigAsync();
-
-        private async UniTask FetchRemoteConfigAsync()
+        public async UniTask FetchRemoteConfigAsync()
         {
-            TimeSpan cacheTime = TimeSpan.Zero; 
+            var cacheTime = TimeSpan.Zero;
 
             await FirebaseRemoteConfig.DefaultInstance.FetchAsync(cacheTime);
             
@@ -34,7 +25,7 @@ namespace Assets.Game.Scripts.Services.Configs
             {
                 var json = FirebaseRemoteConfig.DefaultInstance.AllValues[GameConfigKey].StringValue;
             
-                _gameSettings = JsonConvert.DeserializeObject<GameSettings>(json);
+                Settings = JsonConvert.DeserializeObject<GameSettings>(json);
                 
                 Debug.Log("Configuration updated");
             }

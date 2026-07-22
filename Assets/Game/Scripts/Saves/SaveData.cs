@@ -9,6 +9,6 @@ namespace Assets.Game.Scripts.Saves
         public Dictionary<string, int> Upgrades = new();
         public int MetaCurrency;
         public int WavesRecord;
-        public bool IsaAdsDisabled;
+        public bool IsAdsDisabled;
     }
 }

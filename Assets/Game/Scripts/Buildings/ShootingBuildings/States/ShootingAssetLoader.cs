@@ -17,9 +17,10 @@ namespace Assets.Game.Scripts.Buildings.States
         private AssetReference _shootVFXPrefab;
         private AssetReference _projectilePrefab;
         private AssetReference _hitVFXPrefab;
-        
-        private bool _assetsLoaded;
+
         private UniTask _loadAssetsTask;
+        
+        public bool AssetsLoaded { get; private set; }
         
         public ShootingAssetLoader(IAssetProvider assetProvider) => _assetProvider = assetProvider;
 
@@ -29,7 +30,7 @@ namespace Assets.Game.Scripts.Buildings.States
             AssetReference hitVFXPrefab,
             CancellationToken ct = default)
         {
-            if (_assetsLoaded)
+            if (AssetsLoaded)
                 return;
             
             if (_loadAssetsTask.Status == UniTaskStatus.Pending)
@@ -65,36 +66,39 @@ namespace Assets.Game.Scripts.Buildings.States
                 throw;
             }
         }
-        
+
         private async UniTask LoadAssetsAsync(CancellationToken ct = default)
         {
-            GameObject shootVFX = null;
-            GameObject projectile = null;
-            GameObject hitVFX = null;
-            
             if (_shootVFXPrefab.RuntimeKeyIsValid())
-                shootVFX = await _assetProvider.Load<GameObject>(_shootVFXPrefab, ct);
+            {
+                var shootVFX = await _assetProvider.Load<GameObject>(_shootVFXPrefab, ct);
+                CachedShootVFXPrefab = shootVFX.GetComponent<ParticleSystem>();
+            }
+
             if (_projectilePrefab.RuntimeKeyIsValid())
-                projectile = await _assetProvider.Load<GameObject>(_projectilePrefab, ct);
+            {
+                var projectile = await _assetProvider.Load<GameObject>(_projectilePrefab, ct);
+                CachedProjectilePrefab = projectile.GetComponent<Projectile>();
+            }
+
             if (_hitVFXPrefab.RuntimeKeyIsValid())
-                hitVFX = await _assetProvider.Load<GameObject>(_hitVFXPrefab, ct);
+            {
+                var hitVFX = await _assetProvider.Load<GameObject>(_hitVFXPrefab, ct);
+                CachedHitVFXPrefab = hitVFX.GetComponent<ParticleSystem>();
+            }
 
-            CachedShootVFXPrefab = shootVFX?.GetComponent<ParticleSystem>();
-            CachedProjectilePrefab = projectile?.GetComponent<Projectile>();
-            CachedHitVFXPrefab = hitVFX?.GetComponent<ParticleSystem>();
-
-            _assetsLoaded = true;
+            AssetsLoaded = true;
         }
         
         public void UnloadAssets()
         {
-            if (!_assetsLoaded)
+            if (!AssetsLoaded)
                 return;
             
             _assetProvider.Unload(_shootVFXPrefab);
             _assetProvider.Unload(_projectilePrefab);
             _assetProvider.Unload(_hitVFXPrefab);
-            _assetsLoaded = false;
+            AssetsLoaded = false;
             CachedShootVFXPrefab = null;
             CachedProjectilePrefab = null;
             CachedHitVFXPrefab = null;

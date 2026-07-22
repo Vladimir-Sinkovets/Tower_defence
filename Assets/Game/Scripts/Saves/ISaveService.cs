@@ -6,11 +6,11 @@ namespace Assets.Game.Scripts.Saves
     public interface ISaveService
     {
         event Action OnUpgradesChanged;
-        event Action MetaCurrencyChanged;
-        event Action WavesRecordChanged;
+        event Action OnMetaCurrencyChanged;
+        event Action OnWavesRecordChanged;
         int MetaCurrency { get; set; }
         int WavesRecord { get; set; }
-        bool IsaAdsDisabled { get; }
+        bool IsAdsDisabled { get; }
         IReadOnlyDictionary<string, int> Upgrades { get; }
         bool TryAddUpgrade(string upgradeId, int firstLevel);
         void SetUpgrade(string upgradeId, int level);

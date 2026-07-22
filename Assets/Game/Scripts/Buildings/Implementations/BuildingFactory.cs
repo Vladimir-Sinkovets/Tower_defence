@@ -22,7 +22,7 @@ namespace Assets.Game.Scripts.Buildings.Implementations
         {
             var prefab = await _assetProvider.Load<GameObject>(config.Prefab);
             
-            var building = _instantiator.InstantiatePrefabForComponent<ShootingBuilding>(prefab);
+            var building = _instantiator.InstantiatePrefabForComponent<Building>(prefab);
 
             building.Init(config, settings, buildingType);
 

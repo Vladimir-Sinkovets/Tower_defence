@@ -1,6 +1,6 @@
-using System.Threading.Tasks;
 using Assets.Game.Scripts.Enemies.Interfaces;
 using Assets.Game.Scripts.Services.AssetProviders;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
@@ -17,7 +17,7 @@ namespace Assets.Game.Scripts.Enemies.Implementations
             _assetProvider = assetProvider;
         }
         
-        public async Task<Enemy> CreateAsync(EnemyConfig config)
+        public async UniTask<Enemy> CreateAsync(EnemyConfig config)
         {
             var prefab = await _assetProvider.Load<GameObject>(config.Prefab);
             

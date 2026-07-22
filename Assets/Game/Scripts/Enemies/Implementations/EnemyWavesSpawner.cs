@@ -16,7 +16,8 @@ namespace Assets.Game.Scripts.Enemies.Implementations
         private readonly IEnemyFactory _enemyFactory;
         private readonly WavesConfig _wavesConfig;
         private readonly Transform[] _perimeterPoints;
-        private readonly GameSettingsService _gameSettingsService;
+        private readonly GameSettings _settings;
+
         private bool _isStopped;
 
         public bool IsSpawning { get; private set; }
@@ -26,15 +27,13 @@ namespace Assets.Game.Scripts.Enemies.Implementations
             _enemyFactory = enemyFactory;
             _wavesConfig = wavesConfig;
             _perimeterPoints = perimeterPoints;
-            _gameSettingsService = gameSettingsService;
+            _settings = gameSettingsService.Settings;
         }
 
         public async UniTask SpawnWaveAsync(int count, Health targetHealth, Transform targetTransform, CancellationToken ct)
         {
             IsSpawning = true;
             
-            var gameSettings = await _gameSettingsService.GetSettingsAsync();
-
             for (int i = 0; i < count; i++)
             {
                 await UniTask.WaitWhile(() => _isStopped, cancellationToken: ct);
@@ -45,13 +44,13 @@ namespace Assets.Game.Scripts.Enemies.Implementations
 
                 enemy.transform.position = spawnPoint;
 
-                enemy.Init(gameSettings.WavesSettings.EnemySettings, targetHealth, targetTransform);
+                enemy.Init(_settings.WavesSettings.EnemySettings, targetHealth, targetTransform);
 
                 enemy.Activate();
 
                 await UniTask.WaitWhile(() => _isStopped, cancellationToken: ct);
                 
-                await UniTask.WaitForSeconds(gameSettings.WavesSettings.IntervalBetweenEnemies, cancellationToken: ct);
+                await UniTask.WaitForSeconds(_settings.WavesSettings.IntervalBetweenEnemies, cancellationToken: ct);
             }
 
             IsSpawning = false;

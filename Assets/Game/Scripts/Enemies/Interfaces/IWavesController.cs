@@ -5,7 +5,7 @@ namespace Assets.Game.Scripts.Enemies.Interfaces
 {
     public interface IWavesController
     {
-        int WavesCount { get; }
+        int WavesNumber { get; }
         void StartWaves(Health target, Transform targetTransform);
         void Stop();
         void Resume();

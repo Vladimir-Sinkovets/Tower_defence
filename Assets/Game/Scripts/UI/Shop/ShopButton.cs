@@ -22,6 +22,6 @@ namespace Assets.Game.Scripts.UI.Shop
         
         private void OnClickedHandler() => OnBuyButtonClicked?.Invoke(_product);
 
-        private void OnDestroy() => _button.onClick.AddListener(OnClickedHandler);
+        private void OnDestroy() => _button.onClick.RemoveListener(OnClickedHandler);
     }
 }

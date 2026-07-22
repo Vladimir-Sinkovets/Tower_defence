@@ -8,8 +8,8 @@ namespace Assets.Game.Scripts.Saves
     public class SaveService : ISaveService
     {
         public event Action OnUpgradesChanged;
-        public event Action MetaCurrencyChanged;
-        public event Action WavesRecordChanged;
+        public event Action OnMetaCurrencyChanged;
+        public event Action OnWavesRecordChanged;
         
         private readonly SaveData _saveData = new();
 
@@ -19,7 +19,7 @@ namespace Assets.Game.Scripts.Saves
             set
             {
                 _saveData.MetaCurrency = value;
-                MetaCurrencyChanged?.Invoke();
+                OnMetaCurrencyChanged?.Invoke();
             }
         }
 
@@ -29,11 +29,11 @@ namespace Assets.Game.Scripts.Saves
             set
             {
                 _saveData.WavesRecord = value;
-                WavesRecordChanged?.Invoke();
+                OnWavesRecordChanged?.Invoke();
             }
         }
         
-        public bool IsaAdsDisabled => _saveData.IsaAdsDisabled;
+        public bool IsAdsDisabled => _saveData.IsAdsDisabled;
 
         public IReadOnlyDictionary<string, int> Upgrades => _saveData.Upgrades;
         
@@ -60,7 +60,7 @@ namespace Assets.Game.Scripts.Saves
             OnUpgradesChanged?.Invoke();
         }
 
-        public void DisableAds() => _saveData.IsaAdsDisabled = true;
+        public void DisableAds() => _saveData.IsAdsDisabled = true;
 
         public void Save()
         {

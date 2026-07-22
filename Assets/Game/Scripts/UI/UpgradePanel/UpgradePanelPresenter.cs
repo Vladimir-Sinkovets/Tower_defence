@@ -29,9 +29,9 @@ namespace Assets.Game.Scripts.UI.UpgradePanel
             _upgradePanelView.Init();
         }
 
-        private async UniTask RenderAsync()
+        private void Render()
         {
-            var upgrades = await _upgradeService.GetUpgradesAsync();
+            var upgrades = _upgradeService.GetUpgrades();
             
             var viewModels = upgrades
                 .Select(upgrade => new UpgradePanelViewModel()
@@ -48,26 +48,24 @@ namespace Assets.Game.Scripts.UI.UpgradePanel
             _upgradePanelView.UpdateUpgradeList(viewModels);
         }
 
-        private void OnUpgradeClickedHandler(string id) => OnUpgradeClickedHandlerAsync(id).Forget();
-
-        private async UniTask OnUpgradeClickedHandlerAsync(string id)
+        private void OnUpgradeClickedHandler(string id)
         {
-            var upgrade = await _upgradeService.GetUpgrade(id);
+            var upgrade = _upgradeService.GetUpgrade(id);
             
             if (!_upgradeService.IsAvailable(upgrade))
                 return;
 
-            _upgradeService.BuyUpgradeAsync(upgrade).Forget();
+            _upgradeService.BuyUpgrade(upgrade);
         }
 
         private void OnOpenButtonClickedHandler()
         {
-            RenderAsync().Forget();
+            Render();
             
             _upgradePanelView.ShowPanel();
         }
 
-        private void OnUpgradesChangedHandler() => RenderAsync().Forget();
+        private void OnUpgradesChangedHandler() => Render();
 
         private void OnCloseButtonClickedHandler() => _upgradePanelView.ClosePanel().Forget();
         

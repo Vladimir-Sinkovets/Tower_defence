@@ -36,7 +36,7 @@ namespace Assets.Game.Scripts.Buildings.States
         {
             _data = data;
 
-            SetNextShootTimeAsync().Forget();
+            SetNextShootTime();
             
             _shootCts?.Cancel();
             _shootCts?.Dispose();
@@ -50,29 +50,23 @@ namespace Assets.Game.Scripts.Buildings.States
 
         public async UniTask Attack()
         {
+            if (!_assetLoader.AssetsLoaded)
+                return;
+
             if (_nextShootTime > Time.time)
                 return;
 
-            await SetNextShootTimeAsync();
+            SetNextShootTime();
 
             await ShootAsync(_shootCts.Token);
         }
 
 
-        private async UniTask SetNextShootTimeAsync()
-        {
-            _nextShootTime = Time.time + 
-                             await _buildingUpgradeApplier.ApplyBuildingAttackSpeedUpgradeAsync(_data.Settings.AttackInterval, _data.BuildingType);
-        }
+        private void SetNextShootTime() => 
+            _nextShootTime = Time.time + _buildingUpgradeApplier.ApplyBuildingAttackSpeedUpgrade(_data.Settings.AttackInterval, _data.BuildingType);
 
         private async UniTask ShootAsync(CancellationToken ct)
         {
-            await _assetLoader.EnsureAssetsLoadedAsync(
-                _data.Config.ShootVFXPrefab, 
-                _data.Config.ProjectilePrefab,
-                _data.Config.HitVFXPrefab,
-                ct);
-            
             if (_data.PreShootAnimation != null)
                 await _data.PreShootAnimation.PlayBeforeAttackAnimationAsync(ct);
             
@@ -85,7 +79,7 @@ namespace Assets.Game.Scripts.Buildings.States
                 {
                     Position = _data.ProjectileStartPosition.position,
                     Target = _data.CurrentTarget,
-                    Damage = await _buildingUpgradeApplier.ApplyBuildingDamageUpgradeAsync(_data.Settings.Damage, _data.BuildingType),
+                    Damage = _buildingUpgradeApplier.ApplyBuildingDamageUpgrade(_data.Settings.Damage, _data.BuildingType),
                     ProjectileSpeed = _data.Settings.ProjectileSpeed,
                     ArcHeight = _data.Settings.ArcHeight,
                     HitVFXPrefab = _assetLoader.CachedHitVFXPrefab,

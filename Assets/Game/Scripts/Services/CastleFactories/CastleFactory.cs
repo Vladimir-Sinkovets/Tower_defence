@@ -20,7 +20,7 @@ namespace Assets.Game.Scripts.Services.CastleFactories
         private readonly IBuildingFactory _buildingFactory;
         private readonly IBuildingUpgradeApplier _buildingUpgradeApplier;
         private readonly IInstantiator _instantiator;
-        private readonly GameSettingsService _gameSettingsService;
+        private readonly GameSettings _settings;
 
         public CastleFactory(
             BuildingsConfig buildingsConfig,
@@ -33,7 +33,7 @@ namespace Assets.Game.Scripts.Services.CastleFactories
             _buildingFactory = buildingFactory;
             _buildingUpgradeApplier = buildingUpgradeApplier;
             _instantiator = instantiator;
-            _gameSettingsService = gameSettingsService;
+            _settings = gameSettingsService.Settings;
         }
 
         public async UniTask<(Health, Transform)> CreateCastleAsync(CancellationToken ct)
@@ -41,7 +41,7 @@ namespace Assets.Game.Scripts.Services.CastleFactories
             var root = new GameObject(CastleRootGameObjectName);
             var disposeHandler = root.AddComponent<DisposeOnDestroy>();
 
-            var castleHealth = await CreateHealthAsync();
+            var castleHealth = CreateHealth();
             
             RegisterDisposables(castleHealth, root, disposeHandler);
 
@@ -52,11 +52,9 @@ namespace Assets.Game.Scripts.Services.CastleFactories
             return (castleHealth, root.transform);
         }
 
-        private async Task<Building> CreateBuildingAsync(GameObject root)
+        private async UniTask<Building> CreateBuildingAsync(GameObject root)
         {
-            var gameSettings = await _gameSettingsService.GetSettingsAsync();
-            
-            var building = await _buildingFactory.CreateAsync(_buildingsConfig.CastleBuilding, gameSettings.CastleSettings.CastleBuilding, BuildingType.Castle);
+            var building = await _buildingFactory.CreateAsync(_buildingsConfig.CastleBuilding, _settings.CastleSettings.CastleBuilding, BuildingType.Castle);
 
             building.transform.SetParent(root.transform);
             building.transform.position = root.transform.position;
@@ -73,11 +71,9 @@ namespace Assets.Game.Scripts.Services.CastleFactories
             disposeHandler.Add(shaker, handler);
         }
 
-        private async UniTask<Health> CreateHealthAsync()
+        private Health CreateHealth()
         {
-            var gameSettings = await _gameSettingsService.GetSettingsAsync();
-            
-            var castleHp = await _buildingUpgradeApplier.ApplyCastleHpUpgradeAsync(gameSettings.CastleSettings.CastleHp);
+            var castleHp = _buildingUpgradeApplier.ApplyCastleHpUpgrade(_settings.CastleSettings.CastleHp);
             var castleHealth = new Health(castleHp);
             
             return castleHealth;

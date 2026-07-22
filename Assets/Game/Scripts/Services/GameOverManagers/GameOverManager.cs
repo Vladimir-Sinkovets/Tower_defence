@@ -39,9 +39,9 @@ namespace Assets.Game.Scripts.Services.GameOverManagers
             castleHealth.OnDied += CastleDiedHandler;
         }
 
-        public async UniTask GameOverAsync()
+        public void GameOver()
         {
-            var result = await _gameResultCalculator.CalculateAsync();
+            var result = _gameResultCalculator.Calculate();
             
             _gameResultSaver.ApplyMetaCurrency(result.EarnedMetaCurrency);
             _gameResultSaver.ApplyWavesRecord(result.Waves);

@@ -4,8 +4,8 @@ namespace Assets.Game.Scripts.Services.Analytics
     {
         void GameStarted();
         void WaveStarted(int waveNumber, int enemiesToSpawn);
-        void WaveCompleted(int waveNumber, int towersBuilt);
-        void TowerBuilt(int coinsSpent, int towersTotal, int waveNumber);
+        void WaveCompleted(int waveNumber);
+        void TowerBuilt(int coinsSpent, int waveNumber);
         void BuildRejected();
         void CastleDamaged();
         void GameOver();

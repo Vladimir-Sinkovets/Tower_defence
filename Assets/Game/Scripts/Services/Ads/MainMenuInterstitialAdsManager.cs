@@ -35,7 +35,7 @@ namespace Assets.Game.Scripts.Services.Ads
 
         private async UniTask ShowAd()
         {
-            if (_saveService.IsaAdsDisabled)
+            if (_saveService.IsAdsDisabled)
                 return;
             
             _adsCallCount++;

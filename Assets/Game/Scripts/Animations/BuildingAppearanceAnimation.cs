@@ -8,7 +8,7 @@ namespace Assets.Game.Scripts.Animations
     public class BuildingAppearanceAnimation : MonoBehaviour
     {
         [SerializeField] private Transform _target;
-        [SerializeField] private float _fallOffestY = 10f;
+        [SerializeField] private float _fallOffsetY = 10f;
         [SerializeField] private float _moveDuration = 0.5f;
         [SerializeField] private float _scaleSqueeze = 1.2f;
         [SerializeField] private float _scaleDownY = 0.1f;
@@ -19,7 +19,7 @@ namespace Assets.Game.Scripts.Animations
         {
             var buildingGroundPosition = _target.position;
 
-            _target.position += new Vector3(0, _fallOffestY, 0);
+            _target.position += new Vector3(0, _fallOffsetY, 0);
 
             await _target.DOMove(buildingGroundPosition, _moveDuration)
                 .SetEase(Ease.InExpo)

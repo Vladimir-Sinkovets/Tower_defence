@@ -1,9 +1,11 @@
+using System;
 using Assets.Game.Scripts.Saves;
 using Assets.Game.Scripts.Services.Ads;
 using Assets.Game.Scripts.Services.ContinueGameServices;
 using Assets.Game.Scripts.Services.GameOverManagers;
 using Assets.Game.Scripts.Services.GameResumeServices;
 using Cysharp.Threading.Tasks;
+using UnityEngine;
 
 namespace Assets.Game.Scripts.UI.Windows.ContinuePanel
 {
@@ -54,17 +56,33 @@ namespace Assets.Game.Scripts.UI.Windows.ContinuePanel
         }
 
         private void OnContinueButtonClickedHandler()
-        {
+        {    
+            _view.SetContinueButtonActive(false);
+
             ShowAdAsync().Forget();
-            
-            _continueGameService.UseContinue();
         }
 
         private async UniTask ShowAdAsync()
         {
-            if (!_saveService.IsaAdsDisabled)
-                await _adsRewardService.ShowAdAsync();
-
+            if (!_saveService.IsAdsDisabled)
+            {
+                try
+                {
+                    await _adsRewardService.ShowAdAsync();
+                }
+                catch (Exception e)
+                {
+                    Debug.LogError($"Show ads to continue error, {e.Message}");
+                    
+                    if (_continueGameService.HasContinues())
+                        _view.SetContinueButtonActive(true);
+                    
+                    return;
+                }
+            }
+            
+            _continueGameService.UseContinue();
+            
             _gameResumeService.Resume();
 
             _windowsManager.Close(WindowType.ContinueByAd);
@@ -74,7 +92,7 @@ namespace Assets.Game.Scripts.UI.Windows.ContinuePanel
         {
             _windowsManager.Close(WindowType.ContinueByAd);
             
-            _gameOverManager.GameOverAsync();
+            _gameOverManager.GameOver();
         }
     }
 }

@@ -5,8 +5,8 @@ namespace Assets.Game.Scripts.Upgrades.Interfaces
 {
     public interface IBuildingUpgradeApplier
     {
-        UniTask<int> ApplyBuildingDamageUpgradeAsync(int baseDamage, BuildingType buildingType);
-        UniTask<float> ApplyBuildingAttackSpeedUpgradeAsync(float baseInterval, BuildingType buildingType);
-        UniTask<int> ApplyCastleHpUpgradeAsync(int baseHp);
+        int ApplyBuildingDamageUpgrade(int baseDamage, BuildingType buildingType);
+        float ApplyBuildingAttackSpeedUpgrade(float baseInterval, BuildingType buildingType);
+        int ApplyCastleHpUpgrade(int baseHp);
     }
 }

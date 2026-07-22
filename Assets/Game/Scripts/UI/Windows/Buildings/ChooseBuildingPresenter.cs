@@ -21,7 +21,8 @@ namespace Assets.Game.Scripts.UI.Windows.Buildings
         private readonly PointSelector _pointSelector;
         private readonly IWindowsManager _windowManager;
         private readonly IAnalytics _analytics;
-        private readonly GameSettingsService _gameSettingsService;
+        
+        private readonly GameSettings _settings;
 
         private Vector3 _position;
         private CancellationTokenSource _closePanelCts;
@@ -43,7 +44,7 @@ namespace Assets.Game.Scripts.UI.Windows.Buildings
             _pointSelector = pointSelector;
             _windowManager = windowManager;
             _analytics = analytics;
-            _gameSettingsService = gameSettingsService;
+            _settings = gameSettingsService.Settings;
         }
 
         
@@ -66,17 +67,14 @@ namespace Assets.Game.Scripts.UI.Windows.Buildings
 
             HidePanel();
         }
-
         
         private void OnCloseButtonClickedHandler() => _windowManager.Close(WindowType.Buildings);
 
-        private void OnOptionChosenHandler(int index) => OnOptionChosenHandlerAsync(index).Forget();
-
-        private async UniTask OnOptionChosenHandlerAsync(int index)
+        private void OnOptionChosenHandler(int index)
         {
             var config = _buildingsConfig.Buildings.ElementAt(index);
 
-            if (!await _buildingService.TryBuildAsync(config, _position))
+            if (!_buildingService.TryBuild(config, _position))
             {
                 _analytics.BuildRejected();
                 
@@ -96,7 +94,7 @@ namespace Assets.Game.Scripts.UI.Windows.Buildings
             _chooseBuildingView.ShowPointer(position);
         }
 
-        private void OnCurrencyChangedHandler(int _) => RenderAsync().Forget();
+        private void OnCurrencyChangedHandler(int _) => Render();
 
         private void ShowPanel()
         {
@@ -107,8 +105,8 @@ namespace Assets.Game.Scripts.UI.Windows.Buildings
             OnClickedHandler(_pointSelector.LastPosition);
             
             _chooseBuildingView.ShowPanel();
-            
-            RenderAsync().Forget();
+
+            Render();
         }
 
         private void HidePanel()
@@ -118,17 +116,15 @@ namespace Assets.Game.Scripts.UI.Windows.Buildings
             _chooseBuildingView.HidePanel(_closePanelCts.Token).Forget();
         }
 
-        private async UniTask RenderAsync()
+        private void Render()
         {
-            var gameSettings =  await _gameSettingsService.GetSettingsAsync();
-            
             var viewModels = _buildingsConfig.Buildings
                 .Select((buildingConfig, index) => new BuildingOptionViewModel()
                 {
-                    Price = gameSettings.BuildingSettings[index].Price,
+                    Price = _settings.BuildingSettings[index].Price,
                     Icon = buildingConfig.Icon,
                     Index = index,
-                    IsAvailable = gameSettings.BuildingSettings[index].Price <= _currencyBank.Total,
+                    IsAvailable = _settings.BuildingSettings[index].Price <= _currencyBank.Total,
                 }).ToList();
             
             _chooseBuildingView.Render(viewModels);

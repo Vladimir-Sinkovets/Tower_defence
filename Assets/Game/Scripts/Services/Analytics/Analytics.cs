@@ -1,3 +1,4 @@
+using Assets.Game.Scripts.Buildings.Implementations;
 using Assets.Game.Scripts.Saves;
 using Assets.Game.Scripts.Services.CurrencyBanks;
 
@@ -30,12 +31,14 @@ namespace Assets.Game.Scripts.Services.Analytics
         private readonly ISaveService _saveService;
         private readonly CurrencyBank _currencyBank;
         private readonly IAnalyticsProvider _analyticsProvider;
+        private readonly BuildingCounter _buildingCounter;
 
-        public Analytics(ISaveService saveService, CurrencyBank currencyBank, IAnalyticsProvider analyticsProvider)
+        public Analytics(ISaveService saveService, CurrencyBank currencyBank, IAnalyticsProvider analyticsProvider, BuildingCounter buildingCounter)
         {
             _saveService = saveService;
             _currencyBank = currencyBank;
             _analyticsProvider = analyticsProvider;
+            _buildingCounter = buildingCounter;
         }
 
         public void GameStarted()
@@ -50,9 +53,10 @@ namespace Assets.Game.Scripts.Services.Analytics
                 new AnalyticsParameter(WaveNumberParameterName, waveNumber),
                 new AnalyticsParameter(EnemiesToSpawnParameterName, enemiesToSpawn));
 
-        public void WaveCompleted(int waveNumber, int towersBuilt)
+        public void WaveCompleted(int waveNumber)
         {
             var coinsRemaining = _currencyBank.Total;
+            var towersBuilt = _buildingCounter.Count;
             
             _analyticsProvider.LogEvent(WaveCompletedEventName,
                 new AnalyticsParameter(WaveNumberParameterName, waveNumber),
@@ -60,15 +64,16 @@ namespace Assets.Game.Scripts.Services.Analytics
                 new AnalyticsParameter(CoinsRemainingParameterName, coinsRemaining));
         }
 
-        public void TowerBuilt(int coinsSpent, int towersTotal, int waveNumber)
+        public void TowerBuilt(int coinsSpent, int waveNumber)
         {
             var coinsRemaining = _currencyBank.Total;
+            var towersBuilt = _buildingCounter.Count;
             
             _analyticsProvider.LogEvent(TowerBuiltEventName,
                 new AnalyticsParameter(WaveNumberParameterName, waveNumber),
                 new AnalyticsParameter(CoinsSpentParameterName, coinsSpent),
                 new AnalyticsParameter(CoinsRemainingParameterName, coinsRemaining),
-                new AnalyticsParameter(TowersTotalParameterName, towersTotal));
+                new AnalyticsParameter(TowersTotalParameterName, towersBuilt));
         }
 
         public void BuildRejected() => _analyticsProvider.LogEvent(BuildRejectedEventName);

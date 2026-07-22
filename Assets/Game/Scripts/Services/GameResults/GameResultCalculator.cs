@@ -27,13 +27,13 @@ namespace Assets.Game.Scripts.Services.GameResults
             _gameStatistics = gameStatistics;
         }
         
-        public async UniTask<GameOverResult> CalculateAsync()
+        public GameOverResult Calculate()
         {
-            var earnedMetaCurrency = await _rewardCalculator.CalculateMetaCurrencyAsync(_wavesController.WavesCount, _gameStatistics.KilledEnemiesCount);
+            var earnedMetaCurrency = _rewardCalculator.CalculateMetaCurrency(_wavesController.WavesNumber, _gameStatistics.KilledEnemiesCount);
 
             GameOverResult = new GameOverResult()
             {
-                Waves = _wavesController.WavesCount,
+                Waves = _wavesController.WavesNumber,
                 Kills = _gameStatistics.KilledEnemiesCount,
                 Currency = _currencyBank.Total,
                 EarnedMetaCurrency = earnedMetaCurrency,

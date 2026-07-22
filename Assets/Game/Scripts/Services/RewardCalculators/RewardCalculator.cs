@@ -9,12 +9,12 @@ namespace Assets.Game.Scripts.Services.RewardCalculators
 
         public RewardCalculator(GameSettingsService gameSettingsService) => _gameSettingsService = gameSettingsService;
 
-        public async UniTask<int> CalculateMetaCurrencyAsync(int wavesCount, int killedEnemiesCount)
+        public int CalculateMetaCurrency(int wavesCount, int killedEnemiesCount)
         {
-            var gameSettings = await _gameSettingsService.GetSettingsAsync();
+            var metaCurrencySettings = _gameSettingsService.Settings.MetaCurrencySettings;
             
-            return wavesCount * gameSettings.MetaCurrencySettings.MetaCurrencyPerWave +
-                   killedEnemiesCount * gameSettings.MetaCurrencySettings.MetaCurrencyPerKill;
+            return wavesCount * metaCurrencySettings.MetaCurrencyPerWave +
+                   killedEnemiesCount * metaCurrencySettings.MetaCurrencyPerKill;
         }
     }
 }

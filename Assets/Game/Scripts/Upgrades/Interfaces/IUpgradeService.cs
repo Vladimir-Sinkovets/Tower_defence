@@ -9,12 +9,12 @@ namespace Assets.Game.Scripts.Upgrades.Interfaces
     public interface IUpgradeService
     {
         event Action OnUpgradesChanged;
-        UniTask<IEnumerable<UpgradeSettings>> GetUpgradesAsync();
+        IEnumerable<UpgradeSettings> GetUpgrades();
         int GetLevel(UpgradeSettings settings);
         Sprite GetIcon(string id);
         int GetLevelCost(UpgradeSettings settings);
         bool IsAvailable(UpgradeSettings upgrade);
-        UniTask BuyUpgradeAsync(UpgradeSettings upgrade);
-        UniTask<UpgradeSettings> GetUpgrade(string id);
+        void BuyUpgrade(UpgradeSettings upgrade);
+        UpgradeSettings GetUpgrade(string id);
     }
 }

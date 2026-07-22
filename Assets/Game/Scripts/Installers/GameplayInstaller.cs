@@ -96,6 +96,8 @@ namespace Assets.Game.Scripts.Installers
             Container.BindInterfacesTo<GameStopper>().AsSingle();
             Container.BindInterfacesTo<RewardCalculator>().AsSingle();
             Container.BindInterfacesTo<GameResultCalculator>().AsSingle();
+            Container.Bind<BuildingCounter>().ToSelf().AsSingle();
+            
         }
 
         private void BindRegisters()

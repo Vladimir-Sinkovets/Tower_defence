@@ -1,9 +1,9 @@
-using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 
 namespace Assets.Game.Scripts.Enemies.Interfaces
 {
     public interface IEnemyFactory
     {
-        Task<Enemy> CreateAsync(EnemyConfig config);
+        UniTask<Enemy> CreateAsync(EnemyConfig config);
     }
 }

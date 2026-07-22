@@ -39,9 +39,9 @@ namespace Assets.Game.Scripts.Enemies
 
         public void DisableCanvas() => _canvas.SetActive(false);
 
-        public void RemoveModel(float delay = 1.0f) => RemoveModelCoroutine(delay, this.GetCancellationTokenOnDestroy()).Forget();
+        public void RemoveModel(float delay = 1.0f) => RemoveModelAsync(delay, this.GetCancellationTokenOnDestroy()).Forget();
 
-        private async UniTask RemoveModelCoroutine(float delay, CancellationToken ct)
+        private async UniTask RemoveModelAsync(float delay, CancellationToken ct)
         {
             await UniTask.WaitForSeconds(delay, cancellationToken: ct);
 
