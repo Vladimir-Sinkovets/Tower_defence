@@ -41,10 +41,20 @@ namespace Assets.Game.Scripts.Services.CloudSaves
 
         public async UniTask<string> LoadAsync()
         {
-            var data = await  CloudSaveService.Instance.Data.Player.LoadAsync(new HashSet<string>() { SaveKey })
-                .AsUniTask();
+            try
+            {
+                var data = await  CloudSaveService.Instance.Data.Player.LoadAsync(new HashSet<string>() { SaveKey })
+                    .AsUniTask();
+                
+                if (data == null || !data.ContainsKey(SaveKey))
+                    return string.Empty;
 
-            return data[SaveKey].Value.GetAsString();
+                return data[SaveKey].Value.GetAsString();
+            }
+            catch
+            {
+                return string.Empty;
+            }
         }
     }
 }

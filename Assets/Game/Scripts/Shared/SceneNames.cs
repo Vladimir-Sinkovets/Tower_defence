@@ -2,7 +2,8 @@
 {
     public static class SceneNames
     {
-        public const string Menu = "Main_menu";
-        public const string Game = "Game_play";
+        public const string Menu = "Main menu";
+        public const string Game = "Gameplay";
+        public const string StartGame = "Start game";
     }
 }

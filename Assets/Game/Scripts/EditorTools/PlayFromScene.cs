@@ -1,3 +1,4 @@
+using Assets.Game.Scripts.Shared;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 
@@ -6,7 +7,6 @@ namespace Assets.Game.Scripts.EditorTools
     [InitializeOnLoad]
     public static class PlayFromScene
     {
-        private const string StartScene = "Assets/Game/Scenes/Start_game.unity";
         private const string PrefKey = "PlayFromScene_Enabled";
         private const string MenuPath = "Tools/Start Scene/Use Start Scene";
 
@@ -45,7 +45,7 @@ namespace Assets.Game.Scripts.EditorTools
 
             if (EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
             {
-                EditorSceneManager.OpenScene(StartScene);
+                EditorSceneManager.OpenScene(SceneNames.StartGame);
             }
             else
             {
