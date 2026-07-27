@@ -2,6 +2,7 @@ using Assets.Game.Scripts.Saves;
 using Assets.Game.Scripts.Services.Ads;
 using Assets.Game.Scripts.Services.Analytics;
 using Assets.Game.Scripts.Services.AssetProviders;
+using Assets.Game.Scripts.Services.CloudSaves;
 using Assets.Game.Scripts.Services.Configs;
 using Assets.Game.Scripts.Services.FirebaseSetups;
 using Assets.Game.Scripts.Services.Purchases;
@@ -22,8 +23,6 @@ namespace Assets.Game.Scripts.Installers
         public override void InstallBindings()
         {
             Container.BindInterfacesTo<SaveService>().AsSingle();
-            
-            Container.BindInterfacesTo<SaveDataLoader>().AsSingle();
             
             Container.BindInterfacesTo<AddressableAssetProvider>().AsSingle();
             
@@ -50,6 +49,8 @@ namespace Assets.Game.Scripts.Installers
             Container.BindInterfacesAndSelfTo<InAppPurchaseExecutor>().AsSingle();
             
             Container.BindInstance(_inAppPurchasesConfig).AsSingle();
+            
+            Container.BindInterfacesAndSelfTo<UnityCloudSaveService>().AsSingle();
         }
     }
 }

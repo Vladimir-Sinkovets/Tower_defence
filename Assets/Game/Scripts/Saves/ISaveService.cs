@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 
 namespace Assets.Game.Scripts.Saves
 {
@@ -15,6 +16,7 @@ namespace Assets.Game.Scripts.Saves
         bool TryAddUpgrade(string upgradeId, int firstLevel);
         void SetUpgrade(string upgradeId, int level);
         void Save();
+        UniTask LoadAsync();
         void SetUpgrades(Dictionary<string, int> saveDataUpgrades);
         void DisableAds();
     }
