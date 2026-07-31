@@ -12,26 +12,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 468a46d0ae32c3544b7d98094e6448a9, type: 3}
   m_Name: AddressableAssetSettings
   m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetSettings
-  m_DefaultGroup: a39614aec155c444da340de4798ee1f7
+  m_DefaultGroup: d16afcce0049ff141a6abf249e53a0fa
   m_currentHash:
     serializedVersion: 2
-    Hash: 00000000000000000000000000000000
+    Hash: 6f24df7510bcee3fc00f834ac6213973
   m_OptimizeCatalogSize: 0
-  m_BuildRemoteCatalog: 0
+  m_BuildRemoteCatalog: 1
+  m_BundleLocalCatalog: 0
   m_CatalogRequestsTimeout: 0
   m_DisableCatalogUpdateOnStart: 0
   m_InternalIdNamingMode: 0
   m_InternalBundleIdMode: 1
   m_AssetLoadMode: 0
   m_BundledAssetProviderType:
-    m_AssemblyName: 
-    m_ClassName: 
+    m_AssemblyName: Unity.ResourceManager, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_ClassName: UnityEngine.ResourceManagement.ResourceProviders.BundledAssetProvider
   m_AssetBundleProviderType:
-    m_AssemblyName: 
-    m_ClassName: 
+    m_AssemblyName: Unity.ResourceManager, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_ClassName: UnityEngine.ResourceManagement.ResourceProviders.AssetBundleProvider
   m_IgnoreUnsupportedFilesInBuild: 0
   m_UniqueBundleIds: 0
-  m_EnableJsonCatalog: 0
+  m_EnableJsonCatalog: 1
   m_NonRecursiveBuilding: 1
   m_AllowNestedBundleFolders: 0
   m_CCDEnabled: 0
@@ -54,7 +55,7 @@ MonoBehaviour:
     m_Id: 
   m_RemoteCatalogLoadPath:
     m_Id: 
-  m_ContentStateBuildPathProfileVariableName: 
+  m_ContentStateBuildPathProfileVariableName: <default settings path>
   m_CustomContentStateBuildPath: 
   m_ContentStateBuildPath: 
   m_BuildAddressablesWithPlayerBuild: 0
@@ -67,34 +68,48 @@ MonoBehaviour:
   m_ProfileSettings:
     m_Profiles:
     - m_InheritedParent: 
-      m_Id: 6fed4ab570453704ca3762838e9f1596
+      m_Id: 283a0337f8d8ce04b9f18a12eaa654a3
       m_ProfileName: Default
       m_Values:
-      - m_Id: 0205a1bfa1dd8c84bbe6b00d23d8518c
+      - m_Id: 55510efefabb99349833830ec5186eb6
         m_Value: '[UnityEditor.EditorUserBuildSettings.activeBuildTarget]'
-      - m_Id: 953f669d1eb2ab14bb0e5dff29e0bee4
-        m_Value: 'ServerData/[BuildTarget]'
-      - m_Id: 99416941edb1ca54dad26b2e41bfb4a5
+      - m_Id: e97cc3d27667f5d49b5c1ef0bb0305db
         m_Value: <undefined>
-      - m_Id: a5a895bc7c8c8484fb904659e3be7413
-        m_Value: '[UnityEngine.AddressableAssets.Addressables.BuildPath]/[BuildTarget]'
-      - m_Id: f6db9e95a792d6a40a477f93d2c19f15
+      - m_Id: ebd8a8455a6cb4e46905c10f87f5d293
         m_Value: '{UnityEngine.AddressableAssets.Addressables.RuntimePath}/[BuildTarget]'
+      - m_Id: ed3c9666e1560bc4496b6c4aee87685b
+        m_Value: 'ServerData/[BuildTarget]'
+      - m_Id: f820c27a163a78a4ba5c7ac28377274d
+        m_Value: '[UnityEngine.AddressableAssets.Addressables.BuildPath]/[BuildTarget]'
+    - m_InheritedParent: 
+      m_Id: 9971ea733636f314492fd78364f005b6
+      m_ProfileName: RemoteProfile
+      m_Values:
+      - m_Id: 55510efefabb99349833830ec5186eb6
+        m_Value: '[UnityEditor.EditorUserBuildSettings.activeBuildTarget]'
+      - m_Id: e97cc3d27667f5d49b5c1ef0bb0305db
+        m_Value: 'https://storage.yandexcloud.net/tower-defence-test/[BuildTarget]'
+      - m_Id: ebd8a8455a6cb4e46905c10f87f5d293
+        m_Value: '{UnityEngine.AddressableAssets.Addressables.RuntimePath}/[BuildTarget]'
+      - m_Id: ed3c9666e1560bc4496b6c4aee87685b
+        m_Value: 'ServerData/[BuildTarget]'
+      - m_Id: f820c27a163a78a4ba5c7ac28377274d
+        m_Value: '[UnityEngine.AddressableAssets.Addressables.BuildPath]/[BuildTarget]'
     m_ProfileEntryNames:
-    - m_Id: 0205a1bfa1dd8c84bbe6b00d23d8518c
+    - m_Id: 55510efefabb99349833830ec5186eb6
       m_Name: BuildTarget
       m_InlineUsage: 0
-    - m_Id: 953f669d1eb2ab14bb0e5dff29e0bee4
-      m_Name: Remote.BuildPath
-      m_InlineUsage: 0
-    - m_Id: 99416941edb1ca54dad26b2e41bfb4a5
+    - m_Id: e97cc3d27667f5d49b5c1ef0bb0305db
       m_Name: Remote.LoadPath
       m_InlineUsage: 0
-    - m_Id: a5a895bc7c8c8484fb904659e3be7413
-      m_Name: Local.BuildPath
-      m_InlineUsage: 0
-    - m_Id: f6db9e95a792d6a40a477f93d2c19f15
+    - m_Id: ebd8a8455a6cb4e46905c10f87f5d293
       m_Name: Local.LoadPath
+      m_InlineUsage: 0
+    - m_Id: ed3c9666e1560bc4496b6c4aee87685b
+      m_Name: Remote.BuildPath
+      m_InlineUsage: 0
+    - m_Id: f820c27a163a78a4ba5c7ac28377274d
+      m_Name: Local.BuildPath
       m_InlineUsage: 0
     m_ProfileVersion: 1
   m_LabelTable:
@@ -112,4 +127,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a80d94086b3d4914a8c3ca6165304b53, type: 2}
   - {fileID: 11400000, guid: 4261b1df4e1c44f47b45cf445627d375, type: 2}
   - {fileID: 11400000, guid: 216959d39748d904fa9c127a568abb05, type: 2}
-  m_ActiveProfileId: 6fed4ab570453704ca3762838e9f1596
+  m_ActiveProfileId: 9971ea733636f314492fd78364f005b6
