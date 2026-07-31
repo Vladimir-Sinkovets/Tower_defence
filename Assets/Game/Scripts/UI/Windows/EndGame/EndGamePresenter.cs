@@ -9,13 +9,13 @@ namespace Assets.Game.Scripts.UI.Windows.EndGame
     public class EndGamePresenter : IDisposable, IWindowPresenter
     {
         private readonly IEndGameView _view;
-        private readonly SceneLoader _sceneLoader;
+        private readonly ISceneLoader _sceneLoader;
         private readonly IGameResultCalculator _gameResultCalculator;
         private readonly IAnalytics _analytics;
 
         public EndGamePresenter(
             IEndGameView view,
-            SceneLoader sceneLoader,
+            ISceneLoader sceneLoader,
             IGameResultCalculator gameResultCalculator,
             IAnalytics analytics)
         {

@@ -9,12 +9,10 @@ namespace Assets.Game.Scripts.Buildings.Implementations
     public class ProjectileFactory : IProjectileFactory
     {
         private readonly IInstantiator _instantiator;
-        private readonly IVFXFactory _vfxFactory;
 
-        public ProjectileFactory(IInstantiator instantiator, IVFXFactory vfxFactory)
+        public ProjectileFactory(IInstantiator instantiator)
         {
             _instantiator = instantiator;
-            _vfxFactory = vfxFactory;
         }
 
         public Projectile Create(Projectile projectilePrefab, ProjectileData data)
@@ -23,22 +21,7 @@ namespace Assets.Game.Scripts.Buildings.Implementations
 
             projectile.transform.position = data.Position;
 
-            projectile.Init(data.Target, data.Damage, data.ProjectileSpeed, data.ArcHeight);
-
-            var hitVFXPrefab = data.HitVFXPrefab;
-            
-            if (hitVFXPrefab == null)
-                return projectile;
-
-            Action<Vector3> handler = null;
-            
-            handler = (position) =>
-            {
-                _vfxFactory.Create(hitVFXPrefab, position);
-                projectile.OnHit -= handler;
-            };
-            
-            projectile.OnHit += handler;
+            projectile.Init(data.Target, data.Damage, data.ProjectileSpeed, data.ArcHeight, data.HitVFXPrefab);
 
             return projectile;
         }

@@ -11,25 +11,25 @@ using Cysharp.Threading.Tasks;
 
 namespace Assets.Game.Scripts.Services.GameplayOrchestrators
 {
-    public class GameplayOrchestrator : IDisposable
+    public class GameplayOrchestrator : IGameplayOrchestrator, IDisposable
     {
         private readonly IWavesController _wavesController;
-        private readonly GameOverManager _gameOverManager;
+        private readonly IGameOverManager _gameOverManager;
         private readonly IGameResumeService _gameResumeService;
         private readonly FieldStartupAnimation _fieldStartupAnimation;
-        private readonly HudFactory _hudFactory;
-        private readonly CastleFactory _castleFactory;
+        private readonly IHudFactory _hudFactory;
+        private readonly ICastleFactory _castleFactory;
         private readonly IAnalytics _analytics;
 
         private CancellationTokenSource _startGameCts;
 
         public GameplayOrchestrator(
             IWavesController waveController,
-            GameOverManager gameOverManager,
+            IGameOverManager gameOverManager,
             IGameResumeService gameResumeService,
             FieldStartupAnimation fieldStartupAnimation,
-            HudFactory hudFactory,
-            CastleFactory castleFactory,
+            IHudFactory hudFactory,
+            ICastleFactory castleFactory,
             IAnalytics analytics)
         {
             _wavesController = waveController;

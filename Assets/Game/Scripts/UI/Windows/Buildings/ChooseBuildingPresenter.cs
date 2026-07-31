@@ -16,7 +16,7 @@ namespace Assets.Game.Scripts.UI.Windows.Buildings
     {
         private readonly IChooseBuildingView _chooseBuildingView;
         private readonly BuildingsConfig _buildingsConfig;
-        private readonly CurrencyBank _currencyBank;
+        private readonly ICurrencyBank _currencyBank;
         private readonly IBuildingService _buildingService;
         private readonly PointSelector _pointSelector;
         private readonly IWindowsManager _windowManager;
@@ -30,12 +30,12 @@ namespace Assets.Game.Scripts.UI.Windows.Buildings
         public ChooseBuildingPresenter(
             IChooseBuildingView chooseBuildingView,
             BuildingsConfig buildingsConfig,
-            CurrencyBank currencyBank,
+            ICurrencyBank currencyBank,
             IBuildingService buildingService,
             PointSelector pointSelector,
             IWindowsManager windowManager,
             IAnalytics analytics,
-            GameSettingsService gameSettingsService)
+            IGameSettingsAccessor gameSettingsAccessor)
         {
             _chooseBuildingView = chooseBuildingView;
             _buildingsConfig = buildingsConfig;
@@ -44,7 +44,7 @@ namespace Assets.Game.Scripts.UI.Windows.Buildings
             _pointSelector = pointSelector;
             _windowManager = windowManager;
             _analytics = analytics;
-            _settings = gameSettingsService.Settings;
+            _settings = gameSettingsAccessor.Settings;
         }
 
         

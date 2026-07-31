@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using Assets.Game.Scripts.Configs;
 using Assets.Game.Scripts.Enemies.Interfaces;
 using Assets.Game.Scripts.Services.Configs;
@@ -6,11 +7,13 @@ using Assets.Game.Scripts.Shared;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 namespace Assets.Game.Scripts.Enemies.Implementations
 {
     public class EnemyWavesSpawner : IEnemyWavesSpawner
     {
+        public event Action OnSpawnCompleted;
         private const float NavMeshSamplePositionMaxDistance = 2.0f;
         
         private readonly IEnemyFactory _enemyFactory;
@@ -18,16 +21,16 @@ namespace Assets.Game.Scripts.Enemies.Implementations
         private readonly Transform[] _perimeterPoints;
         private readonly GameSettings _settings;
 
-        private bool _isStopped;
-
         public bool IsSpawning { get; private set; }
+
+        private bool _isStopped;
         
-        public EnemyWavesSpawner(IEnemyFactory enemyFactory, WavesConfig wavesConfig, Transform[] perimeterPoints, GameSettingsService gameSettingsService)
+        public EnemyWavesSpawner(IEnemyFactory enemyFactory, WavesConfig wavesConfig, Transform[] perimeterPoints, IGameSettingsAccessor gameSettingsAccessor)
         {
             _enemyFactory = enemyFactory;
             _wavesConfig = wavesConfig;
             _perimeterPoints = perimeterPoints;
-            _settings = gameSettingsService.Settings;
+            _settings = gameSettingsAccessor.Settings;
         }
 
         public async UniTask SpawnWaveAsync(int count, Health targetHealth, Transform targetTransform, CancellationToken ct)
@@ -54,6 +57,7 @@ namespace Assets.Game.Scripts.Enemies.Implementations
             }
 
             IsSpawning = false;
+            OnSpawnCompleted?.Invoke();
         }
 
         public void Stop() => _isStopped = true;

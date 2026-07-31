@@ -7,7 +7,7 @@ namespace Assets.Game.Scripts.Enemies
 {
     public abstract class Enemy : MonoBehaviour
     {
-        public event Action OnDied;
+        public event Action<Enemy> OnDied;
 
         protected Health Health;
 
@@ -15,6 +15,8 @@ namespace Assets.Game.Scripts.Enemies
         
         public bool IsDead => Health.IsDead;
         
+        public int Award { get; private set; }
+
         public void Activate() => IsActive = true;
 
         public void Deactivate() => IsActive = false;
@@ -23,11 +25,12 @@ namespace Assets.Game.Scripts.Enemies
         {
             Health = new Health(settings.Hp);
             Health.OnDied += OnDiedHandler;
+            Award = settings.Award;
         }
 
         public void ApplyDamage(int damage) => Health.ApplyDamage(damage);
         
-        protected virtual void OnDiedHandler() => OnDied?.Invoke();
+        protected virtual void OnDiedHandler() => OnDied?.Invoke(this);
 
         protected virtual void OnDestroy() => Health.OnDied -= OnDiedHandler;
     }

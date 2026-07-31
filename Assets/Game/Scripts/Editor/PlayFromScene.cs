@@ -2,7 +2,7 @@ using Assets.Game.Scripts.Shared;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 
-namespace Assets.Game.Scripts.EditorTools
+namespace Assets.Game.Scripts.Editor
 {
     [InitializeOnLoad]
     public static class PlayFromScene

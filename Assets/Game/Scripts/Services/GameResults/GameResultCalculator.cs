@@ -2,14 +2,13 @@ using Assets.Game.Scripts.Enemies.Interfaces;
 using Assets.Game.Scripts.Services.CurrencyBanks;
 using Assets.Game.Scripts.Services.RewardCalculators;
 using Assets.Game.Scripts.Services.Statistics;
-using Cysharp.Threading.Tasks;
 
 namespace Assets.Game.Scripts.Services.GameResults
 {
     public class GameResultCalculator : IGameResultCalculator
     {
-        private readonly GameStatistics _gameStatistics;
-        private readonly CurrencyBank _currencyBank;
+        private readonly IGameStatistics _gameStatistics;
+        private readonly ICurrencyBank _currencyBank;
         private readonly IRewardCalculator _rewardCalculator;
         private readonly IWavesController _wavesController;
 
@@ -18,8 +17,8 @@ namespace Assets.Game.Scripts.Services.GameResults
         public GameResultCalculator(
             IWavesController wavesController,
             IRewardCalculator rewardCalculator,
-            CurrencyBank currencyBank,
-            GameStatistics gameStatistics)
+            ICurrencyBank currencyBank,
+            IGameStatistics gameStatistics)
         {
             _wavesController = wavesController;
             _rewardCalculator = rewardCalculator;

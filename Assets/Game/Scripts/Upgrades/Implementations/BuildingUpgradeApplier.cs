@@ -15,9 +15,9 @@ namespace Assets.Game.Scripts.Upgrades.Implementations
         private readonly ISaveService _saveService;
         private readonly GameSettings _settings;
 
-        public BuildingUpgradeApplier(GameSettingsService gameSettingsService, ISaveService saveService)
+        public BuildingUpgradeApplier(IGameSettingsAccessor gameSettingsAccessor, ISaveService saveService)
         {
-            _settings = gameSettingsService.Settings;
+            _settings = gameSettingsAccessor.Settings;
             _saveService = saveService;
             
         }

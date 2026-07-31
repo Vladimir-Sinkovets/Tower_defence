@@ -1,4 +1,5 @@
 using Assets.Game.Scripts.Common.UniversalStateMachine;
+using Assets.Game.Scripts.Enemies;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -75,7 +76,7 @@ namespace Assets.Game.Scripts.Buildings.States
             }
         }
 
-        private void OnCurrentTargetDiedHandler() => StateSwitcher.SwitchState<ShootingBuildingWaitState>();
+        private void OnCurrentTargetDiedHandler(Enemy _) => StateSwitcher.SwitchState<ShootingBuildingWaitState>();
         private void OnStoppedHandler() => StateSwitcher.SwitchState<ShootingBuildingStopState>();
     }
 }

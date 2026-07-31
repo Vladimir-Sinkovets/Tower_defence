@@ -11,7 +11,7 @@ using Zenject;
 
 namespace Assets.Game.Scripts.Services.HudFactories
 {
-    public class HudFactory : IDisposable
+    public class HudFactory : IHudFactory, IDisposable
     {
         private readonly IInstantiator _instantiator;
         private readonly AssetReference _hudPrefab;

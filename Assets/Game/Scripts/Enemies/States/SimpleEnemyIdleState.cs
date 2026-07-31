@@ -28,7 +28,7 @@ namespace Assets.Game.Scripts.Enemies.States
             }
         }
 
-        private void OnEnemyDied()
+        private void OnEnemyDied(Enemy _)
         {
             StateSwitcher.SwitchState<SimpleEnemyDeathState>();
         }

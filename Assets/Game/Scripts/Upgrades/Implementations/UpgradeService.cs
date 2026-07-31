@@ -18,10 +18,10 @@ namespace Assets.Game.Scripts.Upgrades.Implementations
         private readonly UpgradeConfigs _upgradeConfigs;
         private readonly GameSettings _settings;
 
-        public UpgradeService(ISaveService saveService, GameSettingsService gameSettingsService, UpgradeConfigs upgradeConfigs)
+        public UpgradeService(ISaveService saveService, IGameSettingsAccessor gameSettingsAccessor, UpgradeConfigs upgradeConfigs)
         {
             _saveService = saveService;
-            _settings = gameSettingsService.Settings;
+            _settings = gameSettingsAccessor.Settings;
             _upgradeConfigs = upgradeConfigs;
         }
         

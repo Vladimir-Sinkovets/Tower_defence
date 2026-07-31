@@ -5,13 +5,13 @@ namespace Assets.Game.Scripts.Services.RewardCalculators
 {
     public class RewardCalculator : IRewardCalculator
     {
-        private readonly GameSettingsService _gameSettingsService;
+        private readonly IGameSettingsAccessor _gameSettingsAccessor;
 
-        public RewardCalculator(GameSettingsService gameSettingsService) => _gameSettingsService = gameSettingsService;
+        public RewardCalculator(IGameSettingsAccessor gameSettingsAccessor) => _gameSettingsAccessor = gameSettingsAccessor;
 
         public int CalculateMetaCurrency(int wavesCount, int killedEnemiesCount)
         {
-            var metaCurrencySettings = _gameSettingsService.Settings.MetaCurrencySettings;
+            var metaCurrencySettings = _gameSettingsAccessor.Settings.MetaCurrencySettings;
             
             return wavesCount * metaCurrencySettings.MetaCurrencyPerWave +
                    killedEnemiesCount * metaCurrencySettings.MetaCurrencyPerKill;

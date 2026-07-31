@@ -1,5 +1,4 @@
 using System.Threading;
-using System.Threading.Tasks;
 using Assets.Game.Scripts.Animations;
 using Assets.Game.Scripts.Buildings;
 using Assets.Game.Scripts.Buildings.Interfaces;
@@ -12,7 +11,7 @@ using Zenject;
 
 namespace Assets.Game.Scripts.Services.CastleFactories
 {
-    public class CastleFactory
+    public class CastleFactory : ICastleFactory
     {
         private const string CastleRootGameObjectName = "Root";
         
@@ -27,13 +26,13 @@ namespace Assets.Game.Scripts.Services.CastleFactories
             IBuildingFactory buildingFactory,
             IBuildingUpgradeApplier buildingUpgradeApplier,
             IInstantiator instantiator,
-            GameSettingsService gameSettingsService)
+            IGameSettingsAccessor gameSettingsAccessor)
         {
             _buildingsConfig = buildingsConfig;
             _buildingFactory = buildingFactory;
             _buildingUpgradeApplier = buildingUpgradeApplier;
             _instantiator = instantiator;
-            _settings = gameSettingsService.Settings;
+            _settings = gameSettingsAccessor.Settings;
         }
 
         public async UniTask<(Health, Transform)> CreateCastleAsync(CancellationToken ct)

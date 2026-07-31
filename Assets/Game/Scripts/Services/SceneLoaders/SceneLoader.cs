@@ -3,7 +3,7 @@ using Zenject;
 
 namespace Assets.Game.Scripts.Services.SceneLoaders
 {
-    public class SceneLoader
+    public class SceneLoader : ISceneLoader
     {
         private readonly ZenjectSceneLoader _zenjectSceneLoader;
 

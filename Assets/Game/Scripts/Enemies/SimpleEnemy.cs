@@ -23,13 +23,13 @@ namespace Assets.Game.Scripts.Enemies
         private SimpleEnemyStateMachineData _data;
 
         private Registry<Enemy> _enemyRegistry;
-        private CurrencyBank _currencyBank;
-        private GameStatistics _gameStatistics;
+        private ICurrencyBank _currencyBank;
+        private IGameStatistics _gameStatistics;
         private HealthBarPresenter _healthPresenter;
         private IInstantiator _instantiator;
 
         [Inject]
-        public void Construct(Registry<Enemy> enemyRegistry, CurrencyBank currencyBank, GameStatistics gameStatistics, IInstantiator instantiator)
+        public void Construct(Registry<Enemy> enemyRegistry, ICurrencyBank currencyBank, IGameStatistics gameStatistics, IInstantiator instantiator)
         {
             _enemyRegistry = enemyRegistry;
             _currencyBank = currencyBank;
@@ -84,15 +84,6 @@ namespace Assets.Game.Scripts.Enemies
             
             _stateMachine.SetStartState<SimpleEnemyRunState>();
         }
-
-        protected override void OnDiedHandler()
-        {
-            base.OnDiedHandler();
-            
-            _currencyBank.Add(_data.Settings.Award);
-            _gameStatistics.IncreaseKilledEnemyCount();
-        }
-
         private void Update() => _stateMachine?.Update();
 
         protected override void OnDestroy()

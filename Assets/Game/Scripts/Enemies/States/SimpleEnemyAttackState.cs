@@ -58,7 +58,7 @@ namespace Assets.Game.Scripts.Enemies.States
             _nextAttackTime = Time.time + _data.Settings.IntervalBetweenAttacks;
         }
 
-        private void OnEnemyDied()
+        private void OnEnemyDied(Enemy _)
         {
             StateSwitcher.SwitchState<SimpleEnemyDeathState>();
         }

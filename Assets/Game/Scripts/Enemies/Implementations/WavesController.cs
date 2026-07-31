@@ -13,33 +13,37 @@ namespace Assets.Game.Scripts.Enemies.Implementations
 {
     public class WavesController : IWavesController, IInitializable, IDisposable
     {
-        private readonly IEnemyWavesSpawner _enemyWavesController;
+        private readonly IEnemyWavesSpawner _enemyWavesSpawner;
         private readonly Registry<Enemy> _enemyRegistry;
         private readonly IAnalytics _analytics;
 
         public int WavesNumber { get; private set; }
 
-        private CancellationTokenSource _wavesCts;
         private int _aliveEnemyCount;
         private bool _isStopped;
         private readonly GameSettings _settings;
+        
+        private CancellationTokenSource _wavesCts;
+        private UniTaskCompletionSource _waveCompletedTcs;
+        private UniTaskCompletionSource _resumeTcs;
 
         public WavesController(
             IEnemyWavesSpawner enemyWavesSpawner,
             Registry<Enemy> enemyRegistry,
             IAnalytics analytics,
-            GameSettingsService gameSettingsService)
+            IGameSettingsAccessor gameSettingsAccessor)
         {
-            _enemyWavesController = enemyWavesSpawner;
+            _enemyWavesSpawner = enemyWavesSpawner;
             _enemyRegistry = enemyRegistry;
             _analytics = analytics;
-            _settings = gameSettingsService.Settings;
+            _settings = gameSettingsAccessor.Settings;
         }
 
         public void Initialize()
         {
             _enemyRegistry.OnRegistered += OnRegisteredHandler;
             _enemyRegistry.OnUnregistered += OnUnregisteredHandler;
+            _enemyWavesSpawner.OnSpawnCompleted += OnSpawnCompletedHandler;
         }
 
         public void StartWaves(Health targetHealth, Transform targetTransform)
@@ -55,42 +59,67 @@ namespace Assets.Game.Scripts.Enemies.Implementations
         public void Stop()
         {
             _isStopped = true;
-            _enemyWavesController.Stop();
+            _enemyWavesSpawner.Stop();
         }
 
         public void Resume()
         {
             _isStopped = false;
-            _enemyWavesController.Resume();
+            _enemyWavesSpawner.Resume();
+            _resumeTcs?.TrySetResult();
+            _resumeTcs = null;
         }
-
+        
         private async UniTaskVoid SpawnWavesAsync(Health targetHealth, Transform targetTransform, CancellationToken ct)
         {
-            while (ct.IsCancellationRequested == false)
+            while (!ct.IsCancellationRequested)
             {
-                await UniTask.WaitWhile(() => _isStopped, cancellationToken: _wavesCts.Token);
+                _waveCompletedTcs = new UniTaskCompletionSource();
+                
+                await WaitIfStopped(ct);
                 
                 var enemyCount = _settings.WavesSettings.BaseEnemyCount + WavesNumber * _settings.WavesSettings.NewEnemiesPerWave;
                 
                 _analytics.WaveStarted(WavesNumber, enemyCount);
 
-                await _enemyWavesController.SpawnWaveAsync(enemyCount, targetHealth, targetTransform, ct);
+                await _enemyWavesSpawner.SpawnWaveAsync(enemyCount, targetHealth, targetTransform, ct);
 
-                await UniTask.WaitUntil(() =>
-                    _enemyWavesController.IsSpawning == false &&
-                    _aliveEnemyCount == 0,
-                    cancellationToken: ct);
+                await _waveCompletedTcs.Task.AttachExternalCancellation(ct);
 
                 _analytics.WaveCompleted(WavesNumber);
                 
-                await UniTask.WaitWhile(() => _isStopped, cancellationToken: _wavesCts.Token);
-                
-                await UniTask.WaitForSeconds(_settings.WavesSettings.IntervalBetweenWaves, cancellationToken: ct);
+                await WaitBetweenWaves(_settings.WavesSettings.IntervalBetweenWaves, ct);
 
                 WavesNumber++;
             }
         }
         
+        private async UniTask WaitBetweenWaves(float duration, CancellationToken ct)
+        {
+            var elapsed = 0f;
+
+            while (elapsed < duration)
+            {
+                await WaitIfStopped(ct);
+
+                await UniTask.Yield(cancellationToken: ct);
+
+                elapsed += Time.deltaTime;
+            }
+        }
+
+        private async UniTask WaitIfStopped(CancellationToken ct)
+        {
+            if (!_isStopped)
+                return;
+
+            _resumeTcs ??= new UniTaskCompletionSource();
+
+            await _resumeTcs.Task.AttachExternalCancellation(ct);
+        }
+
+        private void OnSpawnCompletedHandler() => TryCompleteWave();
+
         private void OnRegisteredHandler(Enemy enemy)
         {
             _aliveEnemyCount++;
@@ -99,12 +128,26 @@ namespace Assets.Game.Scripts.Enemies.Implementations
         
         private void OnUnregisteredHandler(Enemy enemy) => enemy.OnDied -= OnEnemyDiedHandler;
         
-        private void OnEnemyDiedHandler() => _aliveEnemyCount--;
+        private void OnEnemyDiedHandler(Enemy _)
+        {
+            _aliveEnemyCount--;
+            TryCompleteWave();
+        }
+        
+        private void TryCompleteWave()
+        {
+            if (_enemyWavesSpawner.IsSpawning || _aliveEnemyCount != 0)
+                return;
+            
+            _waveCompletedTcs?.TrySetResult();
+            _waveCompletedTcs = null;
+        }
 
         public void Dispose()
         {
             _enemyRegistry.OnRegistered -= OnRegisteredHandler;
             _enemyRegistry.OnUnregistered -= OnUnregisteredHandler;
+            _enemyWavesSpawner.OnSpawnCompleted -= OnSpawnCompletedHandler;
             
             _wavesCts?.Cancel();
             _wavesCts?.Dispose();

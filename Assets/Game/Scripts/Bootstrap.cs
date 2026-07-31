@@ -4,24 +4,23 @@ using Assets.Game.Scripts.Services.Configs;
 using Assets.Game.Scripts.Services.SceneLoaders;
 using Assets.Game.Scripts.Shared;
 using Cysharp.Threading.Tasks;
-using Unity.Services.CloudSave;
 using UnityEngine;
 using Zenject;
 
 namespace Assets.Game.Scripts
 {
-    public class StartGameEntryPoint : MonoBehaviour
+    public class Bootstrap : MonoBehaviour
     {
-        private SceneLoader _sceneLoader;
-        private GameSettingsService _gameSettingsService;
+        private ISceneLoader _sceneLoader;
         private ICloudService _cloudService;
         private ISaveService _saveService;
+        private IGameSettingLoader _gameSettingLoader;
 
         [Inject]
-        private void Construct(SceneLoader sceneLoader, GameSettingsService gameSettingsService, ICloudService cloudService, ISaveService saveService)
+        private void Construct(ISceneLoader sceneLoader, IGameSettingLoader gameSettingLoader, ICloudService cloudService, ISaveService saveService)
         {
             _sceneLoader = sceneLoader;
-            _gameSettingsService = gameSettingsService;
+            _gameSettingLoader = gameSettingLoader;
             _cloudService = cloudService;
             _saveService = saveService;
         }
@@ -30,7 +29,7 @@ namespace Assets.Game.Scripts
 
         private async UniTask LoadAsync()
         {
-            await _gameSettingsService.FetchRemoteConfigAsync();
+            await _gameSettingLoader.FetchRemoteConfigAsync();
 
             await _cloudService.Initialize();
 

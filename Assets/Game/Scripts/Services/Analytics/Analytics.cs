@@ -29,11 +29,11 @@ namespace Assets.Game.Scripts.Services.Analytics
         private const string CoinsRemainingParameterName = "coins_remaining";
         
         private readonly ISaveService _saveService;
-        private readonly CurrencyBank _currencyBank;
+        private readonly ICurrencyBank _currencyBank;
         private readonly IAnalyticsProvider _analyticsProvider;
         private readonly BuildingCounter _buildingCounter;
 
-        public Analytics(ISaveService saveService, CurrencyBank currencyBank, IAnalyticsProvider analyticsProvider, BuildingCounter buildingCounter)
+        public Analytics(ISaveService saveService, ICurrencyBank currencyBank, IAnalyticsProvider analyticsProvider, BuildingCounter buildingCounter)
         {
             _saveService = saveService;
             _currencyBank = currencyBank;

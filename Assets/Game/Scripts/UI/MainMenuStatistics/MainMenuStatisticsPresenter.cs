@@ -21,11 +21,11 @@ namespace Assets.Game.Scripts.UI.MainMenuStatistics
             
             _view.SetWavesRecord(_saveService.WavesRecord.ToString());
 
-            _saveService.OnMetaCurrencyChanged += OnOnMetaCurrencyChangedHandler;
+            _saveService.OnMetaCurrencyChanged += OnMetaCurrencyChangedHandler;
         }
 
-        private void OnOnMetaCurrencyChangedHandler() => _view.SetMetaCurrency(_saveService.MetaCurrency.ToString());
+        private void OnMetaCurrencyChangedHandler() => _view.SetMetaCurrency(_saveService.MetaCurrency.ToString());
 
-        public void Dispose() => _saveService.OnMetaCurrencyChanged -= OnOnMetaCurrencyChangedHandler;
+        public void Dispose() => _saveService.OnMetaCurrencyChanged -= OnMetaCurrencyChangedHandler;
     }
 }

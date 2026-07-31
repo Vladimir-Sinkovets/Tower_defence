@@ -53,16 +53,17 @@ namespace Assets.Game.Scripts.Installers
 
         private void BindServices()
         {
-            Container.Bind<CurrencyBank>().AsSingle();
-            Container.Bind<GameStatistics>().AsSingle();
-            Container.Bind<CastleFactory>().AsSingle();
+            Container.BindInterfacesTo<CurrencyBank>().AsSingle();
+            Container.BindInterfacesTo<GameStatistics>().AsSingle();
+            Container.BindInterfacesTo<CastleFactory>().AsSingle();
             Container.BindInterfacesTo<BuildingUpgradeApplier>().AsSingle();
-            Container.BindInterfacesAndSelfTo<HudFactory>().AsSingle();
+            Container.BindInterfacesTo<HudFactory>().AsSingle();
             Container.BindInterfacesTo<EnemyAccessor>().AsSingle();
             Container.BindInterfacesTo<EnemyFactory>().AsSingle();
             Container.BindInterfacesTo<BuildingFactory>().AsSingle();
             Container.BindInterfacesTo<ProjectileFactory>().AsSingle();
             Container.BindInterfacesTo<VFXFactory>().AsSingle();
+            Container.BindInterfacesTo<EnemyDeathHandler>().AsSingle();
 
             Container.Bind<ShootingAssetLoader>().AsTransient();
             Container.Bind<ShootingExecutor>().AsTransient();
@@ -81,7 +82,7 @@ namespace Assets.Game.Scripts.Installers
         private void BindGameManagers()
         {
             Container.BindInterfacesAndSelfTo<GameplayEntryPoint>().AsSingle();
-            Container.BindInterfacesAndSelfTo<GameplayOrchestrator>().AsSingle();
+            Container.BindInterfacesTo<GameplayOrchestrator>().AsSingle();
             Container.BindInterfacesTo<GameResumeService>().AsSingle();
 
             Container.BindInstance(_perimeterPoints).AsSingle();
@@ -91,7 +92,7 @@ namespace Assets.Game.Scripts.Installers
             Container.BindInterfacesTo<BuildingService>().AsSingle();
             Container.BindInstance(_fieldStartupAnimation).AsSingle();
             
-            Container.BindInterfacesAndSelfTo<GameOverManager>().AsSingle();
+            Container.BindInterfacesTo<GameOverManager>().AsSingle();
             Container.BindInterfacesTo<GameResultSaver>().AsSingle();
             Container.BindInterfacesTo<GameStopper>().AsSingle();
             Container.BindInterfacesTo<RewardCalculator>().AsSingle();

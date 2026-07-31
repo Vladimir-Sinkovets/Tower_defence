@@ -15,7 +15,7 @@ namespace Assets.Game.Scripts.Buildings.Implementations
     public class BuildingService : IBuildingService, IDisposable
     {
         private readonly Registry<Building> _buildingRegistry;
-        private readonly CurrencyBank _currencyBank;
+        private readonly ICurrencyBank _currencyBank;
         private readonly IBuildingFactory _buildingFactory;
         private readonly IAnalytics _analytics;
         private readonly IWavesController _wavesController;
@@ -26,11 +26,11 @@ namespace Assets.Game.Scripts.Buildings.Implementations
 
         public BuildingService(
             Registry<Building> buildingRegistry,
-            CurrencyBank currencyBank,
+            ICurrencyBank currencyBank,
             IBuildingFactory buildingFactory,
             IAnalytics analytics,
             IWavesController wavesController,
-            GameSettingsService gameSettingsService,
+            IGameSettingsAccessor gameSettingsAccessor,
             BuildingCounter buildingCounter)
         {
             _buildingRegistry = buildingRegistry;
@@ -38,7 +38,7 @@ namespace Assets.Game.Scripts.Buildings.Implementations
             _buildingFactory = buildingFactory;
             _analytics = analytics;
             _wavesController = wavesController;
-            _settings = gameSettingsService.Settings;
+            _settings = gameSettingsAccessor.Settings;
             _buildingCounter = buildingCounter;
         }
         

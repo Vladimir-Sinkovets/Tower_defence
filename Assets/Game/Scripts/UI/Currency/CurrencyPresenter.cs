@@ -5,10 +5,10 @@ namespace Assets.Game.Scripts.UI.Currency
 {
     public class CurrencyPresenter : IDisposable
     {
-        private readonly CurrencyBank _currencyBank;
+        private readonly ICurrencyBank _currencyBank;
         private readonly ICurrencyView _view;
 
-        public CurrencyPresenter(CurrencyBank currencyBank, ICurrencyView view)
+        public CurrencyPresenter(ICurrencyBank currencyBank, ICurrencyView view)
         {
             _currencyBank = currencyBank;
             _view = view;

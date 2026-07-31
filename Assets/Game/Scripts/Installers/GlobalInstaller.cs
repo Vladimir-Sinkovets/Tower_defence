@@ -38,11 +38,11 @@ namespace Assets.Game.Scripts.Installers
 
             Container.BindInstance(_upgradeConfigs).AsSingle();
 
-            Container.Bind<SceneLoader>().AsSingle();
+            Container.BindInterfacesTo<SceneLoader>().AsSingle();
             
             Container.BindInterfacesTo<FirebaseAnalyticsProvider>().AsSingle();
             
-            Container.BindInterfacesAndSelfTo<GameSettingsService>().AsSingle();
+            Container.BindInterfacesTo<GameSettingsService>().AsSingle();
             
             Container.BindInterfacesAndSelfTo<InAppPurchaseManager>().AsSingle();
             

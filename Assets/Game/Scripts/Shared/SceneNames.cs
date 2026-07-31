@@ -4,6 +4,6 @@
     {
         public const string Menu = "Main menu";
         public const string Game = "Gameplay";
-        public const string StartGame = "Start game";
+        public const string Bootstrap = "Bootstrap";
     }
 }

@@ -7,10 +7,10 @@ namespace Assets.Game.Scripts.UI
 {
     public class MainMenuPresenter : IInitializable, IDisposable
     {
-        private readonly SceneLoader _sceneLoader;
+        private readonly ISceneLoader _sceneLoader;
         private readonly IMainMenuView _mainMenuView;
 
-        public MainMenuPresenter(SceneLoader sceneLoader, IMainMenuView mainMenuView)
+        public MainMenuPresenter(ISceneLoader sceneLoader, IMainMenuView mainMenuView)
         {
             _sceneLoader = sceneLoader;
             _mainMenuView = mainMenuView;

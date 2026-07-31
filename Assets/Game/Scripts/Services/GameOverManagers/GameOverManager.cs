@@ -9,7 +9,7 @@ using Cysharp.Threading.Tasks;
 
 namespace Assets.Game.Scripts.Services.GameOverManagers
 {
-    public class GameOverManager : IDisposable
+    public class GameOverManager : IGameOverManager, IDisposable
     {
         private readonly IWindowsManager _windowsManager;
         private readonly IGameResultCalculator _gameResultCalculator;

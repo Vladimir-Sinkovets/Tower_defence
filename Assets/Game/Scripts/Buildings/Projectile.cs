@@ -1,16 +1,16 @@
-﻿using System;
+﻿using Assets.Game.Scripts.Buildings.Interfaces;
 using Assets.Game.Scripts.Enemies;
 using UnityEngine;
+using Zenject;
 
 namespace Assets.Game.Scripts.Buildings
 {
     public class Projectile : MonoBehaviour
     {
-        public event Action<Vector3> OnHit;
-        
         private Enemy _target;
         private int _damage;
         private float _speed;
+        private ParticleSystem _hitVFXPrefab;
 
         private Vector3 _targetLastPosition;
         private Vector3 _startPosition;
@@ -18,8 +18,13 @@ namespace Assets.Game.Scripts.Buildings
         private float _time;
         private float _flightTime;
         private float _arcHeight;
+        
+        private IVFXFactory _vfxFactory;
 
-        public void Init(Enemy target, int damage, float speed, float arcHeight)
+        [Inject]
+        public void Construct(IVFXFactory vfxFactory) => _vfxFactory = vfxFactory;
+
+        public void Init(Enemy target, int damage, float speed, float arcHeight, ParticleSystem hitVFXPrefab)
         {
             if (target == null)
             {
@@ -30,6 +35,7 @@ namespace Assets.Game.Scripts.Buildings
             _target = target;
             _damage = damage;
             _speed = speed;
+            _hitVFXPrefab = hitVFXPrefab;
 
             _targetLastPosition = target.transform.position;
             _startPosition = transform.position;
@@ -66,14 +72,10 @@ namespace Assets.Game.Scripts.Buildings
             if (_target != null)
                 _target.ApplyDamage(_damage);
 
-            OnHit?.Invoke(transform.position);
+            if (_hitVFXPrefab != null)
+                _vfxFactory.Create(_hitVFXPrefab, transform.position);
 
             Destroy(gameObject);
-        }
-
-        private void OnDestroy()
-        {
-            OnHit = null;
         }
     }
 }

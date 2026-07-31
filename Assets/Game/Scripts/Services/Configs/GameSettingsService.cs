@@ -1,13 +1,13 @@
 using System;
 using Cysharp.Threading.Tasks;
+using Firebase;
 using Firebase.RemoteConfig;
 using Newtonsoft.Json;
 using UnityEngine;
-using Zenject;
 
 namespace Assets.Game.Scripts.Services.Configs
 {
-    public class GameSettingsService
+    public class GameSettingsService : IGameSettingsAccessor, IGameSettingLoader
     {
         private const string GameConfigKey = "Game_config";
 
@@ -15,11 +15,17 @@ namespace Assets.Game.Scripts.Services.Configs
         
         public async UniTask FetchRemoteConfigAsync()
         {
-            var cacheTime = TimeSpan.Zero;
-
-            await FirebaseRemoteConfig.DefaultInstance.FetchAsync(cacheTime);
+            var dependencyStatus = await FirebaseApp.CheckDependenciesAsync();
             
-            var activated = await FirebaseRemoteConfig.DefaultInstance.ActivateAsync();
+            if (dependencyStatus != DependencyStatus.Available)
+            {
+                Debug.LogError($"[{nameof(GameSettingsService)}] Firebase dependencies not available: {dependencyStatus}");
+                return;
+            }
+            
+            await FirebaseRemoteConfig.DefaultInstance.FetchAsync(TimeSpan.Zero).AsUniTask();
+            
+            var activated = await FirebaseRemoteConfig.DefaultInstance.ActivateAsync().AsUniTask();
 
             if (activated)
             {
@@ -27,11 +33,11 @@ namespace Assets.Game.Scripts.Services.Configs
             
                 Settings = JsonConvert.DeserializeObject<GameSettings>(json);
                 
-                Debug.Log("Configuration updated");
+                Debug.Log($"[{nameof(GameSettingsService)}] Configuration updated");
             }
             else
             {
-                Debug.LogError("Configuration update error");
+                Debug.LogError($"[{nameof(GameSettingsService)}] Configuration update error");
             }
         }
     }

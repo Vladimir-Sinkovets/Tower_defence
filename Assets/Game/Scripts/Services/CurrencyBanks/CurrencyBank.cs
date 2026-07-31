@@ -2,7 +2,7 @@
 
 namespace Assets.Game.Scripts.Services.CurrencyBanks
 {
-    public class CurrencyBank
+    public class CurrencyBank : ICurrencyBank
     {
         public event Action<int> OnCurrencyChanged;
 

@@ -15,7 +15,7 @@ namespace Assets.Game.Scripts.UI.Windows.ContinuePanel
         private readonly IGameResumeService _gameResumeService;
         private readonly IAdsRewardService _adsRewardService;
         private readonly IWindowsManager _windowsManager;
-        private readonly GameOverManager _gameOverManager;
+        private readonly IGameOverManager _gameOverManager;
         private readonly IContinueGameService _continueGameService;
         private readonly ISaveService _saveService;
 
@@ -24,7 +24,7 @@ namespace Assets.Game.Scripts.UI.Windows.ContinuePanel
             IGameResumeService gameResumeService,
             IAdsRewardService adsRewardService,
             IWindowsManager windowsManager,
-            GameOverManager gameOverManager,
+            IGameOverManager gameOverManager,
             IContinueGameService continueGameService,
             ISaveService saveService)
         {
