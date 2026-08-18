@@ -14,22 +14,24 @@ namespace Assets.Game.Scripts.Upgrades.Implementations
     {
         public event Action OnUpgradesChanged;
 
-        private readonly ISaveService _saveService;
         private readonly UpgradeConfigs _upgradeConfigs;
         private readonly GameSettings _settings;
+        private readonly ISaveService _saveService;
+        private readonly SaveData _saveData;
 
         public UpgradeService(ISaveService saveService, IGameSettingsAccessor gameSettingsAccessor, UpgradeConfigs upgradeConfigs)
         {
             _saveService = saveService;
+            _saveData = saveService.SaveData;
             _settings = gameSettingsAccessor.Settings;
             _upgradeConfigs = upgradeConfigs;
         }
         
-        public void Initialize() => _saveService.OnUpgradesChanged += OnUpgradesChangedHandler;
+        public void Initialize() => _saveData.OnChanged += OnChangedHandler;
 
         public IEnumerable<UpgradeSettings> GetUpgrades() => _settings.UpgradesSettings.GetUpgradeConfigs();
 
-        public int GetLevel(UpgradeSettings upgrade) => _saveService.Upgrades.GetValueOrDefault(upgrade.Id, 0);
+        public int GetLevel(UpgradeSettings upgrade) => _saveData.Upgrades.GetValueOrDefault(upgrade.Id, 0);
 
         public Sprite GetIcon(string id) => _upgradeConfigs.Configs.FirstOrDefault(x => x.Id == id)?.Icon;
         
@@ -39,7 +41,7 @@ namespace Assets.Game.Scripts.Upgrades.Implementations
         {
             var cost = GetLevelCost(upgrade);
 
-            return _saveService.MetaCurrency >= cost;
+            return _saveData.MetaCurrency >= cost;
         }
 
         public void BuyUpgrade(UpgradeSettings upgrade)
@@ -49,18 +51,19 @@ namespace Assets.Game.Scripts.Upgrades.Implementations
             
             var cost = GetLevelCost(upgrade);
 
-            if (_saveService.MetaCurrency < cost)
+            if (_saveData.MetaCurrency < cost)
             {
                 Debug.LogError($"Player does not have enough currency to buy the upgrade ({upgrade.Id})");
                 return;
             }
             
-            _saveService.MetaCurrency -= cost;
+            _saveData.MetaCurrency -= cost;
 
-            if (!_saveService.TryAddUpgrade(upgrade.Id, _settings.UpgradesSettings.FirstLevel))
+            if (!_saveData.Upgrades.TryAdd(upgrade.Id, _settings.UpgradesSettings.FirstLevel))
             {
-                var newLevel = _saveService.Upgrades[upgrade.Id] + _settings.UpgradesSettings.LevelIncrease;
-                _saveService.SetUpgrade(upgrade.Id, newLevel);
+                var newLevel = _saveData.Upgrades[upgrade.Id] + _settings.UpgradesSettings.LevelIncrease;
+                
+                _saveData.Upgrades[upgrade.Id] = newLevel;
             }
 
             _saveService.Save();
@@ -68,8 +71,8 @@ namespace Assets.Game.Scripts.Upgrades.Implementations
 
         public UpgradeSettings GetUpgrade(string id) => GetUpgrades().FirstOrDefault(x => x.Id == id);
 
-        private void OnUpgradesChangedHandler() => OnUpgradesChanged?.Invoke();
+        private void OnChangedHandler() => OnUpgradesChanged?.Invoke();
 
-        public void Dispose() => _saveService.OnUpgradesChanged -= OnUpgradesChangedHandler;
+        public void Dispose() => _saveData.OnChanged -= OnChangedHandler;
     }
 }

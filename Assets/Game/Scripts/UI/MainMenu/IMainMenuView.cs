@@ -5,5 +5,6 @@ namespace Assets.Game.Scripts.UI
     public interface IMainMenuView
     {
         event Action OnStartClick;
+        event Action OnCloseClick;
     }
 }

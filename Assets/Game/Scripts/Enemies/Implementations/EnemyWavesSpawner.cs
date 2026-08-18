@@ -21,9 +21,9 @@ namespace Assets.Game.Scripts.Enemies.Implementations
         private readonly Transform[] _perimeterPoints;
         private readonly GameSettings _settings;
 
-        public bool IsSpawning { get; private set; }
+        private UniTaskCompletionSource _resumeTcs;
 
-        private bool _isStopped;
+        public bool IsSpawning { get; private set; }
         
         public EnemyWavesSpawner(IEnemyFactory enemyFactory, WavesConfig wavesConfig, Transform[] perimeterPoints, IGameSettingsAccessor gameSettingsAccessor)
         {
@@ -39,7 +39,7 @@ namespace Assets.Game.Scripts.Enemies.Implementations
             
             for (int i = 0; i < count; i++)
             {
-                await UniTask.WaitWhile(() => _isStopped, cancellationToken: ct);
+                await WaitIfPaused(ct);
 
                 var spawnPoint = GetRandomPerimeterPoint();
 
@@ -51,7 +51,7 @@ namespace Assets.Game.Scripts.Enemies.Implementations
 
                 enemy.Activate();
 
-                await UniTask.WaitWhile(() => _isStopped, cancellationToken: ct);
+                await WaitIfPaused(ct);
                 
                 await UniTask.WaitForSeconds(_settings.WavesSettings.IntervalBetweenEnemies, cancellationToken: ct);
             }
@@ -60,8 +60,24 @@ namespace Assets.Game.Scripts.Enemies.Implementations
             OnSpawnCompleted?.Invoke();
         }
 
-        public void Stop() => _isStopped = true;
-        public void Resume() => _isStopped = false;
+        public void Stop() => _resumeTcs ??= new UniTaskCompletionSource();
+
+        public void Resume()
+        {
+            if (_resumeTcs == null)
+                return;
+                
+            _resumeTcs.TrySetResult();
+            _resumeTcs = null;
+        }
+
+        private async UniTask WaitIfPaused(CancellationToken ct)
+        {
+            if (_resumeTcs == null)
+                return;
+
+            await _resumeTcs.Task.AttachExternalCancellation(ct);
+        }
 
         private Vector3 GetRandomPerimeterPoint()
         {

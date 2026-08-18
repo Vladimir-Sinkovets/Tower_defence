@@ -1,23 +1,11 @@
-using System;
-using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 
 namespace Assets.Game.Scripts.Saves
 {
     public interface ISaveService
     {
-        event Action OnUpgradesChanged;
-        event Action OnMetaCurrencyChanged;
-        event Action OnWavesRecordChanged;
-        int MetaCurrency { get; set; }
-        int WavesRecord { get; set; }
-        bool IsAdsDisabled { get; }
-        IReadOnlyDictionary<string, int> Upgrades { get; }
-        bool TryAddUpgrade(string upgradeId, int firstLevel);
-        void SetUpgrade(string upgradeId, int level);
+        SaveData SaveData { get; }
         void Save();
         UniTask LoadAsync();
-        void SetUpgrades(Dictionary<string, int> saveDataUpgrades);
-        void DisableAds();
     }
 }

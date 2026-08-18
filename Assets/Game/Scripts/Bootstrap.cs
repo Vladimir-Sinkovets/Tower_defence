@@ -2,6 +2,7 @@ using Assets.Game.Scripts.Saves;
 using Assets.Game.Scripts.Services.AssetLoaders;
 using Assets.Game.Scripts.Services.CloudSaves;
 using Assets.Game.Scripts.Services.Configs;
+using Assets.Game.Scripts.Services.Purchases;
 using Assets.Game.Scripts.Services.SceneLoaders;
 using Assets.Game.Scripts.Services.StartScreens;
 using Assets.Game.Scripts.Shared;
@@ -11,26 +12,27 @@ using Zenject;
 
 namespace Assets.Game.Scripts
 {
-    public class Bootstrap : MonoBehaviour
+    public class Bootstrap : IInitializable
     {
         private const string DownloadingAssetsErrorMessage = "Downloading assets error";
         private const string LoadingMessage = "Loading...";
 
-        private ISceneLoader _sceneLoader;
-        private ICloudService _cloudService;
-        private ISaveService _saveService;
-        private IGameSettingLoader _gameSettingLoader;
-        private IAssetDownloader _assetDownloader;
-        private IStartScreen _startScreen;
-        
-        [Inject]
-        private void Construct(
+        private readonly ISceneLoader _sceneLoader;
+        private readonly ICloudService _cloudService;
+        private readonly ISaveService _saveService;
+        private readonly IGameSettingLoader _gameSettingLoader;
+        private readonly IAssetDownloader _assetDownloader;
+        private readonly IStartScreen _startScreen;
+        private readonly IInAppPurchaseManager _inAppPurchaseManager;
+
+        private Bootstrap(
             ISceneLoader sceneLoader,
             IGameSettingLoader gameSettingLoader,
             ICloudService cloudService,
             ISaveService saveService,
             IAssetDownloader assetDownloader,
-            IStartScreen startScreen)
+            IStartScreen startScreen,
+            IInAppPurchaseManager inAppPurchaseManager)
         {
             _sceneLoader = sceneLoader;
             _gameSettingLoader = gameSettingLoader;
@@ -38,14 +40,19 @@ namespace Assets.Game.Scripts
             _saveService = saveService;
             _assetDownloader = assetDownloader;
             _startScreen = startScreen;
+            _inAppPurchaseManager = inAppPurchaseManager;
         }
         
-        private void Start() => LoadAsync().Forget();
+        public void Initialize() => LoadAsync().Forget();
 
         private async UniTask LoadAsync()
         {
-            await _gameSettingLoader.FetchRemoteConfigAsync();
+            _startScreen.ShowMessage("Start");
+
+            await _inAppPurchaseManager.InitializeAsync();
             
+            await _gameSettingLoader.FetchRemoteConfigAsync();
+
             _startScreen.ShowMessage(LoadingMessage);
             
             if (!await _assetDownloader.LoadAsync())
@@ -56,7 +63,7 @@ namespace Assets.Game.Scripts
             }
 
             await _cloudService.Initialize();
-
+            
             await _saveService.LoadAsync();
             
             _sceneLoader.LoadScene(SceneNames.Menu);

@@ -28,14 +28,14 @@ namespace Assets.Game.Scripts.Services.Analytics
         private const string WaveNumberParameterName = "wave_number";
         private const string CoinsRemainingParameterName = "coins_remaining";
         
-        private readonly ISaveService _saveService;
+        private readonly SaveData _saveData;
         private readonly ICurrencyBank _currencyBank;
         private readonly IAnalyticsProvider _analyticsProvider;
         private readonly BuildingCounter _buildingCounter;
 
         public Analytics(ISaveService saveService, ICurrencyBank currencyBank, IAnalyticsProvider analyticsProvider, BuildingCounter buildingCounter)
         {
-            _saveService = saveService;
+            _saveData = saveService.SaveData;
             _currencyBank = currencyBank;
             _analyticsProvider = analyticsProvider;
             _buildingCounter = buildingCounter;
@@ -43,7 +43,7 @@ namespace Assets.Game.Scripts.Services.Analytics
 
         public void GameStarted()
         {
-            var metaCurrency = _saveService.MetaCurrency;
+            var metaCurrency = _saveData.MetaCurrency;
             
             _analyticsProvider.LogEvent(GameStartedEventName, new AnalyticsParameter(MetaCurrencyTotalParameterName, metaCurrency));
         }
@@ -59,7 +59,7 @@ namespace Assets.Game.Scripts.Services.Analytics
             var towersBuilt = _buildingCounter.Count;
             
             _analyticsProvider.LogEvent(WaveCompletedEventName,
-                new AnalyticsParameter(WaveNumberParameterName, waveNumber),
+                new AnalyticsParameter(WaveNumberParameterName, waveNumber),    
                 new AnalyticsParameter(TowersBuiltParameterName, towersBuilt),
                 new AnalyticsParameter(CoinsRemainingParameterName, coinsRemaining));
         }

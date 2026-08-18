@@ -8,7 +8,7 @@ namespace Assets.Game.Scripts.Services.Purchases.Configs
     {
         public void Execute(ISaveService saveService)
         {
-            saveService.DisableAds();
+            saveService.SaveData.IsAdsDisabled = true;
             saveService.Save();
         }
     }

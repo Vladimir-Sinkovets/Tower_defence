@@ -12,14 +12,13 @@ namespace Assets.Game.Scripts.Upgrades.Implementations
 {
     public class BuildingUpgradeApplier : IBuildingUpgradeApplier
     {
-        private readonly ISaveService _saveService;
+        private readonly SaveData _saveData;
         private readonly GameSettings _settings;
 
         public BuildingUpgradeApplier(IGameSettingsAccessor gameSettingsAccessor, ISaveService saveService)
         {
             _settings = gameSettingsAccessor.Settings;
-            _saveService = saveService;
-            
+            _saveData = saveService.SaveData;
         }
         
         public int ApplyBuildingDamageUpgrade(int baseDamage, BuildingType buildingType)
@@ -71,7 +70,7 @@ namespace Assets.Game.Scripts.Upgrades.Implementations
         {
             var upgradesSettings = _settings.UpgradesSettings;
             
-            return _saveService.Upgrades.GetValueOrDefault(upgrade.Id, upgradesSettings.UpgradeLevel);
+            return _saveData.Upgrades.GetValueOrDefault(upgrade.Id, upgradesSettings.UpgradeLevel);
         }
     }
 }

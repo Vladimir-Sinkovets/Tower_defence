@@ -1,3 +1,4 @@
+using System;
 using Assets.Game.Scripts.Common.UniversalStateMachine;
 using Assets.Game.Scripts.Enemies;
 using Cysharp.Threading.Tasks;
@@ -5,7 +6,7 @@ using UnityEngine;
 
 namespace Assets.Game.Scripts.Buildings.States
 {
-    public class ShootingBuildingAttackState : State
+    public class ShootingBuildingAttackState : State, IDisposable
     {
         private readonly ShootingBuildingStateMachineData _data;
         private readonly ShootingExecutor _shootingExecutor;
@@ -78,5 +79,7 @@ namespace Assets.Game.Scripts.Buildings.States
 
         private void OnCurrentTargetDiedHandler(Enemy _) => StateSwitcher.SwitchState<ShootingBuildingWaitState>();
         private void OnStoppedHandler() => StateSwitcher.SwitchState<ShootingBuildingStopState>();
+        
+        public void Dispose() => _shootingExecutor.Dispose();
     }
 }

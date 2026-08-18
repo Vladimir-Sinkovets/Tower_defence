@@ -1,6 +1,7 @@
 using Assets.Game.Scripts.Shared;
 using UnityEditor;
 using UnityEditor.SceneManagement;
+using UnityEngine;
 
 namespace Assets.Game.Scripts.Editor
 {
@@ -18,14 +19,14 @@ namespace Assets.Game.Scripts.Editor
 
         static PlayFromScene()
         {
-            EditorApplication.playModeStateChanged += OnPlayModeChanged;
+            ApplyStartScene();
         }
 
         [MenuItem(MenuPath)]
         private static void Toggle()
         {
             Enabled = !Enabled;
-            Menu.SetChecked(MenuPath, Enabled);
+            ApplyStartScene();
         }
 
         [MenuItem(MenuPath, true)]
@@ -35,22 +36,51 @@ namespace Assets.Game.Scripts.Editor
             return true;
         }
 
-        private static void OnPlayModeChanged(PlayModeStateChange state)
+        private static void ApplyStartScene()
         {
+            Menu.SetChecked(MenuPath, Enabled);
+
             if (!Enabled)
-                return;
-
-            if (state != PlayModeStateChange.ExitingEditMode)
-                return;
-
-            if (EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
             {
-                EditorSceneManager.OpenScene(SceneNames.Bootstrap);
+                EditorSceneManager.playModeStartScene = null;
+                return;
             }
-            else
+
+            var bootstrapScene = GetBootstrapScene();
+
+            if (bootstrapScene == null)
             {
-                EditorApplication.isPlaying = false;
+                EditorSceneManager.playModeStartScene = null;
+                Debug.LogError($"Bootstrap scene not found at path: {SceneNames.Bootstrap}");
+                return;
             }
+
+            EditorSceneManager.playModeStartScene = bootstrapScene;
+        }
+
+        private static SceneAsset GetBootstrapScene()
+        {
+            var guids = AssetDatabase.FindAssets($"t:Scene {SceneNames.Bootstrap}");
+
+            if (guids.Length == 0)
+            {
+                Debug.LogError($"Bootstrap scene not found: {SceneNames.Bootstrap}");
+
+                EditorSceneManager.playModeStartScene = null;
+                return null;
+            }
+
+            if (guids.Length > 1)
+            {
+                Debug.LogError($"Multiple scenes found with name: {SceneNames.Bootstrap}");
+
+                EditorSceneManager.playModeStartScene = null;
+                return null;
+            }
+
+            var scenePath = AssetDatabase.GUIDToAssetPath(guids[0]);
+            
+            return AssetDatabase.LoadAssetAtPath<SceneAsset>(scenePath);
         }
     }
 }

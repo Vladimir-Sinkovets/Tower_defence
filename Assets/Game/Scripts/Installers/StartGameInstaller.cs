@@ -13,7 +13,8 @@ namespace Assets.Game.Scripts.Installers
         {
             Container.Bind<IStartScreen>().FromInstance(_startScreen).AsSingle();
             
-            Container.BindInterfacesAndSelfTo<AssetDownloader>().AsSingle();
+            Container.BindInterfacesTo<AssetDownloader>().AsSingle();
+            Container.BindInterfacesTo<Bootstrap>().AsSingle();
         }
     }
 }

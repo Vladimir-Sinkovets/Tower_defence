@@ -10,7 +10,7 @@ namespace Assets.Game.Scripts.Services.Purchases.Configs
         
         public void Execute(ISaveService saveService)
         {
-            saveService.MetaCurrency += Amount;
+            saveService.SaveData.MetaCurrency += Amount;
             
             saveService.Save();
         }

@@ -7,25 +7,25 @@ namespace Assets.Game.Scripts.UI.MainMenuStatistics
     public class MainMenuStatisticsPresenter : IInitializable, IDisposable
     {
         private readonly IMainMenuStatisticsView _view;
-        private readonly ISaveService _saveService;
+        private readonly SaveData _saveData;
 
         public MainMenuStatisticsPresenter(IMainMenuStatisticsView view, ISaveService saveService)
         {
             _view = view;
-            _saveService = saveService;
+            _saveData = saveService.SaveData;
         }
 
         public void Initialize()
         {
-            _view.SetMetaCurrency(_saveService.MetaCurrency.ToString());
+            _view.SetMetaCurrency(_saveData.MetaCurrency.ToString());
             
-            _view.SetWavesRecord(_saveService.WavesRecord.ToString());
+            _view.SetWavesRecord(_saveData.WavesRecord.ToString());
 
-            _saveService.OnMetaCurrencyChanged += OnMetaCurrencyChangedHandler;
+            _saveData.OnChanged += OnChangedHandler;
         }
 
-        private void OnMetaCurrencyChangedHandler() => _view.SetMetaCurrency(_saveService.MetaCurrency.ToString());
+        private void OnChangedHandler() => _view.SetMetaCurrency(_saveData.MetaCurrency.ToString());
 
-        public void Dispose() => _saveService.OnMetaCurrencyChanged -= OnMetaCurrencyChangedHandler;
+        public void Dispose() => _saveData.OnChanged -= OnChangedHandler;
     }
 }

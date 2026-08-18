@@ -8,7 +8,7 @@ using Zenject;
 
 namespace Assets.Game.Scripts.Services.Purchases
 {
-    public class InAppPurchaseManager : IInAppPurchaseManager, IInitializable, IDisposable
+    public class InAppPurchaseManager : IInAppPurchaseManager, IDisposable
     {
         public event Action OnProductsChanged;
         
@@ -17,25 +17,30 @@ namespace Assets.Game.Scripts.Services.Purchases
 
         private List<ProductItem> _products = new();
         private readonly List<string> _ownedProducts = new();
+        private bool _isInitialized;
 
         public IReadOnlyList<ProductItem> Products => _products;
 
         public InAppPurchaseManager(IInAppPurchaseExecutor executor) => _executor = executor;
 
-        public void Initialize() => InitAsync();
-
         public void BuyProduct(ProductItem product)
         {
+            if (!_isInitialized)
+            {
+                Debug.LogWarning($"[{nameof(InAppPurchaseManager)}] Store is not initialized");
+                return;
+            }
+            
             if (product == null)
             {
-                Debug.LogError($"[IAP] BuyProduct: null");
+                Debug.LogError($"[{nameof(InAppPurchaseManager)}] BuyProduct: null");
                 return;
             }
             
             _controller.PurchaseProduct(product.Id);
         }
 
-        private async UniTask InitAsync()
+        public async UniTask InitializeAsync()
         {
             _controller = UnityIAPServices.StoreController();
             
@@ -43,7 +48,7 @@ namespace Assets.Game.Scripts.Services.Purchases
             
             await _controller.Connect();
             
-            var initialProductToFetch = BuildProductDefinitions();
+            var initialProductToFetch = BuildProductDefinitions();;
             
             _controller.FetchProducts(initialProductToFetch);
         }
@@ -93,7 +98,7 @@ namespace Assets.Game.Scripts.Services.Purchases
         #region Events handlers
         private void OnPurchaseConfirmed(Order order)
         {
-            Debug.Log($"[IAP] Purchase confirmed");
+            Debug.Log($"[{nameof(InAppPurchaseManager)}] Purchase confirmed");
 
             if (order?.Info?.PurchasedProductInfo == null || order.Info.PurchasedProductInfo.Count <= 0)
                 return;
@@ -107,7 +112,7 @@ namespace Assets.Game.Scripts.Services.Purchases
 
         private void OnPurchasePending(PendingOrder order)
         {
-            Debug.Log($"[IAP] Pending Order: {order}");
+            Debug.Log($"[{nameof(InAppPurchaseManager)}] Pending Order: {order}");
             
             _controller.ConfirmPurchase(order);
         }
@@ -129,24 +134,26 @@ namespace Assets.Game.Scripts.Services.Purchases
             OnProductsChanged?.Invoke();
             
             _controller.FetchPurchases();
+            
+            _isInitialized = true;
         }
 
         private void LogProductsFetched(List<Product> products)
         {
-            Debug.Log($"[IAP] Products fetched: {products.Count}");
+            Debug.Log($"[{nameof(InAppPurchaseManager)}] Products fetched: {products.Count}");
             foreach (var p in products)
             {
-                Debug.Log($"[IAP] {p.definition.id} | {p.metadata.localizedTitle} | {p.metadata.localizedPriceString}");
+                Debug.Log($"[{nameof(InAppPurchaseManager)}] {p.definition.id} | {p.metadata.localizedTitle} | {p.metadata.localizedPriceString}");
             }
         }
 
-        private void OnPurchaseFailed(FailedOrder order) => Debug.LogError($"[IAP] Failed Order: {order}");
+        private void OnPurchaseFailed(FailedOrder order) => Debug.LogError($"[{nameof(InAppPurchaseManager)}] Failed Order: {order}");
         
-        private void OnProductsFetchFailed(ProductFetchFailed failure) => Debug.LogError($"[IAP] Product fetch failed: {failure.FailureReason}");
+        private void OnProductsFetchFailed(ProductFetchFailed failure) => Debug.LogError($"[{nameof(InAppPurchaseManager)}] Product fetch failed: {failure.FailureReason}");
         
         private void OnPurchasesFetched(Orders orders)
         {
-            Debug.Log($"[IAP] Purchase fetched");
+            Debug.Log($"[{nameof(InAppPurchaseManager)}] Purchase fetched");
             
             _ownedProducts.Clear();
             
@@ -166,8 +173,8 @@ namespace Assets.Game.Scripts.Services.Purchases
             OnProductsChanged?.Invoke();
         }
 
-        private void OnPurchasesFetchFailed(PurchasesFetchFailureDescription failure) => Debug.LogError($"[IAP] Purchases fetch failed: {failure.FailureReason}");
-        private void OnStoreDisconnected(StoreConnectionFailureDescription desc) => Debug.LogError($"[IAP] Store disconnected: {desc.Message}");
+        private void OnPurchasesFetchFailed(PurchasesFetchFailureDescription failure) => Debug.LogError($"[{nameof(InAppPurchaseManager)}] Purchases fetch failed: {failure.FailureReason}");
+        private void OnStoreDisconnected(StoreConnectionFailureDescription desc) => Debug.LogError($"[{nameof(InAppPurchaseManager)}] Store disconnected: {desc.Message}");
         #endregion
         
         public void Dispose() => UnsubscribeIAPEvents();

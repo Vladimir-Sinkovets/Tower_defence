@@ -22,20 +22,20 @@ namespace Assets.Game.Scripts.Services.Configs
                 Debug.LogError($"[{nameof(GameSettingsService)}] Firebase dependencies not available: {dependencyStatus}");
                 return;
             }
-            
-            await FirebaseRemoteConfig.DefaultInstance.FetchAsync(TimeSpan.Zero).AsUniTask();
-            
-            var activated = await FirebaseRemoteConfig.DefaultInstance.ActivateAsync().AsUniTask();
 
-            if (activated)
+            try
             {
+                await FirebaseRemoteConfig.DefaultInstance.FetchAsync(TimeSpan.Zero).AsUniTask();
+                
+                await FirebaseRemoteConfig.DefaultInstance.ActivateAsync().AsUniTask();
+                
                 var json = FirebaseRemoteConfig.DefaultInstance.AllValues[GameConfigKey].StringValue;
             
                 Settings = JsonConvert.DeserializeObject<GameSettings>(json);
                 
                 Debug.Log($"[{nameof(GameSettingsService)}] Configuration updated");
             }
-            else
+            catch
             {
                 Debug.LogError($"[{nameof(GameSettingsService)}] Configuration update error");
             }

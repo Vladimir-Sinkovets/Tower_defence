@@ -23,17 +23,13 @@ namespace Assets.Game.Scripts.Enemies
         private SimpleEnemyStateMachineData _data;
 
         private Registry<Enemy> _enemyRegistry;
-        private ICurrencyBank _currencyBank;
-        private IGameStatistics _gameStatistics;
         private HealthBarPresenter _healthPresenter;
         private IInstantiator _instantiator;
 
         [Inject]
-        public void Construct(Registry<Enemy> enemyRegistry, ICurrencyBank currencyBank, IGameStatistics gameStatistics, IInstantiator instantiator)
+        public void Construct(Registry<Enemy> enemyRegistry, IInstantiator instantiator)
         {
             _enemyRegistry = enemyRegistry;
-            _currencyBank = currencyBank;
-            _gameStatistics = gameStatistics;
             _instantiator = instantiator;
         }
 

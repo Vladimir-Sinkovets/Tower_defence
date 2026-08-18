@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Assets.Game.Scripts.Buildings;
@@ -118,15 +119,27 @@ namespace Assets.Game.Scripts.UI.Windows.Buildings
 
         private void Render()
         {
-            var viewModels = _buildingsConfig.Buildings
-                .Select((buildingConfig, index) => new BuildingOptionViewModel()
+            var viewModels = new List<BuildingOptionViewModel>();
+
+            for (var i = 0; i < _buildingsConfig.Buildings.Count; i++)
+            {
+                var buildingConfig = _buildingsConfig.Buildings[i];
+                var settings = _settings.BuildingSettings.FirstOrDefault(x => x.Id == buildingConfig.Id);
+
+                if (settings == null)
+                    continue;
+
+                var viewModel = new BuildingOptionViewModel()
                 {
-                    Price = _settings.BuildingSettings[index].Price,
+                    Price = settings.Price,
                     Icon = buildingConfig.Icon,
-                    Index = index,
-                    IsAvailable = _settings.BuildingSettings[index].Price <= _currencyBank.Total,
-                }).ToList();
-            
+                    Index = i,
+                    IsAvailable = settings.Price <= _currencyBank.Total,
+                };
+
+                viewModels.Add(viewModel);
+            }
+
             _chooseBuildingView.Render(viewModels);
         }
 
