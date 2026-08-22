@@ -1,4 +1,5 @@
 ﻿using Assets.Game.Scripts.UI;
+using Assets.Game.Scripts.UI.ConnectMenu;
 using Assets.Game.Scripts.UI.MainMenuStatistics;
 using Assets.Game.Scripts.UI.Shop;
 using Assets.Game.Scripts.UI.UpgradePanel;
@@ -14,6 +15,7 @@ namespace Assets.Game.Scripts.Installers
         [SerializeField] private MainMenuView _mainMenuView;
         [SerializeField] private UpgradePanelView _upgradePanelView;
         [SerializeField] private ShopView _shopView;
+        [SerializeField] private ConnectView _connectView;
         
         public override void InstallBindings()
         {
@@ -30,6 +32,9 @@ namespace Assets.Game.Scripts.Installers
 
             Container.BindInstance<IShopView>(_shopView).AsSingle();
             Container.BindInterfacesAndSelfTo<ShopPresenter>().AsSingle();
+            
+            Container.BindInstance<IConnectMenuView>(_connectView).AsSingle();
+            Container.BindInterfacesAndSelfTo<ConnectMenuPresenter>().AsSingle();
         }
     }
 }
