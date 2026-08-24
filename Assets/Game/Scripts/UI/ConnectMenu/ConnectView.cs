@@ -25,6 +25,12 @@ namespace Assets.Game.Scripts.UI.ConnectMenu
         
         [SerializeField] private TMP_InputField _roomIdInputField;
 
+        [SerializeField] private GameObject _connectingPanel;
+        [SerializeField] private TMP_Text _errorMessageText;
+        
+        
+        public string RoomId => _roomIdInputField.text;
+
         private void Awake()
         {
             _openPanelButton.onClick.AddListener(OpenPanelButtonClickedHandler);
@@ -32,7 +38,7 @@ namespace Assets.Game.Scripts.UI.ConnectMenu
             _createRoomButton.onClick.AddListener(CreateRoomButtonClickedHandler);
             _connectRoomButton.onClick.AddListener(ConnectRoomButtonClickedHandler);
         }
-        
+
         public void Show()
         {
             _panel.SetActive(true);
@@ -44,6 +50,28 @@ namespace Assets.Game.Scripts.UI.ConnectMenu
             await  _panelAnimation.Hide();
             _panel.SetActive(false);
         }
+
+        public void Block()
+        {
+            _openPanelButton.interactable = false;
+            _closePanelButton.interactable = false;
+            _createRoomButton.interactable = false;
+            _roomIdInputField.interactable = false;
+        }
+
+        public void ShowConnectingPanel() => _connectingPanel.SetActive(true);
+
+        public void Unlock()
+        {
+            _openPanelButton.interactable = true;
+            _closePanelButton.interactable = true;
+            _createRoomButton.interactable = true;
+            _roomIdInputField.interactable = true;
+        }
+
+        public void HideConnectingPanel() => _connectingPanel.SetActive(false);
+
+        public void ShowErrorMessage(string message) => _errorMessageText.text = message;
 
         private void ClosePanelButtonClickedHandler() => OnClosePanelButtonClicked?.Invoke();
         private void OpenPanelButtonClickedHandler() => OnOpenPanelButtonClicked?.Invoke();

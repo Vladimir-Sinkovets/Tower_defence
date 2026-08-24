@@ -1,4 +1,5 @@
-﻿using Assets.Game.Scripts.UI;
+﻿using Assets.Game.Scripts.Services.Net;
+using Assets.Game.Scripts.UI;
 using Assets.Game.Scripts.UI.ConnectMenu;
 using Assets.Game.Scripts.UI.MainMenuStatistics;
 using Assets.Game.Scripts.UI.Shop;
@@ -35,6 +36,8 @@ namespace Assets.Game.Scripts.Installers
             
             Container.BindInstance<IConnectMenuView>(_connectView).AsSingle();
             Container.BindInterfacesAndSelfTo<ConnectMenuPresenter>().AsSingle();
+            
+            Container.BindInterfacesTo<NetworkService>().AsSingle();
         }
     }
 }

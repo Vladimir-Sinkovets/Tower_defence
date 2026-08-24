@@ -5,6 +5,7 @@ using Assets.Game.Scripts.Services.AssetProviders;
 using Assets.Game.Scripts.Services.CloudSaves;
 using Assets.Game.Scripts.Services.Configs;
 using Assets.Game.Scripts.Services.FirebaseSetups;
+using Assets.Game.Scripts.Services.Net;
 using Assets.Game.Scripts.Services.Purchases;
 using Assets.Game.Scripts.Services.Purchases.Configs;
 using Assets.Game.Scripts.Services.SceneLoaders;
@@ -51,6 +52,15 @@ namespace Assets.Game.Scripts.Installers
             Container.BindInstance(_inAppPurchasesConfig).AsSingle();
             
             Container.BindInterfacesAndSelfTo<UnityCloudSaveService>().AsSingle();
+            
+            var callbacks = new GameObject("PhotonCallbacks")
+                .AddComponent<PhotonCallbacks>();
+
+            DontDestroyOnLoad(callbacks.gameObject);
+
+            Container.Bind<PhotonCallbacks>()
+                .FromInstance(callbacks)
+                .AsSingle();
         }
     }
 }

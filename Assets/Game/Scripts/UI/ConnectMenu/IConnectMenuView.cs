@@ -9,7 +9,13 @@ namespace Assets.Game.Scripts.UI.ConnectMenu
         event Action OnOpenPanelButtonClicked;
         event Action OnConnectRoomButtonClicked;
         event Action OnCreateRoomButtonClicked;
+        string RoomId { get; }
         void Show();
         UniTask Hide();
+        void Block();
+        void ShowConnectingPanel();
+        void Unlock();
+        void HideConnectingPanel();
+        void ShowErrorMessage(string message);
     }
 }
