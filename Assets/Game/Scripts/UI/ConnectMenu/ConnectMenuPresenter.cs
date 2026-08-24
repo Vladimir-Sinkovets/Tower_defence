@@ -40,7 +40,7 @@ namespace Assets.Game.Scripts.UI.ConnectMenu
             _connectMenuView.Unlock();
             _connectMenuView.HideConnectingPanel();
             
-            _sceneLoader.LoadScene(SceneNames.OnlineGameplay);
+            _sceneLoader.LoadScene(SceneNames.Arena);
         }
 
         private void OnRoomCreatedHandler(string _)
@@ -48,7 +48,7 @@ namespace Assets.Game.Scripts.UI.ConnectMenu
             _connectMenuView.Unlock();
             _connectMenuView.HideConnectingPanel();
 
-            _sceneLoader.LoadScene(SceneNames.OnlineGameplay);
+            _sceneLoader.LoadScene(SceneNames.Arena);
         }
 
         private void OnClosePanelButtonClickedHandler() => _connectMenuView.Hide();
