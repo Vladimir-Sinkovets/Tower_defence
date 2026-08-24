@@ -1,5 +1,7 @@
 using System;
 using Assets.Game.Scripts.Services.Net;
+using Assets.Game.Scripts.Services.SceneLoaders;
+using Assets.Game.Scripts.Shared;
 
 namespace Assets.Game.Scripts.UI.ConnectMenu
 {
@@ -7,11 +9,13 @@ namespace Assets.Game.Scripts.UI.ConnectMenu
     {
         private readonly IConnectMenuView _connectMenuView;
         private readonly INetworkService _networkService;
+        private readonly ISceneLoader _sceneLoader;
 
-        public ConnectMenuPresenter(IConnectMenuView connectMenuView, INetworkService networkService)
+        public ConnectMenuPresenter(IConnectMenuView connectMenuView, INetworkService networkService, ISceneLoader sceneLoader)
         {
             _connectMenuView = connectMenuView;
             _networkService = networkService;
+            _sceneLoader = sceneLoader;
 
             _connectMenuView.OnClosePanelButtonClicked += OnClosePanelButtonClickedHandler;
             _connectMenuView.OnOpenPanelButtonClicked += OnOpenPanelButtonClickedHandler;
@@ -35,12 +39,16 @@ namespace Assets.Game.Scripts.UI.ConnectMenu
         {
             _connectMenuView.Unlock();
             _connectMenuView.HideConnectingPanel();
+            
+            _sceneLoader.LoadScene(SceneNames.OnlineGameplay);
         }
 
         private void OnRoomCreatedHandler(string _)
         {
             _connectMenuView.Unlock();
             _connectMenuView.HideConnectingPanel();
+
+            _sceneLoader.LoadScene(SceneNames.OnlineGameplay);
         }
 
         private void OnClosePanelButtonClickedHandler() => _connectMenuView.Hide();
