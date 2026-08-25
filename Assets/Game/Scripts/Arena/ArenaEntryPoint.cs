@@ -1,5 +1,6 @@
 using Assets.Game.Scripts.Arena.Services.PlayerControllers;
 using Assets.Game.Scripts.Arena.Services.PlayerFactory;
+using Cysharp.Threading.Tasks;
 using Unity.Cinemachine;
 using Zenject;
 
@@ -18,8 +19,12 @@ namespace Assets.Game.Scripts.Arena
             _cineMachineCamera = cineMachineCamera;
         }
         
-        public void Initialize()
+        public void Initialize() => InitializeAsync().Forget();
+
+        private async UniTaskVoid InitializeAsync()
         {
+            await UniTask.Yield();
+            
             var player = _playerFactory.CreatePlayer();
 
             if (player.PhotonView.IsMine)
