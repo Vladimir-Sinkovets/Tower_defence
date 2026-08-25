@@ -9,13 +9,11 @@ namespace Assets.Game.Scripts.UI.ConnectMenu
     {
         private readonly IConnectMenuView _connectMenuView;
         private readonly INetworkService _networkService;
-        private readonly ISceneLoader _sceneLoader;
 
-        public ConnectMenuPresenter(IConnectMenuView connectMenuView, INetworkService networkService, ISceneLoader sceneLoader)
+        public ConnectMenuPresenter(IConnectMenuView connectMenuView, INetworkService networkService)
         {
             _connectMenuView = connectMenuView;
             _networkService = networkService;
-            _sceneLoader = sceneLoader;
 
             _connectMenuView.OnClosePanelButtonClicked += OnClosePanelButtonClickedHandler;
             _connectMenuView.OnOpenPanelButtonClicked += OnOpenPanelButtonClickedHandler;
@@ -39,8 +37,6 @@ namespace Assets.Game.Scripts.UI.ConnectMenu
         {
             _connectMenuView.Unlock();
             _connectMenuView.HideConnectingPanel();
-            
-            _sceneLoader.LoadScene(SceneNames.Arena);
         }
 
         private void OnRoomCreatedHandler(string _)
@@ -48,7 +44,7 @@ namespace Assets.Game.Scripts.UI.ConnectMenu
             _connectMenuView.Unlock();
             _connectMenuView.HideConnectingPanel();
 
-            _sceneLoader.LoadScene(SceneNames.Arena);
+            _networkService.LoadScene(SceneNames.Arena);
         }
 
         private void OnClosePanelButtonClickedHandler() => _connectMenuView.Hide();

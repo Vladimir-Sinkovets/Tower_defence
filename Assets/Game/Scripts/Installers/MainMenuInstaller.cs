@@ -36,8 +36,6 @@ namespace Assets.Game.Scripts.Installers
             
             Container.BindInstance<IConnectMenuView>(_connectView).AsSingle();
             Container.BindInterfacesAndSelfTo<ConnectMenuPresenter>().AsSingle();
-            
-            Container.BindInterfacesTo<NetworkService>().AsSingle();
         }
     }
 }

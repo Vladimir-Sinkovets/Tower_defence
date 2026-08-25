@@ -53,14 +53,19 @@ namespace Assets.Game.Scripts.Installers
             
             Container.BindInterfacesAndSelfTo<UnityCloudSaveService>().AsSingle();
             
+            Container.BindInterfacesTo<NetworkService>().AsSingle();
+            
+            BindPhotonCallbacks();
+        }
+
+        private void BindPhotonCallbacks()
+        {
             var callbacks = new GameObject("PhotonCallbacks")
                 .AddComponent<PhotonCallbacks>();
 
             DontDestroyOnLoad(callbacks.gameObject);
 
-            Container.Bind<PhotonCallbacks>()
-                .FromInstance(callbacks)
-                .AsSingle();
+            Container.BindInstance(callbacks).AsSingle();
         }
     }
 }

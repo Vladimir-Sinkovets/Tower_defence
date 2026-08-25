@@ -55,6 +55,14 @@ namespace Assets.Game.Scripts.Services.Net
 
             ConnectToPhoton();
         }
+        
+        public void LoadScene(string sceneName)
+        {
+            if (!PhotonNetwork.IsMasterClient)
+                return;
+            
+            PhotonNetwork.LoadLevel(sceneName);
+        }
 
         private void ConnectToPhoton()
         {

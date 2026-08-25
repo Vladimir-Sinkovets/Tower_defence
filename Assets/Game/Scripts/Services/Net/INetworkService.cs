@@ -12,5 +12,6 @@ namespace Assets.Game.Scripts.Services.Net
         event Action<string> OnError;
         void ConnectRoom(string id);
         void CreateRoom();
+        void LoadScene(string sceneName);
     }
 }

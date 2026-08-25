@@ -6,5 +6,6 @@ namespace Assets.Game.Scripts.Arena
     public class ArenaConfig : ScriptableObject
     {
         public float Speed = 5.0f;
+        public string PlayerPrefabName = "Player";
     }
 }
