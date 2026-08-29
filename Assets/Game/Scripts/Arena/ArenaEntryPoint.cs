@@ -1,3 +1,4 @@
+using Assets.Game.Scripts.Arena.Services.EnemySpawners;
 using Assets.Game.Scripts.Arena.Services.PlayerControllers;
 using Assets.Game.Scripts.Arena.Services.PlayerFactory;
 using Cysharp.Threading.Tasks;
@@ -11,12 +12,14 @@ namespace Assets.Game.Scripts.Arena
         private readonly IPlayerFactory _playerFactory;
         private readonly IPlayerController _playerController;
         private readonly CinemachineCamera _cineMachineCamera;
+        private readonly IEnemySpawner _enemySpawner;
 
-        public ArenaEntryPoint(IPlayerFactory playerFactory, IPlayerController playerController, CinemachineCamera cineMachineCamera)
+        public ArenaEntryPoint(IPlayerFactory playerFactory, IPlayerController playerController, CinemachineCamera cineMachineCamera, IEnemySpawner enemySpawner)
         {
             _playerFactory = playerFactory;
             _playerController = playerController;
             _cineMachineCamera = cineMachineCamera;
+            _enemySpawner = enemySpawner;
         }
         
         public void Initialize() => InitializeAsync().Forget();
@@ -32,6 +35,8 @@ namespace Assets.Game.Scripts.Arena
                 _playerController.Init(player);
                 _cineMachineCamera.Follow = player.transform;
             }
+            
+            _enemySpawner.Init();
         }
     }
 }

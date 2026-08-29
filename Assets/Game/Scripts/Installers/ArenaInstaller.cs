@@ -1,4 +1,6 @@
 using Assets.Game.Scripts.Arena;
+using Assets.Game.Scripts.Arena.Services.EnemyFactories;
+using Assets.Game.Scripts.Arena.Services.EnemySpawners;
 using Assets.Game.Scripts.Arena.Services.PlayerControllers;
 using Assets.Game.Scripts.Arena.Services.PlayerFactory;
 using Unity.Cinemachine;
@@ -26,6 +28,10 @@ namespace Assets.Game.Scripts.Installers
             Container.BindInterfacesTo<PlayerFactory>().AsSingle();
             
             Container.BindInterfacesTo<ArenaEntryPoint>().AsSingle();
+            
+            Container.BindInterfacesTo<EnemySpawner>().AsSingle();
+            
+            Container.BindInterfacesTo<EnemyFactory>().AsSingle();
         }
     }
 } 
