@@ -1,3 +1,4 @@
+using Assets.Game.Scripts.Arena.Services.ArenaContexts;
 using Assets.Game.Scripts.Arena.Services.EnemySpawners;
 using Assets.Game.Scripts.Arena.Services.PlayerControllers;
 using Assets.Game.Scripts.Arena.Services.PlayerFactory;
@@ -13,13 +14,19 @@ namespace Assets.Game.Scripts.Arena
         private readonly IPlayerController _playerController;
         private readonly CinemachineCamera _cineMachineCamera;
         private readonly IEnemySpawner _enemySpawner;
+        private readonly IPlayerAccessor _playerAccessor;
 
-        public ArenaEntryPoint(IPlayerFactory playerFactory, IPlayerController playerController, CinemachineCamera cineMachineCamera, IEnemySpawner enemySpawner)
+        public ArenaEntryPoint(IPlayerFactory playerFactory,
+            IPlayerController playerController,
+            CinemachineCamera cineMachineCamera,
+            IEnemySpawner enemySpawner,
+            IPlayerAccessor playerAccessor)
         {
             _playerFactory = playerFactory;
             _playerController = playerController;
             _cineMachineCamera = cineMachineCamera;
             _enemySpawner = enemySpawner;
+            _playerAccessor = playerAccessor;
         }
         
         public void Initialize() => InitializeAsync().Forget();
@@ -35,6 +42,8 @@ namespace Assets.Game.Scripts.Arena
                 _playerController.Init(player);
                 _cineMachineCamera.Follow = player.transform;
             }
+            
+            _playerAccessor.UpdatePlayers();
             
             _enemySpawner.Init();
         }

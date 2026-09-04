@@ -8,7 +8,7 @@ namespace Assets.Game.Scripts.Arena.Services.PlayerControllers
         private readonly ArenaConfig _arenaConfig;
         private readonly Joystick _joystick;
         
-        private Player _player;
+        private ArenaPlayer _arenaPlayer;
 
         public PlayerController(Joystick joystick, ArenaConfig arenaConfig)
         {
@@ -16,11 +16,11 @@ namespace Assets.Game.Scripts.Arena.Services.PlayerControllers
             _arenaConfig = arenaConfig;
         }
 
-        public void Init(Player player) => _player = player;
+        public void Init(ArenaPlayer arenaPlayer) => _arenaPlayer = arenaPlayer;
 
         public void Tick()
         {
-            if (_player == null)
+            if (_arenaPlayer == null)
                 return;
             
             if (_joystick.Horizontal == 0 || _joystick.Vertical == 0)
@@ -28,7 +28,7 @@ namespace Assets.Game.Scripts.Arena.Services.PlayerControllers
             
             var direction = new Vector3(_joystick.Direction.x, 0, _joystick.Direction.y);
             
-            _player.CharacterController.Move(direction * (_arenaConfig.Speed * Time.deltaTime));
+            _arenaPlayer.CharacterController.Move(direction * (_arenaConfig.Speed * Time.deltaTime));
         }
     }
 }

@@ -3,9 +3,11 @@ using UnityEngine;
 
 namespace Assets.Game.Scripts.Arena
 {
-    public class Player : MonoBehaviour
+    public class ArenaPlayer : MonoBehaviour
     {
         [field: SerializeField] public CharacterController CharacterController { get; private set; }
         [field: SerializeField] public PhotonView PhotonView { get; private set; }
+        
+        public Vector3 Position => transform.position;
     }
 }

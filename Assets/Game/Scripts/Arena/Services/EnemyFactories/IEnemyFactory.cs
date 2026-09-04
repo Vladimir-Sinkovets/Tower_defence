@@ -1,7 +1,10 @@
+using Assets.Game.Scripts.Arena.Services.EnemySpawners;
+using UnityEngine;
+
 namespace Assets.Game.Scripts.Arena.Services.EnemyFactories
 {
     public interface IEnemyFactory
     {
-        void Spawn();
+        ArenaEnemy Spawn(ArenaEnemyConfig enemyConfig, Vector3 position);
     }
 }

@@ -13,15 +13,15 @@ namespace Assets.Game.Scripts.Arena.Services.EnemySpawners
         private const string NextSpawnTimeKey = "EnemySpawner_NextSpawnTime";
         
         private readonly IEnemyFactory _enemyFactory;
+        private readonly EnemySpawnConfig _enemySpawnConfig;
         private bool _isSpawning;
         
         private double _nextSpawnTime;
         
-        private double _delay = 1.0f;
-
-        public EnemySpawner(IEnemyFactory enemyFactory)
+        public EnemySpawner(IEnemyFactory enemyFactory, EnemySpawnConfig enemySpawnConfig)
         {
             _enemyFactory = enemyFactory;
+            _enemySpawnConfig = enemySpawnConfig;
         }
 
         public void Init()
@@ -32,7 +32,7 @@ namespace Assets.Game.Scripts.Arena.Services.EnemySpawners
             
             if (PhotonNetwork.IsMasterClient)
             {
-                _nextSpawnTime = (float) PhotonNetwork.Time + _delay;
+                _nextSpawnTime = (float) PhotonNetwork.Time + _enemySpawnConfig.TimeBetweenSpawns;
                 UpdateNextSpawnTimeProperty();
             }
         }
@@ -49,9 +49,9 @@ namespace Assets.Game.Scripts.Arena.Services.EnemySpawners
 
             if (_nextSpawnTime <= PhotonNetwork.Time)
             {
-                _enemyFactory.Spawn();
+                _enemyFactory.Spawn(_enemySpawnConfig.EnemyConfig, Vector3.zero);
                 
-                _nextSpawnTime = PhotonNetwork.Time + _delay;
+                _nextSpawnTime = PhotonNetwork.Time + _enemySpawnConfig.TimeBetweenSpawns;
                 
                 UpdateNextSpawnTimeProperty();
             }
@@ -62,7 +62,7 @@ namespace Assets.Game.Scripts.Arena.Services.EnemySpawners
             if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue(NextSpawnTimeKey, out var nextSpawnTime))
                 return (double) nextSpawnTime;
             
-            return PhotonNetwork.Time + _delay;
+            return PhotonNetwork.Time + _enemySpawnConfig.TimeBetweenSpawns;
         }
 
         private void UpdateNextSpawnTimeProperty()

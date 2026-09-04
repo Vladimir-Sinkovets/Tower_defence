@@ -1,19 +1,29 @@
 using Photon.Pun;
 using UnityEngine;
+using Zenject;
 
 namespace Assets.Game.Scripts.Arena.Services.PlayerFactory
 {
     public class PlayerFactory : IPlayerFactory
     {
         private readonly ArenaConfig _config;
+        private readonly DiContainer _container;
 
-        public PlayerFactory(ArenaConfig config) => _config = config;
-
-        public Player CreatePlayer()
+        public PlayerFactory(ArenaConfig config, DiContainer container)
         {
-            var player = PhotonNetwork.Instantiate(_config.PlayerPrefabName, Vector3.zero, Quaternion.identity);
+            _config = config;
+            _container = container;
+        }
 
-            return player.GetComponent<Player>();
+        public ArenaPlayer CreatePlayer()
+        {
+            var playerGameObject = PhotonNetwork.Instantiate(_config.PlayerPrefabName, Vector3.zero, Quaternion.identity);
+            
+            _container.InjectGameObject(playerGameObject);
+
+            var player = playerGameObject.GetComponent<ArenaPlayer>();
+            
+            return player;
         }
     }
 }

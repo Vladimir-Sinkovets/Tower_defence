@@ -1,4 +1,5 @@
 using Assets.Game.Scripts.Arena;
+using Assets.Game.Scripts.Arena.Services.ArenaContexts;
 using Assets.Game.Scripts.Arena.Services.EnemyFactories;
 using Assets.Game.Scripts.Arena.Services.EnemySpawners;
 using Assets.Game.Scripts.Arena.Services.PlayerControllers;
@@ -13,7 +14,9 @@ namespace Assets.Game.Scripts.Installers
     {
         [SerializeField] private Joystick _joystick;
         [SerializeField] private ArenaConfig _arenaConfig;
+        [SerializeField] private EnemySpawnConfig _enemySpawnConfig;
         [SerializeField] private CinemachineCamera _cineMachineCamera;
+        [SerializeField] private ArenaContext _arenaContext;
 
         public override void InstallBindings()
         {
@@ -22,6 +25,8 @@ namespace Assets.Game.Scripts.Installers
             Container.BindInstance(_cineMachineCamera).AsSingle();
             
             Container.BindInstance(_arenaConfig).AsSingle();
+            
+            Container.BindInstance(_enemySpawnConfig).AsSingle();
             
             Container.BindInterfacesTo<PlayerController>().AsSingle();
             
@@ -32,6 +37,8 @@ namespace Assets.Game.Scripts.Installers
             Container.BindInterfacesTo<EnemySpawner>().AsSingle();
             
             Container.BindInterfacesTo<EnemyFactory>().AsSingle();
+            
+            Container.Bind<IPlayerAccessor>().FromInstance(_arenaContext).AsSingle();
         }
     }
 } 
