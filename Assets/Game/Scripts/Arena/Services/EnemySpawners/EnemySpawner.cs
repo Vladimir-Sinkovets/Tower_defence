@@ -32,7 +32,7 @@ namespace Assets.Game.Scripts.Arena.Services.EnemySpawners
             
             if (PhotonNetwork.IsMasterClient)
             {
-                _nextSpawnTime = (float) PhotonNetwork.Time + _enemySpawnConfig.TimeBetweenSpawns;
+                _nextSpawnTime = (float)PhotonNetwork.Time;// + _enemySpawnConfig.TimeBetweenSpawns; todo: fix
                 UpdateNextSpawnTimeProperty();
             }
         }

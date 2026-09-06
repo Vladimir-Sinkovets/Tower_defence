@@ -157,10 +157,11 @@ namespace Assets.Game.Scripts.Services.Net
 
         private static string GenerateRoomId()
         {
-            return Guid.NewGuid()
-                .ToString("N")
-                .Substring(0, 6)
-                .ToUpperInvariant();
+            return "11"; // todo: fix
+            // return Guid.NewGuid()
+            //     .ToString("N")
+            //     .Substring(0, 6)
+            //     .ToUpperInvariant();
         }
 
         public void Dispose()

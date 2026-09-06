@@ -10,32 +10,24 @@ namespace Assets.Game.Scripts.Arena
     [RequireComponent(typeof(NavMeshAgent))]
     public class ArenaEnemy : MonoBehaviour
     {
+        [SerializeField] private ArenaEnemyConfig _enemyConfig;
         [SerializeField] private NavMeshAgent _navMeshAgent;
         
         private IPlayerAccessor _playerAccessor;
-        
-        private ArenaEnemyConfig _enemyConfig;
-        
-        private bool _inited;
         
         private ArenaPlayer _target;
 
         [Inject]
         public void Construct(IPlayerAccessor playerAccessor) => _playerAccessor = playerAccessor;
 
-        public void Init(ArenaEnemyConfig enemyConfig)
+        private void Awake()
         {
-            _enemyConfig = enemyConfig;
-            
-            _inited = true;
+            _navMeshAgent.speed = _enemyConfig.Speed;
         }
 
         private void Update()
         {
             if (!PhotonNetwork.IsMasterClient)
-                return;
-            
-            if (!_inited)
                 return;
             
             EnsureTarget();
@@ -75,7 +67,7 @@ namespace Assets.Game.Scripts.Arena
                 }
             }
             
-            Debug.Log($"distance = {distance}");
+            Debug.Log($"_playerAccessor.Players = {_playerAccessor.Players}");
 
             return nearestTarget;
         }

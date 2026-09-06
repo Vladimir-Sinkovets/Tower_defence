@@ -20,8 +20,6 @@ namespace Assets.Game.Scripts.Arena.Services.EnemyFactories
 
             _container.InjectGameObject(enemy.gameObject);
             
-            enemy.Init(enemyConfig);
-
             Debug.Log($"PhotonNetwork.Time - {PhotonNetwork.Time:F2}");
             
             return enemy;

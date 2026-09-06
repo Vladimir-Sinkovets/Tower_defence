@@ -193,6 +193,7 @@ GameObject:
   - component: {fileID: 3755966853446611692}
   - component: {fileID: 7727715200295768625}
   - component: {fileID: 4812858998762700010}
+  - component: {fileID: 7684920927596863549}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -250,6 +251,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48cb7127e7204dde9bbf2d0042b1714f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Arena.ArenaEnemy
+  _enemyConfig: {fileID: 11400000, guid: ce9faafd740f8a740bf424a7c7720ca2, type: 2}
   _navMeshAgent: {fileID: 693398706749541385}
 --- !u!114 &7727715200295768625
 MonoBehaviour:
@@ -290,6 +292,19 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
+--- !u!114 &7684920927596863549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5563364587758972822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 717a02054ef2699498e6bd4234fd7995, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Zenject::Zenject.ZenAutoInjecter
+  _containerSource: 0
 --- !u!1 &8443497853486590951
 GameObject:
   m_ObjectHideFlags: 0

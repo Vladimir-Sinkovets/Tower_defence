@@ -33,7 +33,7 @@ namespace Assets.Game.Scripts.Arena
 
         private async UniTaskVoid InitializeAsync()
         {
-            await UniTask.Yield();
+            await UniTask.NextFrame();
             
             var player = _playerFactory.CreatePlayer();
 
