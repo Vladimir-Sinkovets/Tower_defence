@@ -50,8 +50,6 @@ namespace Assets.Game.Scripts.Arena.ArenaEnemyStates
         {
             _isAttacking = true;
 
-            Debug.Log("Attacking");
-
             _data.View.PlayAttackAnimation();
         }
 
@@ -60,12 +58,10 @@ namespace Assets.Game.Scripts.Arena.ArenaEnemyStates
             if (_data.Enemy.IsDead)
                 return;
 
-            _data.Target.TakeDamage(_data.Config.Damage);
+            _data.Target.Health.ApplyDamage(_data.Config.Damage);
 
             _isAttacking = false;
             
-            Debug.Log("Attacked");
-
             _nextAttackTime = Time.time + _data.Config.IntervalBetweenAttacks;
         }
 

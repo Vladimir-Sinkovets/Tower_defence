@@ -8,7 +8,7 @@ namespace Assets.Game.Scripts.Arena.Services.EnemySpawners
         public string PrefabName = "Enemy";
         public float Speed = 5.5f;
         public float AttackRange = 2.0f;
-        public float Damage = 10.0f;
+        public int Damage = 1;
         public float IntervalBetweenAttacks = 2.0f;
     }
 }

@@ -2,6 +2,7 @@ using Assets.Game.Scripts.Arena;
 using Assets.Game.Scripts.Arena.Services.ArenaContexts;
 using Assets.Game.Scripts.Arena.Services.EnemyFactories;
 using Assets.Game.Scripts.Arena.Services.EnemySpawners;
+using Assets.Game.Scripts.Arena.Services.HudFactories;
 using Assets.Game.Scripts.Arena.Services.PlayerControllers;
 using Assets.Game.Scripts.Arena.Services.PlayerFactory;
 using Unity.Cinemachine;
@@ -39,6 +40,8 @@ namespace Assets.Game.Scripts.Installers
             Container.BindInterfacesTo<EnemyFactory>().AsSingle();
             
             Container.Bind<IPlayerAccessor>().FromInstance(_arenaContext).AsSingle();
+            
+            Container.BindInterfacesTo<HudFactory>().AsSingle();
         }
     }
 } 

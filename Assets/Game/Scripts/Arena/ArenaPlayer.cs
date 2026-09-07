@@ -1,3 +1,4 @@
+using Assets.Game.Scripts.Shared;
 using Photon.Pun;
 using UnityEngine;
 
@@ -10,9 +11,8 @@ namespace Assets.Game.Scripts.Arena
         
         public Vector3 Position => transform.position;
 
-        public void TakeDamage(float damage)
-        {
-            Debug.Log($"{gameObject.name} get {damage} damage");
-        }
+        public Health Health { get; private set; }
+        
+        public void Init(int hp) => Health = new Health(hp);
     }
 }

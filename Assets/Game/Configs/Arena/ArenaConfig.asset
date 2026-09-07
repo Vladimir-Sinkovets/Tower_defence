@@ -12,4 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c0cda77bd524985894f5a1a94fa61f5, type: 3}
   m_Name: ArenaConfig
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Arena.ArenaConfig
+  Hp: 20
   Speed: 5
+  PlayerPrefabName: Player
+  HUDPrefab: {fileID: 1732742079389757373, guid: bccef497fa5d1fa41ad39b814a56ee69, type: 3}

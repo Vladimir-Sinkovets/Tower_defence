@@ -23,6 +23,8 @@ namespace Assets.Game.Scripts.Arena.Services.PlayerFactory
 
             var player = playerGameObject.GetComponent<ArenaPlayer>();
             
+            player.Init(_config.Hp);
+            
             return player;
         }
     }
