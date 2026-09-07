@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: ArenaEnemyConfig
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Arena.Services.EnemySpawners.ArenaEnemyConfig
   PrefabName: Enemy
-  Hp: 10
-  Speed: 5.5
+  Speed: 4
+  AttackRange: 2
+  Damage: 10
+  IntervalBetweenAttacks: 2

@@ -18,7 +18,9 @@ namespace Assets.Game.Scripts.Arena.Services.EnemyFactories
 
             var enemy = enemyGameObject.GetComponent<ArenaEnemy>();
 
-            _container.InjectGameObject(enemy.gameObject);
+            // _container.InjectGameObject(enemy.gameObject);
+            
+            enemy.Init();
             
             Debug.Log($"PhotonNetwork.Time - {PhotonNetwork.Time:F2}");
             

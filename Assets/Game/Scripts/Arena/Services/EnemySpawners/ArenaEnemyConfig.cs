@@ -6,7 +6,9 @@ namespace Assets.Game.Scripts.Arena.Services.EnemySpawners
     public class ArenaEnemyConfig : ScriptableObject
     {
         public string PrefabName = "Enemy";
-        public int Hp = 10;
         public float Speed = 5.5f;
+        public float AttackRange = 2.0f;
+        public float Damage = 10.0f;
+        public float IntervalBetweenAttacks = 2.0f;
     }
 }

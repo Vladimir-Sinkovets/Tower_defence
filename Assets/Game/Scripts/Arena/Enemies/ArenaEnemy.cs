@@ -1,5 +1,8 @@
+using System;
+using Assets.Game.Scripts.Arena.ArenaEnemyStates;
 using Assets.Game.Scripts.Arena.Services.ArenaContexts;
 using Assets.Game.Scripts.Arena.Services.EnemySpawners;
+using Assets.Game.Scripts.Common.UniversalStateMachine;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.AI;
@@ -10,19 +13,43 @@ namespace Assets.Game.Scripts.Arena
     [RequireComponent(typeof(NavMeshAgent))]
     public class ArenaEnemy : MonoBehaviour
     {
+        public event Action OnDied;
+        
         [SerializeField] private ArenaEnemyConfig _enemyConfig;
         [SerializeField] private NavMeshAgent _navMeshAgent;
+        [SerializeField] private ArenaEnemyView _view;
         
         private IPlayerAccessor _playerAccessor;
         
-        private ArenaPlayer _target;
+        private StateMachine _stateMachine;
+        private ArenaEnemyStateMachineData _data;
+
+        public bool IsDead => false;
 
         [Inject]
         public void Construct(IPlayerAccessor playerAccessor) => _playerAccessor = playerAccessor;
 
-        private void Awake()
+        public void Init()
         {
-            _navMeshAgent.speed = _enemyConfig.Speed;
+            _data = new ArenaEnemyStateMachineData()
+            {
+                Config = _enemyConfig,
+                NavMeshAgent = _navMeshAgent,
+                View = _view,
+                Enemy = this,
+            };
+            
+            _stateMachine = new StateMachine();
+            _stateMachine.AddState(new ArenaEnemyAttackState(_stateMachine, _data));
+            _stateMachine.AddState(new ArenaEnemyChaseState(_stateMachine, _data));
+            _stateMachine.AddState(new ArenaEnemyDeathState(_stateMachine));
+            
+            if (!PhotonNetwork.IsMasterClient)
+                return;
+            
+            SetTarget();
+            
+            _stateMachine.SetStartState<ArenaEnemyChaseState>();
         }
 
         private void Update()
@@ -30,25 +57,15 @@ namespace Assets.Game.Scripts.Arena
             if (!PhotonNetwork.IsMasterClient)
                 return;
             
-            EnsureTarget();
-
-            MoveToTarget();
+            _stateMachine.Update();
         }
 
-        private void MoveToTarget()
+        private void SetTarget()
         {
-            if (_target == null)
-                return;
-            
-            _navMeshAgent.SetDestination(_target.Position);
-        }
-
-        private void EnsureTarget()
-        {
-            if (_target != null)
+            if (_data.Target != null)
                 return;
 
-            _target = GetNearestTarget();
+            _data.Target = GetNearestTarget();
         }
 
         private ArenaPlayer GetNearestTarget()
@@ -67,8 +84,6 @@ namespace Assets.Game.Scripts.Arena
                 }
             }
             
-            Debug.Log($"_playerAccessor.Players = {_playerAccessor.Players}");
-
             return nearestTarget;
         }
     }
