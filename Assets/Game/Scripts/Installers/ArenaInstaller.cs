@@ -2,9 +2,11 @@ using Assets.Game.Scripts.Arena;
 using Assets.Game.Scripts.Arena.Services.ArenaContexts;
 using Assets.Game.Scripts.Arena.Services.EnemyFactories;
 using Assets.Game.Scripts.Arena.Services.EnemySpawners;
+using Assets.Game.Scripts.Arena.Services.GameOverManager;
 using Assets.Game.Scripts.Arena.Services.HudFactories;
 using Assets.Game.Scripts.Arena.Services.PlayerControllers;
 using Assets.Game.Scripts.Arena.Services.PlayerFactory;
+using Assets.Game.Scripts.Arena.UI.Windows;
 using Unity.Cinemachine;
 using UnityEngine;
 using Zenject;
@@ -18,6 +20,7 @@ namespace Assets.Game.Scripts.Installers
         [SerializeField] private EnemySpawnConfig _enemySpawnConfig;
         [SerializeField] private CinemachineCamera _cineMachineCamera;
         [SerializeField] private ArenaContext _arenaContext;
+        [SerializeField] private WindowViewsConfig _windowViewsConfig;
 
         public override void InstallBindings()
         {
@@ -42,6 +45,14 @@ namespace Assets.Game.Scripts.Installers
             Container.Bind<IPlayerAccessor>().FromInstance(_arenaContext).AsSingle();
             
             Container.BindInterfacesTo<HudFactory>().AsSingle();
+            
+            Container.BindInterfacesTo<WindowFactory>().AsSingle();
+            
+            Container.BindInterfacesTo<WindowsManager>().AsSingle();
+            
+            Container.BindInterfacesTo<GameOverManager>().AsSingle();
+            
+            Container.BindInstance(_windowViewsConfig).AsSingle();
         }
     }
 } 

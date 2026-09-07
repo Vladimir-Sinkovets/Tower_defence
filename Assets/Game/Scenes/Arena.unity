@@ -640,6 +640,7 @@ MonoBehaviour:
   _enemySpawnConfig: {fileID: 11400000, guid: 6dc5d2e06133405448633fe8cca4b74a, type: 2}
   _cineMachineCamera: {fileID: 367432644}
   _arenaContext: {fileID: 538555313}
+  _windowViewsConfig: {fileID: 11400000, guid: 2b4e39673e71f0347a9f6ce4e925e618, type: 2}
 --- !u!1 &677046060
 GameObject:
   m_ObjectHideFlags: 0
