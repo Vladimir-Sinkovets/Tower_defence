@@ -7,7 +7,7 @@ namespace Assets.Game.Scripts.Arena.Player
 {
     public class ArenaPlayer : MonoBehaviour
     {
-        [SerializeField] public HealthBarView _healthBarView;
+        [SerializeField] private HealthBarView _healthBarView;
         
         [field: SerializeField] public CharacterController CharacterController { get; private set; }
         [field: SerializeField] public PhotonView PhotonView { get; private set; }
