@@ -4,6 +4,7 @@ using Assets.Game.Scripts.Arena.Player;
 using Assets.Game.Scripts.Arena.Services.ArenaContexts;
 using Assets.Game.Scripts.Arena.Services.EnemySpawners;
 using Assets.Game.Scripts.Common.UniversalStateMachine;
+using Assets.Game.Scripts.Services.Registries;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.AI;
@@ -21,6 +22,7 @@ namespace Assets.Game.Scripts.Arena
         [SerializeField] private ArenaEnemyView _view;
         
         private IPlayerAccessor _playerAccessor;
+        private Registry<ArenaEnemy> _enemyRegistry;
         
         private StateMachine _stateMachine;
         private ArenaEnemyStateMachineData _data;
@@ -28,7 +30,13 @@ namespace Assets.Game.Scripts.Arena
         public bool IsDead => false;
 
         [Inject]
-        public void Construct(IPlayerAccessor playerAccessor) => _playerAccessor = playerAccessor;
+        public void Construct(IPlayerAccessor playerAccessor, Registry<ArenaEnemy> enemyRegistry)
+        {
+            _playerAccessor = playerAccessor;
+            _enemyRegistry = enemyRegistry;
+            
+            _enemyRegistry.Register(this);
+        }
 
         public void Init()
         {
@@ -86,6 +94,13 @@ namespace Assets.Game.Scripts.Arena
             }
             
             return nearestTarget;
+        }
+
+        public void ApplyDamage(int damage)
+        {
+            Debug.Log($"ApplyDamage {damage} to enemy");
+            
+            // todo: remove
         }
     }
 }

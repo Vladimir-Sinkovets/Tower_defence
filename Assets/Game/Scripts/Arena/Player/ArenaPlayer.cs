@@ -1,3 +1,4 @@
+using Assets.Game.Scripts.Arena.Buildings.ShootingBuildings;
 using Assets.Game.Scripts.Shared;
 using Assets.Game.Scripts.UI.HealthBar;
 using Photon.Pun;
@@ -11,6 +12,7 @@ namespace Assets.Game.Scripts.Arena.Player
         
         [field: SerializeField] public CharacterController CharacterController { get; private set; }
         [field: SerializeField] public PhotonView PhotonView { get; private set; }
+        [field: SerializeField] public ShootingBuilding ShootingBuilding { get; private set; }
         public Vector3 Position => transform.position;
         public Health Health { get; private set; }
         

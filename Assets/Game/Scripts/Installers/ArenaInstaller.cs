@@ -1,5 +1,8 @@
 using Assets.Game.Scripts.Arena;
+using Assets.Game.Scripts.Arena.Buildings.Implementations;
+using Assets.Game.Scripts.Arena.Buildings.States;
 using Assets.Game.Scripts.Arena.Services.ArenaContexts;
+using Assets.Game.Scripts.Arena.Services.EnemyAccessors;
 using Assets.Game.Scripts.Arena.Services.EnemyFactories;
 using Assets.Game.Scripts.Arena.Services.EnemySpawners;
 using Assets.Game.Scripts.Arena.Services.GameOverManager;
@@ -10,6 +13,7 @@ using Assets.Game.Scripts.Arena.Services.PlayerControllers;
 using Assets.Game.Scripts.Arena.Services.PlayerFactory;
 using Assets.Game.Scripts.Arena.UI.Windows;
 using Assets.Game.Scripts.Services.GameResultSavers;
+using Assets.Game.Scripts.Services.Registries;
 using Unity.Cinemachine;
 using UnityEngine;
 using Zenject;
@@ -62,6 +66,18 @@ namespace Assets.Game.Scripts.Installers
             Container.BindInterfacesTo<GameResultCalculator>().AsSingle();
 
             Container.BindInterfacesTo<GameResultSaver>().AsSingle();
+
+            Container.Bind<Registry<ArenaEnemy>>().AsSingle();
+            
+            Container.BindInterfacesTo<EnemyAccessor>().AsSingle();
+            
+            Container.BindInterfacesAndSelfTo<ShootingExecutor>().AsSingle();
+            
+            Container.BindInterfacesTo<ProjectileFactory>().AsSingle();
+            
+            Container.BindInterfacesTo<VFXFactory>().AsSingle();
+            
+            Container.BindInterfacesTo<BuildingUpgradeApplier>().AsSingle();
         }
     }
 } 

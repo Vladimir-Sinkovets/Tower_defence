@@ -54,6 +54,8 @@ namespace Assets.Game.Scripts.Arena
                 _hudFactory.CreateHUD(player.Health);
                 
                 _gameOverManager.Init(player.Health);
+
+                player.ShootingBuilding.Init();
             }
             
             _playerAccessor.UpdatePlayers();
