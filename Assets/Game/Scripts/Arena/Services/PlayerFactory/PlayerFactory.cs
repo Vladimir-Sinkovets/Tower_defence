@@ -1,3 +1,4 @@
+using Assets.Game.Scripts.Arena.Player;
 using Photon.Pun;
 using UnityEngine;
 using Zenject;

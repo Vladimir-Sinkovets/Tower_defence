@@ -3,7 +3,7 @@ using Assets.Game.Scripts.UI.HealthBar;
 using Photon.Pun;
 using UnityEngine;
 
-namespace Assets.Game.Scripts.Arena
+namespace Assets.Game.Scripts.Arena.Player
 {
     public class ArenaPlayer : MonoBehaviour
     {

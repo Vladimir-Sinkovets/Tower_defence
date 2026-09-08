@@ -1,5 +1,6 @@
 using System;
 using Assets.Game.Scripts.Arena.ArenaEnemyStates;
+using Assets.Game.Scripts.Arena.Player;
 using Assets.Game.Scripts.Arena.Services.ArenaContexts;
 using Assets.Game.Scripts.Arena.Services.EnemySpawners;
 using Assets.Game.Scripts.Common.UniversalStateMachine;

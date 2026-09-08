@@ -1,3 +1,4 @@
+using Assets.Game.Scripts.Arena.Player;
 using Assets.Game.Scripts.Arena.Services.EnemySpawners;
 using UnityEngine.AI;
 

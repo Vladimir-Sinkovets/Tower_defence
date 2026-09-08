@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Assets.Game.Scripts.Arena.Player;
 using Photon.Pun;
 using UnityEngine;
 
