@@ -1,6 +1,7 @@
 ﻿using System;
 using Assets.Game.Scripts.Animations;
 using Assets.Game.Scripts.Arena.Buildings.States;
+using Assets.Game.Scripts.Arena.Player;
 using Assets.Game.Scripts.Common.UniversalStateMachine;
 using Assets.Game.Scripts.Shared;
 using UnityEngine;
@@ -33,7 +34,7 @@ namespace Assets.Game.Scripts.Arena.Buildings.ShootingBuildings
 
         private void Update() => _stateMachine?.Update();
         
-        public void Init()
+        public void Init(ArenaPlayer player)
         {
             _data = new ShootingBuildingStateMachineData
             {
@@ -44,6 +45,7 @@ namespace Assets.Game.Scripts.Arena.Buildings.ShootingBuildings
                 ProjectileStartPosition = _projectileStartPosition,
                 PreShootAnimation = _preShootAnimation,
                 ShootingBuilding = this,
+                PlayerViewId = player.PhotonView.ViewID,
             };
 
             SetUpStateMachine();

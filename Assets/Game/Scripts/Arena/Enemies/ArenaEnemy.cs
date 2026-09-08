@@ -1,6 +1,7 @@
 using Assets.Game.Scripts.Arena.ArenaEnemyStates;
 using Assets.Game.Scripts.Arena.Player;
 using Assets.Game.Scripts.Arena.Services.ArenaContexts;
+using Assets.Game.Scripts.Arena.Services.EnemyDeathHandlers;
 using Assets.Game.Scripts.Arena.Services.EnemySpawners;
 using Assets.Game.Scripts.Common.UniversalStateMachine;
 using Assets.Game.Scripts.Services.Net;
@@ -27,15 +28,21 @@ namespace Assets.Game.Scripts.Arena
         
         private StateMachine _stateMachine;
         private ArenaEnemyStateMachineData _data;
-        
+        private IEnemyDeathHandler _enemyDeathHandler;
+
         public Health Health { get; private set; }
 
         [Inject]
-        public void Construct(IPlayerAccessor playerAccessor, Registry<ArenaEnemy> enemyRegistry, PhotonCallbacks photonCallbacks)
+        public void Construct(
+            IPlayerAccessor playerAccessor,
+            Registry<ArenaEnemy> enemyRegistry,
+            PhotonCallbacks photonCallbacks,
+            IEnemyDeathHandler enemyDeathHandler)
         {
             _playerAccessor = playerAccessor;
             _enemyRegistry = enemyRegistry;
             _photonCallbacks = photonCallbacks;
+            _enemyDeathHandler = enemyDeathHandler;
             
             Init();
         }
@@ -114,9 +121,17 @@ namespace Assets.Game.Scripts.Arena
             return nearestTarget;
         }
 
-        public void ApplyDamage(int damage) => _photonView.RPC(nameof(TakeDamage), RpcTarget.All, damage);
+        public void ApplyDamage(int damage, int playerViewId) => _photonView.RPC(nameof(TakeDamage), RpcTarget.All, damage, playerViewId);
 
         [PunRPC]
-        private void TakeDamage(int damage) => Health.ApplyDamage(damage);
+        private void TakeDamage(int damage, int playerViewId)
+        {
+            Health.ApplyDamage(damage);
+
+            if (Health.IsDead)
+            {
+                _enemyDeathHandler.EnemyDiedHandler(playerViewId);
+            }
+        }
     }
 }

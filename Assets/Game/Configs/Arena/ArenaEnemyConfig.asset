@@ -15,5 +15,6 @@ MonoBehaviour:
   PrefabName: Enemy
   Speed: 4
   AttackRange: 2
-  Damage: 10
-  IntervalBetweenAttacks: 2
+  Damage: 50
+  IntervalBetweenAttacks: 0.5
+  Hp: 4

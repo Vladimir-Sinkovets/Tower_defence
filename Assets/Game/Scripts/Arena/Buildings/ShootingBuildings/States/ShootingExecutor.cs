@@ -72,6 +72,7 @@ namespace Assets.Game.Scripts.Arena.Buildings.States
                     ProjectileSpeed = _data.Config.ProjectileSpeed,
                     ArcHeight = _data.Config.ArcHeight,
                     HitVFXPrefab = _data.Config.HitVFXPrefab,
+                    PlayerViewId = _data.PlayerViewId,
                 });
         }
 

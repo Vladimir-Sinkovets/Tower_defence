@@ -3,6 +3,7 @@ using Assets.Game.Scripts.Arena.Buildings.Implementations;
 using Assets.Game.Scripts.Arena.Buildings.States;
 using Assets.Game.Scripts.Arena.Services.ArenaContexts;
 using Assets.Game.Scripts.Arena.Services.EnemyAccessors;
+using Assets.Game.Scripts.Arena.Services.EnemyDeathHandlers;
 using Assets.Game.Scripts.Arena.Services.EnemyFactories;
 using Assets.Game.Scripts.Arena.Services.EnemySpawners;
 using Assets.Game.Scripts.Arena.Services.GameOverManager;
@@ -78,6 +79,8 @@ namespace Assets.Game.Scripts.Installers
             Container.BindInterfacesTo<VFXFactory>().AsSingle();
             
             Container.BindInterfacesTo<BuildingUpgradeApplier>().AsSingle();
+            
+            Container.BindInterfacesTo<EnemyDeathHandler>().AsSingle();
         }
     }
 } 

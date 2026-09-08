@@ -1,6 +1,4 @@
 using Assets.Game.Scripts.Animations;
-using Assets.Game.Scripts.Enemies;
-using Assets.Game.Scripts.Services.Configs.Buildings;
 using UnityEngine;
 
 namespace Assets.Game.Scripts.Arena.Buildings.ShootingBuildings
@@ -15,5 +13,6 @@ namespace Assets.Game.Scripts.Arena.Buildings.ShootingBuildings
         public Transform ProjectileStartPosition { get; set; }
         public WeaponAnimation PreShootAnimation { get; set; }
         public ShootingBuilding ShootingBuilding { get; set; }
+        public int PlayerViewId { get; set; }
     }
 }

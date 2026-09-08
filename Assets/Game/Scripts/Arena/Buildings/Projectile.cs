@@ -22,11 +22,12 @@ namespace Assets.Game.Scripts.Arena.Buildings
         private float _arcHeight;
         
         private IVFXFactory _vfxFactory;
+        private int _playerViewId;
 
         [Inject]
         public void Construct(IVFXFactory vfxFactory) => _vfxFactory = vfxFactory;
 
-        public void Init(ArenaEnemy target, int damage, float speed, float arcHeight, ParticleSystem hitVFXPrefab)
+        public void Init(ArenaEnemy target, int damage, float speed, float arcHeight, ParticleSystem hitVFXPrefab, int playerViewId)
         {
             if (target == null)
             {
@@ -34,6 +35,7 @@ namespace Assets.Game.Scripts.Arena.Buildings
                 return;
             }
 
+            _playerViewId = playerViewId;
             _target = target;
             _damage = damage;
             _speed = speed;
@@ -75,7 +77,7 @@ namespace Assets.Game.Scripts.Arena.Buildings
                 return;
             
             if (_target != null)
-                _target.ApplyDamage(_damage);
+                _target.ApplyDamage(_damage, _playerViewId);
 
             if (_hitVFXPrefab != null)
                 _vfxFactory.Create(_hitVFXPrefab, transform.position);

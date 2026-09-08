@@ -55,7 +55,7 @@ namespace Assets.Game.Scripts.Arena
                 
                 _gameOverManager.Init(player.Health);
 
-                player.ShootingBuilding.Init();
+                player.ShootingBuilding.Init(player);
             }
             
             _playerAccessor.UpdatePlayers();

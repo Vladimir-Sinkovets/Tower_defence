@@ -19,7 +19,7 @@ namespace Assets.Game.Scripts.Arena.Buildings.Implementations
             var projectile = PhotonNetwork.Instantiate(projectilePrefabName, data.Position, Quaternion.identity)
                 .GetComponent<Projectile>();
 
-            projectile.Init(data.Target, data.Damage, data.ProjectileSpeed, data.ArcHeight, data.HitVFXPrefab);
+            projectile.Init(data.Target, data.Damage, data.ProjectileSpeed, data.ArcHeight, data.HitVFXPrefab, data.PlayerViewId);
 
             return projectile;
         }
@@ -33,5 +33,6 @@ namespace Assets.Game.Scripts.Arena.Buildings.Implementations
         public float ProjectileSpeed;
         public float ArcHeight;
         public ParticleSystem HitVFXPrefab;
+        public int PlayerViewId;
     }
 }
