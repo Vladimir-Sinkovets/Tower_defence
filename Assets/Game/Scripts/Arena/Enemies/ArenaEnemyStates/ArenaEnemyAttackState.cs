@@ -19,13 +19,13 @@ namespace Assets.Game.Scripts.Arena.ArenaEnemyStates
 
         public override void Enter()
         {
-            _data.Enemy.OnDied += OnEnemyDied;
+            _data.Enemy.Health.OnDied += OnEnemyDied;
             _data.View.OnAttacked += AttackAnimationEventHandler;
         }
 
         public override void Exit()
         {
-            _data.Enemy.OnDied -= OnEnemyDied;
+            _data.Enemy.Health.OnDied -= OnEnemyDied;
             _data.View.OnAttacked -= AttackAnimationEventHandler;
         }
 
@@ -55,7 +55,7 @@ namespace Assets.Game.Scripts.Arena.ArenaEnemyStates
 
         private void AttackAnimationEventHandler()
         {
-            if (_data.Enemy.IsDead)
+            if (_data.Enemy.Health.IsDead)
                 return;
 
             _data.Target.Health.ApplyDamage(_data.Config.Damage);
@@ -65,7 +65,7 @@ namespace Assets.Game.Scripts.Arena.ArenaEnemyStates
             _nextAttackTime = Time.time + _data.Config.IntervalBetweenAttacks;
         }
 
-        private void OnEnemyDied() => StateSwitcher.SwitchState<SimpleEnemyDeathState>();
+        private void OnEnemyDied() => StateSwitcher.SwitchState<ArenaEnemyDeathState>();
 
         private bool IsInAttackRange()
         {

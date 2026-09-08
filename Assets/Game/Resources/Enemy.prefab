@@ -71,6 +71,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48cb7127e7204dde9bbf2d0042b1714f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Arena.ArenaEnemy
+  _photonView: {fileID: 7727715200295768625}
   _enemyConfig: {fileID: 11400000, guid: ce9faafd740f8a740bf424a7c7720ca2, type: 2}
   _navMeshAgent: {fileID: 693398706749541385}
   _view: {fileID: 6166932249451506337}

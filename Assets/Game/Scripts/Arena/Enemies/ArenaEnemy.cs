@@ -1,10 +1,11 @@
-using System;
 using Assets.Game.Scripts.Arena.ArenaEnemyStates;
 using Assets.Game.Scripts.Arena.Player;
 using Assets.Game.Scripts.Arena.Services.ArenaContexts;
 using Assets.Game.Scripts.Arena.Services.EnemySpawners;
 using Assets.Game.Scripts.Common.UniversalStateMachine;
+using Assets.Game.Scripts.Services.Net;
 using Assets.Game.Scripts.Services.Registries;
+using Assets.Game.Scripts.Shared;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.AI;
@@ -15,31 +16,38 @@ namespace Assets.Game.Scripts.Arena
     [RequireComponent(typeof(NavMeshAgent))]
     public class ArenaEnemy : MonoBehaviour
     {
-        public event Action OnDied;
-        
+        [SerializeField] private PhotonView _photonView;
         [SerializeField] private ArenaEnemyConfig _enemyConfig;
         [SerializeField] private NavMeshAgent _navMeshAgent;
         [SerializeField] private ArenaEnemyView _view;
         
         private IPlayerAccessor _playerAccessor;
         private Registry<ArenaEnemy> _enemyRegistry;
+        private PhotonCallbacks _photonCallbacks;
         
         private StateMachine _stateMachine;
         private ArenaEnemyStateMachineData _data;
-
-        public bool IsDead => false;
+        
+        public Health Health { get; private set; }
 
         [Inject]
-        public void Construct(IPlayerAccessor playerAccessor, Registry<ArenaEnemy> enemyRegistry)
+        public void Construct(IPlayerAccessor playerAccessor, Registry<ArenaEnemy> enemyRegistry, PhotonCallbacks photonCallbacks)
         {
             _playerAccessor = playerAccessor;
             _enemyRegistry = enemyRegistry;
+            _photonCallbacks = photonCallbacks;
             
-            _enemyRegistry.Register(this);
+            Init();
         }
 
         public void Init()
         {
+            _photonCallbacks.MasterClientSwitched += MasterClientSwitchedHandler;
+            
+            _enemyRegistry.Register(this);
+            
+            Health = new Health(_enemyConfig.Hp);
+            
             _data = new ArenaEnemyStateMachineData()
             {
                 Config = _enemyConfig,
@@ -51,8 +59,18 @@ namespace Assets.Game.Scripts.Arena
             _stateMachine = new StateMachine();
             _stateMachine.AddState(new ArenaEnemyAttackState(_stateMachine, _data));
             _stateMachine.AddState(new ArenaEnemyChaseState(_stateMachine, _data));
-            _stateMachine.AddState(new ArenaEnemyDeathState(_stateMachine));
+            _stateMachine.AddState(new ArenaEnemyDeathState(_stateMachine, _data));
             
+            if (!PhotonNetwork.IsMasterClient)
+                return;
+            
+            SetTarget();
+            
+            _stateMachine.SetStartState<ArenaEnemyChaseState>();
+        }
+
+        private void MasterClientSwitchedHandler(Photon.Realtime.Player obj)
+        {
             if (!PhotonNetwork.IsMasterClient)
                 return;
             
@@ -96,11 +114,9 @@ namespace Assets.Game.Scripts.Arena
             return nearestTarget;
         }
 
-        public void ApplyDamage(int damage)
-        {
-            Debug.Log($"ApplyDamage {damage} to enemy");
-            
-            // todo: remove
-        }
+        public void ApplyDamage(int damage) => _photonView.RPC(nameof(TakeDamage), RpcTarget.All, damage);
+
+        [PunRPC]
+        private void TakeDamage(int damage) => Health.ApplyDamage(damage);
     }
 }

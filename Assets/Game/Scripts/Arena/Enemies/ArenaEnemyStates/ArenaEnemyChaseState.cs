@@ -21,7 +21,7 @@ namespace Assets.Game.Scripts.Arena.ArenaEnemyStates
             
             _data.View.PlayWalkAnimation();
 
-            _data.Enemy.OnDied += OnEnemyDied;
+            _data.Enemy.Health.OnDied += OnEnemyDied;
         }
 
         public override void Exit()
@@ -29,7 +29,7 @@ namespace Assets.Game.Scripts.Arena.ArenaEnemyStates
             if (_data.NavMeshAgent != null && _data.NavMeshAgent.isOnNavMesh)
                 _data.NavMeshAgent.isStopped = true;
 
-            _data.Enemy.OnDied -= OnEnemyDied;
+            _data.Enemy.Health.OnDied -= OnEnemyDied;
         }
 
         public override void Update()

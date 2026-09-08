@@ -10,5 +10,6 @@ namespace Assets.Game.Scripts.Arena.Services.EnemySpawners
         public float AttackRange = 2.0f;
         public int Damage = 1;
         public float IntervalBetweenAttacks = 2.0f;
+        public int Hp = 4;
     }
 }

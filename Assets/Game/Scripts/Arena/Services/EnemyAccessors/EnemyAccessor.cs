@@ -22,7 +22,7 @@ namespace Assets.Game.Scripts.Arena.Services.EnemyAccessors
 
             foreach (var enemy in _enemyRegistry.All)
             {
-                if (enemy.IsDead)
+                if (enemy.Health.IsDead)
                     continue;
 
                 var distance = Vector3.Distance(enemy.transform.position, position);

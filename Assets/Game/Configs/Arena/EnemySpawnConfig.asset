@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: EnemySpawnConfig
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Arena.Services.EnemySpawners.EnemySpawnConfig
   EnemyConfig: {fileID: 11400000, guid: ce9faafd740f8a740bf424a7c7720ca2, type: 2}
-  TimeBetweenSpawns: 180
+  TimeBetweenSpawns: 5
