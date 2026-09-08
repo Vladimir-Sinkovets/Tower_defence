@@ -8,6 +8,7 @@ namespace Assets.Game.Scripts.Arena
     {
         public int Hp = 20;
         public float Speed = 5.0f;
+        public int MetacurrencyPerKill = 2;
         public string PlayerPrefabName = "Player";
         public ArenaHUD HUDPrefab;
     }

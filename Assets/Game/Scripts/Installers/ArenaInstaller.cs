@@ -3,10 +3,13 @@ using Assets.Game.Scripts.Arena.Services.ArenaContexts;
 using Assets.Game.Scripts.Arena.Services.EnemyFactories;
 using Assets.Game.Scripts.Arena.Services.EnemySpawners;
 using Assets.Game.Scripts.Arena.Services.GameOverManager;
+using Assets.Game.Scripts.Arena.Services.GameResultCalculators;
+using Assets.Game.Scripts.Arena.Services.GameStatistic;
 using Assets.Game.Scripts.Arena.Services.HudFactories;
 using Assets.Game.Scripts.Arena.Services.PlayerControllers;
 using Assets.Game.Scripts.Arena.Services.PlayerFactory;
 using Assets.Game.Scripts.Arena.UI.Windows;
+using Assets.Game.Scripts.Services.GameResultSavers;
 using Unity.Cinemachine;
 using UnityEngine;
 using Zenject;
@@ -53,6 +56,12 @@ namespace Assets.Game.Scripts.Installers
             Container.BindInterfacesTo<GameOverManager>().AsSingle();
             
             Container.BindInstance(_windowViewsConfig).AsSingle();
+            
+            Container.BindInterfacesTo<GameStatistics>().AsSingle();
+            
+            Container.BindInterfacesTo<GameResultCalculator>().AsSingle();
+
+            Container.BindInterfacesTo<GameResultSaver>().AsSingle();
         }
     }
 } 

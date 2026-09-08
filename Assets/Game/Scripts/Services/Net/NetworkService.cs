@@ -64,6 +64,8 @@ namespace Assets.Game.Scripts.Services.Net
             PhotonNetwork.LoadLevel(sceneName);
         }
 
+        public void DisconnectRoom() => PhotonNetwork.Disconnect();
+
         private void ConnectToPhoton()
         {
             if (PhotonNetwork.IsConnectedAndReady)

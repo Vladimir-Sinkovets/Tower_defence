@@ -13,5 +13,6 @@ namespace Assets.Game.Scripts.Services.Net
         void ConnectRoom(string id);
         void CreateRoom();
         void LoadScene(string sceneName);
+        void DisconnectRoom();
     }
 }
