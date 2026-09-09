@@ -27,6 +27,6 @@ namespace Assets.Game.Scripts.Arena.Player
             _presenter.Init();
         }
 
-        private void OnDestroy() => _presenter.Dispose();
+        private void OnDestroy() => _presenter?.Dispose();
     }
 }

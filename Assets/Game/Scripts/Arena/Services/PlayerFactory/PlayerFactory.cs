@@ -1,4 +1,3 @@
-using Assets.Game.Scripts.Arena.Buildings.Interfaces;
 using Assets.Game.Scripts.Arena.Player;
 using Photon.Pun;
 using UnityEngine;

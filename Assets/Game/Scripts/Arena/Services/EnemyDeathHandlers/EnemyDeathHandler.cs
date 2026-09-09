@@ -13,7 +13,7 @@ namespace Assets.Game.Scripts.Arena.Services.EnemyDeathHandlers
         {
             var playerPhotonView = PhotonView.Find(playerViewId);
             
-            if (playerPhotonView.IsMine)
+            if (playerPhotonView != null && playerPhotonView.IsMine)
             {
                 _gameStatistics.IncreaseKilledEnemyCount();
             }

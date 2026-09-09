@@ -1,3 +1,4 @@
+using System;
 using Assets.Game.Scripts.Arena.ArenaEnemyStates;
 using Assets.Game.Scripts.Arena.Player;
 using Assets.Game.Scripts.Arena.Services.ArenaContexts;
@@ -15,7 +16,7 @@ using Zenject;
 namespace Assets.Game.Scripts.Arena
 {
     [RequireComponent(typeof(NavMeshAgent))]
-    public class ArenaEnemy : MonoBehaviour
+    public class ArenaEnemy : MonoBehaviour, IPunObservable
     {
         [SerializeField] private PhotonView _photonView;
         [SerializeField] private ArenaEnemyConfig _enemyConfig;
@@ -91,15 +92,24 @@ namespace Assets.Game.Scripts.Arena
             if (!PhotonNetwork.IsMasterClient)
                 return;
             
-            _stateMachine.Update();
+            _stateMachine?.Update();
         }
 
         private void SetTarget()
         {
-            if (_data.Target != null)
-                return;
+            var viewId = PhotonView.Find(_data.TargetViewId);
+
+            if (viewId != null)
+            {
+                _data.Target = viewId.GetComponent<ArenaPlayer>();
+                _data.TargetViewId = _data.Target.PhotonView.ViewID;
+
+                if (_data.Target != null)
+                    return;
+            }
 
             _data.Target = GetNearestTarget();
+            _data.TargetViewId = _data.Target.PhotonView.ViewID;
         }
 
         private ArenaPlayer GetNearestTarget()
@@ -133,5 +143,19 @@ namespace Assets.Game.Scripts.Arena
                 _enemyDeathHandler.EnemyDiedHandler(playerViewId);
             }
         }
+
+        public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+        {
+            if (stream.IsWriting)
+            {
+                stream.SendNext(_data.TargetViewId);
+            }
+            else
+            {
+                _data.TargetViewId = (int)stream.ReceiveNext();
+            }
+        }
+
+        private void OnDestroy() => _enemyRegistry.Unregister(this);
     }
 }
