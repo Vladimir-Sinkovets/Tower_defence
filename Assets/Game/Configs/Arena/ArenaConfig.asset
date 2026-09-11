@@ -16,5 +16,4 @@ MonoBehaviour:
   Speed: 5
   MetacurrencyPerKill: 2
   PlayerPrefabName: Player
-  HUDPrefab: {fileID: 1732742079389757373, guid: bccef497fa5d1fa41ad39b814a56ee69, type: 3}
   BuildingConfig: {fileID: 11400000, guid: 8886f6fff9fbc084f89551c041ee3569, type: 2}

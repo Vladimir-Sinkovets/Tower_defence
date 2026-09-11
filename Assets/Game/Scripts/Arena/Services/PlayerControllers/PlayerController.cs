@@ -7,17 +7,21 @@ namespace Assets.Game.Scripts.Arena.Services.PlayerControllers
     public class PlayerController : ITickable, IPlayerController
     {
         private readonly ArenaConfig _arenaConfig;
-        private readonly Joystick _joystick;
         
+        private Joystick _joystick;
         private ArenaPlayer _arenaPlayer;
 
-        public PlayerController(Joystick joystick, ArenaConfig arenaConfig)
+        public PlayerController(ArenaConfig arenaConfig)
         {
-            _joystick = joystick;
             _arenaConfig = arenaConfig;
         }
 
-        public void Init(ArenaPlayer arenaPlayer) => _arenaPlayer = arenaPlayer;
+        public void Init(Joystick joystick, ArenaPlayer arenaPlayer)
+        {
+            _joystick = joystick;
+            _arenaPlayer = arenaPlayer;
+        }
+
 
         public void Tick()
         {

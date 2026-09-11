@@ -1,5 +1,4 @@
 using Assets.Game.Scripts.Arena.Buildings;
-using Assets.Game.Scripts.Arena.UI;
 using UnityEngine;
 
 namespace Assets.Game.Scripts.Arena
@@ -11,7 +10,6 @@ namespace Assets.Game.Scripts.Arena
         public float Speed = 5.0f;
         public int MetacurrencyPerKill = 2;
         public string PlayerPrefabName = "Player";
-        public ArenaHUD HUDPrefab;
         public BuildingConfig BuildingConfig;
     }
 }

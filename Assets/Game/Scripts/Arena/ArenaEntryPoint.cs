@@ -1,6 +1,6 @@
 using Assets.Game.Scripts.Arena.Services.EnemySpawners;
 using Assets.Game.Scripts.Arena.Services.GameOverManager;
-using Assets.Game.Scripts.Arena.Services.HudFactories;
+using Assets.Game.Scripts.Arena.Services.UIFactories;
 using Assets.Game.Scripts.Arena.Services.PlayerControllers;
 using Assets.Game.Scripts.Arena.Services.PlayerFactory;
 using Cysharp.Threading.Tasks;
@@ -15,21 +15,21 @@ namespace Assets.Game.Scripts.Arena
         private readonly IPlayerController _playerController;
         private readonly CinemachineCamera _cineMachineCamera;
         private readonly IEnemySpawner _enemySpawner;
-        private readonly IHudFactory _hudFactory;
+        private readonly IUIFactory _iuiFactory;
         private readonly IGameOverManager _gameOverManager;
 
         public ArenaEntryPoint(IPlayerFactory playerFactory,
             IPlayerController playerController,
             CinemachineCamera cineMachineCamera,
             IEnemySpawner enemySpawner,
-            IHudFactory hudFactory,
+            IUIFactory iuiFactory,
             IGameOverManager gameOverManager)
         {
             _playerFactory = playerFactory;
             _playerController = playerController;
             _cineMachineCamera = cineMachineCamera;
             _enemySpawner = enemySpawner;
-            _hudFactory = hudFactory;
+            _iuiFactory = iuiFactory;
             _gameOverManager = gameOverManager;
         }
         
@@ -43,11 +43,13 @@ namespace Assets.Game.Scripts.Arena
 
             if (player.PhotonView.IsMine)
             {
-                _playerController.Init(player);
-                
                 _cineMachineCamera.Follow = player.transform;
                 
-                _hudFactory.CreateHUD(player.Health);
+                _iuiFactory.CreateHUD(player.Health);
+                
+                var input = _iuiFactory.CreateArenaInput();
+                
+                _playerController.Init(input.Joystick, player);
                 
                 _gameOverManager.Init(player.Health);
 

@@ -4,16 +4,16 @@ using Assets.Game.Scripts.Shared;
 using Assets.Game.Scripts.UI.HealthBar;
 using Zenject;
 
-namespace Assets.Game.Scripts.Arena.Services.HudFactories
+namespace Assets.Game.Scripts.Arena.Services.UIFactories
 {
-    public class HudFactory : IHudFactory, IDisposable
+    public class UIFactory : IUIFactory, IDisposable
     {
         private readonly IInstantiator _instantiator;
-        private readonly ArenaConfig _config;
+        private readonly ArenaUIConfig _config;
 
         private HealthBarPresenter _castleHealthPresenter;
         
-        public HudFactory(IInstantiator instantiator, ArenaConfig config)
+        public UIFactory(IInstantiator instantiator, ArenaUIConfig config)
         {
             _instantiator = instantiator;
             _config = config;
@@ -21,11 +21,14 @@ namespace Assets.Game.Scripts.Arena.Services.HudFactories
 
         public void CreateHUD(Health playerHealth)
         {
-            var hud = _instantiator.InstantiatePrefabForComponent<ArenaHUD>(_config.HUDPrefab.GetComponent<ArenaHUD>());
+            var hud = _instantiator.InstantiatePrefabForComponent<ArenaHUD>(_config.HUDPrefab);
 
             _castleHealthPresenter = _instantiator.Instantiate<HealthBarPresenter>(new object[] { hud.HealthBarView, playerHealth });
             _castleHealthPresenter.Init();
         }
+
+        public ArenaInput CreateArenaInput() => 
+            _instantiator.InstantiatePrefabForComponent<ArenaInput>(_config.InputPrefab);
 
         public void Dispose() => _castleHealthPresenter?.Dispose();
     }

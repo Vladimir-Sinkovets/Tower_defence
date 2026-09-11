@@ -9,10 +9,11 @@ using Assets.Game.Scripts.Arena.Services.EnemySpawners;
 using Assets.Game.Scripts.Arena.Services.GameOverManager;
 using Assets.Game.Scripts.Arena.Services.GameResultCalculators;
 using Assets.Game.Scripts.Arena.Services.GameStatistic;
-using Assets.Game.Scripts.Arena.Services.HudFactories;
+using Assets.Game.Scripts.Arena.Services.UIFactories;
 using Assets.Game.Scripts.Arena.Services.PlayerAccessors;
 using Assets.Game.Scripts.Arena.Services.PlayerControllers;
 using Assets.Game.Scripts.Arena.Services.PlayerFactory;
+using Assets.Game.Scripts.Arena.UI;
 using Assets.Game.Scripts.Arena.UI.Windows;
 using Assets.Game.Scripts.Services.GameResultSavers;
 using Assets.Game.Scripts.Services.Registries;
@@ -24,19 +25,19 @@ namespace Assets.Game.Scripts.Installers
 {
     public class ArenaInstaller : MonoInstaller
     {
-        [SerializeField] private Joystick _joystick;
         [SerializeField] private ArenaConfig _arenaConfig;
+        [SerializeField] private ArenaUIConfig _arenaUIConfig;
         [SerializeField] private EnemySpawnConfig _enemySpawnConfig;
         [SerializeField] private CinemachineCamera _cineMachineCamera;
         [SerializeField] private WindowViewsConfig _windowViewsConfig;
 
         public override void InstallBindings()
         {
-            Container.BindInstance(_joystick).AsSingle();
-            
             Container.BindInstance(_cineMachineCamera).AsSingle();
             
             Container.BindInstance(_arenaConfig).AsSingle();
+            
+            Container.BindInstance(_arenaUIConfig).AsSingle();
             
             Container.BindInstance(_enemySpawnConfig).AsSingle();
             
@@ -50,7 +51,7 @@ namespace Assets.Game.Scripts.Installers
             
             Container.BindInterfacesTo<EnemyFactory>().AsSingle();
             
-            Container.BindInterfacesTo<HudFactory>().AsSingle();
+            Container.BindInterfacesTo<UIFactory>().AsSingle();
             
             Container.BindInterfacesTo<WindowFactory>().AsSingle();
             
