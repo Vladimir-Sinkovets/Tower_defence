@@ -14,11 +14,6 @@ namespace Assets.Game.Scripts.Arena.ArenaEnemyStates
         
         public override void Enter()
         {
-            if (_data.NavMeshAgent != null && _data.NavMeshAgent.isOnNavMesh)
-                _data.NavMeshAgent.isStopped = false;
-
-            _data.NavMeshAgent.speed = _data.Config.Speed;
-            
             _data.View.PlayWalkAnimation();
 
             _data.Enemy.Health.OnDied += OnEnemyDied;
@@ -26,9 +21,6 @@ namespace Assets.Game.Scripts.Arena.ArenaEnemyStates
 
         public override void Exit()
         {
-            if (_data.NavMeshAgent != null && _data.NavMeshAgent.isOnNavMesh)
-                _data.NavMeshAgent.isStopped = true;
-
             _data.Enemy.Health.OnDied -= OnEnemyDied;
         }
 
@@ -40,11 +32,28 @@ namespace Assets.Game.Scripts.Arena.ArenaEnemyStates
                 return;
             }
             
-            _data.NavMeshAgent.SetDestination(_data.Target.transform.position);
+            var direction = _data.Target.transform.position - _data.Enemy.transform.position;
+            direction.y = 0f;
 
-            if (Vector3.Distance(_data.Enemy.transform.position, _data.Target.transform.position) <= _data.Config.AttackRange)
+            var distance = direction.magnitude;
+
+            if (distance <= _data.Config.AttackRange)
             {
                 StateSwitcher.SwitchState<ArenaEnemyAttackState>();
+            }
+
+            if (direction.sqrMagnitude > 0.001f)
+            {
+                var targetRotation = Quaternion.LookRotation(direction);
+
+                _data.Enemy.transform.rotation = Quaternion.Slerp(
+                    _data.Enemy.transform.rotation,
+                    targetRotation,
+                    _data.Config.RotationSpeed * Time.deltaTime
+                );
+
+                _data.Enemy.transform.position += _data.Enemy.transform.forward *
+                    (_data.Config.Speed * Time.deltaTime);
             }
         }
 

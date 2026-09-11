@@ -14,12 +14,10 @@ using Zenject;
 
 namespace Assets.Game.Scripts.Arena
 {
-    [RequireComponent(typeof(NavMeshAgent))]
     public class ArenaEnemy : MonoBehaviour, IPunObservable
     {
         [SerializeField] private PhotonView _photonView;
         [SerializeField] private ArenaEnemyConfig _enemyConfig;
-        [SerializeField] private NavMeshAgent _navMeshAgent;
         [SerializeField] private ArenaEnemyView _view;
         
         private Registry<ArenaEnemy> _enemyRegistry;
@@ -78,7 +76,6 @@ namespace Assets.Game.Scripts.Arena
             _data = new ArenaEnemyStateMachineData()
             {
                 Config = _enemyConfig,
-                NavMeshAgent = _navMeshAgent,
                 View = _view,
                 Enemy = this,
             };

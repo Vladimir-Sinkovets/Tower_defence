@@ -11,5 +11,6 @@ namespace Assets.Game.Scripts.Arena.Services.EnemySpawners
         public int Damage = 1;
         public float IntervalBetweenAttacks = 2.0f;
         public int Hp = 4;
+        public float RotationSpeed = 360.0f;
     }
 }

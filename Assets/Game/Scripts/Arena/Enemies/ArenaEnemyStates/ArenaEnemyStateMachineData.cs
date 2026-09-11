@@ -10,6 +10,5 @@ namespace Assets.Game.Scripts.Arena.ArenaEnemyStates
         public ArenaEnemy Enemy;
         public ArenaEnemyConfig Config;
         public ArenaEnemyView View;
-        public NavMeshAgent NavMeshAgent;
     }
 }
