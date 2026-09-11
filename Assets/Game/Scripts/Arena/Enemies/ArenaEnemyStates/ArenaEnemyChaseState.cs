@@ -34,6 +34,12 @@ namespace Assets.Game.Scripts.Arena.ArenaEnemyStates
 
         public override void Update()
         {
+            if (_data.Target == null)
+            {
+                _data.Enemy.SetTarget();
+                return;
+            }
+            
             _data.NavMeshAgent.SetDestination(_data.Target.transform.position);
 
             if (Vector3.Distance(_data.Enemy.transform.position, _data.Target.transform.position) <= _data.Config.AttackRange)

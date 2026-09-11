@@ -66,7 +66,7 @@ namespace Assets.Game.Scripts.Arena.Buildings.ShootingBuildings
 
         protected void OnDestroy()
         {
-            _stateMachine.Dispose();
+            _stateMachine?.Dispose();
         }
     }
 }

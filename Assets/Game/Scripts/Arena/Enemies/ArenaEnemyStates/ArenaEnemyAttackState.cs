@@ -1,5 +1,4 @@
 using Assets.Game.Scripts.Common.UniversalStateMachine;
-using Assets.Game.Scripts.Enemies.States;
 using UnityEngine;
 using State = Assets.Game.Scripts.Common.UniversalStateMachine.State;
 
@@ -33,6 +32,12 @@ namespace Assets.Game.Scripts.Arena.ArenaEnemyStates
         {
             if (_isAttacking)
                 return;
+
+            if (_data.Target == null)
+            {
+                _data.Enemy.SetTarget();
+                return;
+            }
             
             if (!IsInAttackRange())
             {
@@ -58,7 +63,7 @@ namespace Assets.Game.Scripts.Arena.ArenaEnemyStates
             if (_data.Enemy.Health.IsDead)
                 return;
 
-            _data.Target.Health.ApplyDamage(_data.Config.Damage);
+            _data.Target.ApplyDamage(_data.Config.Damage);
 
             _isAttacking = false;
             

@@ -1,9 +1,8 @@
-using System;
 using Assets.Game.Scripts.Arena.ArenaEnemyStates;
 using Assets.Game.Scripts.Arena.Player;
-using Assets.Game.Scripts.Arena.Services.ArenaContexts;
 using Assets.Game.Scripts.Arena.Services.EnemyDeathHandlers;
 using Assets.Game.Scripts.Arena.Services.EnemySpawners;
+using Assets.Game.Scripts.Arena.Services.PlayerAccessors;
 using Assets.Game.Scripts.Common.UniversalStateMachine;
 using Assets.Game.Scripts.Services.Net;
 using Assets.Game.Scripts.Services.Registries;
@@ -23,13 +22,14 @@ namespace Assets.Game.Scripts.Arena
         [SerializeField] private NavMeshAgent _navMeshAgent;
         [SerializeField] private ArenaEnemyView _view;
         
-        private IPlayerAccessor _playerAccessor;
         private Registry<ArenaEnemy> _enemyRegistry;
         private PhotonCallbacks _photonCallbacks;
+        private IEnemyDeathHandler _enemyDeathHandler;
+        private IPlayerAccessor _playerAccessor;
         
         private StateMachine _stateMachine;
         private ArenaEnemyStateMachineData _data;
-        private IEnemyDeathHandler _enemyDeathHandler;
+        private int _targetViewId;
 
         public Health Health { get; private set; }
 
@@ -48,7 +48,26 @@ namespace Assets.Game.Scripts.Arena
             Init();
         }
 
-        public void Init()
+        public void SetTarget()
+        {
+            var viewId = PhotonView.Find(_targetViewId);
+
+            if (viewId != null)
+            {
+                _data.Target = viewId.GetComponent<ArenaPlayer>();
+                
+                _targetViewId = _data.Target.PhotonView.ViewID;
+
+                if (_data.Target != null)
+                    return;
+            }
+
+            _data.Target = _playerAccessor.GetNearestTarget(transform.position);
+            
+            _targetViewId = _data.Target.PhotonView.ViewID;
+        }
+
+        private void Init()
         {
             _photonCallbacks.MasterClientSwitched += MasterClientSwitchedHandler;
             
@@ -95,42 +114,6 @@ namespace Assets.Game.Scripts.Arena
             _stateMachine?.Update();
         }
 
-        private void SetTarget()
-        {
-            var viewId = PhotonView.Find(_data.TargetViewId);
-
-            if (viewId != null)
-            {
-                _data.Target = viewId.GetComponent<ArenaPlayer>();
-                _data.TargetViewId = _data.Target.PhotonView.ViewID;
-
-                if (_data.Target != null)
-                    return;
-            }
-
-            _data.Target = GetNearestTarget();
-            _data.TargetViewId = _data.Target.PhotonView.ViewID;
-        }
-
-        private ArenaPlayer GetNearestTarget()
-        {
-            var distance = float.MaxValue;
-
-            ArenaPlayer nearestTarget = null;
-            
-            foreach (var player in _playerAccessor.Players)
-            {
-                if (Vector3.Distance(player.Position, transform.position) <= distance)
-                {
-                    nearestTarget = player;
-                    
-                    distance = Vector3.Distance(player.Position, transform.position);
-                }
-            }
-            
-            return nearestTarget;
-        }
-
         public void ApplyDamage(int damage, int playerViewId) => _photonView.RPC(nameof(TakeDamage), RpcTarget.All, damage, playerViewId);
 
         [PunRPC]
@@ -148,11 +131,11 @@ namespace Assets.Game.Scripts.Arena
         {
             if (stream.IsWriting)
             {
-                stream.SendNext(_data.TargetViewId);
+                stream.SendNext(_targetViewId);
             }
             else
             {
-                _data.TargetViewId = (int)stream.ReceiveNext();
+                _targetViewId = (int)stream.ReceiveNext();
             }
         }
 

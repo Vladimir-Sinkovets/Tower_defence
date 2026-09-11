@@ -1,4 +1,3 @@
-using Assets.Game.Scripts.Arena.Services.ArenaContexts;
 using Assets.Game.Scripts.Arena.Services.EnemySpawners;
 using Assets.Game.Scripts.Arena.Services.GameOverManager;
 using Assets.Game.Scripts.Arena.Services.HudFactories;
@@ -16,7 +15,6 @@ namespace Assets.Game.Scripts.Arena
         private readonly IPlayerController _playerController;
         private readonly CinemachineCamera _cineMachineCamera;
         private readonly IEnemySpawner _enemySpawner;
-        private readonly IPlayerAccessor _playerAccessor;
         private readonly IHudFactory _hudFactory;
         private readonly IGameOverManager _gameOverManager;
 
@@ -24,7 +22,6 @@ namespace Assets.Game.Scripts.Arena
             IPlayerController playerController,
             CinemachineCamera cineMachineCamera,
             IEnemySpawner enemySpawner,
-            IPlayerAccessor playerAccessor,
             IHudFactory hudFactory,
             IGameOverManager gameOverManager)
         {
@@ -32,7 +29,6 @@ namespace Assets.Game.Scripts.Arena
             _playerController = playerController;
             _cineMachineCamera = cineMachineCamera;
             _enemySpawner = enemySpawner;
-            _playerAccessor = playerAccessor;
             _hudFactory = hudFactory;
             _gameOverManager = gameOverManager;
         }
@@ -57,8 +53,6 @@ namespace Assets.Game.Scripts.Arena
 
                 player.ShootingBuilding.Init(player);
             }
-            
-            _playerAccessor.UpdatePlayers();
             
             _enemySpawner.Init();
         }

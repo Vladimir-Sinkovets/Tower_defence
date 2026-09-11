@@ -12,8 +12,6 @@ namespace Assets.Game.Scripts.Arena.Services.EnemyFactories
 
             var enemy = enemyGameObject.GetComponent<ArenaEnemy>();
             
-            enemy.Init();
-            
             return enemy;
         }
     }

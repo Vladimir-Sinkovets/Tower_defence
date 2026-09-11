@@ -1,8 +1,10 @@
 using Assets.Game.Scripts.Arena.Buildings.ShootingBuildings;
+using Assets.Game.Scripts.Services.Registries;
 using Assets.Game.Scripts.Shared;
 using Assets.Game.Scripts.UI.HealthBar;
 using Photon.Pun;
 using UnityEngine;
+using Zenject;
 
 namespace Assets.Game.Scripts.Arena.Player
 {
@@ -17,6 +19,32 @@ namespace Assets.Game.Scripts.Arena.Player
         public Health Health { get; private set; }
         
         private HealthBarPresenter _presenter;
+        private Registry<ArenaPlayer> _playerRegistry;
+
+        [Inject]
+        public void Construct(Registry<ArenaPlayer> playerRegistry)
+        {
+            _playerRegistry = playerRegistry;
+            playerRegistry.Register(this);
+        }
+
+        private void OnPhotonInstantiate(PhotonMessageInfo info)
+        {
+            var instantiationData = info.photonView.InstantiationData;
+
+            if (instantiationData != null && instantiationData.Length >= 1)
+            {
+                var hp = (int)instantiationData[0];
+                
+                Debug.Log("Init");
+                
+                Init(hp);
+            }
+            else
+            {
+                Debug.LogError($"photonView.InstantiationData is null");
+            }
+        }
         
         public void Init(int hp)
         {
@@ -27,6 +55,16 @@ namespace Assets.Game.Scripts.Arena.Player
             _presenter.Init();
         }
 
-        private void OnDestroy() => _presenter?.Dispose();
+        private void OnDestroy()
+        {
+            _playerRegistry.Unregister(this);
+            _presenter?.Dispose();
+        }
+
+        public void ApplyDamage(int configDamage) => 
+            PhotonView.RPC(nameof(TakeDamage), PhotonView.Controller, configDamage);
+
+        [PunRPC]
+        private void TakeDamage(int configDamage) => Health.ApplyDamage(configDamage);
     }
 }

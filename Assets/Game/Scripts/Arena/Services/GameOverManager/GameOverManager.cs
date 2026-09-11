@@ -1,9 +1,10 @@
 using System;
-using Assets.Game.Scripts.Arena.Services.ArenaContexts;
+using Assets.Game.Scripts.Arena.Player;
 using Assets.Game.Scripts.Arena.Services.GameResultCalculators;
 using Assets.Game.Scripts.Arena.UI.Windows;
 using Assets.Game.Scripts.Services.GameResultSavers;
 using Assets.Game.Scripts.Services.Net;
+using Assets.Game.Scripts.Services.Registries;
 using Assets.Game.Scripts.Shared;
 
 namespace Assets.Game.Scripts.Arena.Services.GameOverManager
@@ -13,7 +14,6 @@ namespace Assets.Game.Scripts.Arena.Services.GameOverManager
         private readonly IWindowsManager _windowsManager;
         private readonly IGameResultCalculator _gameResultCalculator;
         private readonly IGameResultSaver _gameResultSaver;
-        private readonly IPlayerAccessor _playerAccessor;
         private readonly INetworkService _networkService;
 
         private Health _playerHealth;
@@ -22,13 +22,11 @@ namespace Assets.Game.Scripts.Arena.Services.GameOverManager
             IWindowsManager windowsManager,
             IGameResultCalculator gameResultCalculator,
             IGameResultSaver gameResultSaver,
-            IPlayerAccessor playerAccessor,
             INetworkService networkService)
         {
             _windowsManager = windowsManager;
             _gameResultCalculator = gameResultCalculator;
             _gameResultSaver = gameResultSaver;
-            _playerAccessor = playerAccessor;
             _networkService = networkService;
         }
 
