@@ -78,6 +78,7 @@ namespace Assets.Game.Scripts.Arena.Buildings.States
 
         public void Dispose()
         {
+            Debug.Log("Disposing ---------------------------");
             _shootCts?.Cancel();
             _shootCts?.Dispose();
         }
