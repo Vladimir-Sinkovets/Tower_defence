@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1c0cda77bd524985894f5a1a94fa61f5, type: 3}
-  m_Name: ArenaConfig
+  m_Name: Arena_config
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Arena.ArenaConfig
   Hp: 400
   Speed: 5

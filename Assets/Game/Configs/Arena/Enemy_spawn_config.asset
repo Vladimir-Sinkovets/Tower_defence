@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 613c73a4aa1241e0b3cdba3737dc8f9c, type: 3}
-  m_Name: EnemySpawnConfig
+  m_Name: Enemy_spawn_config
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Arena.Services.EnemySpawners.EnemySpawnConfig
   EnemyConfig: {fileID: 11400000, guid: ce9faafd740f8a740bf424a7c7720ca2, type: 2}
   TimeBetweenSpawns: 5

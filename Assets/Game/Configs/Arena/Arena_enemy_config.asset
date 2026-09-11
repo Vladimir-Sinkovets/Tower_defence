@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6573f0f8bdaa42c99b1a9795065918a8, type: 3}
-  m_Name: ArenaEnemyConfig
+  m_Name: Arena_enemy_config
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Arena.Services.EnemySpawners.ArenaEnemyConfig
   PrefabName: Enemy
   Speed: 4
