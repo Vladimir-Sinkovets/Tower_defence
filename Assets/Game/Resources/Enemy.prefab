@@ -47,7 +47,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 20
   m_Acceleration: 30
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -72,9 +72,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Arena.ArenaEnemy
   _photonView: {fileID: 7727715200295768625}
-  _enemyConfig: {fileID: 11400000, guid: ce9faafd740f8a740bf424a7c7720ca2, type: 2}
-  _navMeshAgent: {fileID: 693398706749541385}
   _view: {fileID: 6166932249451506337}
+  <Config>k__BackingField: {fileID: 11400000, guid: ce9faafd740f8a740bf424a7c7720ca2, type: 2}
 --- !u!114 &7727715200295768625
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -9,7 +9,6 @@ using Assets.Game.Scripts.Services.Registries;
 using Assets.Game.Scripts.Shared;
 using Photon.Pun;
 using UnityEngine;
-using UnityEngine.AI;
 using Zenject;
 
 namespace Assets.Game.Scripts.Arena
@@ -17,8 +16,8 @@ namespace Assets.Game.Scripts.Arena
     public class ArenaEnemy : MonoBehaviour, IPunObservable
     {
         [SerializeField] private PhotonView _photonView;
-        [SerializeField] private ArenaEnemyConfig _enemyConfig;
         [SerializeField] private ArenaEnemyView _view;
+        [field: SerializeField] public ArenaEnemyConfig Config { get; private set; }
         
         private Registry<ArenaEnemy> _enemyRegistry;
         private PhotonCallbacks _photonCallbacks;
@@ -71,11 +70,11 @@ namespace Assets.Game.Scripts.Arena
             
             _enemyRegistry.Register(this);
             
-            Health = new Health(_enemyConfig.Hp);
+            Health = new Health(Config.Hp);
             
             _data = new ArenaEnemyStateMachineData()
             {
-                Config = _enemyConfig,
+                Config = Config,
                 View = _view,
                 Enemy = this,
             };
@@ -116,11 +115,13 @@ namespace Assets.Game.Scripts.Arena
         [PunRPC]
         private void TakeDamage(int damage, int playerViewId)
         {
+            Debug.Log($"Damage {damage}");
+            
             Health.ApplyDamage(damage);
 
             if (Health.IsDead)
             {
-                _enemyDeathHandler.EnemyDiedHandler(playerViewId);
+                _enemyDeathHandler.EnemyDiedHandler(this, playerViewId);
             }
         }
 

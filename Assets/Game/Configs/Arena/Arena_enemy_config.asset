@@ -17,4 +17,5 @@ MonoBehaviour:
   AttackRange: 2
   Damage: 20
   IntervalBetweenAttacks: 0.5
-  Hp: 50
+  Hp: 5
+  RotationSpeed: 360

@@ -18,6 +18,6 @@ MonoBehaviour:
   AttackRadius: 8
   AttackInterval: 1
   ProjectileSpeed: 4
-  Damage: 1
+  Damage: 3
   RotationSpeed: 360
   ArcHeight: 0.4

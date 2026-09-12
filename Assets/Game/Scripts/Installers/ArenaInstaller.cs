@@ -4,6 +4,7 @@ using Assets.Game.Scripts.Arena.Buildings.States;
 using Assets.Game.Scripts.Arena.Player;
 using Assets.Game.Scripts.Arena.Services.EnemyAccessors;
 using Assets.Game.Scripts.Arena.Services.EnemyDeathHandlers;
+using Assets.Game.Scripts.Arena.Services.EnemyDroppers;
 using Assets.Game.Scripts.Arena.Services.EnemyFactories;
 using Assets.Game.Scripts.Arena.Services.EnemySpawners;
 using Assets.Game.Scripts.Arena.Services.GameOverManager;
@@ -26,6 +27,7 @@ namespace Assets.Game.Scripts.Installers
     public class ArenaInstaller : MonoInstaller
     {
         [SerializeField] private ArenaConfig _arenaConfig;
+        [SerializeField] private DropConfig _arenaDropConfig;
         [SerializeField] private ArenaUIConfig _arenaUIConfig;
         [SerializeField] private EnemySpawnConfig _enemySpawnConfig;
         [SerializeField] private CinemachineCamera _cineMachineCamera;
@@ -40,6 +42,8 @@ namespace Assets.Game.Scripts.Installers
             Container.BindInstance(_arenaUIConfig).AsSingle();
             
             Container.BindInstance(_enemySpawnConfig).AsSingle();
+            
+            Container.BindInstance(_arenaDropConfig).AsSingle();
             
             Container.BindInterfacesTo<PlayerController>().AsSingle();
             
@@ -84,6 +88,8 @@ namespace Assets.Game.Scripts.Installers
             Container.BindInterfacesTo<EnemyDeathHandler>().AsSingle();
             
             Container.BindInterfacesTo<PlayerAccessor>().AsSingle();
+            
+            Container.BindInterfacesTo<Dropper>().AsSingle();
         }
     }
 } 

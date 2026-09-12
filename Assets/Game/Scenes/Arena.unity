@@ -407,6 +407,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Installers.ArenaInstaller
   _arenaConfig: {fileID: 11400000, guid: 128e268cea9ded9488f4f57cae9407ff, type: 2}
+  _arenaDropConfig: {fileID: 11400000, guid: 48643c72760b6eb43849d1ead16a4cbc, type: 2}
   _arenaUIConfig: {fileID: 11400000, guid: b9d43bf637c64a94ea23de2fedd0e032, type: 2}
   _enemySpawnConfig: {fileID: 11400000, guid: 6dc5d2e06133405448633fe8cca4b74a, type: 2}
   _cineMachineCamera: {fileID: 367432644}
