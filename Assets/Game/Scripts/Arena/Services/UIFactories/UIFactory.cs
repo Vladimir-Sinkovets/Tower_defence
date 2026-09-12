@@ -1,5 +1,6 @@
 using System;
 using Assets.Game.Scripts.Arena.UI;
+using Assets.Game.Scripts.Arena.UI.Experience;
 using Assets.Game.Scripts.Shared;
 using Assets.Game.Scripts.UI.HealthBar;
 using Zenject;
@@ -12,7 +13,8 @@ namespace Assets.Game.Scripts.Arena.Services.UIFactories
         private readonly ArenaUIConfig _config;
 
         private HealthBarPresenter _castleHealthPresenter;
-        
+        private ExperiencePresenter _experiencePresenter;
+
         public UIFactory(IInstantiator instantiator, ArenaUIConfig config)
         {
             _instantiator = instantiator;
@@ -25,11 +27,18 @@ namespace Assets.Game.Scripts.Arena.Services.UIFactories
 
             _castleHealthPresenter = _instantiator.Instantiate<HealthBarPresenter>(new object[] { hud.HealthBarView, playerHealth });
             _castleHealthPresenter.Init();
+            
+            _experiencePresenter = _instantiator.Instantiate<ExperiencePresenter>(new object[] { hud.ExperienceView });
+            _experiencePresenter.Init();
         }
 
         public ArenaInput CreateArenaInput() => 
             _instantiator.InstantiatePrefabForComponent<ArenaInput>(_config.InputPrefab);
 
-        public void Dispose() => _castleHealthPresenter?.Dispose();
+        public void Dispose()
+        {
+            _castleHealthPresenter?.Dispose();
+            _experiencePresenter?.Dispose();
+        }
     }
 }

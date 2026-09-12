@@ -7,6 +7,7 @@ using Assets.Game.Scripts.Arena.Services.EnemyDeathHandlers;
 using Assets.Game.Scripts.Arena.Services.EnemyDroppers;
 using Assets.Game.Scripts.Arena.Services.EnemyFactories;
 using Assets.Game.Scripts.Arena.Services.EnemySpawners;
+using Assets.Game.Scripts.Arena.Services.Experiences;
 using Assets.Game.Scripts.Arena.Services.GameOverManager;
 using Assets.Game.Scripts.Arena.Services.GameResultCalculators;
 using Assets.Game.Scripts.Arena.Services.GameStatistic;
@@ -15,6 +16,7 @@ using Assets.Game.Scripts.Arena.Services.PlayerAccessors;
 using Assets.Game.Scripts.Arena.Services.PlayerControllers;
 using Assets.Game.Scripts.Arena.Services.PlayerFactory;
 using Assets.Game.Scripts.Arena.UI;
+using Assets.Game.Scripts.Arena.UI.Experience;
 using Assets.Game.Scripts.Arena.UI.Windows;
 using Assets.Game.Scripts.Services.GameResultSavers;
 using Assets.Game.Scripts.Services.Registries;
@@ -32,6 +34,7 @@ namespace Assets.Game.Scripts.Installers
         [SerializeField] private EnemySpawnConfig _enemySpawnConfig;
         [SerializeField] private CinemachineCamera _cineMachineCamera;
         [SerializeField] private WindowViewsConfig _windowViewsConfig;
+        [SerializeField] private ArenaUpgradesConfig _arenaUpgradesConfig;
 
         public override void InstallBindings()
         {
@@ -88,8 +91,12 @@ namespace Assets.Game.Scripts.Installers
             Container.BindInterfacesTo<EnemyDeathHandler>().AsSingle();
             
             Container.BindInterfacesTo<PlayerAccessor>().AsSingle();
-            
+
             Container.BindInterfacesTo<Dropper>().AsSingle();
+            
+            Container.BindInterfacesTo<ExperienceService>().AsSingle();
+            
+            Container.BindInstance(_arenaUpgradesConfig).AsSingle();
         }
     }
 } 
