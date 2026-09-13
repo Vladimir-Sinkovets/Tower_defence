@@ -1,3 +1,4 @@
+using Assets.Game.Scripts.Arena.Services.EnemyDroppers;
 using UnityEngine;
 
 namespace Assets.Game.Scripts.Arena.Services.EnemySpawners
@@ -12,5 +13,6 @@ namespace Assets.Game.Scripts.Arena.Services.EnemySpawners
         public float IntervalBetweenAttacks = 2.0f;
         public int Hp = 4;
         public float RotationSpeed = 360.0f;
+        public DropConfig Drop;
     }
 }

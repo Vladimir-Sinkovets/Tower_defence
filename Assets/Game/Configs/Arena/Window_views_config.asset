@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: Window_views_config
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Arena.UI.Windows.WindowViewsConfig
   EndGameViewPrefab: {fileID: 5421595415422225015, guid: f29b71fbf5a7caf4eaec5d390d1e75fe, type: 3}
+  UpgradeViewPrefab: {fileID: 6830060989914951168, guid: 458ba45d0baa370498448381dbe05adb, type: 3}

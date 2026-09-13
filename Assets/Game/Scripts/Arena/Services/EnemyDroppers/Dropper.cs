@@ -1,4 +1,3 @@
-using Assets.Game.Scripts.Arena.Services.EnemySpawners;
 using Photon.Pun;
 using UnityEngine;
 
@@ -6,20 +5,16 @@ namespace Assets.Game.Scripts.Arena.Services.EnemyDroppers
 {
     public class Dropper : IDropper
     {
-        private readonly DropConfig _config;
-
-        public Dropper(DropConfig config) => _config = config;
-
-        public void Drop(Vector3 position, ArenaEnemyConfig arenaEnemyConfig)
+        public void Drop(Vector3 position, DropConfig dropConfig)
         {
-            var exp = PhotonNetwork.InstantiateRoomObject(_config.ExpPrefabName, position, Quaternion.identity)
+            var exp = PhotonNetwork.InstantiateRoomObject(dropConfig.ExpPrefabName, position, Quaternion.identity)
                 .GetComponent<Experience>();
 
-            exp.Init(_config.Experience);
+            exp.Init(dropConfig.Experience);
 
-            for (int i = 0; i < _config.Hp; i++)
+            for (int i = 0; i < dropConfig.Hp; i++)
             {
-                var hp = PhotonNetwork.InstantiateRoomObject(_config.CurrencyPrefabName, position, Quaternion.identity)
+                var hp = PhotonNetwork.InstantiateRoomObject(dropConfig.CurrencyPrefabName, position, Quaternion.identity)
                     .GetComponent<Hp>();
                 
                 hp.Init();

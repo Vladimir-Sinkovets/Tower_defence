@@ -634,7 +634,7 @@ GameObject:
   - component: {fileID: 4616781682096779314}
   - component: {fileID: 7545392324841392766}
   m_Layer: 5
-  m_Name: ArenaEndGameCanvas
+  m_Name: Arena_end_game_canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

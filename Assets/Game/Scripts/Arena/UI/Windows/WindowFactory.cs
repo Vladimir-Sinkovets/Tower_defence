@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Assets.Game.Scripts.Arena.UI.Windows.EndGame;
+using Assets.Game.Scripts.Arena.UI.Windows.Upgrades;
 using UnityEngine;
 using Zenject;
 
@@ -19,6 +20,7 @@ namespace Assets.Game.Scripts.Arena.UI.Windows
             _factoryDelegates = new Dictionary<WindowType, Func<IWindowPresenter>>
             {
                 [WindowType.EndGame] = () => CreateWindow<EndGameView, EndGamePresenter>(config.EndGameViewPrefab),
+                [WindowType.Upgrades] = () => CreateWindow<UpgradesView, UpgradesPresenter>(config.UpgradeViewPrefab)
             };
         }
 

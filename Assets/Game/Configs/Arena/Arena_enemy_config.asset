@@ -19,3 +19,4 @@ MonoBehaviour:
   IntervalBetweenAttacks: 0.5
   Hp: 5
   RotationSpeed: 360
+  Drop: {fileID: 11400000, guid: 48643c72760b6eb43849d1ead16a4cbc, type: 2}

@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Arena.Services.EnemyDroppers.DropConfig
   ExpPrefabName: Experience
   CurrencyPrefabName: Hp
-  Experience: 2
-  CurrencyAward: 1
+  Experience: 8
+  Hp: 1

@@ -18,7 +18,7 @@ namespace Assets.Game.Scripts.Arena.Services.EnemyDeathHandlers
         public void EnemyDiedHandler(ArenaEnemy arenaEnemy, int playerViewId)
         {
             if (PhotonNetwork.IsMasterClient)
-                _dropper.Drop(arenaEnemy.transform.position, arenaEnemy.Config);
+                _dropper.Drop(arenaEnemy.transform.position, arenaEnemy.Config.Drop);
             
             var playerPhotonView = PhotonView.Find(playerViewId);
             

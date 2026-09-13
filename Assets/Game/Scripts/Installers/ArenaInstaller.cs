@@ -11,10 +11,12 @@ using Assets.Game.Scripts.Arena.Services.Experiences;
 using Assets.Game.Scripts.Arena.Services.GameOverManager;
 using Assets.Game.Scripts.Arena.Services.GameResultCalculators;
 using Assets.Game.Scripts.Arena.Services.GameStatistic;
+using Assets.Game.Scripts.Arena.Services.LevelUpHandlers;
 using Assets.Game.Scripts.Arena.Services.UIFactories;
 using Assets.Game.Scripts.Arena.Services.PlayerAccessors;
 using Assets.Game.Scripts.Arena.Services.PlayerControllers;
 using Assets.Game.Scripts.Arena.Services.PlayerFactory;
+using Assets.Game.Scripts.Arena.Services.UpgradeServices;
 using Assets.Game.Scripts.Arena.UI;
 using Assets.Game.Scripts.Arena.UI.Experience;
 using Assets.Game.Scripts.Arena.UI.Windows;
@@ -97,6 +99,10 @@ namespace Assets.Game.Scripts.Installers
             Container.BindInterfacesTo<ExperienceService>().AsSingle();
             
             Container.BindInstance(_arenaUpgradesConfig).AsSingle();
+            
+            Container.BindInterfacesTo<LevelUpHandler>().AsSingle();
+            
+            Container.BindInterfacesTo<UpgradeService>().AsSingle();
         }
     }
 } 

@@ -6,5 +6,6 @@ namespace Assets.Game.Scripts.Arena.UI.Windows
     public class WindowViewsConfig : ScriptableObject
     {
         public GameObject EndGameViewPrefab;
+        public GameObject UpgradeViewPrefab;
     }
 }

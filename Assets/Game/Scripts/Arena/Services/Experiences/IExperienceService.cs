@@ -6,7 +6,7 @@ namespace Assets.Game.Scripts.Arena.Services.Experiences
     {
         event Action OnExperienceChanged;
         int Experience { get; }
-        int ExperienceForNextLevel { get; }
         void Increase(int amount);
+        void Decrease(int amount);
     }
 }
