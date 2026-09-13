@@ -10,6 +10,7 @@ namespace Assets.Game.Scripts.Arena.Services.PlayerControllers
         
         private Joystick _joystick;
         private ArenaPlayer _arenaPlayer;
+        private float _speed;
 
         public PlayerController(ArenaConfig arenaConfig)
         {
@@ -20,8 +21,10 @@ namespace Assets.Game.Scripts.Arena.Services.PlayerControllers
         {
             _joystick = joystick;
             _arenaPlayer = arenaPlayer;
+            _speed = _arenaConfig.Speed;
         }
 
+        public void IncreaseMovementSpeed(float speed) => _speed += speed;
 
         public void Tick()
         {
@@ -33,7 +36,7 @@ namespace Assets.Game.Scripts.Arena.Services.PlayerControllers
             
             var direction = new Vector3(_joystick.Direction.x, 0, _joystick.Direction.y);
             
-            _arenaPlayer.CharacterController.Move(direction * (_arenaConfig.Speed * Time.deltaTime));
+            _arenaPlayer.CharacterController.Move(direction * (_speed * Time.deltaTime));
         }
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using Assets.Game.Scripts.Arena.Services.Experiences;
+using Assets.Game.Scripts.Arena.Services.UpgradeServices;
 
 namespace Assets.Game.Scripts.Arena.UI.Experience
 {

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets.Game.Scripts.Arena.Services.Experiences
+namespace Assets.Game.Scripts.Arena.Services.UpgradeServices
 {
     [CreateAssetMenu(fileName = "Arena_upgrades_config", menuName = "Arena/Upgrades")]
     public class ArenaUpgradesConfig : ScriptableObject
@@ -16,5 +16,7 @@ namespace Assets.Game.Scripts.Arena.Services.Experiences
     {
         public string Name;
         public Sprite Icon;
+        public UpgradeType Type;
+        public float EachLevelCoefficient = 1.0f;
     }
 }

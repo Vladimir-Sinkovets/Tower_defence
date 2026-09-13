@@ -14,5 +14,6 @@ namespace Assets.Game.Scripts.Arena.Buildings
         public int Damage = 1;
         public float RotationSpeed = 360.0f;
         public float ArcHeight = 0.4f;
+        public float MinAttackInterval = 0.1f;
     }
 }

@@ -14,11 +14,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Arena.Services.Experiences.ArenaUpgradesConfig
   ExperienceForLevel: 10
   Upgrades:
-  - Name: _01
+  - Name: Attack speed
     Icon: {fileID: 21300000, guid: 48c0d4d6bebaa934384b07aa1e2f8184, type: 3}
-  - Name: _02
+    Type: 0
+    EachLevelCoefficient: 0.9
+  - Name: Damage
     Icon: {fileID: 21300000, guid: 7ab74e659e1f0a34d9cfec21c478fc12, type: 3}
-  - Name: _03
+    Type: 1
+    EachLevelCoefficient: 1
+  - Name: Hp
     Icon: {fileID: 21300014, guid: 7ab74e659e1f0a34d9cfec21c478fc12, type: 3}
-  - Name: _04
+    Type: 2
+    EachLevelCoefficient: 1
+  - Name: Speed
     Icon: {fileID: 21300100, guid: 7ab74e659e1f0a34d9cfec21c478fc12, type: 3}
+    Type: 3
+    EachLevelCoefficient: 0.3

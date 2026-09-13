@@ -12,21 +12,16 @@ namespace Assets.Game.Scripts.Arena.Buildings.States
     {
         private readonly IProjectileFactory _projectileFactory;
         private readonly IVFXFactory _vfxFactory;
-        private readonly IBuildingUpgradeApplier _buildingUpgradeApplier;
 
         private ShootingBuildingStateMachineData _data;
         
         private CancellationTokenSource _shootCts;
         private float _nextShootTime;
 
-        public ShootingExecutor(
-            IProjectileFactory projectileFactory,
-            IVFXFactory vfxFactory,
-            IBuildingUpgradeApplier buildingUpgradeApplier)
+        public ShootingExecutor(IProjectileFactory projectileFactory, IVFXFactory vfxFactory)
         {
             _projectileFactory = projectileFactory;
             _vfxFactory = vfxFactory;
-            _buildingUpgradeApplier = buildingUpgradeApplier;
         }
 
         public void Init(ShootingBuildingStateMachineData data)
@@ -52,7 +47,7 @@ namespace Assets.Game.Scripts.Arena.Buildings.States
 
 
         private void SetNextShootTime() => 
-            _nextShootTime = Time.time + _buildingUpgradeApplier.ApplyBuildingAttackSpeedUpgrade(_data.Config.AttackInterval);
+            _nextShootTime = Time.time + _data.AttackInterval;
 
         private async UniTask ShootAsync(CancellationToken ct)
         {
@@ -68,7 +63,7 @@ namespace Assets.Game.Scripts.Arena.Buildings.States
                 {
                     Position = _data.ProjectileStartPosition.position,
                     Target = _data.CurrentTarget,
-                    Damage = _buildingUpgradeApplier.ApplyBuildingDamageUpgrade(_data.Config.Damage),
+                    Damage = _data.Damage,
                     ProjectileSpeed = _data.Config.ProjectileSpeed,
                     ArcHeight = _data.Config.ArcHeight,
                     HitVFXPrefab = _data.Config.HitVFXPrefab,

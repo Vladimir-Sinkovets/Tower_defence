@@ -8,6 +8,8 @@ namespace Assets.Game.Scripts.Arena.Services.PlayerAccessors
     {
         private readonly Registry<ArenaPlayer> _playerRegistry;
 
+        public ArenaPlayer CurrentPlayer { get; private set; }
+
         public PlayerAccessor(Registry<ArenaPlayer> playerRegistry) => _playerRegistry = playerRegistry;
 
         public ArenaPlayer GetNearestTarget(Vector3 point)
@@ -27,6 +29,11 @@ namespace Assets.Game.Scripts.Arena.Services.PlayerAccessors
             }
             
             return nearestTarget;
+        }
+
+        public void SetCurrentPlayer(ArenaPlayer player)
+        {
+            CurrentPlayer = player;
         }
     }
 }

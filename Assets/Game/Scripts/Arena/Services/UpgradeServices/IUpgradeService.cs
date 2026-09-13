@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Assets.Game.Scripts.Arena.Services.Experiences;
 using UnityEngine;
 
 namespace Assets.Game.Scripts.Arena.Services.UpgradeServices
@@ -17,5 +18,7 @@ namespace Assets.Game.Scripts.Arena.Services.UpgradeServices
         public string Name;
         public Sprite Icon;
         public int Level;
+        public UpgradeType Type;
+        public float EachLevelCoefficient = 1.0f;
     }
 }

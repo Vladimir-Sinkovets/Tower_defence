@@ -14,5 +14,7 @@ namespace Assets.Game.Scripts.Arena.Buildings.ShootingBuildings
         public WeaponAnimation PreShootAnimation { get; set; }
         public ShootingBuilding ShootingBuilding { get; set; }
         public int PlayerViewId { get; set; }
+        public int Damage { get; set; }
+        public float AttackInterval { get; set; }
     }
 }

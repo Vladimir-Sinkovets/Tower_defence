@@ -1,5 +1,6 @@
 using Assets.Game.Scripts.Arena.Services.EnemySpawners;
 using Assets.Game.Scripts.Arena.Services.GameOverManager;
+using Assets.Game.Scripts.Arena.Services.PlayerAccessors;
 using Assets.Game.Scripts.Arena.Services.UIFactories;
 using Assets.Game.Scripts.Arena.Services.PlayerControllers;
 using Assets.Game.Scripts.Arena.Services.PlayerFactory;
@@ -17,13 +18,15 @@ namespace Assets.Game.Scripts.Arena
         private readonly IEnemySpawner _enemySpawner;
         private readonly IUIFactory _iuiFactory;
         private readonly IGameOverManager _gameOverManager;
+        private readonly IPlayerAccessor _playerAccessor;
 
         public ArenaEntryPoint(IPlayerFactory playerFactory,
             IPlayerController playerController,
             CinemachineCamera cineMachineCamera,
             IEnemySpawner enemySpawner,
             IUIFactory iuiFactory,
-            IGameOverManager gameOverManager)
+            IGameOverManager gameOverManager,
+            IPlayerAccessor playerAccessor)
         {
             _playerFactory = playerFactory;
             _playerController = playerController;
@@ -31,6 +34,7 @@ namespace Assets.Game.Scripts.Arena
             _enemySpawner = enemySpawner;
             _iuiFactory = iuiFactory;
             _gameOverManager = gameOverManager;
+            _playerAccessor = playerAccessor;
         }
         
         public void Initialize() => InitializeAsync().Forget();
@@ -54,6 +58,8 @@ namespace Assets.Game.Scripts.Arena
                 _gameOverManager.Init(player.Health);
 
                 player.ShootingBuilding.Init(player);
+
+                _playerAccessor.SetCurrentPlayer(player);
             }
             
             _enemySpawner.Init();

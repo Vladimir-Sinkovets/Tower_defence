@@ -46,10 +46,17 @@ namespace Assets.Game.Scripts.Arena.Buildings.ShootingBuildings
                 PreShootAnimation = _preShootAnimation,
                 ShootingBuilding = this,
                 PlayerViewId = player.PhotonView.ViewID,
+                Damage = _config.Damage,
+                AttackInterval = _config.AttackInterval,
             };
 
             SetUpStateMachine();
         }
+        
+        public void IncreaseAttackSpeed(float coefficient) => 
+            _data.AttackInterval = Math.Max(_config.MinAttackInterval, coefficient * _config.AttackInterval);
+
+        public void IncreaseDamage(int additionalDamage) => _data.Damage += additionalDamage;
 
         private void SetUpStateMachine()
         {
@@ -64,9 +71,6 @@ namespace Assets.Game.Scripts.Arena.Buildings.ShootingBuildings
         public void Stop() => OnStopped?.Invoke();
         public void Resume() => OnResume?.Invoke();
 
-        protected void OnDestroy()
-        {
-            _stateMachine?.Dispose();
-        }
+        protected void OnDestroy() => _stateMachine?.Dispose();
     }
 }

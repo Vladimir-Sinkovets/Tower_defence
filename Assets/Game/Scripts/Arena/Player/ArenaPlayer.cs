@@ -1,4 +1,5 @@
 using Assets.Game.Scripts.Arena.Buildings.ShootingBuildings;
+using Assets.Game.Scripts.Arena.Services.PlayerControllers;
 using Assets.Game.Scripts.Services.Registries;
 using Assets.Game.Scripts.Shared;
 using Assets.Game.Scripts.UI.HealthBar;
@@ -27,24 +28,6 @@ namespace Assets.Game.Scripts.Arena.Player
             _playerRegistry = playerRegistry;
             playerRegistry.Register(this);
         }
-
-        private void OnPhotonInstantiate(PhotonMessageInfo info)
-        {
-            var instantiationData = info.photonView.InstantiationData;
-
-            if (instantiationData != null && instantiationData.Length >= 1)
-            {
-                var hp = (int)instantiationData[0];
-                
-                Debug.Log("Init");
-                
-                Init(hp);
-            }
-            else
-            {
-                Debug.LogError($"photonView.InstantiationData is null");
-            }
-        }
         
         public void Init(int hp)
         {
@@ -54,6 +37,8 @@ namespace Assets.Game.Scripts.Arena.Player
             
             _presenter.Init();
         }
+        
+        public void IncreaseHp(int hp) => Health.AddHp(hp);
 
         private void OnDestroy()
         {
