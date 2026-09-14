@@ -2,6 +2,7 @@ using Assets.Game.Scripts.Arena;
 using Assets.Game.Scripts.Arena.Buildings.Implementations;
 using Assets.Game.Scripts.Arena.Buildings.States;
 using Assets.Game.Scripts.Arena.Player;
+using Assets.Game.Scripts.Arena.Services.ConstantUpgradeAppliers;
 using Assets.Game.Scripts.Arena.Services.EnemyAccessors;
 using Assets.Game.Scripts.Arena.Services.EnemyDeathHandlers;
 using Assets.Game.Scripts.Arena.Services.EnemyDroppers;
@@ -103,6 +104,8 @@ namespace Assets.Game.Scripts.Installers
             Container.BindInterfacesTo<LevelUpHandler>().AsSingle();
             
             Container.BindInterfacesTo<UpgradeService>().AsSingle();
+            
+            Container.BindInterfacesTo<ConstantUpgradeApplier>().AsSingle();
         }
     }
 } 

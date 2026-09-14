@@ -2,6 +2,7 @@
 using Assets.Game.Scripts.Animations;
 using Assets.Game.Scripts.Arena.Buildings.States;
 using Assets.Game.Scripts.Arena.Player;
+using Assets.Game.Scripts.Arena.Services.ConstantUpgradeAppliers;
 using Assets.Game.Scripts.Common.UniversalStateMachine;
 using Assets.Game.Scripts.Shared;
 using UnityEngine;
@@ -20,15 +21,17 @@ namespace Assets.Game.Scripts.Arena.Buildings.ShootingBuildings
         [SerializeField] private float _searchTargetInterval = 0.2f;
 
         private IInstantiator _instantiator;
+        private IConstantUpgradeApplier _upgradeApplier;
+        private BuildingConfig _config;
 
         private StateMachine _stateMachine;
         private ShootingBuildingStateMachineData _data;
-        private BuildingConfig _config;
 
         [Inject]
-        public void Construct(IInstantiator instantiator, ArenaConfig config)
+        public void Construct(IInstantiator instantiator, ArenaConfig config, IConstantUpgradeApplier upgradeApplier)
         {
             _instantiator =  instantiator;
+            _upgradeApplier = upgradeApplier;
             _config = config.BuildingConfig;
         }
 
@@ -46,7 +49,7 @@ namespace Assets.Game.Scripts.Arena.Buildings.ShootingBuildings
                 PreShootAnimation = _preShootAnimation,
                 ShootingBuilding = this,
                 PlayerViewId = player.PhotonView.ViewID,
-                Damage = _config.Damage,
+                Damage = _upgradeApplier.ApplyDamageUpgrade(_config.Damage),
                 AttackInterval = _config.AttackInterval,
             };
 

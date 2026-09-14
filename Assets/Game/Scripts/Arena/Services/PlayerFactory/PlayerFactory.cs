@@ -1,17 +1,19 @@
 using Assets.Game.Scripts.Arena.Player;
+using Assets.Game.Scripts.Arena.Services.ConstantUpgradeAppliers;
 using Photon.Pun;
 using UnityEngine;
-using Zenject;
 
 namespace Assets.Game.Scripts.Arena.Services.PlayerFactory
 {
     public class PlayerFactory : IPlayerFactory
     {
         private readonly ArenaConfig _config;
+        private readonly IConstantUpgradeApplier _upgradeApplier;
 
-        public PlayerFactory(ArenaConfig config, DiContainer container)
+        public PlayerFactory(ArenaConfig config, IConstantUpgradeApplier upgradeApplier)
         {
             _config = config;
+            _upgradeApplier = upgradeApplier;
         }
 
         public ArenaPlayer CreatePlayer()
@@ -20,7 +22,7 @@ namespace Assets.Game.Scripts.Arena.Services.PlayerFactory
 
             var player = playerGameObject.GetComponent<ArenaPlayer>();
 
-            player.Init(_config.Hp);
+            player.Init(_upgradeApplier.ApplyHpUpgrade(_config.Hp));
             
             return player;
         }
