@@ -90,7 +90,7 @@ namespace Assets.Game.Scripts.Arena.Services.UpgradeServices
                         (int)(upgrade.Level * upgrade.EachLevelCoefficient));
                     break;
                 case UpgradeType.Hp:
-                    _playerAccessor.CurrentPlayer.IncreaseHp(
+                    _playerAccessor.CurrentPlayer.Health.IncreaseHp(
                         (int)(upgrade.Level * upgrade.EachLevelCoefficient));
                     break;
                 case UpgradeType.MovementSpeed:

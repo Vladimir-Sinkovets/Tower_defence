@@ -38,8 +38,6 @@ namespace Assets.Game.Scripts.Arena.Player
             _presenter.Init();
         }
         
-        public void IncreaseHp(int hp) => Health.AddHp(hp);
-
         private void OnDestroy()
         {
             _playerRegistry.Unregister(this);

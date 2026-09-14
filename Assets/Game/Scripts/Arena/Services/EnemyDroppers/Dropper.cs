@@ -12,13 +12,10 @@ namespace Assets.Game.Scripts.Arena.Services.EnemyDroppers
 
             exp.Init(dropConfig.Experience);
 
-            for (int i = 0; i < dropConfig.Hp; i++)
-            {
-                var hp = PhotonNetwork.InstantiateRoomObject(dropConfig.CurrencyPrefabName, position, Quaternion.identity)
-                    .GetComponent<Hp>();
-                
-                hp.Init();
-            }
+            var hp = PhotonNetwork.InstantiateRoomObject(dropConfig.CurrencyPrefabName, position, Quaternion.identity)
+                .GetComponent<Hp>();
+            
+            hp.Init(dropConfig.Heal);
         }
     }
 }

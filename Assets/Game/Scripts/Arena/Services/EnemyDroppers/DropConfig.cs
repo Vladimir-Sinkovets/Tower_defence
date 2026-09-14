@@ -8,6 +8,6 @@ namespace Assets.Game.Scripts.Arena.Services.EnemyDroppers
         public string ExpPrefabName;
         public string CurrencyPrefabName;
         public int Experience = 2;
-        public int Hp = 1;
+        public int Heal = 3;
     }
 }

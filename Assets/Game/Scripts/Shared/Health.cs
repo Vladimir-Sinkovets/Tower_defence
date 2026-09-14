@@ -48,11 +48,21 @@ namespace Assets.Game.Scripts.Shared
             OnHpChanged?.Invoke(_currentHp, _startHp);
         }
 
-        public void AddHp(int hp)
+        public void IncreaseHp(int hp)
         {
             _startHp += hp;
             _currentHp += hp;
 
+            OnHpChanged?.Invoke(_currentHp, _startHp);
+        }
+
+        public void ApplyHeal(int hp)
+        {
+            _currentHp += hp;
+            
+            if (_currentHp > _startHp)
+                _currentHp = _startHp;
+            
             OnHpChanged?.Invoke(_currentHp, _startHp);
         }
     }
