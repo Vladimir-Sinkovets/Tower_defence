@@ -15,4 +15,4 @@ MonoBehaviour:
   ExpPrefabName: Experience
   CurrencyPrefabName: Hp
   Experience: 8
-  Hp: 1
+  Heal: 15

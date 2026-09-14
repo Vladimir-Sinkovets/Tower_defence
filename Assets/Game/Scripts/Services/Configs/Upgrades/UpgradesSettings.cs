@@ -15,6 +15,9 @@ namespace Assets.Game.Scripts.Services.Configs.Upgrades
         public CastleHpUpgradeSettings CastleHpUpgradeSettings;
         public TowerAttackSpeedUpgradeSettings TowerAttackSpeedUpgradeSettings;
         public TowerDamageUpgradeSettings TowerDamageUpgradeSettings;
+        
+        public ArenaHpUpgradeSettings ArenaHpUpgradeSettings;
+        public ArenaDamageUpgradeSettings ArenaDamageUpgradeSettings;
 
         public IEnumerable<UpgradeSettings> GetUpgradeConfigs()
         {
@@ -23,6 +26,12 @@ namespace Assets.Game.Scripts.Services.Configs.Upgrades
             yield return CastleHpUpgradeSettings;
             yield return TowerAttackSpeedUpgradeSettings;
             yield return TowerDamageUpgradeSettings;
+        }
+        
+        public IEnumerable<UpgradeSettings> GetArenaUpgradeConfigs()
+        {
+            yield return ArenaHpUpgradeSettings;
+            yield return ArenaDamageUpgradeSettings;
         }
     }
 }

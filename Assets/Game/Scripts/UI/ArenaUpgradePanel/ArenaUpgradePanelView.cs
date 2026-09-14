@@ -1,0 +1,106 @@
+using System;
+using System.Collections.Generic;
+using System.Threading;
+using Assets.Game.Scripts.Animations;
+using Cysharp.Threading.Tasks;
+using UnityEngine;
+using UnityEngine.UI;
+
+namespace Assets.Game.Scripts.UI.UpgradePanel
+{
+    public class ArenaUpgradePanelView : MonoBehaviour, IArenaUpgradePanelView
+    {
+        [SerializeField] private GameObject _panel;
+        [SerializeField] private RectTransform _container;
+        [SerializeField] private ArenaUpgradeButton _upgradeButtonPrefab;
+        [SerializeField] private Button _closeButton;
+        [SerializeField] private Button _openButton;
+        [SerializeField] private PanelAppearanceAnimation _animation;
+        
+        private readonly List<ArenaUpgradeButton> _upgradeButtons = new();
+        
+        public event Action OnCloseButtonClicked;
+        public event Action OnOpenButtonClicked;
+        public event Action<string> OnUpgradeClicked;
+
+        public void Init()
+        {
+            _openButton.onClick.AddListener(OnOpenButtonClickedHandler);
+            _closeButton.onClick.AddListener(OnCloseButtonClickedHandler);
+            
+            _panel.SetActive(false);
+        }
+
+        public void UpdateUpgradeList(List<ArenaUpgradePanelViewModel> viewModels)
+        {
+            EnsureUpgradesCount(viewModels.Count);
+
+            for (var i = 0; i < viewModels.Count; i++)
+            {
+                var viewModel = viewModels[i];
+                var upgradeButton = _upgradeButtons[i];
+                
+                upgradeButton.gameObject.SetActive(true);
+                
+                upgradeButton.Init(viewModel);
+            }
+
+            for (var i = viewModels.Count; i < _upgradeButtons.Count; i++)
+            {
+                _upgradeButtons[i].gameObject.SetActive(false);
+            }
+        }
+
+        private void EnsureUpgradesCount(int count)
+        {
+            for (var i = _upgradeButtons.Count; i < count; i++)
+            {
+                var upgrade = Instantiate(_upgradeButtonPrefab, _container);
+
+                upgrade.OnClicked += UpgradeClickedHandler;
+                    
+                _upgradeButtons.Add(upgrade);
+            }
+        }
+
+        public void ShowPanel()
+        {
+            _panel.SetActive(true);
+            
+            if (_animation != null)
+                _animation.Show();
+        }
+
+        public async UniTask ClosePanel()
+        {
+            if (_animation != null)
+                await _animation.Hide(CancellationToken.None);
+
+            _panel.SetActive(false);
+        }
+
+        private void ClearContainer()
+        {
+            foreach(var upgradeButton in _upgradeButtons)
+            {
+                upgradeButton.OnClicked -= UpgradeClickedHandler;
+                
+                Destroy(upgradeButton.gameObject);
+            }
+            
+            _upgradeButtons.Clear();
+        }
+
+        private void OnDestroy()
+        {
+            _openButton.onClick.RemoveListener(OnOpenButtonClickedHandler);
+            _closeButton.onClick.RemoveListener(OnCloseButtonClickedHandler);
+            
+            ClearContainer();
+        }
+
+        private void UpgradeClickedHandler(string id) => OnUpgradeClicked?.Invoke(id);
+        private void OnOpenButtonClickedHandler() => OnOpenButtonClicked?.Invoke();
+        private void OnCloseButtonClickedHandler() => OnCloseButtonClicked?.Invoke();
+    }
+}

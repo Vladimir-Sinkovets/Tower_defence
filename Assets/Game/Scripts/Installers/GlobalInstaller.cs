@@ -1,3 +1,4 @@
+using Assets.Game.Scripts.Arena.Services.ArenaConstantUpdateService;
 using Assets.Game.Scripts.Saves;
 using Assets.Game.Scripts.Services.Ads;
 using Assets.Game.Scripts.Services.Analytics;
@@ -18,6 +19,7 @@ namespace Assets.Game.Scripts.Installers
     public class GlobalInstaller : MonoInstaller
     {
         [SerializeField] private UpgradeConfigs _upgradeConfigs;
+        [SerializeField] private ArenaConstantUpgradesConfig _arenaConstantUpgradesConfig;
         [SerializeField] private AdsConfig _adsConfig;
         [SerializeField] private InAppPurchasesConfig _inAppPurchasesConfig;
         
@@ -38,6 +40,8 @@ namespace Assets.Game.Scripts.Installers
             Container.BindInstance(_adsConfig).AsSingle();
 
             Container.BindInstance(_upgradeConfigs).AsSingle();
+
+            Container.BindInstance(_arenaConstantUpgradesConfig).AsSingle();
 
             Container.BindInterfacesTo<SceneLoader>().AsSingle();
             
