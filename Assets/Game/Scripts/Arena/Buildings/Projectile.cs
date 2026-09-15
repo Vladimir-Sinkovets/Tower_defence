@@ -1,0 +1,88 @@
+﻿using Assets.Game.Scripts.Arena.Buildings.Interfaces;
+using Photon.Pun;
+using UnityEngine;
+using Zenject;
+
+namespace Assets.Game.Scripts.Arena.Buildings
+{
+    public class Projectile : MonoBehaviour
+    {
+        [SerializeField] private PhotonView _photonView;
+        
+        private ArenaEnemy _target;
+        private int _damage;
+        private float _speed;
+        private ParticleSystem _hitVFXPrefab;
+
+        private Vector3 _targetLastPosition;
+        private Vector3 _startPosition;
+
+        private float _time;
+        private float _flightTime;
+        private float _arcHeight;
+        
+        private IVFXFactory _vfxFactory;
+        private int _playerViewId;
+
+        [Inject]
+        public void Construct(IVFXFactory vfxFactory) => _vfxFactory = vfxFactory;
+
+        public void Init(ArenaEnemy target, int damage, float speed, float arcHeight, ParticleSystem hitVFXPrefab, int playerViewId)
+        {
+            if (target == null)
+            {
+                Destroy(gameObject);
+                return;
+            }
+
+            _playerViewId = playerViewId;
+            _target = target;
+            _damage = damage;
+            _speed = speed;
+            _hitVFXPrefab = hitVFXPrefab;
+
+            _targetLastPosition = target.transform.position;
+            _startPosition = transform.position;
+
+            var distance = Vector3.Distance(_startPosition, _targetLastPosition);
+            _flightTime = distance / _speed;
+            _arcHeight = arcHeight;
+        }
+
+        private void Update()
+        {
+            if (!_photonView.IsMine)
+                return;
+            
+            _time += Time.deltaTime;
+
+            if (_target != null)
+            {
+                _targetLastPosition = _target.transform.position;
+            }
+
+            var t = _time / _flightTime;
+
+            t = Mathf.Clamp01(t);
+
+            var horizontalPos = Vector3.Lerp(_startPosition, _targetLastPosition, t);
+
+            var height = _arcHeight * 4 * (t - t * t);
+
+            horizontalPos.y += height;
+
+            transform.position = horizontalPos;
+
+            if (!(t >= 1f))
+                return;
+            
+            if (_target != null)
+                _target.ApplyDamage(_damage, _playerViewId);
+
+            if (_hitVFXPrefab != null)
+                _vfxFactory.Create(_hitVFXPrefab, transform.position);
+
+            PhotonNetwork.Destroy(gameObject);
+        }
+    }
+}

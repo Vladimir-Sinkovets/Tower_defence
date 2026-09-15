@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e548c2a4b3414b708d7ba90448a3eaf8, type: 3}
+  m_Name: Arena_upgrades_config
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Arena.Services.Experiences.ArenaUpgradesConfig
+  ExperienceForLevel: 10
+  Upgrades:
+  - Name: Attack speed
+    Icon: {fileID: 21300000, guid: 48c0d4d6bebaa934384b07aa1e2f8184, type: 3}
+    Type: 0
+    EachLevelCoefficient: 0.9
+  - Name: Damage
+    Icon: {fileID: 21300000, guid: 7ab74e659e1f0a34d9cfec21c478fc12, type: 3}
+    Type: 1
+    EachLevelCoefficient: 1
+  - Name: Hp
+    Icon: {fileID: 21300014, guid: 7ab74e659e1f0a34d9cfec21c478fc12, type: 3}
+    Type: 2
+    EachLevelCoefficient: 1
+  - Name: Speed
+    Icon: {fileID: 21300100, guid: 7ab74e659e1f0a34d9cfec21c478fc12, type: 3}
+    Type: 3
+    EachLevelCoefficient: 0.3

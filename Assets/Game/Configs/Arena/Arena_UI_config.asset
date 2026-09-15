@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64cd780141b842d9a725ca6896c40bf7, type: 3}
+  m_Name: Arena_UI_config
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Arena.UI.ArenaUIConfig
+  HUDPrefab: {fileID: 1732742079389757373, guid: bccef497fa5d1fa41ad39b814a56ee69, type: 3}
+  InputPrefab: {fileID: 5303024448316760614, guid: ed4400e48bae2c04fb7d47a3c3e98b98, type: 3}

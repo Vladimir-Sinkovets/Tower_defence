@@ -1,4 +1,7 @@
-﻿using Assets.Game.Scripts.UI;
+﻿using Assets.Game.Scripts.Arena.Services.ArenaConstantUpdateService;
+using Assets.Game.Scripts.Services.Net;
+using Assets.Game.Scripts.UI;
+using Assets.Game.Scripts.UI.ConnectMenu;
 using Assets.Game.Scripts.UI.MainMenuStatistics;
 using Assets.Game.Scripts.UI.Shop;
 using Assets.Game.Scripts.UI.UpgradePanel;
@@ -14,10 +17,13 @@ namespace Assets.Game.Scripts.Installers
         [SerializeField] private MainMenuView _mainMenuView;
         [SerializeField] private UpgradePanelView _upgradePanelView;
         [SerializeField] private ShopView _shopView;
+        [SerializeField] private ConnectView _connectView;
+        [SerializeField] private ArenaUpgradePanelView _arenaUpgradePanelView;
         
         public override void InstallBindings()
         {
             Container.BindInterfacesTo<UpgradeService>().AsSingle();
+            Container.BindInterfacesTo<ArenaConstantUpgradeService>().AsSingle();
             
             Container.BindInstance<IMainMenuStatisticsView>(_mainMenuStatisticsView).AsSingle();
             Container.BindInterfacesAndSelfTo<MainMenuStatisticsPresenter>().AsSingle();
@@ -30,6 +36,12 @@ namespace Assets.Game.Scripts.Installers
 
             Container.BindInstance<IShopView>(_shopView).AsSingle();
             Container.BindInterfacesAndSelfTo<ShopPresenter>().AsSingle();
+            
+            Container.BindInstance<IConnectMenuView>(_connectView).AsSingle();
+            Container.BindInterfacesAndSelfTo<ConnectMenuPresenter>().AsSingle();
+
+            Container.BindInstance<IArenaUpgradePanelView>(_arenaUpgradePanelView).AsSingle();
+            Container.BindInterfacesAndSelfTo<ArenaUpgradePanelPresenter>().AsSingle();
         }
     }
 }

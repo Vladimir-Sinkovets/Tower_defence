@@ -1,3 +1,4 @@
+using Assets.Game.Scripts.Arena.Services.ArenaConstantUpdateService;
 using Assets.Game.Scripts.Saves;
 using Assets.Game.Scripts.Services.Ads;
 using Assets.Game.Scripts.Services.Analytics;
@@ -5,6 +6,7 @@ using Assets.Game.Scripts.Services.AssetProviders;
 using Assets.Game.Scripts.Services.CloudSaves;
 using Assets.Game.Scripts.Services.Configs;
 using Assets.Game.Scripts.Services.FirebaseSetups;
+using Assets.Game.Scripts.Services.Net;
 using Assets.Game.Scripts.Services.Purchases;
 using Assets.Game.Scripts.Services.Purchases.Configs;
 using Assets.Game.Scripts.Services.SceneLoaders;
@@ -17,6 +19,7 @@ namespace Assets.Game.Scripts.Installers
     public class GlobalInstaller : MonoInstaller
     {
         [SerializeField] private UpgradeConfigs _upgradeConfigs;
+        [SerializeField] private ArenaConstantUpgradesConfig _arenaConstantUpgradesConfig;
         [SerializeField] private AdsConfig _adsConfig;
         [SerializeField] private InAppPurchasesConfig _inAppPurchasesConfig;
         
@@ -38,6 +41,8 @@ namespace Assets.Game.Scripts.Installers
 
             Container.BindInstance(_upgradeConfigs).AsSingle();
 
+            Container.BindInstance(_arenaConstantUpgradesConfig).AsSingle();
+
             Container.BindInterfacesTo<SceneLoader>().AsSingle();
             
             Container.BindInterfacesTo<FirebaseAnalyticsProvider>().AsSingle();
@@ -51,6 +56,20 @@ namespace Assets.Game.Scripts.Installers
             Container.BindInstance(_inAppPurchasesConfig).AsSingle();
             
             Container.BindInterfacesAndSelfTo<UnityCloudSaveService>().AsSingle();
+            
+            Container.BindInterfacesTo<NetworkService>().AsSingle();
+            
+            BindPhotonCallbacks();
+        }
+
+        private void BindPhotonCallbacks()
+        {
+            var callbacks = new GameObject("PhotonCallbacks")
+                .AddComponent<PhotonCallbacks>();
+
+            DontDestroyOnLoad(callbacks.gameObject);
+
+            Container.BindInstance(callbacks).AsSingle();
         }
     }
 }

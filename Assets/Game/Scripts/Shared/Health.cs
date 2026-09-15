@@ -8,7 +8,7 @@ namespace Assets.Game.Scripts.Shared
         public event Action<int> OnDamaged;
         public event Action OnDied;
 
-        private readonly int _startHp;
+        private int _startHp;
         private int _currentHp;
 
         public bool IsDead { get; private set; }
@@ -44,6 +44,24 @@ namespace Assets.Game.Scripts.Shared
             IsDead = false;
             
             _currentHp = _startHp;
+            
+            OnHpChanged?.Invoke(_currentHp, _startHp);
+        }
+
+        public void IncreaseHp(int hp)
+        {
+            _startHp += hp;
+            _currentHp += hp;
+
+            OnHpChanged?.Invoke(_currentHp, _startHp);
+        }
+
+        public void ApplyHeal(int hp)
+        {
+            _currentHp += hp;
+            
+            if (_currentHp > _startHp)
+                _currentHp = _startHp;
             
             OnHpChanged?.Invoke(_currentHp, _startHp);
         }
