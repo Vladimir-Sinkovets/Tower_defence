@@ -45,22 +45,19 @@ namespace Assets.Game.Scripts.Arena
             
             var player = _playerFactory.CreatePlayer();
 
-            if (player.PhotonView.IsMine)
-            {
-                _cineMachineCamera.Follow = player.transform;
-                
-                _iuiFactory.CreateHUD(player.Health);
-                
-                var input = _iuiFactory.CreateArenaInput();
-                
-                _playerController.Init(input.Joystick, player);
-                
-                _gameOverManager.Init(player.Health);
+            _cineMachineCamera.Follow = player.transform;
+            
+            _iuiFactory.CreateHUD(player.Health);
+            
+            var input = _iuiFactory.CreateArenaInput();
+            
+            _playerController.Init(input.Joystick, player);
+            
+            _gameOverManager.Init(player.Health);
 
-                player.ShootingBuilding.Init(player);
+            player.ShootingBuilding.Init(player);
 
-                _playerAccessor.SetCurrentPlayer(player);
-            }
+            _playerAccessor.SetCurrentPlayer(player);
             
             _enemySpawner.Init();
         }

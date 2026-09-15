@@ -50,7 +50,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Arena.Services.EnemyDroppers.Experience
   _collider: {fileID: 8990839465555353975}
-  _photonView: {fileID: -249432274286272781}
+  PhotonView: {fileID: -249432274286272781}
   _flyDistance: 1
   _flyDuration: 0.6
   _jumpHeight: 1

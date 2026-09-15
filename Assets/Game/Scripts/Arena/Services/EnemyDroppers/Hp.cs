@@ -1,4 +1,5 @@
 using Assets.Game.Scripts.Arena.Services.PlayerAccessors;
+using Photon.Pun;
 using Zenject;
 
 namespace Assets.Game.Scripts.Arena.Services.EnemyDroppers
@@ -15,8 +16,12 @@ namespace Assets.Game.Scripts.Arena.Services.EnemyDroppers
         public void Init(int heal)
         {
             PlayAppearanceAnimation();
-            _heal = heal;
+
+            PhotonView.RPC(nameof(InitRpc), RpcTarget.All, heal);
         }
+
+        [PunRPC]
+        public void InitRpc(int heal) => _heal = heal;
 
         protected override void ApplyBonus() =>
             _playerAccessor.CurrentPlayer.Health.ApplyHeal(_heal);

@@ -10,7 +10,7 @@ namespace Assets.Game.Scripts.Arena.Services.EnemyDroppers
     public abstract class Drop : MonoBehaviour
     {
         [SerializeField] private Collider _collider;
-        [SerializeField] private PhotonView _photonView;
+        [SerializeField] protected PhotonView PhotonView;
         
         [Header("Appearance Animation")]
         [SerializeField] private float _flyDistance = 1f;
@@ -30,7 +30,8 @@ namespace Assets.Game.Scripts.Arena.Services.EnemyDroppers
             var targetPosition = startPosition + direction * _flyDistance;
 
             transform.DOJump(targetPosition, _jumpHeight, 1, _flyDuration)
-                .SetEase(_flyEase);
+                .SetEase(_flyEase)
+                .SetLink(gameObject);
         }
 
         private void OnTriggerEnter(Collider other)
@@ -48,10 +49,12 @@ namespace Assets.Game.Scripts.Arena.Services.EnemyDroppers
             if (!playerView.IsMine)
                 return;
 
-            _photonView.RPC(
+            PhotonView.RPC(
                 nameof(RequestTake),
                 RpcTarget.MasterClient,
                 playerView.ViewID);
+
+            TakeAsync(playerView.ViewID).Forget();
         }
 
         [PunRPC]
@@ -74,17 +77,9 @@ namespace Assets.Game.Scripts.Arena.Services.EnemyDroppers
                 return;
 
             _taken = true;
-
-            _photonView.RPC(
-                nameof(ConfirmTake),
-                RpcTarget.All,
-                playerViewId);
         }
 
-        [PunRPC]
-        public void ConfirmTake(int playerViewId) => ConfirmTakeAsync(playerViewId).Forget();
-
-        private async UniTaskVoid ConfirmTakeAsync(int playerViewId)
+        private async UniTaskVoid TakeAsync(int playerViewId)
         {
             var playerView = PhotonView.Find(playerViewId);
             
@@ -104,6 +99,17 @@ namespace Assets.Game.Scripts.Arena.Services.EnemyDroppers
             await PlayTakeAnimation(player.transform);
 
             ApplyBonus();
+             
+            PhotonView.RPC(nameof(RequestDestroy), RpcTarget.MasterClient);
+        }
+
+        [PunRPC]
+        public void RequestDestroy()
+        {
+            transform.DOKill(true); 
+            
+            if (!PhotonNetwork.IsMasterClient)
+                return;
             
             PhotonNetwork.Destroy(gameObject);
         }

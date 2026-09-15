@@ -45,6 +45,8 @@ MonoBehaviour:
   - TakeDamage
   - RequestTake
   - ConfirmTake
+  - RequestDestroy
+  - InitRpc
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 0
