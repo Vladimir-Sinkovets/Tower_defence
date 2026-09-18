@@ -6,5 +6,6 @@ namespace Assets.Game.Scripts.UI
     {
         event Action OnStartClick;
         event Action OnCloseClick;
+        event Action OnStartBattleClick;
     }
 }

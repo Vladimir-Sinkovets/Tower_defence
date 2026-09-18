@@ -1,7 +1,6 @@
 ﻿using System;
 using Assets.Game.Scripts.Services.SceneLoaders;
 using Assets.Game.Scripts.Shared;
-using UnityEngine;
 using Zenject;
 
 namespace Assets.Game.Scripts.UI
@@ -21,7 +20,10 @@ namespace Assets.Game.Scripts.UI
         {
             _mainMenuView.OnStartClick += OnStartClickHandler;
             _mainMenuView.OnCloseClick += OnCloseClickHandler;
+            _mainMenuView.OnStartBattleClick += OnStartBattleClickHandler;
         }
+
+        private void OnStartBattleClickHandler() => _sceneLoader.LoadScene(SceneNames.Battle);
 
         private void OnStartClickHandler() => _sceneLoader.LoadScene(SceneNames.Game);
         private void OnCloseClickHandler() => CloseApplication();
@@ -35,6 +37,11 @@ namespace Assets.Game.Scripts.UI
 #endif
         }
 
-        public void Dispose() => _mainMenuView.OnStartClick -= OnStartClickHandler;
+        public void Dispose()
+        {
+            _mainMenuView.OnStartClick -= OnStartClickHandler;
+            _mainMenuView.OnCloseClick -= OnCloseClickHandler;
+            _mainMenuView.OnStartBattleClick -= OnStartBattleClickHandler;
+        }
     }
 }
