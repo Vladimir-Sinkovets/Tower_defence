@@ -199,7 +199,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Installers.BattleInstaller
   _planeCenter: {fileID: 1484036184}
-  _ecsRunner: {fileID: 1046890068}
 --- !u!1 &824256934
 GameObject:
   m_ObjectHideFlags: 0

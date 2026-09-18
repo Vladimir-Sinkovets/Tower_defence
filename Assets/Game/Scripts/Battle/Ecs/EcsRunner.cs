@@ -1,4 +1,5 @@
 using Assets.Game.Scripts.Battle.Ecs.Input.Systems;
+using Assets.Game.Scripts.Battle.Ecs.Spawn.Systems;
 using Scellecs.Morpeh;
 using Zenject;
 
@@ -20,6 +21,8 @@ namespace Assets.Game.Scripts.Battle.Ecs
 
             systemsGroup.AddSystem(_instantiator.Instantiate<ClickInputSystem>());
             systemsGroup.AddSystem(_instantiator.Instantiate<FieldClickSystem>());
+            
+            systemsGroup.AddSystem(_instantiator.Instantiate<SpawnPlayerUnitsSystem>());
             
             systemsGroup.AddSystem(_instantiator.Instantiate<InputCleanUpSystem>());
             
