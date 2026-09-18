@@ -18,7 +18,7 @@ namespace Assets.Game.Scripts.UI
         {
             _startButton.onClick.AddListener(OnStartClickHandler);
             _closeButton.onClick.AddListener(OnCloseClickHandler);
-            _closeButton.onClick.AddListener(OnStartBattleClickHandler);
+            _startBattleButton.onClick.AddListener(OnStartBattleClickHandler);
         }
 
         private void OnStartClickHandler() => OnStartClick?.Invoke();

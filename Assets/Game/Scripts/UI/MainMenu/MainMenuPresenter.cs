@@ -24,7 +24,6 @@ namespace Assets.Game.Scripts.UI
         }
 
         private void OnStartBattleClickHandler() => _sceneLoader.LoadScene(SceneNames.Battle);
-
         private void OnStartClickHandler() => _sceneLoader.LoadScene(SceneNames.Game);
         private void OnCloseClickHandler() => CloseApplication();
         
