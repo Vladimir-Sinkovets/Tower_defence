@@ -8,9 +8,6 @@ namespace Assets.Game.Scripts.Battle.Ecs.Input.Systems
         
         private Filter _clickEventsFilter;
         private Filter _clickOnFieldEventsFilter;
-        
-        private Stash<ClickEvent> _clickEventStash;
-        private Stash<ClickEvent> _clickOnFieldEventStash;
 
         public void OnAwake()
         {
@@ -21,21 +18,18 @@ namespace Assets.Game.Scripts.Battle.Ecs.Input.Systems
             _clickOnFieldEventsFilter = World.Filter
                 .With<ClickOnFieldEvent>()
                 .Build();
-
-            _clickEventStash = World.GetStash<ClickEvent>();
-            _clickOnFieldEventStash = World.GetStash<ClickEvent>();
         }
         
         public void OnUpdate(float deltaTime)
         {
             foreach (var clickEventEntity in _clickEventsFilter)
             {
-                _clickEventStash.Remove(clickEventEntity);
+                World.RemoveEntity(clickEventEntity);
             }
 
             foreach (var clickOnFieldEventEntity in _clickOnFieldEventsFilter)
             {
-                _clickOnFieldEventStash.Remove(clickOnFieldEventEntity);
+                World.RemoveEntity(clickOnFieldEventEntity);
             }
         }
 
