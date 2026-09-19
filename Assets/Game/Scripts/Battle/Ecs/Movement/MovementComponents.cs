@@ -1,6 +1,8 @@
 using Scellecs.Morpeh;
+using UnityEngine;
 
 namespace Assets.Game.Scripts.Battle.Ecs.Movement
 {
-    public struct MoveSpeed : IComponent { public float Speed; }
+    public struct Position : IComponent { public Vector3 Value; }
+    public struct MoveDirection : IComponent { public Vector3 Value; }
 }

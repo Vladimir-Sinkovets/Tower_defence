@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fb8e0cf278a4368bd8a775a503af490, type: 3}
   m_Name: Units_config
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Battle.Services.UnitFactories.UnitsConfig
-  Prefab: {fileID: 2449096018754632640, guid: 3ad5d883aeaa59649924502074494fd2, type: 3}
+  Prefab: {fileID: 6393753210967277436, guid: 7bb182d02e3af0d438784bd5a77d1642, type: 3}
