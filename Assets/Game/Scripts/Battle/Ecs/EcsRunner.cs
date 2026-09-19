@@ -30,7 +30,7 @@ namespace Assets.Game.Scripts.Battle.Ecs
             
             systemsGroup.AddSystem(_instantiator.Instantiate<SpawnPlayerUnitsSystem>());
             systemsGroup.AddSystem(_instantiator.Instantiate<PlayerUnitFindTargetSystem>());
-            systemsGroup.AddSystem(_instantiator.Instantiate<PlayerUnitChaseTargetSystem>());
+            systemsGroup.AddSystem(_instantiator.Instantiate<UnitChaseTargetSystem>());
             
             systemsGroup.AddSystem(_instantiator.Instantiate<MoveSystem>());
             systemsGroup.AddSystem(_instantiator.Instantiate<SyncPositionSystem>());

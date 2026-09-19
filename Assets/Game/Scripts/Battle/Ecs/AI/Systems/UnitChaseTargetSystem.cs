@@ -3,43 +3,54 @@ using Scellecs.Morpeh;
 
 namespace Assets.Game.Scripts.Battle.Ecs.AI.Systems
 {
-    public class PlayerUnitChaseTargetSystem : ISystem
+    public class UnitChaseTargetSystem : ISystem
     {
         public World World { get; set; }
         
-        private Filter _playerUnits;
+        private Filter _units;
         
         private Stash<MoveDirection> _movementStash;
         private Stash<FollowTarget> _followTargetStash;
         private Stash<Position> _positionStash;
+        private Stash<Attack> _attackStash;
 
         public void OnAwake()
         {
-            _playerUnits = World.Filter
-                .With<PlayerUnit>()
+            _units = World.Filter
                 .With<FollowTarget>()
+                .Without<Attack>()
                 .Build();
 
             _movementStash = World.GetStash<MoveDirection>();
             _followTargetStash = World.GetStash<FollowTarget>();
             _positionStash = World.GetStash<Position>();
+            _attackStash = World.GetStash<Attack>();
         }
 
         public void OnUpdate(float deltaTime)
         {
-            foreach (var playerUnit in _playerUnits)
+            foreach (var unit in _units)
             {
-                ref var target = ref _followTargetStash.Get(playerUnit).Target;
+                ref var target = ref _followTargetStash.Get(unit).Target;
 
                 if (World.IsDisposed(target))
                     continue;
 
-                ref var unitPosition = ref _positionStash.Get(playerUnit);
+                ref var unitPosition = ref _positionStash.Get(unit);
                 ref var targetPosition = ref _positionStash.Get(target);
 
-                var moveDirection = (targetPosition.Value - unitPosition.Value).normalized;
+                if ((targetPosition.Value - unitPosition.Value).magnitude < 0.3f)
+                {
+                    _movementStash.Remove(unit);
+                    
+                    _attackStash.Set(unit, new());
+                }
+                else
+                {
+                    var moveDirection = (targetPosition.Value - unitPosition.Value).normalized;
 
-                _movementStash.Set(playerUnit, new() { Value =  moveDirection });
+                    _movementStash.Set(unit, new() { Value =  moveDirection });
+                }
             }
         }
         
