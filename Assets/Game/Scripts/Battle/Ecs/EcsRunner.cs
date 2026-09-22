@@ -1,5 +1,6 @@
 using Assets.Game.Scripts.Battle.Ecs.AI.Systems;
 using Assets.Game.Scripts.Battle.Ecs.Damage.Systems;
+using Assets.Game.Scripts.Battle.Ecs.HealthFeature.Systems;
 using Assets.Game.Scripts.Battle.Ecs.Input.Systems;
 using Assets.Game.Scripts.Battle.Ecs.Movement.Systems;
 using Assets.Game.Scripts.Battle.Ecs.Spawn.Systems;
@@ -19,7 +20,7 @@ namespace Assets.Game.Scripts.Battle.Ecs
 
         public void Init()
         {
-            _world = World.Create();
+            _world = World.Default;
             _world.UpdateByUnity = true;
 
             var systemsGroup = _world.CreateSystemsGroup();
@@ -36,6 +37,10 @@ namespace Assets.Game.Scripts.Battle.Ecs
             systemsGroup.AddSystem(_instantiator.Instantiate<AttackSystem>());
             systemsGroup.AddSystem(_instantiator.Instantiate<HitSystem>());
             systemsGroup.AddSystem(_instantiator.Instantiate<DamageSystem>());
+            
+            systemsGroup.AddSystem(_instantiator.Instantiate<DeathSystem>());
+            
+            systemsGroup.AddSystem(_instantiator.Instantiate<DestroyViewSystem>());
             
             systemsGroup.AddSystem(_instantiator.Instantiate<MoveSystem>());
             systemsGroup.AddSystem(_instantiator.Instantiate<SyncPositionSystem>());

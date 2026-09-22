@@ -18,6 +18,8 @@ namespace Assets.Game.Scripts.Battle.Ecs.Unity
 
             _links = GetComponentsInChildren<IEntityLink>();
 
+            World.GetStash<View>().Set(entity, new View() { MonoEntity = this });
+
             foreach (var link in _links)
             {
                 link.Link(entity, world);
@@ -26,6 +28,8 @@ namespace Assets.Game.Scripts.Battle.Ecs.Unity
 
         public void Unbind()
         {
+            World.GetStash<View>().Remove(Entity);
+            
             foreach (var link in _links)
             {
                 link.Unlink(Entity, World);
