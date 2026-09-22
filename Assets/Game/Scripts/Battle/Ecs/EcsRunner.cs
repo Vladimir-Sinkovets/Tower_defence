@@ -1,4 +1,5 @@
 using Assets.Game.Scripts.Battle.Ecs.AI.Systems;
+using Assets.Game.Scripts.Battle.Ecs.Damage.Systems;
 using Assets.Game.Scripts.Battle.Ecs.Input.Systems;
 using Assets.Game.Scripts.Battle.Ecs.Movement.Systems;
 using Assets.Game.Scripts.Battle.Ecs.Spawn.Systems;
@@ -32,8 +33,13 @@ namespace Assets.Game.Scripts.Battle.Ecs
             systemsGroup.AddSystem(_instantiator.Instantiate<PlayerUnitFindTargetSystem>());
             systemsGroup.AddSystem(_instantiator.Instantiate<UnitChaseTargetSystem>());
             
+            systemsGroup.AddSystem(_instantiator.Instantiate<AttackSystem>());
+            systemsGroup.AddSystem(_instantiator.Instantiate<HitSystem>());
+            systemsGroup.AddSystem(_instantiator.Instantiate<DamageSystem>());
+            
             systemsGroup.AddSystem(_instantiator.Instantiate<MoveSystem>());
             systemsGroup.AddSystem(_instantiator.Instantiate<SyncPositionSystem>());
+            
             
             systemsGroup.AddSystem(_instantiator.Instantiate<InputCleanUpSystem>());
             

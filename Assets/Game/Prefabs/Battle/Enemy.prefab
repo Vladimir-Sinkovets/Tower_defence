@@ -9,6 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 725945847662197096}
+  - component: {fileID: 6066882493599804045}
+  - component: {fileID: 4820983184847236682}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -32,6 +34,30 @@ Transform:
   - {fileID: 3448254088064736312}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6066882493599804045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6393753210967277436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16ccb68d69f14ecbab872e9b7e0d2bb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Battle.Ecs.Unity.MonoEntity
+--- !u!114 &4820983184847236682
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6393753210967277436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7daccb48c7a74273a0e6229e7da30bba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Battle.Ecs.Unity.Links.TransformLink
 --- !u!1 &8776544483891478703
 GameObject:
   m_ObjectHideFlags: 0
@@ -171,6 +197,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 47e7468693a15f14b81cac13b492b28e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 991467052965349779}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 47e7468693a15f14b81cac13b492b28e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5410908766522117223}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 47e7468693a15f14b81cac13b492b28e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6343945522112746664}
   m_SourcePrefab: {fileID: 100100000, guid: 47e7468693a15f14b81cac13b492b28e, type: 3}
 --- !u!1 &7260679058535137713 stripped
 GameObject:
@@ -199,6 +231,30 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &5410908766522117223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7260679058535137713}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26dac92a6c4448a396c5feaa1d7cbf6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Battle.Ecs.Unity.Links.AnimatorLink
+--- !u!114 &6343945522112746664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7260679058535137713}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94099605676745038779820c99b80997, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Battle.Ecs.Unity.AnimationEventHandlers.EnemyAnimationEventHandler
 --- !u!4 &8036899544990653195 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 47e7468693a15f14b81cac13b492b28e, type: 3}

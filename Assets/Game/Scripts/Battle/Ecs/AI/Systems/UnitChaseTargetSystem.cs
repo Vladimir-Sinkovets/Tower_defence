@@ -1,3 +1,4 @@
+using Assets.Game.Scripts.Battle.Ecs.Damage;
 using Assets.Game.Scripts.Battle.Ecs.Movement;
 using Scellecs.Morpeh;
 
@@ -12,19 +13,19 @@ namespace Assets.Game.Scripts.Battle.Ecs.AI.Systems
         private Stash<MoveDirection> _movementStash;
         private Stash<FollowTarget> _followTargetStash;
         private Stash<Position> _positionStash;
-        private Stash<Attack> _attackStash;
+        private Stash<AttackRequest> _attackStash;
 
         public void OnAwake()
         {
             _units = World.Filter
                 .With<FollowTarget>()
-                .Without<Attack>()
+                .Without<AttackRequest>()
                 .Build();
 
             _movementStash = World.GetStash<MoveDirection>();
             _followTargetStash = World.GetStash<FollowTarget>();
             _positionStash = World.GetStash<Position>();
-            _attackStash = World.GetStash<Attack>();
+            _attackStash = World.GetStash<AttackRequest>();
         }
 
         public void OnUpdate(float deltaTime)

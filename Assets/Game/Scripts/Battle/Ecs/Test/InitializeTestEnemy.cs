@@ -17,25 +17,17 @@ namespace Assets.Game.Scripts.Battle.Ecs.Test
         public void OnAwake()
         {
             var enemyStash = World.GetStash<EnemyUnit>();
-            var positionStash = World.GetStash<Position>();
             
+            var entity = World.CreateEntity();
             
-            var unit = _factory.CreateUnit(Vector3.zero);
+            var unit = _factory.CreateUnit(Vector3.zero, entity, World);
+            
+            enemyStash.Set(entity, new());
 
             var renderers = unit.GetComponents<Renderer>();
 
             foreach (var renderer in renderers)
-            {
                 renderer.material.color = Color.red;
-            }
-            
-            var entity = World.CreateEntity();
-            
-            enemyStash.Set(entity, new());
-            positionStash.Set(entity, new() { Value = unit.transform.position });
-            
-            Debug.Log($"Entity: {entity.Id}, IsDisposed: {entity.IsDisposed()}");
-            Debug.Log($"Has EnemyUnit: {entity.Has<EnemyUnit>()}");
         }
 
         public void Dispose() { }

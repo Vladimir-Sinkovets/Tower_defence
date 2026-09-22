@@ -1,3 +1,8 @@
+using Assets.Game.Scripts.Battle.Ecs.Damage;
+using Assets.Game.Scripts.Battle.Ecs.HealthFeature;
+using Assets.Game.Scripts.Battle.Ecs.Movement;
+using Assets.Game.Scripts.Battle.Ecs.Unity;
+using Scellecs.Morpeh;
 using UnityEngine;
 using Zenject;
 
@@ -14,11 +19,17 @@ namespace Assets.Game.Scripts.Battle.Services.UnitFactories
             _instantiator = instantiator;
         }
         
-        public GameObject CreateUnit(Vector3 position)
+        public GameObject CreateUnit(Vector3 position, Entity entity, World world)
         {
             var unit = _instantiator.InstantiatePrefab(_unitsConfig.Prefab);
             
             unit.transform.position = position;
+            
+            unit.GetComponent<MonoEntity>()?.Bind(entity, world);
+            
+            world.GetStash<Position>().Set(entity, new() { Value = position });
+            world.GetStash<Attacker>().Set(entity, new() { Damage = 1});
+            world.GetStash<Health>().Set(entity, new() { Hp = 2 });
             
             return unit;
         }
