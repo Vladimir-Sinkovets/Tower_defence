@@ -46,10 +46,12 @@ namespace Assets.Game.Scripts.Battle.Ecs
             systemsGroup.AddSystem(_instantiator.Instantiate<RemoveDeadSystem>());
             
             systemsGroup.AddSystem(_instantiator.Instantiate<MoveSystem>());
+            systemsGroup.AddSystem(_instantiator.Instantiate<RotateSystem>());
+            
             systemsGroup.AddSystem(_instantiator.Instantiate<MoveAnimation>());
             
             systemsGroup.AddSystem(_instantiator.Instantiate<SyncPositionSystem>());
-            
+            systemsGroup.AddSystem(_instantiator.Instantiate<SyncRotationSystem>());
             
             systemsGroup.AddSystem(_instantiator.Instantiate<InputCleanUpSystem>());
             

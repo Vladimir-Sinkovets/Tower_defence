@@ -27,7 +27,8 @@ namespace Assets.Game.Scripts.Battle.Services.UnitFactories
             
             unit.GetComponent<MonoEntity>()?.Bind(entity, world);
             
-            world.GetStash<Position>().Set(entity, new() { Value = position });
+            world.GetStash<Position>().Set(entity, new() { Value = unit.transform.position });
+            world.GetStash<Rotation>().Set(entity, new() { Value = unit.transform.rotation });
             world.GetStash<Attacker>().Set(entity, new() { Damage = 1});
             world.GetStash<Health>().Set(entity, new() { Hp = 2 });
             

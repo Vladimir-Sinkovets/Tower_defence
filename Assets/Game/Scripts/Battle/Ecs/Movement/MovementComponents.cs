@@ -4,8 +4,7 @@ using UnityEngine;
 
 namespace Assets.Game.Scripts.Battle.Ecs.Movement
 {
-    [Serializable]
     public struct Position : IComponent { public Vector3 Value; }
-    [Serializable]
+    public struct Rotation : IComponent { public Quaternion Value; }
     public struct MoveDirection : IComponent { public Vector3 Value; }
 }
