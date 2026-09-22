@@ -1,6 +1,7 @@
 using Assets.Game.Scripts.Battle.Ecs.Damage;
 using Assets.Game.Scripts.Battle.Ecs.Movement;
 using Scellecs.Morpeh;
+using UnityEngine;
 
 namespace Assets.Game.Scripts.Battle.Ecs.AI.Systems
 {
@@ -45,6 +46,7 @@ namespace Assets.Game.Scripts.Battle.Ecs.AI.Systems
                     _movementStash.Remove(unit);
                     
                     _attackStash.Set(unit, new());
+                    _movementStash.Set(unit, new() { Value = Vector3.zero });
                 }
                 else
                 {

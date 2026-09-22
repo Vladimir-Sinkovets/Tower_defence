@@ -27,8 +27,8 @@ namespace Assets.Game.Scripts.Battle.Ecs.Damage.Systems
             foreach (var entity in _damageEvents)
             {
                 ref var damage = ref _damageStash.Get(entity);
-
-                if (_healthStash.Has(damage.Target))
+                
+                if (!World.IsDisposed(damage.Target) && _healthStash.Has(damage.Target))
                 {
                     ref var health = ref _healthStash.Get(damage.Target);
 

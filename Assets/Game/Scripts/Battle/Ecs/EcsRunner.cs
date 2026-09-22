@@ -20,7 +20,8 @@ namespace Assets.Game.Scripts.Battle.Ecs
 
         public void Init()
         {
-            _world = World.Default;
+            _world = World.Default ?? World.Create();
+
             _world.UpdateByUnity = true;
 
             var systemsGroup = _world.CreateSystemsGroup();
@@ -42,7 +43,11 @@ namespace Assets.Game.Scripts.Battle.Ecs
             
             systemsGroup.AddSystem(_instantiator.Instantiate<DestroyViewSystem>());
             
+            systemsGroup.AddSystem(_instantiator.Instantiate<RemoveDeadSystem>());
+            
             systemsGroup.AddSystem(_instantiator.Instantiate<MoveSystem>());
+            systemsGroup.AddSystem(_instantiator.Instantiate<MoveAnimation>());
+            
             systemsGroup.AddSystem(_instantiator.Instantiate<SyncPositionSystem>());
             
             
