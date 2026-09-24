@@ -34,21 +34,31 @@ namespace Assets.Game.Scripts.Battle.Ecs.Spawn.Systems
             {
                 ref var spawner = ref _spawnerStash.Get(entity);
 
-                if (spawner.Time >= spawner.NextSpawnTime)
+                if (spawner.Time >= spawner.NextWaveTime)
                 {
-                    var unitEntity = World.CreateEntity();
+                    for (var i = 0; i < spawner.EnemyCount; i++)
+                    {
+                        CreateEnemy(spawner);
+                    }
                     
-                    var position = new Vector3();
+                    spawner.NextWaveTime = spawner.Time + spawner.TimeBetweenWaves;
                     
-                    _factory.CreateUnit(spawner.Prefab, position, unitEntity, World);
-                    
-                    _enemyUnitStash.Set(unitEntity, new());
-                    
-                    spawner.NextSpawnTime = spawner.Time + spawner.TimeBetweenSpawn;
+                    spawner.EnemyCount += spawner.IncreaseCountPerWave;
                 }
                 
                 spawner.Time += deltaTime;
             }
+        }
+
+        private void CreateEnemy(EnemySpawner spawner)
+        {
+            var unitEntity = World.CreateEntity();
+                        
+            var position = new Vector3(Random.Range(-3.0f, 3.0f), 0, Random.Range(-3.0f, 3.0f));
+                        
+            _factory.CreateUnit(spawner.Prefab, position, unitEntity, World);
+                        
+            _enemyUnitStash.Set(unitEntity, new());
         }
 
         public void Dispose() { }

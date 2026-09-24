@@ -7,5 +7,7 @@ namespace Assets.Game.Scripts.Battle.Services.EnemySpawnStarters
     {
         public float TimeBetweenSpawn;
         public GameObject EnemyPrefab;
+        public int EnemyCount = 4;
+        public int IncreaseCountPerWave = 2;
     }
 }

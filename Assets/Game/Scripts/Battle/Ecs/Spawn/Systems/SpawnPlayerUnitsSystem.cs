@@ -2,7 +2,6 @@ using Assets.Game.Scripts.Battle.Ecs.AI;
 using Assets.Game.Scripts.Battle.Ecs.Input;
 using Assets.Game.Scripts.Battle.Services.UnitFactories;
 using Scellecs.Morpeh;
-using UnityEngine;
 
 namespace Assets.Game.Scripts.Battle.Ecs.Spawn.Systems
 {

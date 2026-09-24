@@ -21,9 +21,11 @@ namespace Assets.Game.Scripts.Battle.Services.EnemySpawnStarters
                 new()
                 {
                     Time = 0,
-                    NextSpawnTime = _config.TimeBetweenSpawn,
-                    TimeBetweenSpawn = _config.TimeBetweenSpawn,
+                    NextWaveTime = _config.TimeBetweenSpawn,
+                    TimeBetweenWaves = _config.TimeBetweenSpawn,
                     Prefab = _config.EnemyPrefab,
+                    EnemyCount = _config.EnemyCount,
+                    IncreaseCountPerWave = _config.IncreaseCountPerWave,
                 });
         }
     }
