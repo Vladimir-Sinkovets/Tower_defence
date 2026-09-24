@@ -1,5 +1,6 @@
 using Assets.Game.Scripts.Battle;
 using Assets.Game.Scripts.Battle.Ecs;
+using Assets.Game.Scripts.Battle.Services.EnemySpawnStarters;
 using Assets.Game.Scripts.Battle.Services.HudFactories;
 using Assets.Game.Scripts.Battle.Services.Raycasts;
 using Assets.Game.Scripts.Battle.Services.UnitFactories;
@@ -12,7 +13,8 @@ namespace Assets.Game.Scripts.Installers
     public class BattleInstaller : MonoInstaller
     {
         [SerializeField] private Transform _planeCenter;
-        [SerializeField] private UnitsConfig _unitsConfig;
+        [SerializeField] private PlayerUnitsConfig _playerUnitsConfig;
+        [SerializeField] private EnemySpawnConfig _enemySpawnConfig;
         [SerializeField] private HudConfig _hudConfig;
         
         public override void InstallBindings()
@@ -27,7 +29,7 @@ namespace Assets.Game.Scripts.Installers
             
             Container.BindInstance(Camera.main).AsSingle();
 
-            Container.BindInstance(_unitsConfig).AsSingle();
+            Container.BindInstance(_playerUnitsConfig).AsSingle();
             
             Container.BindInterfacesAndSelfTo<UnitFactory>().AsSingle();
             
@@ -36,6 +38,10 @@ namespace Assets.Game.Scripts.Installers
             Container.BindInstance(_hudConfig).AsSingle();
             
             Container.BindInstance(World.Default).AsSingle();
+            
+            Container.BindInterfacesAndSelfTo<EnemySpawnStarter>().AsSingle();
+            
+            Container.BindInstance(_enemySpawnConfig).AsSingle();
         }
     }
 }

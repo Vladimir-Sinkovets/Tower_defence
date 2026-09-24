@@ -1,30 +1,24 @@
 using System;
-using Assets.Game.Scripts.Battle.Ecs.Spawn;
-using Scellecs.Morpeh;
+using Assets.Game.Scripts.Battle.Services.EnemySpawnStarters;
 
 namespace Assets.Game.Scripts.Battle.UI.StartPanel
 {
     public class StartPresenter : IDisposable
     {
         private readonly IStartView _view;
-        private readonly World _world;
+        private readonly IEnemySpawnStarter _enemySpawnStarter;
 
-        public StartPresenter(IStartView view, World world)
+        public StartPresenter(IStartView view, IEnemySpawnStarter enemySpawnStarter)
         {
             _view = view;
-            _world = world;
+            _enemySpawnStarter = enemySpawnStarter;
         }
         
         public void Init() => _view.OnStartButtonClicked += OnStartButtonClickedHandler;
 
         private void OnStartButtonClickedHandler()
         {
-            _world.GetStash<EnemySpawner>().Set(
-                _world.CreateEntity(),
-                new()
-                {
-                    
-                });
+            _enemySpawnStarter.Start();
 
             _view.Hide();
         }

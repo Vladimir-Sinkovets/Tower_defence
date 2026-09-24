@@ -1,4 +1,3 @@
-using System;
 using Scellecs.Morpeh;
 
 namespace Assets.Game.Scripts.Battle.Ecs.AI

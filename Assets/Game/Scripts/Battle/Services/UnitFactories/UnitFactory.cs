@@ -10,18 +10,13 @@ namespace Assets.Game.Scripts.Battle.Services.UnitFactories
 {
     public class UnitFactory : IUnitFactory
     {
-        private readonly UnitsConfig _unitsConfig;
         private readonly IInstantiator _instantiator;
 
-        public UnitFactory(UnitsConfig unitsConfig, IInstantiator instantiator)
+        public UnitFactory(IInstantiator instantiator) => _instantiator = instantiator;
+
+        public GameObject CreateUnit(GameObject prefab, Vector3 position, Entity entity, World world)
         {
-            _unitsConfig = unitsConfig;
-            _instantiator = instantiator;
-        }
-        
-        public GameObject CreateUnit(Vector3 position, Entity entity, World world)
-        {
-            var unit = _instantiator.InstantiatePrefab(_unitsConfig.Prefab);
+            var unit = _instantiator.InstantiatePrefab(prefab);
             
             unit.transform.position = position;
             

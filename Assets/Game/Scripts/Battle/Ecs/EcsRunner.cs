@@ -4,7 +4,6 @@ using Assets.Game.Scripts.Battle.Ecs.HealthFeature.Systems;
 using Assets.Game.Scripts.Battle.Ecs.Input.Systems;
 using Assets.Game.Scripts.Battle.Ecs.Movement.Systems;
 using Assets.Game.Scripts.Battle.Ecs.Spawn.Systems;
-using Assets.Game.Scripts.Battle.Ecs.Test;
 using Assets.Game.Scripts.Battle.Ecs.Unity.Systems;
 using Scellecs.Morpeh;
 using Zenject;
@@ -26,12 +25,11 @@ namespace Assets.Game.Scripts.Battle.Ecs
 
             var systemsGroup = _world.CreateSystemsGroup();
 
-            systemsGroup.AddInitializer(_instantiator.Instantiate<InitializeTestEnemy>());
-
             systemsGroup.AddSystem(_instantiator.Instantiate<ClickInputSystem>());
             systemsGroup.AddSystem(_instantiator.Instantiate<FieldClickSystem>());
             
             systemsGroup.AddSystem(_instantiator.Instantiate<SpawnPlayerUnitsSystem>());
+            systemsGroup.AddSystem(_instantiator.Instantiate<SpawnEnemyUnitsSystem>());
             
             systemsGroup.AddSystem(_instantiator.Instantiate<PlayerUnitFindTargetSystem>());
             systemsGroup.AddSystem(_instantiator.Instantiate<UnitChaseTargetSystem>());

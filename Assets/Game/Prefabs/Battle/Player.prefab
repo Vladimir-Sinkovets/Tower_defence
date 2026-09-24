@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6066882493599804045}
   - component: {fileID: 4820983184847236682}
   m_Layer: 0
-  m_Name: Enemy
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -150,30 +150,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -5304396038475686106, guid: 47e7468693a15f14b81cac13b492b28e, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: 245a14902c9eaf54ebd94c1104ed6714, type: 2}
     - target: {fileID: -5017971254852617305, guid: 47e7468693a15f14b81cac13b492b28e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: -7.200013
       objectReference: {fileID: 0}
-    - target: {fileID: -3692600423840342213, guid: 47e7468693a15f14b81cac13b492b28e, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: 245a14902c9eaf54ebd94c1104ed6714, type: 2}
-    - target: {fileID: -3188153193986367248, guid: 47e7468693a15f14b81cac13b492b28e, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: 245a14902c9eaf54ebd94c1104ed6714, type: 2}
-    - target: {fileID: -3018960449897015653, guid: 47e7468693a15f14b81cac13b492b28e, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: 245a14902c9eaf54ebd94c1104ed6714, type: 2}
-    - target: {fileID: -2268516585682839789, guid: 47e7468693a15f14b81cac13b492b28e, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: 245a14902c9eaf54ebd94c1104ed6714, type: 2}
     - target: {fileID: 445712794880070669, guid: 47e7468693a15f14b81cac13b492b28e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 23.76001
@@ -194,10 +174,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4314722597813798244, guid: 47e7468693a15f14b81cac13b492b28e, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: 245a14902c9eaf54ebd94c1104ed6714, type: 2}
     - target: {fileID: 7604367576434143486, guid: 47e7468693a15f14b81cac13b492b28e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: -3.1199956

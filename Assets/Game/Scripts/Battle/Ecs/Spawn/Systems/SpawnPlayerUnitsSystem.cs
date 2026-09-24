@@ -1,15 +1,15 @@
 using Assets.Game.Scripts.Battle.Ecs.AI;
 using Assets.Game.Scripts.Battle.Ecs.Input;
-using Assets.Game.Scripts.Battle.Ecs.Movement;
-using Assets.Game.Scripts.Battle.Ecs.Unity;
 using Assets.Game.Scripts.Battle.Services.UnitFactories;
 using Scellecs.Morpeh;
+using UnityEngine;
 
 namespace Assets.Game.Scripts.Battle.Ecs.Spawn.Systems
 {
     public class SpawnPlayerUnitsSystem : ISystem
     {
         private readonly IUnitFactory _factory;
+        private readonly PlayerUnitsConfig _config;
         public World World { get; set; }
         
         private Filter _events;
@@ -18,7 +18,11 @@ namespace Assets.Game.Scripts.Battle.Ecs.Spawn.Systems
         
         private Stash<PlayerUnit> _playerUnitStash;
 
-        public SpawnPlayerUnitsSystem(IUnitFactory factory) => _factory = factory;
+        public SpawnPlayerUnitsSystem(IUnitFactory factory, PlayerUnitsConfig config)
+        {
+            _factory = factory;
+            _config = config;
+        }
 
         public void OnAwake()
         {
@@ -39,7 +43,7 @@ namespace Assets.Game.Scripts.Battle.Ecs.Spawn.Systems
 
                 var entity = World.CreateEntity();
                 
-                _factory.CreateUnit(clickEvent.Position, entity, World);
+                var unit = _factory.CreateUnit(_config.Prefab, clickEvent.Position, entity, World);
 
                 _playerUnitStash.Set(entity, new());
             }

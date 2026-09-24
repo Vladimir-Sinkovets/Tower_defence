@@ -5,6 +5,6 @@ namespace Assets.Game.Scripts.Battle.Services.UnitFactories
 {
     public interface IUnitFactory
     {
-        GameObject CreateUnit(Vector3 position, Entity entity, World world);
+        GameObject CreateUnit(GameObject prefab, Vector3 position, Entity entity, World world);
     }
 }

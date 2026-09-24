@@ -277,7 +277,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Installers.BattleInstaller
   _planeCenter: {fileID: 1484036184}
-  _unitsConfig: {fileID: 11400000, guid: a021c853d0817f6468f9716aacb49d04, type: 2}
+  _playerUnitsConfig: {fileID: 11400000, guid: a021c853d0817f6468f9716aacb49d04, type: 2}
+  _enemySpawnConfig: {fileID: 11400000, guid: 2bce9a68365cfb5459cbff041073f771, type: 2}
+  _hudConfig: {fileID: 11400000, guid: bf4386d136cdee14ba2618d275b3d75f, type: 2}
 --- !u!1 &824256934
 GameObject:
   m_ObjectHideFlags: 0
