@@ -1,7 +1,9 @@
 using Assets.Game.Scripts.Battle;
 using Assets.Game.Scripts.Battle.Ecs;
+using Assets.Game.Scripts.Battle.Services.HudFactories;
 using Assets.Game.Scripts.Battle.Services.Raycasts;
 using Assets.Game.Scripts.Battle.Services.UnitFactories;
+using Scellecs.Morpeh;
 using UnityEngine;
 using Zenject;
 
@@ -11,6 +13,7 @@ namespace Assets.Game.Scripts.Installers
     {
         [SerializeField] private Transform _planeCenter;
         [SerializeField] private UnitsConfig _unitsConfig;
+        [SerializeField] private HudConfig _hudConfig;
         
         public override void InstallBindings()
         {
@@ -27,6 +30,12 @@ namespace Assets.Game.Scripts.Installers
             Container.BindInstance(_unitsConfig).AsSingle();
             
             Container.BindInterfacesAndSelfTo<UnitFactory>().AsSingle();
+            
+            Container.BindInterfacesAndSelfTo<HudFactory>().AsSingle();
+            
+            Container.BindInstance(_hudConfig).AsSingle();
+            
+            Container.BindInstance(World.Default).AsSingle();
         }
     }
 }
