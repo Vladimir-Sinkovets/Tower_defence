@@ -43,7 +43,7 @@ namespace Assets.Game.Scripts.Battle.Ecs.Spawn.Systems
 
                 var entity = World.CreateEntity();
                 
-                var unit = _factory.CreateUnit(_config.Prefab, clickEvent.Position, entity, World);
+                _factory.CreateUnit(_config.Prefab, clickEvent.Position, entity, World);
 
                 _playerUnitStash.Set(entity, new());
             }
