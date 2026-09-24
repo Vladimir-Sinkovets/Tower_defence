@@ -32,8 +32,10 @@ namespace Assets.Game.Scripts.Battle.Ecs
             systemsGroup.AddSystem(_instantiator.Instantiate<FieldClickSystem>());
             
             systemsGroup.AddSystem(_instantiator.Instantiate<SpawnPlayerUnitsSystem>());
+            
             systemsGroup.AddSystem(_instantiator.Instantiate<PlayerUnitFindTargetSystem>());
             systemsGroup.AddSystem(_instantiator.Instantiate<UnitChaseTargetSystem>());
+            systemsGroup.AddSystem(_instantiator.Instantiate<ClearTargetSystem>());
             
             systemsGroup.AddSystem(_instantiator.Instantiate<AttackSystem>());
             systemsGroup.AddSystem(_instantiator.Instantiate<HitSystem>());
