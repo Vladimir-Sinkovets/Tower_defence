@@ -1,4 +1,4 @@
-using Assets.Game.Scripts.Battle.Ecs.Damage;
+using Assets.Game.Scripts.Battle.Ecs.Attacks;
 using Assets.Game.Scripts.Battle.Ecs.Unity.Links;
 using Scellecs.Morpeh;
 using UnityEngine;

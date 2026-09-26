@@ -2,9 +2,9 @@ using Assets.Game.Scripts.Battle.Ecs.Unity;
 using Assets.Game.Scripts.Enemies;
 using Scellecs.Morpeh;
 
-namespace Assets.Game.Scripts.Battle.Ecs.Damage.Systems
+namespace Assets.Game.Scripts.Battle.Ecs.Attacks.Systems
 {
-    public class AttackSystem : ISystem
+    public class AttackRequestHandlerSystem : ISystem
     {
         public World World { get; set; }
         

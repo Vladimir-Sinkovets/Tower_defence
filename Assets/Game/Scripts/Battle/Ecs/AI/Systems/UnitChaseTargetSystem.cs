@@ -1,4 +1,4 @@
-using Assets.Game.Scripts.Battle.Ecs.Damage;
+using Assets.Game.Scripts.Battle.Ecs.Attacks;
 using Assets.Game.Scripts.Battle.Ecs.Movement;
 using Scellecs.Morpeh;
 using UnityEngine;
@@ -14,7 +14,7 @@ namespace Assets.Game.Scripts.Battle.Ecs.AI.Systems
         private Stash<MoveDirection> _movementStash;
         private Stash<FollowTarget> _followTargetStash;
         private Stash<Position> _positionStash;
-        private Stash<AttackRequest> _attackStash;
+        private Stash<Attack> _attackStash;
 
         public void OnAwake()
         {
@@ -26,7 +26,7 @@ namespace Assets.Game.Scripts.Battle.Ecs.AI.Systems
             _movementStash = World.GetStash<MoveDirection>();
             _followTargetStash = World.GetStash<FollowTarget>();
             _positionStash = World.GetStash<Position>();
-            _attackStash = World.GetStash<AttackRequest>();
+            _attackStash = World.GetStash<Attack>();
         }
 
         public void OnUpdate(float deltaTime)
@@ -43,13 +43,16 @@ namespace Assets.Game.Scripts.Battle.Ecs.AI.Systems
 
                 if ((targetPosition.Value - unitPosition.Value).magnitude < 0.3f)
                 {
-                    _movementStash.Remove(unit);
+                    if (_attackStash.Has(unit))
+                        continue;
                     
                     _attackStash.Set(unit, new());
                     _movementStash.Set(unit, new() { Value = Vector3.zero });
                 }
                 else
                 {
+                    _attackStash.Remove(unit);
+
                     var moveDirection = (targetPosition.Value - unitPosition.Value).normalized;
 
                     _movementStash.Set(unit, new() { Value =  moveDirection });

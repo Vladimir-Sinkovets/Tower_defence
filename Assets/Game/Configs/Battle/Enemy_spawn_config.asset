@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Battle.Services.EnemySpawnStarters.EnemySpawnConfig
   TimeBetweenSpawn: 10
   EnemyPrefab: {fileID: 6393753210967277436, guid: 3efa0bee97d1df44db10cbe1971496ff, type: 3}
-  EnemyCount: 5
+  EnemyCount: 1
   IncreaseCountPerWave: 1

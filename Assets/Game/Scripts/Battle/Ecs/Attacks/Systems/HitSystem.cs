@@ -1,7 +1,7 @@
 using Assets.Game.Scripts.Battle.Ecs.AI;
 using Scellecs.Morpeh;
 
-namespace Assets.Game.Scripts.Battle.Ecs.Damage.Systems
+namespace Assets.Game.Scripts.Battle.Ecs.Attacks.Systems
 {
     public class HitSystem : ISystem
     {

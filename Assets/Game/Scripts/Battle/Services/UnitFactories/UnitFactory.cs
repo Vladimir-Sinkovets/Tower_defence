@@ -1,4 +1,4 @@
-using Assets.Game.Scripts.Battle.Ecs.Damage;
+using Assets.Game.Scripts.Battle.Ecs.Attacks;
 using Assets.Game.Scripts.Battle.Ecs.HealthFeature;
 using Assets.Game.Scripts.Battle.Ecs.Movement;
 using Assets.Game.Scripts.Battle.Ecs.Unity;
@@ -24,7 +24,7 @@ namespace Assets.Game.Scripts.Battle.Services.UnitFactories
             
             world.GetStash<Position>().Set(entity, new() { Value = unit.transform.position });
             world.GetStash<Rotation>().Set(entity, new() { Value = unit.transform.rotation });
-            world.GetStash<Attacker>().Set(entity, new() { Damage = 1});
+            world.GetStash<Attacker>().Set(entity, new() { Damage = 1, TimeBetweenAttacks = 1.5f });
             world.GetStash<Health>().Set(entity, new() { Hp = 2 });
             
             return unit;
