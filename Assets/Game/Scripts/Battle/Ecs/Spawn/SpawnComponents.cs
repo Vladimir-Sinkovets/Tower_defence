@@ -12,4 +12,8 @@ namespace Assets.Game.Scripts.Battle.Ecs.Spawn
         public GameObject Prefab;
         public int IncreaseCountPerWave;
     }
+    public struct Reward : IComponent
+    {
+        public int Value;
+    }
 }

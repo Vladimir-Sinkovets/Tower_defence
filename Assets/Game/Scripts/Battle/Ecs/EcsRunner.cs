@@ -1,5 +1,6 @@
 using Assets.Game.Scripts.Battle.Ecs.AI.Systems;
 using Assets.Game.Scripts.Battle.Ecs.Attacks.Systems;
+using Assets.Game.Scripts.Battle.Ecs.Currency.Systems;
 using Assets.Game.Scripts.Battle.Ecs.HealthFeature.Systems;
 using Assets.Game.Scripts.Battle.Ecs.Input.Systems;
 using Assets.Game.Scripts.Battle.Ecs.Movement.Systems;
@@ -30,11 +31,20 @@ namespace Assets.Game.Scripts.Battle.Ecs
             AddAISystems(systemsGroup);
             AddAttackSystems(systemsGroup);
             AddDeathSystems(systemsGroup);
+            AddCurrencySystems(systemsGroup);
             AddMoveSystems(systemsGroup);
+            AddCleanSystem(systemsGroup);
 
-            systemsGroup.AddSystem(_instantiator.Instantiate<InputCleanUpSystem>());
-            
             _world.AddSystemsGroup(0, systemsGroup);
+        }
+        
+        private void AddCleanSystem(SystemsGroup systemsGroup)
+        {
+            systemsGroup.AddSystem(_instantiator.Instantiate<InputCleanUpSystem>());
+            systemsGroup.AddSystem(_instantiator.Instantiate<DestroyViewSystem>());
+            systemsGroup.AddSystem(_instantiator.Instantiate<RemoveDeadSystem>());
+            systemsGroup.AddSystem(_instantiator.Instantiate<RemoveDeathEventsSystem>());
+            systemsGroup.AddSystem(_instantiator.Instantiate<CurrencyEventCleanSystem>());
         }
 
         private void AddInputSystems(SystemsGroup systemsGroup)
@@ -66,8 +76,12 @@ namespace Assets.Game.Scripts.Battle.Ecs
         private void AddDeathSystems(SystemsGroup systemsGroup)
         {
             systemsGroup.AddSystem(_instantiator.Instantiate<DeathSystem>());
-            systemsGroup.AddSystem(_instantiator.Instantiate<DestroyViewSystem>());
-            systemsGroup.AddSystem(_instantiator.Instantiate<RemoveDeadSystem>());
+        }
+
+        private void AddCurrencySystems(SystemsGroup systemsGroup)
+        {
+            systemsGroup.AddSystem(_instantiator.Instantiate<CurrencySystem>());
+            systemsGroup.AddSystem(_instantiator.Instantiate<CurrencyUISystem>());
         }
 
         private void AddMoveSystems(SystemsGroup systemsGroup)

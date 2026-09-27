@@ -16,6 +16,7 @@ namespace Assets.Game.Scripts.Battle.Ecs.Spawn.Systems
         
         private readonly IUnitFactory _factory;
         private Stash<Team> _teamStash;
+        private Stash<Reward> _awardStash;
 
         public SpawnEnemyUnitsSystem(IUnitFactory factory) => _factory = factory;
 
@@ -27,6 +28,7 @@ namespace Assets.Game.Scripts.Battle.Ecs.Spawn.Systems
 
             _spawnerStash = World.GetStash<EnemySpawner>();
             _teamStash = World.GetStash<Team>();
+            _awardStash = World.GetStash<Reward>();
         }
 
         public void OnUpdate(float deltaTime)
@@ -60,6 +62,7 @@ namespace Assets.Game.Scripts.Battle.Ecs.Spawn.Systems
             _factory.CreateUnit(spawner.Prefab, position, unitEntity, World);
                         
             _teamStash.Set(unitEntity, new() { Index = TeamIndexes.Enemy });
+            _awardStash.Set(unitEntity, new() { Value = 1 });
         }
 
         public void Dispose() { }

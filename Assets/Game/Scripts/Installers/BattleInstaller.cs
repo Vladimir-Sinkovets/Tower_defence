@@ -1,5 +1,6 @@
 using Assets.Game.Scripts.Battle;
 using Assets.Game.Scripts.Battle.Ecs;
+using Assets.Game.Scripts.Battle.Ecs.Currency.Views;
 using Assets.Game.Scripts.Battle.Services.EnemySpawnStarters;
 using Assets.Game.Scripts.Battle.Services.HudFactories;
 using Assets.Game.Scripts.Battle.Services.Raycasts;
@@ -16,6 +17,7 @@ namespace Assets.Game.Scripts.Installers
         [SerializeField] private PlayerUnitsConfig _playerUnitsConfig;
         [SerializeField] private EnemySpawnConfig _enemySpawnConfig;
         [SerializeField] private HudConfig _hudConfig;
+        [SerializeField] private CurrencyView _currencyView;
         
         public override void InstallBindings()
         {
@@ -42,6 +44,8 @@ namespace Assets.Game.Scripts.Installers
             Container.BindInterfacesAndSelfTo<EnemySpawnStarter>().AsSingle();
             
             Container.BindInstance(_enemySpawnConfig).AsSingle();
+
+            Container.Bind<ICurrencyView>().FromInstance(_currencyView).AsSingle();
         }
     }
 }

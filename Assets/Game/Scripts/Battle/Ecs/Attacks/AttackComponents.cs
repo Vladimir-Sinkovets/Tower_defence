@@ -23,4 +23,9 @@ namespace Assets.Game.Scripts.Battle.Ecs.Attacks
     {
         public float Timer;
     }
+
+    public struct DeathEvent : IComponent
+    {
+        public Entity Target;
+    }
 }
