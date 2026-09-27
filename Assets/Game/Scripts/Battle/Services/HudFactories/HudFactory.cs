@@ -1,6 +1,7 @@
 using System;
 using Assets.Game.Scripts.Battle.UI;
 using Assets.Game.Scripts.Battle.UI.StartPanel;
+using Assets.Game.Scripts.Battle.UI.UnitsPanel;
 using Zenject;
 
 namespace Assets.Game.Scripts.Battle.Services.HudFactories
@@ -11,7 +12,8 @@ namespace Assets.Game.Scripts.Battle.Services.HudFactories
         private readonly HudConfig _hudConfig;
 
         private StartPresenter _startPresenter;
-        
+        private UnitsPresenter _unitsPresenter;
+
         public HudFactory(IInstantiator instantiator, HudConfig hudConfig)
         {
             _instantiator = instantiator;
@@ -24,8 +26,15 @@ namespace Assets.Game.Scripts.Battle.Services.HudFactories
 
             _startPresenter = _instantiator.Instantiate<StartPresenter>(new object[] { hud.StartView });
             _startPresenter.Init();
+            
+            _unitsPresenter = _instantiator.Instantiate<UnitsPresenter>(new object[] { hud.UnitsView });
+            _unitsPresenter.Init();
         }
 
-        public void Dispose() => _startPresenter?.Dispose();
+        public void Dispose()
+        {
+            _startPresenter?.Dispose();
+            _unitsPresenter?.Dispose();
+        }
     }
 }

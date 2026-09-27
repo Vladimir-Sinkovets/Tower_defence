@@ -1,3 +1,4 @@
+using Assets.Game.Scripts.Battle.Configs;
 using Scellecs.Morpeh;
 using UnityEngine;
 
@@ -15,5 +16,10 @@ namespace Assets.Game.Scripts.Battle.Ecs.Spawn
     public struct Reward : IComponent
     {
         public int Value;
+    }
+
+    public struct UnitChosenEvent : IComponent
+    {
+        public UnitConfig Config;
     }
 }
