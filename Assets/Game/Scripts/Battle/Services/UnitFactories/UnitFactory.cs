@@ -25,6 +25,8 @@ namespace Assets.Game.Scripts.Battle.Services.UnitFactories
             world.GetStash<Position>().Set(entity, new() { Value = unit.transform.position });
             world.GetStash<Rotation>().Set(entity, new() { Value = unit.transform.rotation });
             world.GetStash<Attacker>().Set(entity, new() { Damage = 1, TimeBetweenAttacks = 1.5f });
+            world.GetStash<Attack>().Set(entity, new() { Timer = 0.0f });
+            world.GetStash<AttackRange>().Set(entity, new() { Value = 0.3f });
             world.GetStash<Health>().Set(entity, new() { Hp = 2 });
             
             return unit;

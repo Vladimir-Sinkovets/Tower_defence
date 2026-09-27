@@ -10,7 +10,7 @@ namespace Assets.Game.Scripts.Battle.Ecs.Attacks.Systems
         private Filter _hitRequests;
         private Filter _hitRequestsForRemoving;
         
-        private Stash<FollowTarget> _followTargetStash;
+        private Stash<Target> _followTargetStash;
         private Stash<DamageEvent> _damageStash;
         private Stash<Attacker> _attackerStash;
         private Stash<HitRequest> _hitStash;
@@ -19,7 +19,7 @@ namespace Assets.Game.Scripts.Battle.Ecs.Attacks.Systems
         {
             _hitRequests = World.Filter
                 .With<HitRequest>()
-                .With<FollowTarget>()
+                .With<Target>()
                 .With<Attacker>()
                 .Build();
             
@@ -27,7 +27,7 @@ namespace Assets.Game.Scripts.Battle.Ecs.Attacks.Systems
                 .With<HitRequest>()
                 .Build();
             
-            _followTargetStash = World.GetStash<FollowTarget>();
+            _followTargetStash = World.GetStash<Target>();
             _damageStash = World.GetStash<DamageEvent>();
             _attackerStash = World.GetStash<Attacker>();
             _hitStash = World.GetStash<HitRequest>();
@@ -44,7 +44,7 @@ namespace Assets.Game.Scripts.Battle.Ecs.Attacks.Systems
 
                 _damageStash.Set(eventEntity, new()
                     {
-                        Target = target.Target,
+                        Target = target.Value,
                         Damage = attacker.Damage,
                     }
                 );

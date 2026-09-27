@@ -8,6 +8,10 @@ namespace Assets.Game.Scripts.Battle.Ecs.Attacks
         public int Damage;
         public float TimeBetweenAttacks;
     }
+    public struct AttackRange : IComponent
+    {
+        public float Value;
+    }
     public struct HitRequest : IComponent { }
     public struct DamageEvent : IComponent
     {
@@ -18,6 +22,5 @@ namespace Assets.Game.Scripts.Battle.Ecs.Attacks
     public struct Attack : IComponent
     {
         public float Timer;
-        public float NextTimeAttack;
     }
 }

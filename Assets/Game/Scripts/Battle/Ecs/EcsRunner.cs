@@ -26,15 +26,10 @@ namespace Assets.Game.Scripts.Battle.Ecs
             var systemsGroup = _world.CreateSystemsGroup();
 
             AddInputSystems(systemsGroup);
-
             AddSpawnSystems(systemsGroup);
-
             AddAISystems(systemsGroup);
-
             AddAttackSystems(systemsGroup);
-
             AddDeathSystems(systemsGroup);
-
             AddMoveSystems(systemsGroup);
 
             systemsGroup.AddSystem(_instantiator.Instantiate<InputCleanUpSystem>());
@@ -56,9 +51,8 @@ namespace Assets.Game.Scripts.Battle.Ecs
 
         private void AddAISystems(SystemsGroup systemsGroup)
         {
-            systemsGroup.AddSystem(_instantiator.Instantiate<PlayerUnitFindTargetSystem>());
-            systemsGroup.AddSystem(_instantiator.Instantiate<UnitChaseTargetSystem>());
-            systemsGroup.AddSystem(_instantiator.Instantiate<ClearTargetSystem>());
+            systemsGroup.AddSystem(_instantiator.Instantiate<TargetingSystem>());
+            systemsGroup.AddSystem(_instantiator.Instantiate<FollowTargetSystem>());
         }
 
         private void AddAttackSystems(SystemsGroup systemsGroup)

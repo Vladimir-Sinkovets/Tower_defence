@@ -15,7 +15,7 @@ namespace Assets.Game.Scripts.Battle.Ecs.Spawn.Systems
         
         private Stash<ClickOnFieldEvent> _eventStash;
         
-        private Stash<PlayerUnit> _playerUnitStash;
+        private Stash<Team> _playerUnitStash;
 
         public SpawnPlayerUnitsSystem(IUnitFactory factory, PlayerUnitsConfig config)
         {
@@ -31,7 +31,7 @@ namespace Assets.Game.Scripts.Battle.Ecs.Spawn.Systems
             
             _eventStash = World.GetStash<ClickOnFieldEvent>();
 
-            _playerUnitStash = World.GetStash<PlayerUnit>();
+            _playerUnitStash = World.GetStash<Team>();
         }
         
         public void OnUpdate(float deltaTime)
