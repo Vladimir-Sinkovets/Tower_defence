@@ -12,8 +12,6 @@ namespace Assets.Game.Scripts.Battle.UI.UnitsPanel
         private readonly UnitsConfig _unitsConfig;
         private readonly World _world;
 
-        private Entity _eventEntity;
-
         private Stash<UnitChosenEvent> _eventStash;
 
         public UnitsPresenter(IUnitsView unitsView, UnitsConfig unitsConfig, World world)
@@ -25,6 +23,8 @@ namespace Assets.Game.Scripts.Battle.UI.UnitsPanel
 
         public void Init()
         {
+            _eventStash = _world.GetStash<UnitChosenEvent>();
+            
             var units = _unitsConfig.Units
                 .Select(x =>
                     new UnitOption()
@@ -33,14 +33,11 @@ namespace Assets.Game.Scripts.Battle.UI.UnitsPanel
                         Name = x.Name,
                         Icon = x.Icon,
                     });
-            
-            _unitsView.SetOptions(units);
-            _unitsView.SetDefaultOption();
 
             _unitsView.OnOptionChosen += OnOptionChosenHandler;
             
-            _eventEntity = _world.CreateEntity();
-            _eventStash = _world.GetStash<UnitChosenEvent>();
+            _unitsView.SetOptions(units);
+            _unitsView.SetDefaultOption();
         }
 
         private void OnOptionChosenHandler(string id)
@@ -50,7 +47,7 @@ namespace Assets.Game.Scripts.Battle.UI.UnitsPanel
             if (unit == null)
                 return;
             
-            _eventStash.Set(_eventEntity, new() { Config = unit });
+            _eventStash.Set(_world.CreateEntity(), new() { Config = unit });
         }
 
         public void Dispose() => _unitsView.OnOptionChosen -= OnOptionChosenHandler;

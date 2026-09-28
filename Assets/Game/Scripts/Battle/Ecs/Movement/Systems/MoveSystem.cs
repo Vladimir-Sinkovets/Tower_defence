@@ -10,16 +10,19 @@ namespace Assets.Game.Scripts.Battle.Ecs.Movement.Systems
         
         private Stash<Position> _positionStash;
         private Stash<MoveDirection> _moveDirectionStash;
+        private Stash<Speed> _speedStash;
 
         public void OnAwake()
         {
             _entities = World.Filter
                 .With<Position>()
+                .With<Speed>()
                 .With<MoveDirection>()
                 .Build();
 
             _positionStash = World.GetStash<Position>();
             _moveDirectionStash = World.GetStash<MoveDirection>();
+            _speedStash = World.GetStash<Speed>();
         }
         
         public void OnUpdate(float deltaTime)
@@ -28,8 +31,9 @@ namespace Assets.Game.Scripts.Battle.Ecs.Movement.Systems
             {
                 ref var position = ref _positionStash.Get(entity);
                 ref var moveDirection = ref _moveDirectionStash.Get(entity);
+                ref var speed = ref _speedStash.Get(entity);
                 
-                position.Value += moveDirection.Value * deltaTime;
+                position.Value += moveDirection.Value * deltaTime * speed.Value;
             }
         }
         

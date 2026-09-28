@@ -16,5 +16,11 @@ namespace Assets.Game.Scripts.Battle.Configs
         public string Id;
         public string Name;
         public Sprite Icon;
+        public GameObject Prefab;
+        
+        [SerializeReference] public List<IComponentConfig> Components = new()
+        {
+            new HealthConfig()
+        };
     }
 }

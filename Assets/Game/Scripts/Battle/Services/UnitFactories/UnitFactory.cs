@@ -1,5 +1,4 @@
-using Assets.Game.Scripts.Battle.Ecs.Attacks;
-using Assets.Game.Scripts.Battle.Ecs.HealthFeature;
+using Assets.Game.Scripts.Battle.Configs;
 using Assets.Game.Scripts.Battle.Ecs.Movement;
 using Assets.Game.Scripts.Battle.Ecs.Unity;
 using Scellecs.Morpeh;
@@ -14,9 +13,9 @@ namespace Assets.Game.Scripts.Battle.Services.UnitFactories
 
         public UnitFactory(IInstantiator instantiator) => _instantiator = instantiator;
 
-        public GameObject CreateUnit(GameObject prefab, Vector3 position, Entity entity, World world)
+        public GameObject CreateUnit(UnitConfig config, Vector3 position, Entity entity, World world)
         {
-            var unit = _instantiator.InstantiatePrefab(prefab);
+            var unit = _instantiator.InstantiatePrefab(config.Prefab);
             
             unit.transform.position = position;
             
@@ -24,10 +23,11 @@ namespace Assets.Game.Scripts.Battle.Services.UnitFactories
             
             world.GetStash<Position>().Set(entity, new() { Value = unit.transform.position });
             world.GetStash<Rotation>().Set(entity, new() { Value = unit.transform.rotation });
-            world.GetStash<Attacker>().Set(entity, new() { Damage = 1, TimeBetweenAttacks = 1.5f });
-            world.GetStash<Attack>().Set(entity, new() { Timer = 0.0f });
-            world.GetStash<AttackRange>().Set(entity, new() { Value = 0.3f });
-            world.GetStash<Health>().Set(entity, new() { Hp = 2 });
+
+            foreach (var componentConfig in config.Components)
+            {
+                componentConfig.Apply(entity, world);
+            }
             
             return unit;
         }

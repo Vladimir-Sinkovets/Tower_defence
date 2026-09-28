@@ -1,3 +1,4 @@
+using Assets.Game.Scripts.Battle.Configs;
 using UnityEngine;
 
 namespace Assets.Game.Scripts.Battle.Services.EnemySpawnStarters
@@ -6,8 +7,8 @@ namespace Assets.Game.Scripts.Battle.Services.EnemySpawnStarters
     public class EnemySpawnConfig : ScriptableObject
     {
         public float TimeBetweenSpawn;
-        public GameObject EnemyPrefab;
         public int EnemyCount = 4;
         public int IncreaseCountPerWave = 2;
+        public UnitConfig EnemyConfig;
     }
 }

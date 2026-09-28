@@ -59,7 +59,7 @@ namespace Assets.Game.Scripts.Battle.Ecs.Spawn.Systems
                         
             var position = new Vector3(Random.Range(-3.0f, 3.0f), 0, Random.Range(-3.0f, 3.0f));
                         
-            _factory.CreateUnit(spawner.Prefab, position, unitEntity, World);
+            _factory.CreateUnit(spawner.Config, position, unitEntity, World);
                         
             _teamStash.Set(unitEntity, new() { Index = TeamIndexes.Enemy });
             _awardStash.Set(unitEntity, new() { Value = 1 });

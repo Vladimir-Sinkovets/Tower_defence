@@ -13,6 +13,31 @@ MonoBehaviour:
   m_Name: Enemy_spawn_config
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Battle.Services.EnemySpawnStarters.EnemySpawnConfig
   TimeBetweenSpawn: 10
-  EnemyPrefab: {fileID: 6393753210967277436, guid: 3efa0bee97d1df44db10cbe1971496ff, type: 3}
   EnemyCount: 1
   IncreaseCountPerWave: 1
+  EnemyConfig:
+    Id: Enemy
+    Name: Enemy
+    Icon: {fileID: 21300000, guid: 48c0d4d6bebaa934384b07aa1e2f8184, type: 3}
+    Prefab: {fileID: 6393753210967277436, guid: 3efa0bee97d1df44db10cbe1971496ff, type: 3}
+    Components:
+    - rid: 4213268725252751473
+    - rid: 4213268725252751477
+    - rid: 4213268725252751476
+  references:
+    version: 2
+    RefIds:
+    - rid: 4213268725252751473
+      type: {class: HealthConfig, ns: Assets.Game.Scripts.Battle.Configs, asm: Assembly-CSharp}
+      data:
+        _hp: 3
+    - rid: 4213268725252751476
+      type: {class: MoveConfig, ns: Assets.Game.Scripts.Battle.Configs, asm: Assembly-CSharp}
+      data:
+        _speed: 0.9
+    - rid: 4213268725252751477
+      type: {class: AttackConfig, ns: Assets.Game.Scripts.Battle.Configs, asm: Assembly-CSharp}
+      data:
+        _damage: 1
+        _attackRange: 0.3
+        _timeBetweenAttacks: 1.7

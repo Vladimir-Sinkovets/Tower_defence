@@ -23,7 +23,7 @@ namespace Assets.Game.Scripts.Battle.Services.EnemySpawnStarters
                     Time = 0,
                     NextWaveTime = _config.TimeBetweenSpawn,
                     TimeBetweenWaves = _config.TimeBetweenSpawn,
-                    Prefab = _config.EnemyPrefab,
+                    Config = _config.EnemyConfig,
                     EnemyCount = _config.EnemyCount,
                     IncreaseCountPerWave = _config.IncreaseCountPerWave,
                 });

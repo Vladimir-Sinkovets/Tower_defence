@@ -1,6 +1,5 @@
 using Assets.Game.Scripts.Battle.Configs;
 using Scellecs.Morpeh;
-using UnityEngine;
 
 namespace Assets.Game.Scripts.Battle.Ecs.Spawn
 {
@@ -10,8 +9,8 @@ namespace Assets.Game.Scripts.Battle.Ecs.Spawn
         public float NextWaveTime;
         public float TimeBetweenWaves;
         public int EnemyCount;
-        public GameObject Prefab;
         public int IncreaseCountPerWave;
+        public UnitConfig Config;
     }
     public struct Reward : IComponent
     {
