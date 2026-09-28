@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Assets.Game.Scripts.Battle.Services.Raycasts
 {
@@ -15,6 +16,13 @@ namespace Assets.Game.Scripts.Battle.Services.Raycasts
         
         public bool TryRaycast(Vector2 touchPosition, out Vector3 point)
         {
+            if (EventSystem.current != null &&
+                EventSystem.current.IsPointerOverGameObject())
+            {
+                point = Vector3.zero;
+                return false;
+            }
+            
             var ray = _mainCamera.ScreenPointToRay(touchPosition);
 
             var buildPlane = new Plane(Vector3.up, _planeCenter.position);
