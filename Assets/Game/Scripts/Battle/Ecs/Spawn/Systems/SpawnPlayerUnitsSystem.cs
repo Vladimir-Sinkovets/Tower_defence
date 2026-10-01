@@ -12,9 +12,9 @@ namespace Assets.Game.Scripts.Battle.Ecs.Spawn.Systems
         private readonly IUnitFactory _factory;
         public World World { get; set; }
         
-        private Filter _events;
+        private Filter _clickOnFieldEvents;
         private Filter _unitChosenEvents;
-        private Filter _currencyFilter;
+        private Filter _currency;
         
         private Stash<ClickOnFieldEvent> _eventStash;
         private Stash<UnitChosenEvent> _unitChosenEventStash;
@@ -32,11 +32,11 @@ namespace Assets.Game.Scripts.Battle.Ecs.Spawn.Systems
                 .With<UnitChosenEvent>()
                 .Build();
             
-            _events = World.Filter
+            _clickOnFieldEvents = World.Filter
                 .With<ClickOnFieldEvent>()
                 .Build();
 
-            _currencyFilter = World.Filter
+            _currency = World.Filter
                 .With<Currency>()
                 .Build();
             
@@ -50,7 +50,7 @@ namespace Assets.Game.Scripts.Battle.Ecs.Spawn.Systems
         
         public void OnUpdate(float deltaTime)
         {
-            var currencyEntity = _currencyFilter.First();
+            var currencyEntity = _currency.First();
             
             ref var currency = ref _currencyStash.Get(currencyEntity);
             
@@ -63,7 +63,7 @@ namespace Assets.Game.Scripts.Battle.Ecs.Spawn.Systems
                 World.RemoveEntity(entity);
             }
             
-            foreach (var eventEntity in _events)
+            foreach (var eventEntity in _clickOnFieldEvents)
             {
                 ref var clickEvent = ref _eventStash.Get(eventEntity);
                 
