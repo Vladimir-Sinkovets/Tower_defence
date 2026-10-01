@@ -420,6 +420,7 @@ MonoBehaviour:
   _currencyView: {fileID: 824699644}
   _unitsConfig: {fileID: 11400000, guid: d2b8f96479e3fa645af5833db059a258, type: 2}
   _battleConfig: {fileID: 11400000, guid: 4955540505ff57f4f9fb51a2204c159e, type: 2}
+  _windowViewsConfig: {fileID: 0}
 --- !u!1 &824256934
 GameObject:
   m_ObjectHideFlags: 0
@@ -1258,9 +1259,9 @@ SceneRoots:
   - {fileID: 1932180482}
   - {fileID: 1417024186}
   - {fileID: 768827005}
+  - {fileID: 428286562}
   - {fileID: 1675204088}
   - {fileID: 1655926273}
   - {fileID: 870298470}
   - {fileID: 824256935}
   - {fileID: 281237885}
-  - {fileID: 428286562}
