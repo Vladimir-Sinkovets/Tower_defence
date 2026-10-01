@@ -14,6 +14,7 @@ namespace Assets.Game.Scripts.Battle.Configs
     public class UnitConfig
     {
         public string Id;
+        public int Price;
         public string Name;
         public Sprite Icon;
         public GameObject Prefab;

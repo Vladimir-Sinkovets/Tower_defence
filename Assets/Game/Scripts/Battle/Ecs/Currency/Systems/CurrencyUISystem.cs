@@ -1,7 +1,7 @@
-using Assets.Game.Scripts.Battle.Ecs.Currency.Views;
+using Assets.Game.Scripts.Battle.Ecs.CurrencyBank.Views;
 using Scellecs.Morpeh;
 
-namespace Assets.Game.Scripts.Battle.Ecs.Currency.Systems
+namespace Assets.Game.Scripts.Battle.Ecs.CurrencyBank.Systems
 {
     public class CurrencyUISystem : ISystem
     {

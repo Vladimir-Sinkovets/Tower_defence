@@ -1,7 +1,7 @@
 using Assets.Game.Scripts.Battle;
 using Assets.Game.Scripts.Battle.Configs;
 using Assets.Game.Scripts.Battle.Ecs;
-using Assets.Game.Scripts.Battle.Ecs.Currency.Views;
+using Assets.Game.Scripts.Battle.Ecs.CurrencyBank.Views;
 using Assets.Game.Scripts.Battle.Services.EnemySpawnStarters;
 using Assets.Game.Scripts.Battle.Services.HudFactories;
 using Assets.Game.Scripts.Battle.Services.Raycasts;
@@ -15,11 +15,11 @@ namespace Assets.Game.Scripts.Installers
     public class BattleInstaller : MonoInstaller
     {
         [SerializeField] private Transform _planeCenter;
-        [SerializeField] private PlayerUnitsConfig _playerUnitsConfig;
         [SerializeField] private EnemySpawnConfig _enemySpawnConfig;
         [SerializeField] private HudConfig _hudConfig;
         [SerializeField] private CurrencyView _currencyView;
         [SerializeField] private UnitsConfig _unitsConfig;
+        [SerializeField] private BattleConfig _battleConfig;
         
         public override void InstallBindings()
         {
@@ -33,8 +33,6 @@ namespace Assets.Game.Scripts.Installers
             
             Container.BindInstance(Camera.main).AsSingle();
 
-            Container.BindInstance(_playerUnitsConfig).AsSingle();
-            
             Container.BindInterfacesAndSelfTo<UnitFactory>().AsSingle();
             
             Container.BindInterfacesAndSelfTo<HudFactory>().AsSingle();
@@ -50,6 +48,8 @@ namespace Assets.Game.Scripts.Installers
             Container.Bind<ICurrencyView>().FromInstance(_currencyView).AsSingle();
             
             Container.BindInstance(_unitsConfig).AsSingle();
+            
+            Container.BindInstance(_battleConfig).AsSingle();
         }
     }
 }

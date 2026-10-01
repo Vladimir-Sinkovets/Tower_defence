@@ -1,4 +1,4 @@
-namespace Assets.Game.Scripts.Battle.Ecs.Currency.Views
+namespace Assets.Game.Scripts.Battle.Ecs.CurrencyBank.Views
 {
     public interface ICurrencyView
     {

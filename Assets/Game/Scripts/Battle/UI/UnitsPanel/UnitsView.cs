@@ -25,6 +25,7 @@ namespace Assets.Game.Scripts.Battle.UI.UnitsPanel
                 
                 option.SetIcon(unit.Icon);
                 option.SetTitle(unit.Name);
+                option.SetPrice(unit.Price);
                 option.SetId(unit.Id);
                 
                 option.OnClicked += OnClickedHandler;

@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace Assets.Game.Scripts.Battle.Ecs.Currency.Views
+namespace Assets.Game.Scripts.Battle.Ecs.CurrencyBank.Views
 {
     public class CurrencyView : MonoBehaviour, ICurrencyView
     {

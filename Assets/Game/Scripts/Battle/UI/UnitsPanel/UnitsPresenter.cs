@@ -32,6 +32,7 @@ namespace Assets.Game.Scripts.Battle.UI.UnitsPanel
                         Id = x.Id,
                         Name = x.Name,
                         Icon = x.Icon,
+                        Price = x.Price,
                     });
 
             _unitsView.OnOptionChosen += OnOptionChosenHandler;

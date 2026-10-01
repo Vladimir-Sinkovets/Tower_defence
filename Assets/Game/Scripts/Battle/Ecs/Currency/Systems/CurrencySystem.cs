@@ -4,26 +4,29 @@ using Assets.Game.Scripts.Battle.Ecs.Attacks;
 using Assets.Game.Scripts.Battle.Ecs.Spawn;
 using Scellecs.Morpeh;
 
-namespace Assets.Game.Scripts.Battle.Ecs.Currency.Systems
+namespace Assets.Game.Scripts.Battle.Ecs.CurrencyBank.Systems
 {
     public class CurrencySystem : ISystem
     {
         public World World { get; set; }
         
         private Filter _events;
+        private Filter _currency;
         
         private Stash<DeathEvent> _eventStash;
         private Stash<Currency> _currencyStash;
         private Stash<CurrencyChangedEvent> _currencyChangedEventStash;
         private Stash<Reward> _rewardStash;
         private Stash<Team> _teamStash;
-        
-        private Entity _currencyEntity;
 
         public void OnAwake()
         {
             _events = World.Filter
                 .With<DeathEvent>()
+                .Build();
+            
+            _currency = World.Filter
+                .With<Currency>()
                 .Build();
 
             _eventStash = World.GetStash<DeathEvent>();
@@ -31,9 +34,6 @@ namespace Assets.Game.Scripts.Battle.Ecs.Currency.Systems
             _currencyChangedEventStash = World.GetStash<CurrencyChangedEvent>();
             _rewardStash = World.GetStash<Reward>();
             _teamStash = World.GetStash<Team>();
-            
-            _currencyEntity = World.CreateEntity();
-            _currencyStash.Add(_currencyEntity, new() { Value = 0 });
         }
 
         public void OnUpdate(float deltaTime)
@@ -56,7 +56,7 @@ namespace Assets.Game.Scripts.Battle.Ecs.Currency.Systems
                     continue;
                 
                 ref var reward = ref _rewardStash.Get(deathEvent.Target);
-                ref var currency = ref _currencyStash.Get(_currencyEntity);
+                ref var currency = ref _currencyStash.Get(_currency.First());
                 
                 currency.Value += reward.Value;
 

@@ -1,6 +1,6 @@
 using Scellecs.Morpeh;
 
-namespace Assets.Game.Scripts.Battle.Ecs.Currency
+namespace Assets.Game.Scripts.Battle.Ecs.CurrencyBank
 {
     public struct Currency : IComponent
     {

@@ -11,6 +11,7 @@ namespace Assets.Game.Scripts.Battle.UI.UnitsPanel
         
         [SerializeField] private Button _button;
         [SerializeField] private TMP_Text _title;
+        [SerializeField] private TMP_Text _price;
         [SerializeField] private Image _icon;
         [SerializeField] private GameObject _highlighter;
 
@@ -23,6 +24,7 @@ namespace Assets.Game.Scripts.Battle.UI.UnitsPanel
         public void SetId(string id) => Id = id;
         public void SetIcon(Sprite icon) => _icon.sprite = icon;
         public void SetTitle(string title) => _title.text = title;
+        public void SetPrice(int price) => _price.text = price.ToString();
         public void Select() => _highlighter.SetActive(true);
         public void Deselect() => _highlighter.SetActive(false);
     }

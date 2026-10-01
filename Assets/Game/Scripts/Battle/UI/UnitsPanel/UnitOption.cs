@@ -7,5 +7,6 @@ namespace Assets.Game.Scripts.Battle.UI.UnitsPanel
         public string Id;
         public Sprite Icon;
         public string Name;
+        public int Price;
     }
 }

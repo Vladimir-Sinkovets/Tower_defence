@@ -1,5 +1,6 @@
 using Assets.Game.Scripts.Battle.Configs;
 using Assets.Game.Scripts.Battle.Ecs.AI;
+using Assets.Game.Scripts.Battle.Ecs.CurrencyBank;
 using Assets.Game.Scripts.Battle.Ecs.Input;
 using Assets.Game.Scripts.Battle.Services.UnitFactories;
 using Scellecs.Morpeh;
@@ -13,10 +14,13 @@ namespace Assets.Game.Scripts.Battle.Ecs.Spawn.Systems
         
         private Filter _events;
         private Filter _unitChosenEvents;
+        private Filter _currencyFilter;
         
         private Stash<ClickOnFieldEvent> _eventStash;
         private Stash<UnitChosenEvent> _unitChosenEventStash;
         private Stash<Team> _playerUnitStash;
+        private Stash<Currency> _currencyStash;
+        private Stash<CurrencyChangedEvent> _currencyChangedEventStash;
 
         private UnitConfig _config;
 
@@ -31,15 +35,25 @@ namespace Assets.Game.Scripts.Battle.Ecs.Spawn.Systems
             _events = World.Filter
                 .With<ClickOnFieldEvent>()
                 .Build();
+
+            _currencyFilter = World.Filter
+                .With<Currency>()
+                .Build();
             
             _unitChosenEventStash = World.GetStash<UnitChosenEvent>();
             _eventStash = World.GetStash<ClickOnFieldEvent>();
+            _currencyStash = World.GetStash<Currency>();
+            _currencyChangedEventStash = World.GetStash<CurrencyChangedEvent>();
 
             _playerUnitStash = World.GetStash<Team>();
         }
         
         public void OnUpdate(float deltaTime)
         {
+            var currencyEntity = _currencyFilter.First();
+            
+            ref var currency = ref _currencyStash.Get(currencyEntity);
+            
             foreach (var entity in _unitChosenEvents)
             {
                 ref var unitChosenEvent = ref _unitChosenEventStash.Get(entity);
@@ -52,15 +66,22 @@ namespace Assets.Game.Scripts.Battle.Ecs.Spawn.Systems
             foreach (var eventEntity in _events)
             {
                 ref var clickEvent = ref _eventStash.Get(eventEntity);
-
-                var entity = World.CreateEntity();
                 
                 if (_config == null)
                     return;
-                
-                _factory.CreateUnit(_config, clickEvent.Position, entity, World);
 
-                _playerUnitStash.Set(entity, new());
+                if (currency.Value >= _config.Price)
+                {
+                    var entity = World.CreateEntity();
+                    
+                    _factory.CreateUnit(_config, clickEvent.Position, entity, World);
+                    
+                    _playerUnitStash.Set(entity, new());
+                    
+                    currency.Value -= _config.Price;
+                    
+                    _currencyChangedEventStash.Set(World.CreateEntity(), new() { Value = currency.Value } );
+                }
             }
         }
         

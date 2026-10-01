@@ -1,6 +1,6 @@
 using Assets.Game.Scripts.Battle.Ecs.AI.Systems;
 using Assets.Game.Scripts.Battle.Ecs.Attacks.Systems;
-using Assets.Game.Scripts.Battle.Ecs.Currency.Systems;
+using Assets.Game.Scripts.Battle.Ecs.CurrencyBank.Systems;
 using Assets.Game.Scripts.Battle.Ecs.HealthFeature.Systems;
 using Assets.Game.Scripts.Battle.Ecs.Input.Systems;
 using Assets.Game.Scripts.Battle.Ecs.Movement.Systems;
@@ -26,6 +26,8 @@ namespace Assets.Game.Scripts.Battle.Ecs
 
             var systemsGroup = _world.CreateSystemsGroup();
 
+            AddInitializeSystems(systemsGroup);
+            
             AddInputSystems(systemsGroup);
             AddSpawnSystems(systemsGroup);
             AddAISystems(systemsGroup);
@@ -37,14 +39,10 @@ namespace Assets.Game.Scripts.Battle.Ecs
 
             _world.AddSystemsGroup(0, systemsGroup);
         }
-        
-        private void AddCleanSystem(SystemsGroup systemsGroup)
+
+        private void AddInitializeSystems(SystemsGroup systemsGroup)
         {
-            systemsGroup.AddSystem(_instantiator.Instantiate<InputCleanUpSystem>());
-            systemsGroup.AddSystem(_instantiator.Instantiate<DestroyViewSystem>());
-            systemsGroup.AddSystem(_instantiator.Instantiate<RemoveDeadSystem>());
-            systemsGroup.AddSystem(_instantiator.Instantiate<RemoveDeathEventsSystem>());
-            systemsGroup.AddSystem(_instantiator.Instantiate<CurrencyEventCleanSystem>());
+            systemsGroup.AddInitializer(_instantiator.Instantiate<SetupStartCurrencySystem>());
         }
 
         private void AddInputSystems(SystemsGroup systemsGroup)
@@ -93,6 +91,15 @@ namespace Assets.Game.Scripts.Battle.Ecs
             
             systemsGroup.AddSystem(_instantiator.Instantiate<SyncPositionSystem>());
             systemsGroup.AddSystem(_instantiator.Instantiate<SyncRotationSystem>());
+        }
+
+        private void AddCleanSystem(SystemsGroup systemsGroup)
+        {
+            systemsGroup.AddSystem(_instantiator.Instantiate<InputCleanUpSystem>());
+            systemsGroup.AddSystem(_instantiator.Instantiate<DestroyViewSystem>());
+            systemsGroup.AddSystem(_instantiator.Instantiate<RemoveDeadSystem>());
+            systemsGroup.AddSystem(_instantiator.Instantiate<RemoveDeathEventsSystem>());
+            systemsGroup.AddSystem(_instantiator.Instantiate<CurrencyEventCleanSystem>());
         }
     }
 }
