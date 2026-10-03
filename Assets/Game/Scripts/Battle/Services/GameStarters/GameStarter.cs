@@ -1,14 +1,16 @@
+using Assets.Game.Scripts.Battle.Ecs.Extensions;
+using Assets.Game.Scripts.Battle.Ecs.GameManagement;
 using Assets.Game.Scripts.Battle.Ecs.Spawn;
 using Scellecs.Morpeh;
 
-namespace Assets.Game.Scripts.Battle.Services.EnemySpawnStarters
+namespace Assets.Game.Scripts.Battle.Services.GameStarters
 {
-    public class EnemySpawnStarter : IEnemySpawnStarter
+    public class GameStarter : IGameStarter
     {
         private readonly World _world;
         private readonly EnemySpawnConfig _config;
 
-        public EnemySpawnStarter(World world, EnemySpawnConfig config)
+        public GameStarter(World world, EnemySpawnConfig config)
         {
             _world = world;
             _config = config;
@@ -16,6 +18,10 @@ namespace Assets.Game.Scripts.Battle.Services.EnemySpawnStarters
 
         public void Start()
         {
+            ref var gameManager = ref _world.GetStash<GameManager>().Get(_world.GetManagerEntity());
+            
+            gameManager.GameStarted = true;
+            
             _world.GetStash<EnemySpawner>().Set(
                 _world.CreateEntity(),
                 new()

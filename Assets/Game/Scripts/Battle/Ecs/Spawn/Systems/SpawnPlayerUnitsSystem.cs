@@ -1,6 +1,8 @@
 using Assets.Game.Scripts.Battle.Configs;
 using Assets.Game.Scripts.Battle.Ecs.AI;
 using Assets.Game.Scripts.Battle.Ecs.CurrencyBank;
+using Assets.Game.Scripts.Battle.Ecs.Extensions;
+using Assets.Game.Scripts.Battle.Ecs.GameManagement;
 using Assets.Game.Scripts.Battle.Ecs.Input;
 using Assets.Game.Scripts.Battle.Services.UnitFactories;
 using Scellecs.Morpeh;
@@ -21,7 +23,10 @@ namespace Assets.Game.Scripts.Battle.Ecs.Spawn.Systems
         private Stash<Team> _playerUnitStash;
         private Stash<Currency> _currencyStash;
         private Stash<CurrencyChangedEvent> _currencyChangedEventStash;
+        private Stash<GameManager> _gamManagerStash;
 
+        private Entity _gameManagerEntity;
+        
         private UnitConfig _config;
 
         public SpawnPlayerUnitsSystem(IUnitFactory factory) => _factory = factory;
@@ -40,16 +45,21 @@ namespace Assets.Game.Scripts.Battle.Ecs.Spawn.Systems
                 .With<Currency>()
                 .Build();
             
+            _gameManagerEntity = World.GetManagerEntity();
+            
             _unitChosenEventStash = World.GetStash<UnitChosenEvent>();
             _eventStash = World.GetStash<ClickOnFieldEvent>();
             _currencyStash = World.GetStash<Currency>();
             _currencyChangedEventStash = World.GetStash<CurrencyChangedEvent>();
-
+            _gamManagerStash = World.GetStash<GameManager>();
             _playerUnitStash = World.GetStash<Team>();
         }
         
         public void OnUpdate(float deltaTime)
         {
+            if (_gamManagerStash.Get(_gameManagerEntity).GameEnded)
+                return;
+            
             var currencyEntity = _currency.First();
             
             ref var currency = ref _currencyStash.Get(currencyEntity);

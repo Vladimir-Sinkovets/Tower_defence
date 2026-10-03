@@ -1,5 +1,7 @@
 using Assets.Game.Scripts.Battle.Common;
 using Assets.Game.Scripts.Battle.Ecs.AI;
+using Assets.Game.Scripts.Battle.Ecs.Extensions;
+using Assets.Game.Scripts.Battle.Ecs.GameManagement;
 using Assets.Game.Scripts.Battle.Services.UnitFactories;
 using Scellecs.Morpeh;
 using UnityEngine;
@@ -10,13 +12,16 @@ namespace Assets.Game.Scripts.Battle.Ecs.Spawn.Systems
     {
         public World World { get; set; }
         
+        private readonly IUnitFactory _factory;
+        
         private Filter _spawners;
         
         private Stash<EnemySpawner> _spawnerStash;
-        
-        private readonly IUnitFactory _factory;
         private Stash<Team> _teamStash;
         private Stash<Reward> _awardStash;
+        private Stash<GameManager> _gameManagerStash;
+        
+        private Entity _gameManagerEntity;
 
         public SpawnEnemyUnitsSystem(IUnitFactory factory) => _factory = factory;
 
@@ -26,13 +31,19 @@ namespace Assets.Game.Scripts.Battle.Ecs.Spawn.Systems
                 .With<EnemySpawner>()
                 .Build();
 
+            _gameManagerEntity = World.GetManagerEntity();
+
             _spawnerStash = World.GetStash<EnemySpawner>();
             _teamStash = World.GetStash<Team>();
             _awardStash = World.GetStash<Reward>();
+            _gameManagerStash = World.GetStash<GameManager>();
         }
 
         public void OnUpdate(float deltaTime)
         {
+            if (_gameManagerStash.Get(_gameManagerEntity).GameEnded)
+                return;
+            
             foreach (var entity in _spawners)
             {
                 ref var spawner = ref _spawnerStash.Get(entity);

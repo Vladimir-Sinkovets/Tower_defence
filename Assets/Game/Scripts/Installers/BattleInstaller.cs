@@ -3,7 +3,7 @@ using Assets.Game.Scripts.Battle.Configs;
 using Assets.Game.Scripts.Battle.Ecs;
 using Assets.Game.Scripts.Battle.Ecs.CurrencyBank.Views;
 using Assets.Game.Scripts.Battle.Services.BattleResultCalculators;
-using Assets.Game.Scripts.Battle.Services.EnemySpawnStarters;
+using Assets.Game.Scripts.Battle.Services.GameStarters;
 using Assets.Game.Scripts.Battle.Services.HudFactories;
 using Assets.Game.Scripts.Battle.Services.Raycasts;
 using Assets.Game.Scripts.Battle.Services.UnitFactories;
@@ -44,7 +44,7 @@ namespace Assets.Game.Scripts.Installers
             
             Container.BindInstance(World.Default).AsSingle();
             
-            Container.BindInterfacesAndSelfTo<EnemySpawnStarter>().AsSingle();
+            Container.BindInterfacesAndSelfTo<GameStarter>().AsSingle();
             
             Container.BindInstance(_enemySpawnConfig).AsSingle();
 

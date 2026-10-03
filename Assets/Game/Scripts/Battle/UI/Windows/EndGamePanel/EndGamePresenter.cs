@@ -41,7 +41,7 @@ namespace Assets.Game.Scripts.Battle.UI.Windows.EndGamePanel
             _view.Close();
         }
 
-        private void OnRestartButtonClickedHandler() => _sceneLoader.LoadScene(SceneNames.Game);
+        private void OnRestartButtonClickedHandler() => _sceneLoader.LoadScene(SceneNames.Battle);
 
         private void OnMenuButtonClickedHandler() => _sceneLoader.LoadScene(SceneNames.Menu);
 

@@ -1,7 +1,7 @@
 using Assets.Game.Scripts.Battle.Configs;
 using UnityEngine;
 
-namespace Assets.Game.Scripts.Battle.Services.EnemySpawnStarters
+namespace Assets.Game.Scripts.Battle.Services.GameStarters
 {
     [CreateAssetMenu(fileName = "Enemy_spawn_config", menuName = "Battle/Enemy spawn config")]
     public class EnemySpawnConfig : ScriptableObject

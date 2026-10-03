@@ -1,6 +1,7 @@
 using Assets.Game.Scripts.Battle.Ecs.AI.Systems;
 using Assets.Game.Scripts.Battle.Ecs.Attacks.Systems;
 using Assets.Game.Scripts.Battle.Ecs.CurrencyBank.Systems;
+using Assets.Game.Scripts.Battle.Ecs.GameManagement.Systems;
 using Assets.Game.Scripts.Battle.Ecs.HealthFeature.Systems;
 using Assets.Game.Scripts.Battle.Ecs.Input.Systems;
 using Assets.Game.Scripts.Battle.Ecs.Movement.Systems;
@@ -33,6 +34,7 @@ namespace Assets.Game.Scripts.Battle.Ecs
             AddAISystems(systemsGroup);
             AddAttackSystems(systemsGroup);
             AddDeathSystems(systemsGroup);
+            AddEndGameSystem(systemsGroup);
             AddCurrencySystems(systemsGroup);
             AddMoveSystems(systemsGroup);
             AddCleanSystem(systemsGroup);
@@ -42,6 +44,7 @@ namespace Assets.Game.Scripts.Battle.Ecs
 
         private void AddInitializeSystems(SystemsGroup systemsGroup)
         {
+            systemsGroup.AddInitializer(_instantiator.Instantiate<SetUpGameManager>());
             systemsGroup.AddInitializer(_instantiator.Instantiate<SetupStartCurrencySystem>());
         }
 
@@ -91,6 +94,11 @@ namespace Assets.Game.Scripts.Battle.Ecs
             
             systemsGroup.AddSystem(_instantiator.Instantiate<SyncPositionSystem>());
             systemsGroup.AddSystem(_instantiator.Instantiate<SyncRotationSystem>());
+        }
+
+        private void AddEndGameSystem(SystemsGroup systemsGroup)
+        {
+            systemsGroup.AddSystem(_instantiator.Instantiate<EndGameSystem>());
         }
 
         private void AddCleanSystem(SystemsGroup systemsGroup)
