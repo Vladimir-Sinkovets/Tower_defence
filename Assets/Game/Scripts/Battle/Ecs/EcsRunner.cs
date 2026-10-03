@@ -7,6 +7,7 @@ using Assets.Game.Scripts.Battle.Ecs.HealthFeature.Systems;
 using Assets.Game.Scripts.Battle.Ecs.Input.Systems;
 using Assets.Game.Scripts.Battle.Ecs.Movement.Systems;
 using Assets.Game.Scripts.Battle.Ecs.Spawn.Systems;
+using Assets.Game.Scripts.Battle.Ecs.Statistics.System;
 using Assets.Game.Scripts.Battle.Ecs.Unity.Systems;
 using Assets.Game.Scripts.Battle.Services.WorldAccessors;
 using Scellecs.Morpeh;
@@ -44,9 +45,15 @@ namespace Assets.Game.Scripts.Battle.Ecs
             AddEndGameSystem(systemsGroup);
             AddCurrencySystems(systemsGroup);
             AddMoveSystems(systemsGroup);
+            AddStatistic(systemsGroup);
             AddCleanSystem(systemsGroup);
 
             _world.AddSystemsGroup(0, systemsGroup);
+        }
+
+        private void AddStatistic(SystemsGroup systemsGroup)
+        {
+            systemsGroup.AddSystem(_instantiator.Instantiate<StatisticSystem>());
         }
 
         private void AddInitializeSystems(SystemsGroup systemsGroup)

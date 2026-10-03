@@ -24,6 +24,7 @@ namespace Assets.Game.Scripts.Installers
         [SerializeField] private UnitsConfig _unitsConfig;
         [SerializeField] private BattleConfig _battleConfig;
         [SerializeField] private WindowViewsConfig _windowViewsConfig;
+        [SerializeField] private BattleResultConfig _battleResultConfig;
         
         public override void InstallBindings()
         {
@@ -62,6 +63,8 @@ namespace Assets.Game.Scripts.Installers
             Container.BindInstance(_windowViewsConfig).AsSingle();
             
             Container.BindInterfacesTo<BattleResultCalculator>().AsSingle();
+            
+            Container.BindInstance(_battleResultConfig).AsSingle();
         }
     }
 }

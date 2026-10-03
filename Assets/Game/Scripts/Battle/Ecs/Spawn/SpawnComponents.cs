@@ -11,6 +11,7 @@ namespace Assets.Game.Scripts.Battle.Ecs.Spawn
         public int EnemyCount;
         public int IncreaseCountPerWave;
         public UnitConfig Config;
+        public int WaveCount;
     }
     public struct Reward : IComponent
     {

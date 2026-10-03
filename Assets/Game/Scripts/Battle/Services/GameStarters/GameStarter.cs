@@ -28,11 +28,12 @@ namespace Assets.Game.Scripts.Battle.Services.GameStarters
                 new()
                 {
                     Time = 0,
-                    NextWaveTime = _config.TimeBetweenSpawn,
+                    NextWaveTime = 0,
                     TimeBetweenWaves = _config.TimeBetweenSpawn,
                     Config = _config.EnemyConfig,
                     EnemyCount = _config.EnemyCount,
                     IncreaseCountPerWave = _config.IncreaseCountPerWave,
+                    WaveCount = 0,
                 });
         }
     }

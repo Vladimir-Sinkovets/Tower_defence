@@ -50,6 +50,8 @@ namespace Assets.Game.Scripts.Battle.Ecs.Spawn.Systems
 
                 if (spawner.Time >= spawner.NextWaveTime)
                 {
+                    spawner.WaveCount++;
+
                     for (var i = 0; i < spawner.EnemyCount; i++)
                     {
                         CreateEnemy(spawner);
