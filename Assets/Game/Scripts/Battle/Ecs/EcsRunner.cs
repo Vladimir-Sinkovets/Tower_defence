@@ -1,3 +1,4 @@
+using System;
 using Assets.Game.Scripts.Battle.Ecs.AI.Systems;
 using Assets.Game.Scripts.Battle.Ecs.Attacks.Systems;
 using Assets.Game.Scripts.Battle.Ecs.CurrencyBank.Systems;
@@ -7,21 +8,27 @@ using Assets.Game.Scripts.Battle.Ecs.Input.Systems;
 using Assets.Game.Scripts.Battle.Ecs.Movement.Systems;
 using Assets.Game.Scripts.Battle.Ecs.Spawn.Systems;
 using Assets.Game.Scripts.Battle.Ecs.Unity.Systems;
+using Assets.Game.Scripts.Battle.Services.WorldAccessors;
 using Scellecs.Morpeh;
 using Zenject;
 
 namespace Assets.Game.Scripts.Battle.Ecs
 {
-    public class EcsRunner
+    public class EcsRunner : IDisposable
     {
         private readonly IInstantiator _instantiator;
+        private readonly IWorldAccessor _worldAccessor;
         private World _world;
 
-        public EcsRunner(IInstantiator instantiator) => _instantiator = instantiator;
+        public EcsRunner(IInstantiator instantiator, IWorldAccessor worldAccessor)
+        {
+            _instantiator = instantiator;
+            _worldAccessor = worldAccessor;
+        }
 
         public void Init()
         {
-            _world = World.Default ?? World.Create();
+            _world = _worldAccessor.World;
 
             _world.UpdateByUnity = true;
 
@@ -109,5 +116,7 @@ namespace Assets.Game.Scripts.Battle.Ecs
             systemsGroup.AddSystem(_instantiator.Instantiate<RemoveDeathEventsSystem>());
             systemsGroup.AddSystem(_instantiator.Instantiate<CurrencyEventCleanSystem>());
         }
+
+        public void Dispose() => _world.Dispose();
     }
 }

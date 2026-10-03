@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using Assets.Game.Scripts.Battle.Configs;
 using Assets.Game.Scripts.Battle.Ecs.Spawn;
+using Assets.Game.Scripts.Battle.Services.WorldAccessors;
 using Scellecs.Morpeh;
 
 namespace Assets.Game.Scripts.Battle.UI.UnitsPanel
@@ -14,11 +15,11 @@ namespace Assets.Game.Scripts.Battle.UI.UnitsPanel
 
         private Stash<UnitChosenEvent> _eventStash;
 
-        public UnitsPresenter(IUnitsView unitsView, UnitsConfig unitsConfig, World world)
+        public UnitsPresenter(IUnitsView unitsView, UnitsConfig unitsConfig, IWorldAccessor worldAccessor)
         {
             _unitsView = unitsView;
             _unitsConfig = unitsConfig;
-            _world = world;
+            _world = worldAccessor.World;
         }
 
         public void Init()

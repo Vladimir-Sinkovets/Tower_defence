@@ -1,10 +1,12 @@
+using System;
 using Assets.Game.Scripts.Battle.Services.BattleResultCalculators;
 using Assets.Game.Scripts.Services.SceneLoaders;
 using Assets.Game.Scripts.Shared;
+using Scellecs.Morpeh;
 
 namespace Assets.Game.Scripts.Battle.UI.Windows.EndGamePanel
 {
-    public class EndGamePresenter : IWindowPresenter
+    public class EndGamePresenter : IWindowPresenter, IDisposable
     {
         private readonly IEndGameView _view;
         private readonly ISceneLoader _sceneLoader;

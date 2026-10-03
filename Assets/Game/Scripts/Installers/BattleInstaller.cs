@@ -7,6 +7,7 @@ using Assets.Game.Scripts.Battle.Services.GameStarters;
 using Assets.Game.Scripts.Battle.Services.HudFactories;
 using Assets.Game.Scripts.Battle.Services.Raycasts;
 using Assets.Game.Scripts.Battle.Services.UnitFactories;
+using Assets.Game.Scripts.Battle.Services.WorldAccessors;
 using Assets.Game.Scripts.Battle.UI.Windows.EndGamePanel;
 using Scellecs.Morpeh;
 using UnityEngine;
@@ -42,7 +43,7 @@ namespace Assets.Game.Scripts.Installers
             
             Container.BindInstance(_hudConfig).AsSingle();
             
-            Container.BindInstance(World.Default).AsSingle();
+            Container.BindInterfacesTo<WorldAccessor>().AsSingle();
             
             Container.BindInterfacesAndSelfTo<GameStarter>().AsSingle();
             

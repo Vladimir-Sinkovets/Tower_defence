@@ -1,6 +1,7 @@
 using Assets.Game.Scripts.Battle.Ecs.Extensions;
 using Assets.Game.Scripts.Battle.Ecs.GameManagement;
 using Assets.Game.Scripts.Battle.Ecs.Spawn;
+using Assets.Game.Scripts.Battle.Services.WorldAccessors;
 using Scellecs.Morpeh;
 
 namespace Assets.Game.Scripts.Battle.Services.GameStarters
@@ -10,9 +11,9 @@ namespace Assets.Game.Scripts.Battle.Services.GameStarters
         private readonly World _world;
         private readonly EnemySpawnConfig _config;
 
-        public GameStarter(World world, EnemySpawnConfig config)
+        public GameStarter(IWorldAccessor worldAccessor, EnemySpawnConfig config)
         {
-            _world = world;
+            _world = worldAccessor.World;
             _config = config;
         }
 
