@@ -6,6 +6,6 @@ namespace Assets.Game.Scripts.Battle.Services.UnitFactories
 {
     public interface IUnitFactory
     {
-        GameObject CreateUnit(UnitConfig config, Vector3 position, Entity entity, World world);
+        GameObject CreateUnit(UnitConfig config, Vector3 position, Entity entity, World world, int teamId);
     }
 }

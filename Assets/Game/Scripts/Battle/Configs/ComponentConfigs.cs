@@ -2,6 +2,7 @@ using System;
 using Assets.Game.Scripts.Battle.Ecs.Attacks;
 using Assets.Game.Scripts.Battle.Ecs.HealthFeature;
 using Assets.Game.Scripts.Battle.Ecs.Movement;
+using Assets.Game.Scripts.Battle.Ecs.Spawn;
 using Scellecs.Morpeh;
 using UnityEngine;
 
@@ -50,5 +51,12 @@ namespace Assets.Game.Scripts.Battle.Configs
         
         public void Apply(Entity entity, World world) => 
             world.GetStash<Speed>().Set(entity, new() { Value = _speed });
+    }
+
+    [Serializable]
+    public class TankConfig : IComponentConfig
+    {
+        public void Apply(Entity entity, World world) => 
+            world.GetStash<Tank>().Set(entity, new());
     }
 }

@@ -1,11 +1,14 @@
+using Assets.Game.Scripts.Battle.Common;
 using Assets.Game.Scripts.Battle.Configs;
 using Assets.Game.Scripts.Battle.Ecs.AI;
+using Assets.Game.Scripts.Battle.Ecs.Attacks;
 using Assets.Game.Scripts.Battle.Ecs.CurrencyBank;
 using Assets.Game.Scripts.Battle.Ecs.Extensions;
 using Assets.Game.Scripts.Battle.Ecs.GameManagement;
 using Assets.Game.Scripts.Battle.Ecs.Input;
 using Assets.Game.Scripts.Battle.Services.UnitFactories;
 using Scellecs.Morpeh;
+using UnityEditor.Experimental.GraphView;
 
 namespace Assets.Game.Scripts.Battle.Ecs.Spawn.Systems
 {
@@ -84,9 +87,7 @@ namespace Assets.Game.Scripts.Battle.Ecs.Spawn.Systems
                 {
                     var entity = World.CreateEntity();
                     
-                    _factory.CreateUnit(_config, clickEvent.Position, entity, World);
-                    
-                    _playerUnitStash.Set(entity, new());
+                    _factory.CreateUnit(_config, clickEvent.Position, entity, World, TeamIndexes.Player);
                     
                     currency.Value -= _config.Price;
                     

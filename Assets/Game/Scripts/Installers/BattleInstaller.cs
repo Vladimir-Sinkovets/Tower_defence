@@ -7,6 +7,7 @@ using Assets.Game.Scripts.Battle.Services.GameStarters;
 using Assets.Game.Scripts.Battle.Services.HudFactories;
 using Assets.Game.Scripts.Battle.Services.Raycasts;
 using Assets.Game.Scripts.Battle.Services.UnitFactories;
+using Assets.Game.Scripts.Battle.Services.UpgradeAppliers;
 using Assets.Game.Scripts.Battle.Services.WorldAccessors;
 using Assets.Game.Scripts.Battle.UI.Windows.EndGamePanel;
 using Scellecs.Morpeh;
@@ -65,6 +66,8 @@ namespace Assets.Game.Scripts.Installers
             Container.BindInterfacesTo<BattleResultCalculator>().AsSingle();
             
             Container.BindInstance(_battleResultConfig).AsSingle();
+            
+            Container.BindInterfacesTo<UpgradeApplier>().AsSingle();
         }
     }
 }

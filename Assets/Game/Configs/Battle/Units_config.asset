@@ -31,9 +31,13 @@ MonoBehaviour:
     - rid: 4213268725252751470
     - rid: 4213268725252751471
     - rid: 4213268725252751472
+    - rid: 130748525993001071
   references:
     version: 2
     RefIds:
+    - rid: 130748525993001071
+      type: {class: TankConfig, ns: Assets.Game.Scripts.Battle.Configs, asm: Assembly-CSharp}
+      data: 
     - rid: 4213268725252751467
       type: {class: HealthConfig, ns: Assets.Game.Scripts.Battle.Configs, asm: Assembly-CSharp}
       data:

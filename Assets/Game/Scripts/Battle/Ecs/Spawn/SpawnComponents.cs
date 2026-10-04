@@ -22,4 +22,6 @@ namespace Assets.Game.Scripts.Battle.Ecs.Spawn
     {
         public UnitConfig Config;
     }
+    
+    public struct Tank : IComponent { }
 }
