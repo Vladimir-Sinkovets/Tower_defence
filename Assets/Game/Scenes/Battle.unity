@@ -421,6 +421,7 @@ MonoBehaviour:
   _unitsConfig: {fileID: 11400000, guid: d2b8f96479e3fa645af5833db059a258, type: 2}
   _battleConfig: {fileID: 11400000, guid: 4955540505ff57f4f9fb51a2204c159e, type: 2}
   _windowViewsConfig: {fileID: 11400000, guid: f152bf68103a9124d8df5b540c91ac70, type: 2}
+  _battleResultConfig: {fileID: 11400000, guid: ae3ddfaceb967574e81fab53d5bdc9de, type: 2}
 --- !u!1 &824256934
 GameObject:
   m_ObjectHideFlags: 0
