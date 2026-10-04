@@ -422,6 +422,7 @@ MonoBehaviour:
   _battleConfig: {fileID: 11400000, guid: 4955540505ff57f4f9fb51a2204c159e, type: 2}
   _windowViewsConfig: {fileID: 11400000, guid: f152bf68103a9124d8df5b540c91ac70, type: 2}
   _battleResultConfig: {fileID: 11400000, guid: ae3ddfaceb967574e81fab53d5bdc9de, type: 2}
+  _battleSpawnBordersConfig: {fileID: 11400000, guid: 62681cb52328e4c488fd5ef76e82dbd4, type: 2}
 --- !u!1 &824256934
 GameObject:
   m_ObjectHideFlags: 0
@@ -1259,10 +1260,10 @@ SceneRoots:
   - {fileID: 1739042456}
   - {fileID: 1932180482}
   - {fileID: 1417024186}
+  - {fileID: 281237885}
   - {fileID: 768827005}
   - {fileID: 428286562}
   - {fileID: 1675204088}
   - {fileID: 1655926273}
   - {fileID: 870298470}
   - {fileID: 824256935}
-  - {fileID: 281237885}

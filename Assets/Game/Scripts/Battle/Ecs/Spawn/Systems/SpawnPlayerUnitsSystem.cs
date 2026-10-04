@@ -1,20 +1,19 @@
 using Assets.Game.Scripts.Battle.Common;
 using Assets.Game.Scripts.Battle.Configs;
-using Assets.Game.Scripts.Battle.Ecs.AI;
-using Assets.Game.Scripts.Battle.Ecs.Attacks;
 using Assets.Game.Scripts.Battle.Ecs.CurrencyBank;
 using Assets.Game.Scripts.Battle.Ecs.Extensions;
 using Assets.Game.Scripts.Battle.Ecs.GameManagement;
 using Assets.Game.Scripts.Battle.Ecs.Input;
 using Assets.Game.Scripts.Battle.Services.UnitFactories;
 using Scellecs.Morpeh;
-using UnityEditor.Experimental.GraphView;
+using UnityEngine;
 
 namespace Assets.Game.Scripts.Battle.Ecs.Spawn.Systems
 {
     public class SpawnPlayerUnitsSystem : ISystem
     {
         private readonly IUnitFactory _factory;
+        private readonly BattleSpawnBordersConfig _battleSpawnBordersConfig;
         public World World { get; set; }
         
         private Filter _clickOnFieldEvents;
@@ -23,7 +22,6 @@ namespace Assets.Game.Scripts.Battle.Ecs.Spawn.Systems
         
         private Stash<ClickOnFieldEvent> _eventStash;
         private Stash<UnitChosenEvent> _unitChosenEventStash;
-        private Stash<Team> _playerUnitStash;
         private Stash<Currency> _currencyStash;
         private Stash<CurrencyChangedEvent> _currencyChangedEventStash;
         private Stash<GameManager> _gamManagerStash;
@@ -32,7 +30,11 @@ namespace Assets.Game.Scripts.Battle.Ecs.Spawn.Systems
         
         private UnitConfig _config;
 
-        public SpawnPlayerUnitsSystem(IUnitFactory factory) => _factory = factory;
+        public SpawnPlayerUnitsSystem(IUnitFactory factory, BattleSpawnBordersConfig battleSpawnBordersConfig)
+        {
+            _factory = factory;
+            _battleSpawnBordersConfig = battleSpawnBordersConfig;
+        }
 
         public void OnAwake()
         {
@@ -55,7 +57,6 @@ namespace Assets.Game.Scripts.Battle.Ecs.Spawn.Systems
             _currencyStash = World.GetStash<Currency>();
             _currencyChangedEventStash = World.GetStash<CurrencyChangedEvent>();
             _gamManagerStash = World.GetStash<GameManager>();
-            _playerUnitStash = World.GetStash<Team>();
         }
         
         public void OnUpdate(float deltaTime)
@@ -83,6 +84,9 @@ namespace Assets.Game.Scripts.Battle.Ecs.Spawn.Systems
                 if (_config == null)
                     return;
 
+                if (!_battleSpawnBordersConfig.SpawnArea.Contains(new Vector2(clickEvent.Position.x, clickEvent.Position.z)))
+                    return;
+                
                 if (currency.Value >= _config.Price)
                 {
                     var entity = World.CreateEntity();

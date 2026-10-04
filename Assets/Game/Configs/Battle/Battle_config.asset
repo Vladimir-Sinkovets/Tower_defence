@@ -13,3 +13,5 @@ MonoBehaviour:
   m_Name: Battle_config
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Battle.Configs.BattleConfig
   StartCurrency: 10
+  SpawnBordersX: {x: -2.75, y: 2.75}
+  SpawnBordersY: {x: -6, y: 0}

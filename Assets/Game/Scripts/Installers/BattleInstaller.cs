@@ -26,6 +26,8 @@ namespace Assets.Game.Scripts.Installers
         [SerializeField] private BattleConfig _battleConfig;
         [SerializeField] private WindowViewsConfig _windowViewsConfig;
         [SerializeField] private BattleResultConfig _battleResultConfig;
+        [SerializeField] private BattleSpawnBordersConfig _battleSpawnBordersConfig;
+        
         
         public override void InstallBindings()
         {
@@ -68,6 +70,8 @@ namespace Assets.Game.Scripts.Installers
             Container.BindInstance(_battleResultConfig).AsSingle();
             
             Container.BindInterfacesTo<UpgradeApplier>().AsSingle();
+            
+            Container.BindInstance(_battleSpawnBordersConfig).AsSingle();
         }
     }
 }
