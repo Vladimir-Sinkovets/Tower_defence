@@ -2,7 +2,6 @@ using System;
 using Assets.Game.Scripts.Battle.Services.BattleResultCalculators;
 using Assets.Game.Scripts.Services.SceneLoaders;
 using Assets.Game.Scripts.Shared;
-using Scellecs.Morpeh;
 
 namespace Assets.Game.Scripts.Battle.UI.Windows.EndGamePanel
 {

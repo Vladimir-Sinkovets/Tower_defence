@@ -3,6 +3,7 @@ using Assets.Game.Scripts.Battle.Configs;
 using Assets.Game.Scripts.Battle.Ecs;
 using Assets.Game.Scripts.Battle.Ecs.CurrencyBank.Views;
 using Assets.Game.Scripts.Battle.Services.BattleResultCalculators;
+using Assets.Game.Scripts.Battle.Services.EndGame;
 using Assets.Game.Scripts.Battle.Services.GameStarters;
 using Assets.Game.Scripts.Battle.Services.HudFactories;
 using Assets.Game.Scripts.Battle.Services.Raycasts;
@@ -72,6 +73,8 @@ namespace Assets.Game.Scripts.Installers
             Container.BindInterfacesTo<UpgradeApplier>().AsSingle();
             
             Container.BindInstance(_battleSpawnBordersConfig).AsSingle();
+            
+            Container.BindInterfacesTo<EndGameService>().AsSingle();
         }
     }
 }

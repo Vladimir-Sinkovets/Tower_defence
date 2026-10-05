@@ -1,6 +1,7 @@
 using Assets.Game.Scripts.Battle.Common;
 using Assets.Game.Scripts.Battle.Ecs.AI;
 using Assets.Game.Scripts.Battle.Ecs.Extensions;
+using Assets.Game.Scripts.Battle.Services.EndGame;
 using Assets.Game.Scripts.Battle.UI.Windows.EndGamePanel;
 using Scellecs.Morpeh;
 
@@ -10,8 +11,6 @@ namespace Assets.Game.Scripts.Battle.Ecs.GameManagement.Systems
     {
         public World World { get; set; }
         
-        private readonly IWindowsManager _windowsManager;
-        
         private Filter _units;
         
         private Stash<Team> _teamStash;
@@ -19,7 +18,9 @@ namespace Assets.Game.Scripts.Battle.Ecs.GameManagement.Systems
         
         private Entity _gameManagerEntity;
 
-        public EndGameSystem(IWindowsManager windowsManager) => _windowsManager = windowsManager;
+        private readonly IEndGameService _endGameService;
+        
+        public EndGameSystem(IEndGameService endGameService) => _endGameService = endGameService;
 
         public void OnAwake()
         {
@@ -52,9 +53,12 @@ namespace Assets.Game.Scripts.Battle.Ecs.GameManagement.Systems
             {
                 ref var manager = ref _gameManagerStash.Get(_gameManagerEntity);
 
-                manager.GameEnded = true;
+                if (manager.GameEnded)
+                    return;
                 
-                _windowsManager.Open(WindowType.EndGame);
+                manager.GameEnded = true;
+
+                _endGameService.EndGame();                
             }
         }
         
