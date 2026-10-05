@@ -1,10 +1,7 @@
 using Assets.Game.Scripts.Common.UniversalStateMachine;
 using Assets.Game.Scripts.Enemies.States;
-using Assets.Game.Scripts.Services.Configs;
 using Assets.Game.Scripts.Services.Configs.Enemies;
-using Assets.Game.Scripts.Services.CurrencyBanks;
 using Assets.Game.Scripts.Services.Registries;
-using Assets.Game.Scripts.Services.Statistics;
 using Assets.Game.Scripts.Shared;
 using Assets.Game.Scripts.UI.HealthBar;
 using UnityEngine;

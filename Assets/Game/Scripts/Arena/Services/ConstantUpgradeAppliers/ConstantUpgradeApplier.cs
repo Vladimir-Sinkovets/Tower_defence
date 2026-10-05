@@ -7,12 +7,12 @@ namespace Assets.Game.Scripts.Arena.Services.ConstantUpgradeAppliers
 {
     public class ConstantUpgradeApplier : IConstantUpgradeApplier
     {
+        private readonly GameDataHolder _gameDataHolder;
         private readonly GameSettings _settings;
-        private readonly SaveData _saveData;
 
-        public ConstantUpgradeApplier(IGameSettingsAccessor settingsAccessor, ISaveService saveService)
+        public ConstantUpgradeApplier(IGameSettingsAccessor settingsAccessor, ISaveService saveService, GameDataHolder gameDataHolder)
         {
-            _saveData = saveService.SaveData;
+            _gameDataHolder = gameDataHolder;
             _settings = settingsAccessor.Settings;
         }
         
@@ -43,7 +43,7 @@ namespace Assets.Game.Scripts.Arena.Services.ConstantUpgradeAppliers
         {
             var upgradesSettings = _settings.UpgradesSettings;
             
-            return _saveData.Upgrades.GetValueOrDefault(upgrade.Id, upgradesSettings.UpgradeLevel);
+            return _gameDataHolder.Data.Upgrades.GetValueOrDefault(upgrade.Id, upgradesSettings.UpgradeLevel);
         }
     }
 }

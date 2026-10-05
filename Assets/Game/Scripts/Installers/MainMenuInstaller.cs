@@ -1,5 +1,5 @@
 ﻿using Assets.Game.Scripts.Arena.Services.ArenaConstantUpdateService;
-using Assets.Game.Scripts.Services.Net;
+using Assets.Game.Scripts.Battle.Services.Upgrades;
 using Assets.Game.Scripts.UI;
 using Assets.Game.Scripts.UI.ConnectMenu;
 using Assets.Game.Scripts.UI.MainMenuStatistics;
@@ -19,11 +19,13 @@ namespace Assets.Game.Scripts.Installers
         [SerializeField] private ShopView _shopView;
         [SerializeField] private ConnectView _connectView;
         [SerializeField] private ArenaUpgradePanelView _arenaUpgradePanelView;
+        [SerializeField] private BattleUpgradePanelView _battleUpgradePanelView;
         
         public override void InstallBindings()
         {
             Container.BindInterfacesTo<UpgradeService>().AsSingle();
             Container.BindInterfacesTo<ArenaConstantUpgradeService>().AsSingle();
+            Container.BindInterfacesTo<BattleUpgradeService>().AsSingle();
             
             Container.BindInstance<IMainMenuStatisticsView>(_mainMenuStatisticsView).AsSingle();
             Container.BindInterfacesAndSelfTo<MainMenuStatisticsPresenter>().AsSingle();
@@ -42,6 +44,9 @@ namespace Assets.Game.Scripts.Installers
 
             Container.BindInstance<IArenaUpgradePanelView>(_arenaUpgradePanelView).AsSingle();
             Container.BindInterfacesAndSelfTo<ArenaUpgradePanelPresenter>().AsSingle();
+
+            Container.BindInstance<IBattleUpgradePanelView>(_battleUpgradePanelView).AsSingle();
+            Container.BindInterfacesAndSelfTo<BattleUpgradePanelPresenter>().AsSingle();
         }
     }
 }

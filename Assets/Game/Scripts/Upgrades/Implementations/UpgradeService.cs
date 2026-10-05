@@ -17,21 +17,24 @@ namespace Assets.Game.Scripts.Upgrades.Implementations
         private readonly UpgradeConfigs _upgradeConfigs;
         private readonly GameSettings _settings;
         private readonly ISaveService _saveService;
-        private readonly SaveData _saveData;
+        private readonly GameDataHolder _gameDataHolder;
 
-        public UpgradeService(ISaveService saveService, IGameSettingsAccessor gameSettingsAccessor, UpgradeConfigs upgradeConfigs)
+        public UpgradeService(ISaveService saveService,
+            GameDataHolder gameDataHolder,
+            IGameSettingsAccessor gameSettingsAccessor,
+            UpgradeConfigs upgradeConfigs)
         {
             _saveService = saveService;
-            _saveData = saveService.SaveData;
+            _gameDataHolder = gameDataHolder;
             _settings = gameSettingsAccessor.Settings;
             _upgradeConfigs = upgradeConfigs;
         }
         
-        public void Initialize() => _saveData.OnChanged += OnChangedHandler;
+        public void Initialize() => _gameDataHolder.Data.OnChanged += OnChangedHandler;
 
         public IEnumerable<UpgradeSettings> GetUpgrades() => _settings.UpgradesSettings.GetUpgradeConfigs();
 
-        public int GetLevel(UpgradeSettings upgrade) => _saveData.Upgrades.GetValueOrDefault(upgrade.Id, 0);
+        public int GetLevel(UpgradeSettings upgrade) => _gameDataHolder.Data.Upgrades.GetValueOrDefault(upgrade.Id, 0);
 
         public Sprite GetIcon(string id) => _upgradeConfigs.Configs.FirstOrDefault(x => x.Id == id)?.Icon;
         
@@ -41,7 +44,7 @@ namespace Assets.Game.Scripts.Upgrades.Implementations
         {
             var cost = GetLevelCost(upgrade);
 
-            return _saveData.MetaCurrency >= cost;
+            return _gameDataHolder.Data.MetaCurrency >= cost;
         }
 
         public void BuyUpgrade(UpgradeSettings upgrade)
@@ -51,19 +54,19 @@ namespace Assets.Game.Scripts.Upgrades.Implementations
             
             var cost = GetLevelCost(upgrade);
 
-            if (_saveData.MetaCurrency < cost)
+            if (_gameDataHolder.Data.MetaCurrency < cost)
             {
                 Debug.LogError($"Player does not have enough currency to buy the upgrade ({upgrade.Id})");
                 return;
             }
             
-            _saveData.MetaCurrency -= cost;
+            _gameDataHolder.Data.MetaCurrency -= cost;
 
-            if (!_saveData.Upgrades.TryAdd(upgrade.Id, _settings.UpgradesSettings.FirstLevel))
+            if (!_gameDataHolder.Data.Upgrades.TryAdd(upgrade.Id, _settings.UpgradesSettings.FirstLevel))
             {
-                var newLevel = _saveData.Upgrades[upgrade.Id] + _settings.UpgradesSettings.LevelIncrease;
+                var newLevel = _gameDataHolder.Data.Upgrades[upgrade.Id] + _settings.UpgradesSettings.LevelIncrease;
                 
-                _saveData.Upgrades[upgrade.Id] = newLevel;
+                _gameDataHolder.Data.Upgrades[upgrade.Id] = newLevel;
             }
 
             _saveService.Save();
@@ -73,6 +76,6 @@ namespace Assets.Game.Scripts.Upgrades.Implementations
 
         private void OnChangedHandler() => OnUpgradesChanged?.Invoke();
 
-        public void Dispose() => _saveData.OnChanged -= OnChangedHandler;
+        public void Dispose() => _gameDataHolder.Data.OnChanged -= OnChangedHandler;
     }
 }

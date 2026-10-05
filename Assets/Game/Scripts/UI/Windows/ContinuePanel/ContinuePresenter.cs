@@ -17,7 +17,7 @@ namespace Assets.Game.Scripts.UI.Windows.ContinuePanel
         private readonly IWindowsManager _windowsManager;
         private readonly IGameOverManager _gameOverManager;
         private readonly IContinueGameService _continueGameService;
-        private readonly SaveData _saveData;
+        private readonly GameDataHolder _gameDataHolder;
 
         public ContinuePresenter(
             IContinueView view,
@@ -26,7 +26,7 @@ namespace Assets.Game.Scripts.UI.Windows.ContinuePanel
             IWindowsManager windowsManager,
             IGameOverManager gameOverManager,
             IContinueGameService continueGameService,
-            ISaveService saveService)
+            GameDataHolder gameDataHolder)
         {
             _view = view;
             _gameResumeService = gameResumeService;
@@ -34,7 +34,7 @@ namespace Assets.Game.Scripts.UI.Windows.ContinuePanel
             _windowsManager = windowsManager;
             _gameOverManager = gameOverManager;
             _continueGameService = continueGameService;
-            _saveData = saveService.SaveData;
+            _gameDataHolder = gameDataHolder;
         }
         
         public void Activate()
@@ -64,7 +64,7 @@ namespace Assets.Game.Scripts.UI.Windows.ContinuePanel
 
         private async UniTask ShowAdAsync()
         {
-            if (!_saveData.IsAdsDisabled)
+            if (!_gameDataHolder.Data.IsAdsDisabled)
             {
                 try
                 {

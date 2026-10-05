@@ -9,18 +9,19 @@ namespace Assets.Game.Scripts.Saves
     public class SaveService : ISaveService
     {
         private readonly ICloudService _cloudSaveService;
-        
-        private SaveData _saveData = new();
+        private readonly GameDataHolder _gameDataHolder;
 
-        public SaveService(ICloudService cloudSaveService) => _cloudSaveService = cloudSaveService;
-
-        public SaveData SaveData => _saveData;
+        public SaveService(ICloudService cloudSaveService, GameDataHolder gameDataHolder)
+        {
+            _cloudSaveService = cloudSaveService;
+            _gameDataHolder = gameDataHolder;
+        }
 
         public void Save()
         {
-            _saveData.LastSaveDate = DateTime.UtcNow;
+            _gameDataHolder.Data.LastSaveDate = DateTime.UtcNow;
             
-            var json = JsonConvert.SerializeObject(_saveData);
+            var json = JsonConvert.SerializeObject(_gameDataHolder.Data);
             
             _cloudSaveService.SaveAsync(json);
             
@@ -34,42 +35,42 @@ namespace Assets.Game.Scripts.Saves
 
             if (localData.LastSaveDate > cloudData.LastSaveDate)
             {
-                _saveData = localData;
+                _gameDataHolder.Data = localData;
                 Debug.Log($"[{nameof(SaveService)}] Loaded local data");
             }
             else
             {
-                _saveData = cloudData;
+                _gameDataHolder.Data = cloudData;
                 Debug.Log($"[{nameof(SaveService)}] Loaded cloud data");
             }
         }
 
-        private async UniTask<SaveData> LoadCloudDataAsync()
+        private async UniTask<GameData> LoadCloudDataAsync()
         {
             var cloudJson = await _cloudSaveService.LoadAsync();
 
             return CreateSaveData(cloudJson);
         }
 
-        private SaveData LoadLocalData()
+        private GameData LoadLocalData()
         {
             var localJson = PlayerPrefs.GetString(SaveConstants.PlayerPrefsKey);
             
             return CreateSaveData(localJson);
         }
 
-        private static SaveData CreateSaveData(string json)
+        private static GameData CreateSaveData(string json)
         {
             if (string.IsNullOrEmpty(json))
-                return SaveData.Default;
+                return GameData.Default;
             
             try
             {
-                return JsonConvert.DeserializeObject<SaveData>(json);
+                return JsonConvert.DeserializeObject<GameData>(json);
             }
             catch
             {
-                return SaveData.Default;
+                return GameData.Default;
             }
         }
     }

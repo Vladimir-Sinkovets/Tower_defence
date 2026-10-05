@@ -4,26 +4,26 @@ namespace Assets.Game.Scripts.Services.GameResultSavers
 {
     public class GameResultSaver : IGameResultSaver
     {
-        private readonly SaveData _saveData;
+        private readonly GameDataHolder _gameDataHolder;
         private readonly ISaveService _saveService;
 
-        public GameResultSaver(ISaveService saveService)
+        public GameResultSaver(GameDataHolder gameDataHolder, ISaveService saveService)
         {
+            _gameDataHolder = gameDataHolder;
             _saveService = saveService;
-            _saveData = saveService.SaveData;
         }
 
         public void ApplyMetaCurrency(int earnedMetaCurrency)
         {
-            _saveData.MetaCurrency += earnedMetaCurrency;
+            _gameDataHolder.Data.MetaCurrency += earnedMetaCurrency;
             
             _saveService.Save();
         }
 
         public void ApplyWavesRecord(int wavesCount)
         {
-            if (_saveData.WavesRecord < wavesCount)
-                _saveData.WavesRecord = wavesCount;
+            if (_gameDataHolder.Data.WavesRecord < wavesCount)
+                _gameDataHolder.Data.WavesRecord = wavesCount;
             
             _saveService.Save();
         }

@@ -9,11 +9,13 @@ namespace Assets.Game.Scripts.Services.Purchases
     {
         private readonly ISaveService _saveService;
         private readonly InAppPurchasesConfig _config;
+        private readonly GameDataHolder _gameDataHolder;
 
-        public InAppPurchaseExecutor(ISaveService saveService, InAppPurchasesConfig config)
+        public InAppPurchaseExecutor(ISaveService saveService, InAppPurchasesConfig config, GameDataHolder gameDataHolder)
         {
             _saveService = saveService;
             _config = config;
+            _gameDataHolder = gameDataHolder;
         }
 
         public void Execute(string productId)
@@ -26,7 +28,7 @@ namespace Assets.Game.Scripts.Services.Purchases
                 return;
             }
             
-            product.Action.Execute(_saveService);
+            product.Action.Execute(_saveService, _gameDataHolder);
         }
     }
 }

@@ -8,9 +8,9 @@ namespace Assets.Game.Scripts.Services.Purchases.Configs
     {
         public int Amount;
         
-        public void Execute(ISaveService saveService)
+        public void Execute(ISaveService saveService, GameDataHolder gameDataHolder)
         {
-            saveService.SaveData.MetaCurrency += Amount;
+            gameDataHolder.Data.MetaCurrency += Amount;
             
             saveService.Save();
         }

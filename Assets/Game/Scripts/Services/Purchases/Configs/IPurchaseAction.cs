@@ -4,6 +4,6 @@ namespace Assets.Game.Scripts.Services.Purchases.Configs
 {
     public interface IPurchaseAction
     {
-        void Execute(ISaveService saveService);
+        void Execute(ISaveService saveService, GameDataHolder gameDataHolder);
     }
 }

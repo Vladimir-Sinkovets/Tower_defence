@@ -5,20 +5,19 @@ using Assets.Game.Scripts.Saves;
 using Assets.Game.Scripts.Services.Configs;
 using Assets.Game.Scripts.Services.Configs.Upgrades;
 using Assets.Game.Scripts.Upgrades.Interfaces;
-using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Assets.Game.Scripts.Upgrades.Implementations
 {
     public class BuildingUpgradeApplier : IBuildingUpgradeApplier
     {
-        private readonly SaveData _saveData;
+        private readonly GameDataHolder _gameDataHolder;
         private readonly GameSettings _settings;
 
-        public BuildingUpgradeApplier(IGameSettingsAccessor gameSettingsAccessor, ISaveService saveService)
+        public BuildingUpgradeApplier(IGameSettingsAccessor gameSettingsAccessor, GameDataHolder gameDataHolder)
         {
+            _gameDataHolder = gameDataHolder;
             _settings = gameSettingsAccessor.Settings;
-            _saveData = saveService.SaveData;
         }
         
         public int ApplyBuildingDamageUpgrade(int baseDamage, BuildingType buildingType)
@@ -70,7 +69,7 @@ namespace Assets.Game.Scripts.Upgrades.Implementations
         {
             var upgradesSettings = _settings.UpgradesSettings;
             
-            return _saveData.Upgrades.GetValueOrDefault(upgrade.Id, upgradesSettings.UpgradeLevel);
+            return _gameDataHolder.Data.Upgrades.GetValueOrDefault(upgrade.Id, upgradesSettings.UpgradeLevel);
         }
     }
 }

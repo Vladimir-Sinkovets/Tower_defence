@@ -13,14 +13,14 @@ namespace Assets.Game.Scripts.Services.Ads
         private int _adsCallCount;
         
         private readonly IInterstitialAdsService _interstitialAdsService;
-        private readonly SaveData _saveData;
+        private readonly GameDataHolder _gameDataHolder;
 
         private CancellationTokenSource _cancellationTokenSource;
 
-        public MainMenuInterstitialAdsManager(IInterstitialAdsService interstitialAdsService, ISaveService saveService)
+        public MainMenuInterstitialAdsManager(IInterstitialAdsService interstitialAdsService, GameDataHolder gameDataHolder)
         {
             _interstitialAdsService = interstitialAdsService;
-            _saveData = saveService.SaveData;
+            _gameDataHolder = gameDataHolder;
         }
 
         public void Initialize() => SceneManager.sceneLoaded += OnSceneLoaded;
@@ -35,7 +35,7 @@ namespace Assets.Game.Scripts.Services.Ads
 
         private async UniTask ShowAd()
         {
-            if (_saveData.IsAdsDisabled)
+            if (_gameDataHolder.Data.IsAdsDisabled)
                 return;
             
             _adsCallCount++;

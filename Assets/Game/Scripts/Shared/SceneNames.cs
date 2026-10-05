@@ -6,5 +6,6 @@
         public const string Game = "Gameplay";
         public const string Bootstrap = "Bootstrap";
         public const string Arena = "Arena";
+        public const string Battle = "Battle";
     }
 }

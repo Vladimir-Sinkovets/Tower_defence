@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Assets.Game.Scripts.Saves
 {
     [Serializable]
-    public class SaveData
+    public class GameData
     {
         public event Action OnChanged;
         
@@ -64,7 +64,7 @@ namespace Assets.Game.Scripts.Saves
             }
         }
 
-        public static SaveData Default => new SaveData
+        public static GameData Default => new GameData
         {
             MetaCurrency = 0,
             WavesRecord = 0,

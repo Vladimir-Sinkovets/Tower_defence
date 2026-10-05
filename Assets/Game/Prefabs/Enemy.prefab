@@ -520,6 +520,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 47e7468693a15f14b81cac13b492b28e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8780912966657089858}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 47e7468693a15f14b81cac13b492b28e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1282518318542904615}
   m_SourcePrefab: {fileID: 100100000, guid: 47e7468693a15f14b81cac13b492b28e, type: 3}
 --- !u!1 &1644224498501433898 stripped
 GameObject:
@@ -563,8 +566,21 @@ MonoBehaviour:
   _animator: {fileID: 4913932138852090868}
   _canvas: {fileID: 8272443485462244588}
   _modelHideAnimationRoot: {fileID: 5984009649443817744}
+  _animationEventHandler: {fileID: 1282518318542904615}
   _hideViewDuration: 1
   _hideViewYPosition: 1.5
+--- !u!114 &1282518318542904615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1644224498501433898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fa2c799f3424ac782c4e486a1bf2a4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Enemies.EnemyAnimationEventHandler
 --- !u!4 &2133199707065573520 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 47e7468693a15f14b81cac13b492b28e, type: 3}

@@ -1,4 +1,5 @@
 using Assets.Game.Scripts.Arena.Services.ArenaConstantUpdateService;
+using Assets.Game.Scripts.Battle.Configs;
 using Assets.Game.Scripts.Saves;
 using Assets.Game.Scripts.Services.Ads;
 using Assets.Game.Scripts.Services.Analytics;
@@ -20,12 +21,15 @@ namespace Assets.Game.Scripts.Installers
     {
         [SerializeField] private UpgradeConfigs _upgradeConfigs;
         [SerializeField] private ArenaConstantUpgradesConfig _arenaConstantUpgradesConfig;
+        [SerializeField] private BattleUpgradesConfig _battleUpgradesConfig;
         [SerializeField] private AdsConfig _adsConfig;
         [SerializeField] private InAppPurchasesConfig _inAppPurchasesConfig;
         
         public override void InstallBindings()
         {
             Container.BindInterfacesTo<SaveService>().AsSingle();
+            
+            Container.Bind<GameDataHolder>().AsSingle();
             
             Container.BindInterfacesTo<AddressableAssetProvider>().AsSingle();
             
@@ -58,6 +62,8 @@ namespace Assets.Game.Scripts.Installers
             Container.BindInterfacesAndSelfTo<UnityCloudSaveService>().AsSingle();
             
             Container.BindInterfacesTo<NetworkService>().AsSingle();
+            
+            Container.BindInstance(_battleUpgradesConfig).AsSingle();
             
             BindPhotonCallbacks();
         }

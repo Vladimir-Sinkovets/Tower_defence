@@ -11,11 +11,14 @@ namespace Assets.Game.Scripts.Enemies
         [SerializeField] private Animator _animator;
         [SerializeField] private GameObject _canvas;
         [SerializeField] private Transform _modelHideAnimationRoot;
+        [SerializeField] private EnemyAnimationEventHandler _animationEventHandler;
 
         [SerializeField] private float _hideViewDuration = 1.0f;
         [SerializeField] private float _hideViewYPosition = 1.5f;
 
         private Action _currentAttackCallback;
+
+        private void Awake() => _animationEventHandler.OnHit += OnHitHandler;
 
         public void PlayWalkAnimation() => _animator.SetTrigger(SimpleEnemyAnimationParameters.Walk);
 
@@ -30,7 +33,7 @@ namespace Assets.Game.Scripts.Enemies
 
         public void PlayDeathAnimation() => _animator.SetTrigger(SimpleEnemyAnimationParameters.Death);
 
-        public void AttackAnimationEventHandler()
+        private void OnHitHandler()
         {
             _currentAttackCallback?.Invoke();
 
@@ -53,6 +56,8 @@ namespace Assets.Game.Scripts.Enemies
         {
             if (_modelHideAnimationRoot != null)
                 _modelHideAnimationRoot.DOKill();
+
+            _animationEventHandler.OnHit -= OnHitHandler;
         }
     }
 }

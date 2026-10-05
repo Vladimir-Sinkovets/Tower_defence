@@ -6,9 +6,9 @@ namespace Assets.Game.Scripts.Services.Purchases.Configs
     [Serializable]
     public class DisableAdsPurchaseAction : IPurchaseAction
     {
-        public void Execute(ISaveService saveService)
+        public void Execute(ISaveService saveService, GameDataHolder gameDataHolder)
         {
-            saveService.SaveData.IsAdsDisabled = true;
+            gameDataHolder.Data.IsAdsDisabled = true;
             saveService.Save();
         }
     }

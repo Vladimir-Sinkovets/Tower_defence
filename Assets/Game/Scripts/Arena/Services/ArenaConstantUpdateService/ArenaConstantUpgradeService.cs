@@ -12,22 +12,26 @@ namespace Assets.Game.Scripts.Arena.Services.ArenaConstantUpdateService
     public class ArenaConstantUpgradeService : IArenaConstantUpgradeService, IInitializable
     {
         private readonly ISaveService _saveService;
+        private readonly GameDataHolder _gameDataHolder;
         private readonly ArenaConstantUpgradesConfig _config;
         private readonly GameSettings _settings;
-        private readonly SaveData _saveData;
 
         public event Action OnUpgradesChanged;
 
-        public ArenaConstantUpgradeService(ISaveService saveService, ArenaConstantUpgradesConfig config, IGameSettingsAccessor gameSettingsAccessor)
+        public ArenaConstantUpgradeService(
+            ISaveService saveService,
+            GameDataHolder gameDataHolder,
+            ArenaConstantUpgradesConfig config,
+            IGameSettingsAccessor gameSettingsAccessor)
         {
             _saveService = saveService;
-            _saveData = saveService.SaveData;
-            
+            _gameDataHolder = gameDataHolder;
+
             _config = config;
             _settings = gameSettingsAccessor.Settings;
         }
         
-        public void Initialize() => _saveData.OnChanged += OnChangedHandler;
+        public void Initialize() => _gameDataHolder.Data.OnChanged += OnChangedHandler;
         
         public IEnumerable<UpgradeSettings> GetUpgrades() => _settings.UpgradesSettings.GetArenaUpgradeConfigs();
 
@@ -35,7 +39,7 @@ namespace Assets.Game.Scripts.Arena.Services.ArenaConstantUpdateService
         {
             var cost = GetLevelCost(upgrade);
 
-            return _saveData.MetaCurrency >= cost;
+            return _gameDataHolder.Data.MetaCurrency >= cost;
         }
 
         public UpgradeSettings GetUpgrade(string id) => GetUpgrades().FirstOrDefault(x => x.Id == id);
@@ -47,19 +51,19 @@ namespace Assets.Game.Scripts.Arena.Services.ArenaConstantUpdateService
             
             var cost = GetLevelCost(upgrade);
 
-            if (_saveData.MetaCurrency < cost)
+            if (_gameDataHolder.Data.MetaCurrency < cost)
             {
                 Debug.LogError($"Player does not have enough currency to buy the upgrade ({upgrade.Id})");
                 return;
             }
             
-            _saveData.MetaCurrency -= cost;
+            _gameDataHolder.Data.MetaCurrency -= cost;
 
-            if (!_saveData.Upgrades.TryAdd(upgrade.Id, _settings.UpgradesSettings.FirstLevel))
+            if (!_gameDataHolder.Data.Upgrades.TryAdd(upgrade.Id, _settings.UpgradesSettings.FirstLevel))
             {
-                var newLevel = _saveData.Upgrades[upgrade.Id] + _settings.UpgradesSettings.LevelIncrease;
+                var newLevel = _gameDataHolder.Data.Upgrades[upgrade.Id] + _settings.UpgradesSettings.LevelIncrease;
                 
-                _saveData.Upgrades[upgrade.Id] = newLevel;
+                _gameDataHolder.Data.Upgrades[upgrade.Id] = newLevel;
             }
 
             _saveService.Save();
@@ -69,7 +73,7 @@ namespace Assets.Game.Scripts.Arena.Services.ArenaConstantUpdateService
         
         public Sprite GetIcon(string id) => _config.Configs.FirstOrDefault(x => x.Id == id)?.Icon;
 
-        public int GetLevel(UpgradeSettings upgrade) => _saveData.Upgrades.GetValueOrDefault(upgrade.Id, 0);
+        public int GetLevel(UpgradeSettings upgrade) => _gameDataHolder.Data.Upgrades.GetValueOrDefault(upgrade.Id, 0);
      
         
         private void OnChangedHandler() => OnUpgradesChanged?.Invoke();

@@ -18,6 +18,10 @@ namespace Assets.Game.Scripts.Services.Configs.Upgrades
         
         public ArenaHpUpgradeSettings ArenaHpUpgradeSettings;
         public ArenaDamageUpgradeSettings ArenaDamageUpgradeSettings;
+        
+        public BattleStartCurrencyUpgradeSettings BattleStartCurrencyUpgradeSettings;
+        public BattleTankDamageUpgradeSettings BattleTankDamageUpgradeSettings;
+        public BattleDefaultUnitDamageUpgradeSettings BattleDefaultUnitDamageUpgradeSettings;
 
         public IEnumerable<UpgradeSettings> GetUpgradeConfigs()
         {
@@ -32,6 +36,13 @@ namespace Assets.Game.Scripts.Services.Configs.Upgrades
         {
             yield return ArenaHpUpgradeSettings;
             yield return ArenaDamageUpgradeSettings;
+        }
+
+        public IEnumerable<UpgradeSettings> GetBattleUpgradeConfigs()
+        {
+            yield return BattleStartCurrencyUpgradeSettings;
+            yield return BattleTankDamageUpgradeSettings;
+            yield return BattleDefaultUnitDamageUpgradeSettings;
         }
     }
 }
