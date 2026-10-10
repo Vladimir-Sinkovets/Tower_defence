@@ -12,20 +12,22 @@ namespace Assets.Game.Scripts.Enemies.States
 
         public SimpleEnemyAttackState(IStateSwitcher stateSwitcher, SimpleEnemyStateMachineData data) : base(stateSwitcher) => _data = data;
 
-        public override void Enter() => _data.Enemy.OnDied += OnEnemyDied;
+        public override void Enter()
+        {
+            _data.Enemy.OnDied += OnEnemyDied;
+            _data.Enemy.Deactivated += OnDeactivatedHandler;
+        }
 
-        public override void Exit() => _data.Enemy.OnDied -= OnEnemyDied;
+        public override void Exit()
+        {
+            _data.Enemy.OnDied -= OnEnemyDied;
+            _data.Enemy.Deactivated -= OnDeactivatedHandler;
+        }
 
         public override void Update()
         {
             if (_isAttacking)
                 return;
-
-            if (!_data.Enemy.IsActive)
-            {
-                StateSwitcher.SwitchState<SimpleEnemyIdleState>();
-                return;
-            }
 
             if (Vector3.Distance(_data.Transform.position, _data.TargetTransform.position) > _data.Settings.AttackRange)
             {
@@ -48,7 +50,7 @@ namespace Assets.Game.Scripts.Enemies.States
 
         private void AttackAnimationEventHandler()
         {
-            if (_data.Enemy.IsDead || !_data.Enemy.IsActive)
+            if (_data.Enemy.IsDead)
                 return;
 
             _data.TargetHealth.ApplyDamage(_data.Settings.Damage);
@@ -58,9 +60,8 @@ namespace Assets.Game.Scripts.Enemies.States
             _nextAttackTime = Time.time + _data.Settings.IntervalBetweenAttacks;
         }
 
-        private void OnEnemyDied(Enemy _)
-        {
-            StateSwitcher.SwitchState<SimpleEnemyDeathState>();
-        }
+        private void OnDeactivatedHandler() => StateSwitcher.SwitchState<SimpleEnemyIdleState>();
+
+        private void OnEnemyDied(Enemy _) => StateSwitcher.SwitchState<SimpleEnemyDeathState>();
     }
 }

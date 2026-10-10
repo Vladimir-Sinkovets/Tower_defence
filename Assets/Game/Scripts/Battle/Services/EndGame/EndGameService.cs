@@ -30,6 +30,8 @@ namespace Assets.Game.Scripts.Battle.Services.EndGame
             _gameDataHolder.Data.MetaCurrency += result.EarnedMetaCurrency;
             
             _windowsManager.Open(WindowType.EndGame);
+            
+            _saveService.Save();
         }
     }
 

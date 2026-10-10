@@ -10,7 +10,7 @@ using Zenject;
 
 namespace Assets.Game.Scripts.Battle.Services.Upgrades
 {
-    public class BattleUpgradeService : IUpgradeService, IInitializable
+    public class BattleUpgradeService : IUpgradeService, IInitializable, IDisposable
     {
         private readonly ISaveService _saveService;
         private readonly GameDataHolder _gameDataHolder;
@@ -59,11 +59,11 @@ namespace Assets.Game.Scripts.Battle.Services.Upgrades
             
             _gameDataHolder.Data.MetaCurrency -= cost;
 
-            if (!_gameDataHolder.Data.Upgrades.TryAdd(upgrade.Id, _settings.UpgradesSettings.FirstLevel))
+            if (!_gameDataHolder.Data.TryAddUpgrade(upgrade.Id, _settings.UpgradesSettings.FirstLevel))
             {
-                var newLevel = _gameDataHolder.Data.Upgrades[upgrade.Id] + _settings.UpgradesSettings.LevelIncrease;
+                var newLevel = _gameDataHolder.Data.GetUpgrade(upgrade.Id) + _settings.UpgradesSettings.LevelIncrease;
                 
-                _gameDataHolder.Data.Upgrades[upgrade.Id] = newLevel;
+                _gameDataHolder.Data.SetUpgrade(upgrade.Id, newLevel);
             }
 
             _saveService.Save();
@@ -73,9 +73,10 @@ namespace Assets.Game.Scripts.Battle.Services.Upgrades
         
         public Sprite GetIcon(string id) => _config.Configs.FirstOrDefault(x => x.Id == id)?.Icon;
 
-        public int GetLevel(UpgradeSettings upgrade) => _gameDataHolder.Data.Upgrades.GetValueOrDefault(upgrade.Id, 0);
+        public int GetLevel(UpgradeSettings upgrade) => _gameDataHolder.Data.GetUpgradeLevel(upgrade.Id, 0);
      
-        
         private void OnChangedHandler() => OnUpgradesChanged?.Invoke();
+        
+        public void Dispose() => _gameDataHolder.Data.OnChanged -= OnChangedHandler;
     }
 }

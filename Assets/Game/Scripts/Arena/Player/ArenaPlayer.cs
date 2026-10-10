@@ -49,5 +49,9 @@ namespace Assets.Game.Scripts.Arena.Player
 
         [PunRPC]
         private void TakeDamage(int configDamage) => Health.ApplyDamage(configDamage);
+
+        public void IncreaseAttackSpeed(float value) => ShootingBuilding.IncreaseAttackSpeed(value);
+        public void IncreaseDamage(int value) => ShootingBuilding.IncreaseDamage(value);
+        public void IncreaseHp(int value) => Health.IncreaseHp(value);
     }
 }

@@ -17,9 +17,11 @@ namespace Assets.Game.Scripts.Enemies.States
             _data.View.PlayWalkAnimation();
 
             _data.Enemy.OnDied += OnEnemyDied;
+            _data.Enemy.Deactivated += OnDeactivatedHandler;
 
             _data.NavMeshAgent.SetDestination(_data.TargetTransform.position);
         }
+
 
         public override void Exit()
         {
@@ -27,19 +29,18 @@ namespace Assets.Game.Scripts.Enemies.States
                 _data.NavMeshAgent.isStopped = true;
 
             _data.Enemy.OnDied -= OnEnemyDied;
+            _data.Enemy.Deactivated -= OnDeactivatedHandler;
         }
 
         public override void Update()
         {
-            if (!_data.Enemy.IsActive)
-            {
-                StateSwitcher.SwitchState<SimpleEnemyIdleState>();
-            }
-            else if (Vector3.Distance(_data.Transform.position, _data.TargetTransform.position) <= _data.Settings.AttackRange)
+            if (Vector3.Distance(_data.Transform.position, _data.TargetTransform.position) <= _data.Settings.AttackRange)
             {
                 StateSwitcher.SwitchState<SimpleEnemyAttackState>();
             }
         }
+
+        private void OnDeactivatedHandler() => StateSwitcher.SwitchState<SimpleEnemyIdleState>();
 
         private void OnEnemyDied(Enemy _)
         {

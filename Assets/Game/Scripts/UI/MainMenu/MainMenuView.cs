@@ -29,7 +29,7 @@ namespace Assets.Game.Scripts.UI
         {
             _startButton.onClick.RemoveListener(OnStartClickHandler);
             _closeButton.onClick.RemoveListener(OnCloseClickHandler);
-            _closeButton.onClick.RemoveListener(OnStartBattleClickHandler);
+            _startBattleButton.onClick.RemoveListener(OnStartBattleClickHandler);
         }
     }
 }

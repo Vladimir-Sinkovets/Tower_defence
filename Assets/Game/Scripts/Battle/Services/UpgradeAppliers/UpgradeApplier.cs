@@ -53,7 +53,7 @@ namespace Assets.Game.Scripts.Battle.Services.UpgradeAppliers
         {
             var upgradesSettings = _settings.UpgradesSettings;
             
-            return _gameDataHolder.Data.Upgrades.GetValueOrDefault(upgrade.Id, upgradesSettings.UpgradeLevel);
+            return _gameDataHolder.Data.GetUpgradeLevel(upgrade.Id, upgradesSettings.UpgradeLevel);
         }
     }
 }

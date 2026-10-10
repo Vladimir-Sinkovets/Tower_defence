@@ -27,5 +27,7 @@ namespace Assets.Game.Scripts.Battle.UI.UnitsPanel
         public void SetPrice(int price) => _price.text = price.ToString();
         public void Select() => _highlighter.SetActive(true);
         public void Deselect() => _highlighter.SetActive(false);
+
+        private void OnDestroy() => _button.onClick.RemoveListener(OnClickedHandler);
     }
 }

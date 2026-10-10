@@ -8,15 +8,15 @@ namespace Assets.Game.Scripts.Shared
         public event Action<int> OnDamaged;
         public event Action OnDied;
 
-        private int _startHp;
-        private int _currentHp;
+        public int StartHp { get; private set; }
+        public int CurrentHp { get; private set; }
 
         public bool IsDead { get; private set; }
 
         public Health(int hp)
         {
-            _startHp = hp;
-            _currentHp = hp;
+            StartHp = hp;
+            CurrentHp = hp;
             
             IsDead = false;
         }
@@ -26,13 +26,13 @@ namespace Assets.Game.Scripts.Shared
             if (IsDead)
                 return;
 
-            _currentHp -= damage;
+            CurrentHp -= damage;
 
-            OnHpChanged?.Invoke(_currentHp, _startHp);
+            OnHpChanged?.Invoke(CurrentHp, StartHp);
 
             OnDamaged?.Invoke(damage);
 
-            if (_currentHp <= 0)
+            if (CurrentHp <= 0)
             {
                 IsDead = true;
                 OnDied?.Invoke();
@@ -43,27 +43,35 @@ namespace Assets.Game.Scripts.Shared
         {
             IsDead = false;
             
-            _currentHp = _startHp;
+            CurrentHp = StartHp;
             
-            OnHpChanged?.Invoke(_currentHp, _startHp);
+            OnHpChanged?.Invoke(CurrentHp, StartHp);
         }
 
         public void IncreaseHp(int hp)
         {
-            _startHp += hp;
-            _currentHp += hp;
+            StartHp += hp;
+            CurrentHp += hp;
 
-            OnHpChanged?.Invoke(_currentHp, _startHp);
+            OnHpChanged?.Invoke(CurrentHp, StartHp);
         }
 
         public void ApplyHeal(int hp)
         {
-            _currentHp += hp;
+            CurrentHp += hp;
             
-            if (_currentHp > _startHp)
-                _currentHp = _startHp;
+            if (CurrentHp > StartHp)
+                CurrentHp = StartHp;
             
-            OnHpChanged?.Invoke(_currentHp, _startHp);
+            OnHpChanged?.Invoke(CurrentHp, StartHp);
+        }
+
+        public void Set(int currentHp, int startHp)
+        {
+            CurrentHp = currentHp;
+            StartHp = startHp;
+            
+            OnHpChanged?.Invoke(CurrentHp, StartHp);
         }
     }
 }

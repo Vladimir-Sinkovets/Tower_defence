@@ -18,13 +18,13 @@ namespace Assets.Game.Scripts.Arena.ArenaEnemyStates
 
         public override void Enter()
         {
-            _data.Enemy.Health.OnDied += OnEnemyDied;
+            _data.Enemy.OnDied += OnEnemyDied;
             _data.View.OnAttacked += AttackAnimationEventHandler;
         }
 
         public override void Exit()
         {
-            _data.Enemy.Health.OnDied -= OnEnemyDied;
+            _data.Enemy.OnDied -= OnEnemyDied;
             _data.View.OnAttacked -= AttackAnimationEventHandler;
         }
 
@@ -60,7 +60,7 @@ namespace Assets.Game.Scripts.Arena.ArenaEnemyStates
 
         private void AttackAnimationEventHandler()
         {
-            if (_data.Enemy.Health.IsDead)
+            if (_data.Enemy.IsDead)
                 return;
 
             _data.Target.ApplyDamage(_data.Config.Damage);

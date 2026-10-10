@@ -12,25 +12,19 @@ namespace Assets.Game.Scripts.Enemies.States
         {
             _data.View.PlayIdleAnimation();
 
-            _data.Enemy.OnDied += OnEnemyDied;
+            _data.Enemy.OnDied += OnEnemyDiedHandler;
+            _data.Enemy.Activated += OnActivatedHandler;
         }
+
 
         public override void Exit()
         {
-            _data.Enemy.OnDied -= OnEnemyDied;
+            _data.Enemy.OnDied -= OnEnemyDiedHandler;
+            _data.Enemy.Activated -= OnActivatedHandler;
         }
 
-        public override void Update()
-        {
-            if (_data.Enemy.IsActive)
-            {
-                StateSwitcher.SwitchState<SimpleEnemyRunState>();
-            }
-        }
+        private void OnActivatedHandler() => StateSwitcher.SwitchState<SimpleEnemyRunState>();
 
-        private void OnEnemyDied(Enemy _)
-        {
-            StateSwitcher.SwitchState<SimpleEnemyDeathState>();
-        }
+        private void OnEnemyDiedHandler(Enemy _) => StateSwitcher.SwitchState<SimpleEnemyDeathState>();
     }
 }

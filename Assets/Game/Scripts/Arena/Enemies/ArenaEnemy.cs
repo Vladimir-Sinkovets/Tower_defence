@@ -1,3 +1,4 @@
+using System;
 using Assets.Game.Scripts.Arena.ArenaEnemyStates;
 using Assets.Game.Scripts.Arena.Player;
 using Assets.Game.Scripts.Arena.Services.EnemyDeathHandlers;
@@ -15,10 +16,14 @@ namespace Assets.Game.Scripts.Arena
 {
     public class ArenaEnemy : MonoBehaviour, IPunObservable
     {
+        public event Action OnDied;
+        
         [SerializeField] private PhotonView _photonView;
         [SerializeField] private ArenaEnemyView _view;
         [field: SerializeField] public ArenaEnemyConfig Config { get; private set; }
         
+        public bool IsDead => _health.IsDead;
+
         private Registry<ArenaEnemy> _enemyRegistry;
         private PhotonCallbacks _photonCallbacks;
         private IEnemyDeathHandler _enemyDeathHandler;
@@ -27,8 +32,7 @@ namespace Assets.Game.Scripts.Arena
         private StateMachine _stateMachine;
         private ArenaEnemyStateMachineData _data;
         private int _targetViewId;
-
-        public Health Health { get; private set; }
+        private Health _health;
 
         [Inject]
         public void Construct(
@@ -70,7 +74,9 @@ namespace Assets.Game.Scripts.Arena
             
             _enemyRegistry.Register(this);
             
-            Health = new Health(Config.Hp);
+            _health = new Health(Config.Hp);
+            
+            _health.OnDied += OnDiedHandler;
             
             _data = new ArenaEnemyStateMachineData()
             {
@@ -91,6 +97,8 @@ namespace Assets.Game.Scripts.Arena
             
             _stateMachine.SetStartState<ArenaEnemyChaseState>();
         }
+
+        private void OnDiedHandler() => OnDied?.Invoke();
 
         private void MasterClientSwitchedHandler(Photon.Realtime.Player obj)
         {
@@ -117,9 +125,9 @@ namespace Assets.Game.Scripts.Arena
         {
             Debug.Log($"Damage {damage}");
             
-            Health.ApplyDamage(damage);
+            _health.ApplyDamage(damage);
 
-            if (Health.IsDead)
+            if (_health.IsDead)
             {
                 _enemyDeathHandler.EnemyDiedHandler(this, playerViewId);
             }
@@ -137,6 +145,11 @@ namespace Assets.Game.Scripts.Arena
             }
         }
 
-        private void OnDestroy() => _enemyRegistry.Unregister(this);
+        private void OnDestroy()
+        {
+            _enemyRegistry.Unregister(this);
+            _health.OnDied -= OnDiedHandler;
+            _photonCallbacks.MasterClientSwitched -= MasterClientSwitchedHandler;
+        }
     }
 }

@@ -17,6 +17,6 @@ namespace Assets.Game.Scripts.Battle.UI.StartPanel
 
         private void OnStartButtonClickedHandler() => OnStartButtonClicked?.Invoke();
 
-        private void OnDestroy() => _startButton.onClick.AddListener(OnStartButtonClickedHandler);
+        private void OnDestroy() => _startButton.onClick.RemoveListener(OnStartButtonClickedHandler);
     }
 }

@@ -26,7 +26,7 @@ namespace Assets.Game.Scripts.Arena.Buildings.States
             _data.ShootingBuilding.OnStopped += OnStoppedHandler;
 
             if (_data.CurrentTarget != null)
-                _data.CurrentTarget.Health.OnDied += OnCurrentTargetDiedHandler;
+                _data.CurrentTarget.OnDied += OnCurrentTargetDiedHandler;
         }
 
         public override void Exit()
@@ -35,7 +35,7 @@ namespace Assets.Game.Scripts.Arena.Buildings.States
 
             if (_data.CurrentTarget != null)
             {
-                _data.CurrentTarget.Health.OnDied -= OnCurrentTargetDiedHandler;
+                _data.CurrentTarget.OnDied -= OnCurrentTargetDiedHandler;
                 _data.CurrentTarget = null;
             }
         }

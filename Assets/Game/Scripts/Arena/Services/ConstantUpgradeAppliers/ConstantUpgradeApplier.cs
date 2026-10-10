@@ -43,7 +43,7 @@ namespace Assets.Game.Scripts.Arena.Services.ConstantUpgradeAppliers
         {
             var upgradesSettings = _settings.UpgradesSettings;
             
-            return _gameDataHolder.Data.Upgrades.GetValueOrDefault(upgrade.Id, upgradesSettings.UpgradeLevel);
+            return _gameDataHolder.Data.GetUpgradeLevel(upgrade.Id, upgradesSettings.UpgradeLevel);
         }
     }
 }

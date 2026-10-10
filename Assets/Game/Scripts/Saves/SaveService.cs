@@ -21,7 +21,9 @@ namespace Assets.Game.Scripts.Saves
         {
             _gameDataHolder.Data.LastSaveDate = DateTime.UtcNow;
             
-            var json = JsonConvert.SerializeObject(_gameDataHolder.Data);
+            var dataToSave = _gameDataHolder.Data.ToRecord();
+            
+            var json = JsonConvert.SerializeObject(dataToSave);
             
             _cloudSaveService.SaveAsync(json);
             
@@ -49,24 +51,26 @@ namespace Assets.Game.Scripts.Saves
         {
             var cloudJson = await _cloudSaveService.LoadAsync();
 
-            return CreateSaveData(cloudJson);
+            return CreateGameData(cloudJson);
         }
 
         private GameData LoadLocalData()
         {
             var localJson = PlayerPrefs.GetString(SaveConstants.PlayerPrefsKey);
             
-            return CreateSaveData(localJson);
+            return CreateGameData(localJson);
         }
 
-        private static GameData CreateSaveData(string json)
+        private static GameData CreateGameData(string json)
         {
             if (string.IsNullOrEmpty(json))
                 return GameData.Default;
             
             try
             {
-                return JsonConvert.DeserializeObject<GameData>(json);
+                var dataRecord = JsonConvert.DeserializeObject<GameDataRecord>(json);
+                
+                return dataRecord.ToDomain();
             }
             catch
             {

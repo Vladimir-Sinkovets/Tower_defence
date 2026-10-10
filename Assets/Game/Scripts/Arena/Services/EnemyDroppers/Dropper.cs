@@ -7,7 +7,7 @@ namespace Assets.Game.Scripts.Arena.Services.EnemyDroppers
     {
         public void Drop(Vector3 position, DropConfig dropConfig)
         {
-            var exp = PhotonNetwork.InstantiateRoomObject(dropConfig.ExpPrefabName, position, Quaternion.identity)
+            var exp = PhotonNetwork.InstantiateRoomObject(dropConfig.ExperiencePrefabName, position, Quaternion.identity)
                 .GetComponent<Experience>();
 
             exp.Init(dropConfig.Experience);

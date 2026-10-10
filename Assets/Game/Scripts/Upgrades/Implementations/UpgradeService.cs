@@ -34,7 +34,7 @@ namespace Assets.Game.Scripts.Upgrades.Implementations
 
         public IEnumerable<UpgradeSettings> GetUpgrades() => _settings.UpgradesSettings.GetUpgradeConfigs();
 
-        public int GetLevel(UpgradeSettings upgrade) => _gameDataHolder.Data.Upgrades.GetValueOrDefault(upgrade.Id, 0);
+        public int GetLevel(UpgradeSettings upgrade) => _gameDataHolder.Data.GetUpgradeLevel(upgrade.Id, 0);
 
         public Sprite GetIcon(string id) => _upgradeConfigs.Configs.FirstOrDefault(x => x.Id == id)?.Icon;
         
@@ -62,11 +62,11 @@ namespace Assets.Game.Scripts.Upgrades.Implementations
             
             _gameDataHolder.Data.MetaCurrency -= cost;
 
-            if (!_gameDataHolder.Data.Upgrades.TryAdd(upgrade.Id, _settings.UpgradesSettings.FirstLevel))
+            if (!_gameDataHolder.Data.TryAddUpgrade(upgrade.Id, _settings.UpgradesSettings.FirstLevel))
             {
-                var newLevel = _gameDataHolder.Data.Upgrades[upgrade.Id] + _settings.UpgradesSettings.LevelIncrease;
+                var newLevel = _gameDataHolder.Data.GetUpgrade(upgrade.Id) + _settings.UpgradesSettings.LevelIncrease;
                 
-                _gameDataHolder.Data.Upgrades[upgrade.Id] = newLevel;
+                _gameDataHolder.Data.SetUpgrade(upgrade.Id, newLevel);
             }
 
             _saveService.Save();

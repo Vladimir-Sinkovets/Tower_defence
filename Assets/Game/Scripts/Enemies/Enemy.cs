@@ -8,18 +8,18 @@ namespace Assets.Game.Scripts.Enemies
     public abstract class Enemy : MonoBehaviour
     {
         public event Action<Enemy> OnDied;
+        public event Action Activated;
+        public event Action Deactivated;
 
         protected Health Health;
 
-        public bool IsActive { get; private set; }
-        
         public bool IsDead => Health.IsDead;
         
         public int Award { get; private set; }
 
-        public void Activate() => IsActive = true;
+        public void Activate() => Activated?.Invoke();
 
-        public void Deactivate() => IsActive = false;
+        public void Deactivate() => Deactivated?.Invoke();
 
         public virtual void Init(EnemySettings settings, Health targetHealth, Transform targetTransform)
         {

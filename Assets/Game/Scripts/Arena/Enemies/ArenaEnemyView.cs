@@ -1,5 +1,6 @@
 using System;
-using Assets.Game.Scripts.Arena.Assets.Game.Scripts.Arena;
+using Assets.Game.Scripts.Arena.Enemies;
+using Assets.Game.Scripts.Enemies;
 using UnityEngine;
 
 namespace Assets.Game.Scripts.Arena
@@ -9,11 +10,16 @@ namespace Assets.Game.Scripts.Arena
         public event Action OnAttacked;
 
         [SerializeField] private Animator _animator;
+        [SerializeField] private EnemyAnimationEventHandler _handler;
 
         public void PlayWalkAnimation() => _animator.SetTrigger(ArenaEnemyAnimationParameters.Walk);
 
         public void PlayAttackAnimation() => _animator.SetTrigger(ArenaEnemyAnimationParameters.Attack);
 
-        public void AttackAnimationEventHandler() => OnAttacked?.Invoke();
+        private void Awake() => _handler.OnHit += AttackAnimationEventHandler;
+
+        private void AttackAnimationEventHandler() => OnAttacked?.Invoke();
+
+        private void OnDestroy() => _handler.OnHit -= AttackAnimationEventHandler;
     }
 }

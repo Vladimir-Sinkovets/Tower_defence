@@ -13,7 +13,8 @@ namespace Assets.Game.Scripts.Shared
         private void OnDestroy()
         {
             foreach (var d in _disposables)
-                d?.Dispose();
+                if (d != null)
+                    d.Dispose();
         }
     }
 }

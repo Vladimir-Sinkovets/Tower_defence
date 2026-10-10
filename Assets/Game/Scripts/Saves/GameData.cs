@@ -72,5 +72,13 @@ namespace Assets.Game.Scripts.Saves
             Upgrades = new Dictionary<string, int>(),
             LastSaveDate = DateTime.MinValue,
         };
+        
+        public int GetUpgradeLevel(string id, int defaultLevel) => Upgrades.GetValueOrDefault(id, defaultLevel);
+
+        public bool TryAddUpgrade(string id, int defaultFirstLevel) => Upgrades.TryAdd(id, defaultFirstLevel);
+
+        public int GetUpgrade(string id) => Upgrades[id];
+
+        public void SetUpgrade(string id, int newLevel) => Upgrades[id] = newLevel;
     }
 }

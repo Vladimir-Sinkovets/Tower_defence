@@ -37,12 +37,8 @@ namespace Assets.Game.Scripts.Arena
             _playerAccessor = playerAccessor;
         }
         
-        public void Initialize() => InitializeAsync().Forget();
-
-        private async UniTaskVoid InitializeAsync()
+        public void Initialize()
         {
-            await UniTask.NextFrame();
-            
             var player = _playerFactory.CreatePlayer();
 
             _cineMachineCamera.Follow = player.transform;

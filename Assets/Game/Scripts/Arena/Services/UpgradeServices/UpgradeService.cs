@@ -77,21 +77,20 @@ namespace Assets.Game.Scripts.Arena.Services.UpgradeServices
 
         private void ApplyBonus(Upgrade upgrade)
         {
+            var player = _playerAccessor.CurrentPlayer;
             switch (upgrade.Type)
             {
                 case UpgradeType.AttackSpeed:
-                    _playerAccessor.CurrentPlayer.ShootingBuilding.IncreaseAttackSpeed(
+                    player.IncreaseAttackSpeed(
                         (float) Math.Pow(
                             Mathf.Clamp01(upgrade.EachLevelCoefficient),
                             upgrade.Level));
                     break;
                 case UpgradeType.Damage:
-                    _playerAccessor.CurrentPlayer.ShootingBuilding.IncreaseDamage(
-                        (int)(upgrade.Level * upgrade.EachLevelCoefficient));
+                    player.IncreaseDamage((int)(upgrade.Level * upgrade.EachLevelCoefficient));
                     break;
                 case UpgradeType.Hp:
-                    _playerAccessor.CurrentPlayer.Health.IncreaseHp(
-                        (int)(upgrade.Level * upgrade.EachLevelCoefficient));
+                    player.IncreaseHp((int)(upgrade.Level * upgrade.EachLevelCoefficient));
                     break;
                 case UpgradeType.MovementSpeed:
                     _playerController.IncreaseMovementSpeed(

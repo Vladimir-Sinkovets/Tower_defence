@@ -69,7 +69,7 @@ namespace Assets.Game.Scripts.Upgrades.Implementations
         {
             var upgradesSettings = _settings.UpgradesSettings;
             
-            return _gameDataHolder.Data.Upgrades.GetValueOrDefault(upgrade.Id, upgradesSettings.UpgradeLevel);
+            return _gameDataHolder.Data.GetUpgradeLevel(upgrade.Id, upgradesSettings.UpgradeLevel);
         }
     }
 }

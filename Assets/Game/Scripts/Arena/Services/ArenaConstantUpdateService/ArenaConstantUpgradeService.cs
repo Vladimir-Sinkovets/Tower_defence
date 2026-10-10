@@ -59,23 +59,22 @@ namespace Assets.Game.Scripts.Arena.Services.ArenaConstantUpdateService
             
             _gameDataHolder.Data.MetaCurrency -= cost;
 
-            if (!_gameDataHolder.Data.Upgrades.TryAdd(upgrade.Id, _settings.UpgradesSettings.FirstLevel))
+            if (!_gameDataHolder.Data.TryAddUpgrade(upgrade.Id, _settings.UpgradesSettings.FirstLevel))
             {
-                var newLevel = _gameDataHolder.Data.Upgrades[upgrade.Id] + _settings.UpgradesSettings.LevelIncrease;
+                var newLevel = _gameDataHolder.Data.GetUpgrade(upgrade.Id) + _settings.UpgradesSettings.LevelIncrease;
                 
-                _gameDataHolder.Data.Upgrades[upgrade.Id] = newLevel;
+                _gameDataHolder.Data.SetUpgrade(upgrade.Id, newLevel);
             }
 
             _saveService.Save();
         }
-        
+
         public int GetLevelCost(UpgradeSettings upgrade) => upgrade.GetCostByLevel(GetLevel(upgrade));
-        
+
         public Sprite GetIcon(string id) => _config.Configs.FirstOrDefault(x => x.Id == id)?.Icon;
 
-        public int GetLevel(UpgradeSettings upgrade) => _gameDataHolder.Data.Upgrades.GetValueOrDefault(upgrade.Id, 0);
-     
-        
+        public int GetLevel(UpgradeSettings upgrade) => _gameDataHolder.Data.GetUpgradeLevel(upgrade.Id, 0);
+
         private void OnChangedHandler() => OnUpgradesChanged?.Invoke();
     }
 }

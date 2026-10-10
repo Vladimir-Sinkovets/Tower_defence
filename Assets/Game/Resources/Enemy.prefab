@@ -197,6 +197,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 47e7468693a15f14b81cac13b492b28e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6166932249451506337}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 47e7468693a15f14b81cac13b492b28e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5517338961245348181}
   m_SourcePrefab: {fileID: 100100000, guid: 47e7468693a15f14b81cac13b492b28e, type: 3}
 --- !u!4 &2526108644361142282 stripped
 Transform:
@@ -243,3 +246,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Arena.ArenaEnemyView
   _animator: {fileID: 2249249832909012318}
+  _handler: {fileID: 5517338961245348181}
+--- !u!114 &5517338961245348181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2901825319910562480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fa2c799f3424ac782c4e486a1bf2a4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Game.Scripts.Enemies.EnemyAnimationEventHandler

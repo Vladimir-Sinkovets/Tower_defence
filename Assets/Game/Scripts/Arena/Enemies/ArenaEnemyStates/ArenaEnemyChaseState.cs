@@ -16,12 +16,12 @@ namespace Assets.Game.Scripts.Arena.ArenaEnemyStates
         {
             _data.View.PlayWalkAnimation();
 
-            _data.Enemy.Health.OnDied += OnEnemyDied;
+            _data.Enemy.OnDied += OnEnemyDied;
         }
 
         public override void Exit()
         {
-            _data.Enemy.Health.OnDied -= OnEnemyDied;
+            _data.Enemy.OnDied -= OnEnemyDied;
         }
 
         public override void Update()
@@ -57,9 +57,6 @@ namespace Assets.Game.Scripts.Arena.ArenaEnemyStates
             }
         }
 
-        private void OnEnemyDied()
-        {
-            StateSwitcher.SwitchState<ArenaEnemyDeathState>();
-        }
+        private void OnEnemyDied() => StateSwitcher.SwitchState<ArenaEnemyDeathState>();
     }
 }
